@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class GBAI : ModuleRules
+public class GBInventory : ModuleRules
 {
-	public GBAI(ReadOnlyTargetRules Target) : base(Target)
+	public GBInventory(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		
@@ -26,7 +26,6 @@ public class GBAI : ModuleRules
 			new string[]
 			{
 				"Core",
-                "GBCore"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -35,8 +34,10 @@ public class GBAI : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"CoreUObject", "Engine", "Slate", "SlateCore",
-                "GameplayTags", "StateTreeModule", "GameplayStateTreeModule", "AIModule"
+				"CoreUObject",
+				"Engine",
+				"Slate",
+				"SlateCore",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

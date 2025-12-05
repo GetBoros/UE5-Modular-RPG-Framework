@@ -1,16 +1,42 @@
 //------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include "AIController.h"
-#include "GameplayTagContainer.h"
+#include <GameplayTagContainer.h>
+#include <DetourCrowdAIController.h>
+
 #include "GB_AI_Controller.generated.h"
 //------------------------------------------------------------------------------------------------------------
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_AI_Action_Event, const FGameplayTag &, event_tag);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_AI_Action_Requested_Delegate, FGameplayTag, requested_action_tag);
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class GBAI_API AGB_AI_Controller : public AAIController
+class UStateTreeAIComponent;
+class UAIPerceptionComponent;
+class UAISenseConfig_Sight;
+//------------------------------------------------------------------------------------------------------------
+UCLASS() class GBAI_API AGB_AI_Controller : public ADetourCrowdAIController
 {
 	GENERATED_BODY()
 	
-	UPROPERTY(BlueprintAssignable, Category = "AI|State Tree") FOn_AI_Action_Event On_AI_Action_Event;
+	AGB_AI_Controller();
+
+	virtual void BeginPlay();
+	virtual void OnPossess(APawn *in_pawn);
+
+	void Set_Patrol_Data(const float patrol_radius, const FVector patrol_center_location);
+
+	UFUNCTION(BlueprintCallable, Category = "AI") void Send_State_Tree_Event(const FGameplayTag gameplay_tag);
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = "AI") FOn_AI_Action_Requested_Delegate On_AI_Action_Requested;
+
+private:
+	UFUNCTION(Category = "AI_Perception Event|Internal") void On_Target_Updated(AActor *actor, FAIStimulus stimulus);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI", meta = (AllowPrivateAccess = "true") ) float Patrol_Radius;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI", meta = (AllowPrivateAccess = "true") ) FVector Patrol_Center_Location;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI", meta = (AllowPrivateAccess = "true") ) AActor *Target_Actor;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI", meta = (AllowPrivateAccess = "true") ) UStateTreeAIComponent *AI_State_Tree;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI", meta = (AllowPrivateAccess = "true") ) UAIPerceptionComponent *AI_Perception;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI", meta = (AllowPrivateAccess = "true") ) UAISenseConfig_Sight *AI_Sense_Config_Sight;
+
 };
 //------------------------------------------------------------------------------------------------------------

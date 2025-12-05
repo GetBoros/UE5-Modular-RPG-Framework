@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "1.0",
+	"VersionName": "0.1",
 	"FriendlyName": "GBCore",
 	"Description": "",
 	"Category": "Other",
@@ -19,12 +19,6 @@
 			"Name": "GBCore",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
-		}
-	],
-	"Plugins": [
-		{
-			"Name": "EnhancedInput",
-			"Enabled": true
 		}
 	]
 }

@@ -2,7 +2,7 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "0.1",
-	"FriendlyName": "GBAI",
+	"FriendlyName": "GBInventory",
 	"Description": "",
 	"Category": "Other",
 	"CreatedBy": "Adonis",
@@ -16,23 +16,9 @@
 	"Installed": false,
 	"Modules": [
 		{
-			"Name": "GBAI",
+			"Name": "GBInventory",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
-		}
-	],
-	"Plugins": [
-		{
-			"Name": "GBCore",
-			"Enabled": true
-		},
-		{
-			"Name": "StateTree",
-			"Enabled": true
-		},
-		{
-			"Name": "GameplayStateTree",
-			"Enabled": true
 		}
 	]
 }
