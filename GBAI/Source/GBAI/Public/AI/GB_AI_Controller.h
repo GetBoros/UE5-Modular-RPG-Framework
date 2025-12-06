@@ -28,7 +28,7 @@ UCLASS() class GBAI_API AGB_AI_Controller : public ADetourCrowdAIController
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = "AI") FOn_AI_Action_Requested_Delegate On_AI_Action_Requested;
 
 private:
-	UFUNCTION(Category = "AI_Perception Event|Internal") void On_Target_Updated(AActor *actor, FAIStimulus stimulus);
+	UFUNCTION(Category = "AI_Perception Event|Internal") void On_Target_Perception_Updated(AActor *actor, FAIStimulus stimulus);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI", meta = (AllowPrivateAccess = "true") ) float Patrol_Radius;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI", meta = (AllowPrivateAccess = "true") ) FVector Patrol_Center_Location;

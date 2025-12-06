@@ -1,7 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
 #include <AI/GB_AI_Character.h>
 #include <AI/GB_AI_Controller.h>
-
 //------------------------------------------------------------------------------------------------------------
 
 
@@ -31,7 +30,7 @@ void AGB_AI_Character::EndPlay(const EEndPlayReason::Type end_play_reason)
 	Super::EndPlay(end_play_reason);
 }
 //------------------------------------------------------------------------------------------------------------
-void AGB_AI_Character::PossessedBy(AController* controller)
+void AGB_AI_Character::PossessedBy(AController *controller)
 {
 	Super::PossessedBy(controller);
 
@@ -49,7 +48,7 @@ void AGB_AI_Character::UnPossessed()
 	Super::UnPossessed();
 }
 //------------------------------------------------------------------------------------------------------------
-void AGB_AI_Character::SetupPlayerInputComponent(UInputComponent* player_input_component)
+void AGB_AI_Character::SetupPlayerInputComponent(UInputComponent *player_input_component)
 {
 	Super::SetupPlayerInputComponent(player_input_component);
 }

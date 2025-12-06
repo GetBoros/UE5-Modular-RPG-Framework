@@ -37,12 +37,12 @@ void AGB_AI_Controller::BeginPlay()
 	Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
-void AGB_AI_Controller::OnPossess(APawn* in_pawn)
+void AGB_AI_Controller::OnPossess(APawn *in_pawn)
 {
 	Super::OnPossess(in_pawn);
 
 	AI_State_Tree->StartLogic();
-	AI_Perception->OnTargetPerceptionUpdated.AddDynamic(this, &AGB_AI_Controller::On_Target_Updated);
+	AI_Perception->OnTargetPerceptionUpdated.AddDynamic(this, &AGB_AI_Controller::On_Target_Perception_Updated);
 }
 //------------------------------------------------------------------------------------------------------------
 void AGB_AI_Controller::Set_Patrol_Data(const float patrol_radius, const FVector patrol_center_location)
@@ -66,8 +66,10 @@ void AGB_AI_Controller::Send_State_Tree_Event(const FGameplayTag gameplay_tag)
 	AI_State_Tree->SendStateTreeEvent(state_tree_event);
 }
 //------------------------------------------------------------------------------------------------------------
-void AGB_AI_Controller::On_Target_Updated(AActor* actor, FAIStimulus stimulus)
+void AGB_AI_Controller::On_Target_Perception_Updated(AActor *actor, FAIStimulus stimulus)
 {
+	return;
+
 	const FGameplayTag sended_tag = FGameplayTag::RequestGameplayTag(TEXT("Test.StateTree.Tag3") );  // !!! TEMP TEST
 
 	if (stimulus.WasSuccessfullySensed() == true)

@@ -21,10 +21,10 @@ public:
 	virtual void Tick(float delta_time);
 	virtual void EndPlay(const EEndPlayReason::Type end_play_reason);
 
-	virtual void PossessedBy(AController* controller);  // Character
+	virtual void PossessedBy(AController *controller);  // Character
 	virtual void UnPossessed();
 
-	virtual void SetupPlayerInputComponent(UInputComponent* player_input_component);
+	virtual void SetupPlayerInputComponent(UInputComponent *player_input_component);
 	virtual void PostInitializeComponents();
 
 	virtual FGenericTeamId GetGenericTeamId() const;  // IGenericTeamAgentInterface
