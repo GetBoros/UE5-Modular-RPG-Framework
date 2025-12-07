@@ -15,14 +15,14 @@ void AGB_AI_Actor::BeginPlay()
 	Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
-void AGB_AI_Actor::Tick(float DeltaTime)
+void AGB_AI_Actor::Tick(float delta_time)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(delta_time);
 }
 //------------------------------------------------------------------------------------------------------------
-void AGB_AI_Actor::GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const
+void AGB_AI_Actor::GetOwnedGameplayTags(FGameplayTagContainer &tag_container) const
 {
-	TagContainer.AppendTags(FoodTags);
+	tag_container.AppendTags(Food_Tags);
 }
 //------------------------------------------------------------------------------------------------------------
 

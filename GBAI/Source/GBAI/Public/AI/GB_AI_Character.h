@@ -29,6 +29,8 @@ public:
 
 	virtual FGenericTeamId GetGenericTeamId() const;  // IGenericTeamAgentInterface
 
+	float Get_Hunger() const;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI") AGB_AI_Controller *AI_Controller;
 
 };

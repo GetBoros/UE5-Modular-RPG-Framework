@@ -65,3 +65,8 @@ FGenericTeamId AGB_AI_Character::GetGenericTeamId() const
 	return ETeamAttitude::Friendly;
 }
 //------------------------------------------------------------------------------------------------------------
+float AGB_AI_Character::Get_Hunger() const
+{
+	return 10.0f;
+}
+//------------------------------------------------------------------------------------------------------------

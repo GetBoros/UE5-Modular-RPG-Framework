@@ -12,11 +12,12 @@ UCLASS() class GBAI_API AGB_AI_Actor : public AActor, public IGameplayTagAssetIn
 public:	
 	AGB_AI_Actor();
 
-	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
-	virtual void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const;
+	virtual void BeginPlay();
+	virtual void Tick(float delta_time);
+	virtual void GetOwnedGameplayTags(FGameplayTagContainer &tag_container) const;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI") FGameplayTagContainer FoodTags;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI") float NutritionValue = 10.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI") FGameplayTagContainer Food_Tags;
 
 };
 //------------------------------------------------------------------------------------------------------------
