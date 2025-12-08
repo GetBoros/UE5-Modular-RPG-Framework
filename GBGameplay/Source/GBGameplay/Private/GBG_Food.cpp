@@ -1,28 +1,29 @@
 //------------------------------------------------------------------------------------------------------------
-#include "AI/GB_AI_Actor.h"
+#include "GBG_Food.h"
+//------------------------------------------------------------------------------------------------------------
 
 
 
 
-// AGB_AI_Actor
-AGB_AI_Actor::AGB_AI_Actor()
+// AGBG_Food
+AGBG_Food::AGBG_Food()
 {
 	PrimaryActorTick.bCanEverTick = false;
 }
 //------------------------------------------------------------------------------------------------------------
-void AGB_AI_Actor::BeginPlay()
+void AGBG_Food::BeginPlay()
 {
 	Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
-void AGB_AI_Actor::Tick(float delta_time)
+void AGBG_Food::Tick(float delta_time)
 {
 	Super::Tick(delta_time);
 }
 //------------------------------------------------------------------------------------------------------------
-void AGB_AI_Actor::GetOwnedGameplayTags(FGameplayTagContainer &tag_container) const
-{
-	tag_container.AppendTags(Food_Tags);
-}
+//void AGBG_Food::GetOwnedGameplayTags(FGameplayTagContainer &tag_container) const
+//{
+//	tag_container.AppendTags(Food_Tags);
+//}
 //------------------------------------------------------------------------------------------------------------
 
