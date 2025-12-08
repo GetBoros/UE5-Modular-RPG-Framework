@@ -1,5 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
-#include "GBG_Food.h"
+#include <GBG_Food.h>
+#include <GameplayTagContainer.h>
 //------------------------------------------------------------------------------------------------------------
 
 
@@ -21,9 +22,16 @@ void AGBG_Food::Tick(float delta_time)
 	Super::Tick(delta_time);
 }
 //------------------------------------------------------------------------------------------------------------
-//void AGBG_Food::GetOwnedGameplayTags(FGameplayTagContainer &tag_container) const
-//{
-//	tag_container.AppendTags(Food_Tags);
-//}
-//------------------------------------------------------------------------------------------------------------
+bool AGBG_Food::Query_Float_Value_By_Tag_Implementation(FGameplayTag data_tag, float& out_value) const
+{
+    const FGameplayTag NutritionTag = FGameplayTag::RequestGameplayTag(FName("Test.StateTree.Tag2"));
 
+    if (data_tag == NutritionTag)
+    {
+        out_value = NutritionValue;
+        return true;
+    }
+
+    return false;
+}
+//------------------------------------------------------------------------------------------------------------

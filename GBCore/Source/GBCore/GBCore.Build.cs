@@ -26,6 +26,7 @@ public class GBCore : ModuleRules
 			new string[]
 			{
 				"Core",
+                "GameplayTags"  // If in public can use includes, but for compile need add to private or public same "GameplayTags"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);

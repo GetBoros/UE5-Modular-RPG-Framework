@@ -1,5 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include "AI/GBAI_EQS.h"
+#include "Interfaces/GBC_AI_Queryable_Interface.h"
+#include "GameplayTagAssetInterface.h"
 #include "EnvironmentQuery/Items/EnvQueryItemType_Actor.h"
 //------------------------------------------------------------------------------------------------------------
 
@@ -12,43 +14,49 @@ UGBAI_EQS::UGBAI_EQS()
 	Cost = EEnvTestCost::Low;
 	ValidItemType = UEnvQueryItemType_Actor::StaticClass();
 
-	// ВАЖНО: Этот тест предназначен для ОЦЕНКИ (Score), а не фильтрации по умолчанию
 	TestPurpose = EEnvTestPurpose::Score;
 }
 //------------------------------------------------------------------------------------------------------------
 void UGBAI_EQS::RunTest(FEnvQueryInstance& QueryInstance) const
 {
-//	UObject *query_owner = QueryInstance.Owner.Get();
-//	AActor *querier = Cast<AActor>(query_owner);
-//	AActor *item_actor;
-//	AGB_AI_Actor *item_food;
-//	AGB_AI_Character *character = Cast<AGB_AI_Character>(querier);
-//
-//	FloatValueMin.BindData(query_owner, QueryInstance.QueryID);
-//	FloatValueMax.BindData(query_owner, QueryInstance.QueryID);
-//	
-//	float threshold_min = FloatValueMin.GetValue();
-//	float threshold_max = FloatValueMax.GetValue();
-//	float HungerFactor = 1.0f;
-//	
-//	if (character != 0)
-//		if (character->Get_Hunger() < 20.0f)
-//			HungerFactor = 5.0f;
-//
-//	for (FEnvQueryInstance::ItemIterator it(this, QueryInstance); it; ++it)
-//	{
-//		item_actor = GetItemActor(QueryInstance, it.GetIndex());
-//		item_food = Cast<AGB_AI_Actor>(item_actor);
-//
-//		if (item_food != 0)
-//		{
-//			float final_score = item_food->NutritionValue * HungerFactor;
-//
-//			it.SetScore(TestPurpose, FilterType, final_score, threshold_min, threshold_max);
-//		}
-//		else
-//			it.ForceItemState(EEnvItemStatus::Failed);
-//	}
+    UObject* QueryOwner = QueryInstance.Owner.Get();
+    if (!QueryOwner)
+        return;
+
+    ScoreMultiplier.BindData(QueryOwner, QueryInstance.QueryID);
+    const float MultiplierValue = ScoreMultiplier.GetValue();
+
+    for (FEnvQueryInstance::ItemIterator It(this, QueryInstance); It; ++It)
+    {
+        AActor* ItemActor = GetItemActor(QueryInstance, It.GetIndex());
+        if (!ItemActor)
+        {
+            It.ForceItemState(EEnvItemStatus::Failed);
+            continue;
+        }
+
+        if (!ItemActor->Implements<UGBC_AI_Queryable_Interface>())
+        {
+            It.ForceItemState(EEnvItemStatus::Failed);
+            continue;
+        }
+
+        // --- Happy Path: если все проверки пройдены, выполняем основную логику ---
+
+        float QueriedValue = 0.0f;
+        // Запрашиваем значение по тегу, который задан в редакторе
+        if (IGBC_AI_Queryable_Interface::Execute_Query_Float_Value_By_Tag(ItemActor, DataToQueryTag, QueriedValue))
+        {
+            const float FinalScore = QueriedValue * MultiplierValue;
+            // CHANGE: Используем встроенные в тест параметры для min/max
+            It.SetScore(TestPurpose, FilterType, FinalScore, BoolValue.GetValue(), BoolValue.GetValue());
+        }
+        else
+        {
+            // Интерфейс есть, но на наш конкретный тег он ответить не смог
+            It.ForceItemState(EEnvItemStatus::Failed);
+        }
+    }
 }
 //------------------------------------------------------------------------------------------------------------
 FText UGBAI_EQS::GetDescriptionTitle() const

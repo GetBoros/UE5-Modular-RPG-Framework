@@ -25,7 +25,7 @@ public class GBGameplay : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-                "GBCore"
+                "GBCore",
 				// ... add other public dependencies that you statically link with here ...
 			}
             );
@@ -34,14 +34,10 @@ public class GBGameplay : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core",
-				"CoreUObject",
-                "Engine",
-				"Slate",
-				"SlateCore",
-				// ... add private dependencies that you statically link with here ...	
+				"Core", "CoreUObject", "Engine", "Slate", "SlateCore",  // Base
+                "GameplayTags"  // Custom
 			}
-			);
+            );
 		
 		
 		DynamicallyLoadedModuleNames.AddRange(
