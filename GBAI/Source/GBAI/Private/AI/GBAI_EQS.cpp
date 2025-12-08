@@ -1,13 +1,13 @@
 //------------------------------------------------------------------------------------------------------------
-#include "AI/GB_AI_EQS.h"
+#include "AI/GBAI_EQS.h"
 #include "EnvironmentQuery/Items/EnvQueryItemType_Actor.h"
 //------------------------------------------------------------------------------------------------------------
 
 
 
 
-// UGB_AI_EQS
-UGB_AI_EQS::UGB_AI_EQS()
+// UGBAI_EQS
+UGBAI_EQS::UGBAI_EQS()
 {
 	Cost = EEnvTestCost::Low;
 	ValidItemType = UEnvQueryItemType_Actor::StaticClass();
@@ -16,7 +16,7 @@ UGB_AI_EQS::UGB_AI_EQS()
 	TestPurpose = EEnvTestPurpose::Score;
 }
 //------------------------------------------------------------------------------------------------------------
-void UGB_AI_EQS::RunTest(FEnvQueryInstance& QueryInstance) const
+void UGBAI_EQS::RunTest(FEnvQueryInstance& QueryInstance) const
 {
 //	UObject *query_owner = QueryInstance.Owner.Get();
 //	AActor *querier = Cast<AActor>(query_owner);
@@ -51,12 +51,12 @@ void UGB_AI_EQS::RunTest(FEnvQueryInstance& QueryInstance) const
 //	}
 }
 //------------------------------------------------------------------------------------------------------------
-FText UGB_AI_EQS::GetDescriptionTitle() const
+FText UGBAI_EQS::GetDescriptionTitle() const
 {
 	return FText::FromString(TEXT("Score by Nutrition"));
 }
 //------------------------------------------------------------------------------------------------------------
-FText UGB_AI_EQS::GetDescriptionDetails() const
+FText UGBAI_EQS::GetDescriptionDetails() const
 {
 	return FText::FromString(TEXT("Higher Nutrition = Better Score"));
 }

@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
-#include <AI/GB_AI_Controller.h>
-#include <AI/GB_AI_Types.h>
+#include <AI/GBAI_Controller.h>
+#include <AI/GBAI_Types.h>
 
 #include <Components/StateTreeAIComponent.h>
 #include <Perception/AISenseConfig_Sight.h>
@@ -10,8 +10,8 @@
 
 
 
-// AGB_AI_Controller
-AGB_AI_Controller::AGB_AI_Controller()
+// AGBAI_Controller 
+AGBAI_Controller ::AGBAI_Controller ()
  : Target_Actor(0), AI_State_Tree(0), AI_Perception(0), AI_Sense_Config_Sight(0)
 {
 	AI_State_Tree = CreateDefaultSubobject<UStateTreeAIComponent>(TEXT("StateTreeAIComponent") );
@@ -32,29 +32,29 @@ AGB_AI_Controller::AGB_AI_Controller()
 	AI_Perception->SetDominantSense(AI_Sense_Config_Sight->GetSenseImplementation() );
 }
 //------------------------------------------------------------------------------------------------------------
-void AGB_AI_Controller::BeginPlay()
+void AGBAI_Controller ::BeginPlay()
 {
 	Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
-void AGB_AI_Controller::OnPossess(APawn *in_pawn)
+void AGBAI_Controller ::OnPossess(APawn *in_pawn)
 {
 	Super::OnPossess(in_pawn);
 
 	AI_State_Tree->StartLogic();
-	AI_Perception->OnTargetPerceptionUpdated.AddDynamic(this, &AGB_AI_Controller::On_Target_Perception_Updated);
+	AI_Perception->OnTargetPerceptionUpdated.AddDynamic(this, &AGBAI_Controller ::On_Target_Perception_Updated);
 }
 //------------------------------------------------------------------------------------------------------------
-void AGB_AI_Controller::Set_Patrol_Data(const float patrol_radius, const FVector patrol_center_location)
+void AGBAI_Controller ::Set_Patrol_Data(const float patrol_radius, const FVector patrol_center_location)
 {
 	Patrol_Radius = patrol_radius;
 	Patrol_Center_Location = patrol_center_location;
 }
 //------------------------------------------------------------------------------------------------------------
-void AGB_AI_Controller::Send_State_Tree_Event(const FGameplayTag gameplay_tag)
+void AGBAI_Controller ::Send_State_Tree_Event(const FGameplayTag gameplay_tag)
 {// Example
 
-	FSGB_AI_Payload_Test payload_test;
+	FSGBAI_Payload_Test payload_test;
 	FStateTreeEvent state_tree_event;
 	FInstancedStruct instanced_struct;
 
@@ -66,7 +66,7 @@ void AGB_AI_Controller::Send_State_Tree_Event(const FGameplayTag gameplay_tag)
 	AI_State_Tree->SendStateTreeEvent(state_tree_event);
 }
 //------------------------------------------------------------------------------------------------------------
-void AGB_AI_Controller::On_Target_Perception_Updated(AActor *actor, FAIStimulus stimulus)
+void AGBAI_Controller ::On_Target_Perception_Updated(AActor *actor, FAIStimulus stimulus)
 {
 	return;
 

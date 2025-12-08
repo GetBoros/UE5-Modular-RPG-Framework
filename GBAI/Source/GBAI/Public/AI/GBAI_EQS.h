@@ -2,14 +2,14 @@
 #pragma once
 //------------------------------------------------------------------------------------------------------------
 #include "EnvironmentQuery/EnvQueryTest.h"
-#include "GB_AI_EQS.generated.h"
+#include "GBAI_EQS.generated.h"
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class GBAI_API UGB_AI_EQS : public UEnvQueryTest
+UCLASS() class GBAI_API UGBAI_EQS : public UEnvQueryTest
 {
 	GENERATED_BODY()
 
 public:
-	UGB_AI_EQS();
+	UGBAI_EQS();
 
 	virtual void RunTest(FEnvQueryInstance& QueryInstance) const override;
 

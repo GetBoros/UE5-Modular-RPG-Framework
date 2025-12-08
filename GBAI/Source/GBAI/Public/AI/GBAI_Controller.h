@@ -4,7 +4,7 @@
 #include <GameplayTagContainer.h>
 #include <DetourCrowdAIController.h>
 
-#include "GB_AI_Controller.generated.h"
+#include "GBAI_Controller.generated.h"
 //------------------------------------------------------------------------------------------------------------
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_AI_Action_Requested_Delegate, FGameplayTag, requested_action_tag);
 //------------------------------------------------------------------------------------------------------------
@@ -12,11 +12,11 @@ class UStateTreeAIComponent;
 class UAIPerceptionComponent;
 class UAISenseConfig_Sight;
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class GBAI_API AGB_AI_Controller : public ADetourCrowdAIController
+UCLASS() class GBAI_API AGBAI_Controller : public ADetourCrowdAIController
 {
 	GENERATED_BODY()
 	
-	AGB_AI_Controller();
+	AGBAI_Controller();
 
 	virtual void BeginPlay();
 	virtual void OnPossess(APawn *in_pawn);

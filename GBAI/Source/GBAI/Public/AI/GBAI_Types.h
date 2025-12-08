@@ -2,9 +2,9 @@
 #pragma once
 //------------------------------------------------------------------------------------------------------------
 #include <GameplayTagContainer.h>
-#include "GB_AI_Types.generated.h"
+#include "GBAI_Types.generated.h"
 //------------------------------------------------------------------------------------------------------------
-USTRUCT() struct FSGB_AI_Payload_Test
+USTRUCT() struct FSGBAI_Payload_Test
 {
 	GENERATED_BODY()
 
@@ -12,7 +12,7 @@ USTRUCT() struct FSGB_AI_Payload_Test
 
 };
 //------------------------------------------------------------------------------------------------------------
-USTRUCT(BlueprintType) struct FGB_AI_Character_Stats_Base
+USTRUCT(BlueprintType) struct FGBAI_Character_Stats_Base
 {
 	GENERATED_BODY()
 

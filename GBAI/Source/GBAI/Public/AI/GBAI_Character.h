@@ -4,18 +4,16 @@
 #include <GenericTeamAgentInterface.h>
 #include <GameFramework/Character.h>
 
-#include <GB_AI_Character.generated.h>
+#include <GBAI_Character.generated.h>
 //------------------------------------------------------------------------------------------------------------
-class AGB_AI_Controller;
-class UED_AI_Stat_Component;
-class UED_AI_Character_Stats;
+class AGBAI_Controller;
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class GBAI_API AGB_AI_Character : public ACharacter, public IGenericTeamAgentInterface
+UCLASS() class GBAI_API AGBAI_Character : public ACharacter, public IGenericTeamAgentInterface
 {
 	GENERATED_BODY()
 
 public:
-	AGB_AI_Character();
+	AGBAI_Character();
 
 	virtual void BeginPlay();  // Actor
 	virtual void Tick(float delta_time);
@@ -31,7 +29,7 @@ public:
 
 	float Get_Hunger() const;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI") AGB_AI_Controller *AI_Controller;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI") AGBAI_Controller *AI_Controller;
 
 };
 //------------------------------------------------------------------------------------------------------------

@@ -1,19 +1,14 @@
 //------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include "UObject/Interface.h"
-#include "GB_AI_Target_Interface.generated.h"
+#include "GBC_Types_Health.generated.h"
 //------------------------------------------------------------------------------------------------------------
-UINTERFACE(MinimalAPI) class UGB_AI_Target_Interface : public UInterface
+USTRUCT(BlueprintType) struct FGBC_Types_Health
 {
-	GENERATED_BODY()
-};
-//------------------------------------------------------------------------------------------------------------
-class GBCORE_API IGB_AI_Target_Interface
-{
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AI|Target") FVector Get_Target_Location();
+    UPROPERTY(BlueprintReadOnly) float Health_Current = 0.0f;
+    UPROPERTY(BlueprintReadOnly) float Health_Max = 0.0f;
 };
 //------------------------------------------------------------------------------------------------------------
