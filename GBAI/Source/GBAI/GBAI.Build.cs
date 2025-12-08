@@ -25,7 +25,6 @@ public class GBAI : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core",
                 "GBCore"
 				// ... add other public dependencies that you statically link with here ...
 			}
@@ -35,7 +34,7 @@ public class GBAI : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"CoreUObject", "Engine", "Slate", "SlateCore",
+				"Core", "CoreUObject", "Engine", "Slate", "SlateCore",
                 "GameplayTags", "StateTreeModule", "GameplayStateTreeModule", "AIModule"
 				// ... add private dependencies that you statically link with here ...	
 			}
