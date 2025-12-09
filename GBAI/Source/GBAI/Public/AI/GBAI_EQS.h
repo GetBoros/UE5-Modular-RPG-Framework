@@ -13,16 +13,13 @@ UCLASS() class GBAI_API UGBAI_EQS : public UEnvQueryTest
 public:
 	UGBAI_EQS();
 
-	virtual void RunTest(FEnvQueryInstance& QueryInstance) const override;
+	virtual void RunTest(FEnvQueryInstance &query_instance) const override;
 
 	virtual FText GetDescriptionTitle() const override;
 	virtual FText GetDescriptionDetails() const override;
 
-    // CHANGE: Тег, который должен быть у объекта (например, "Item.Consumable.Food")
-    UPROPERTY(EditAnywhere, Category = "Test") FGameplayTag RequiredTag;
-    // CHANGE: Тег данных, которые мы хотим получить (например, "Data.Value.Nutrition")
-    UPROPERTY(EditAnywhere, Category = "Test") FGameplayTag DataToQueryTag;
-    // CHANGE: Множитель, который можно передать из StateTree/BT (например, фактор голода)
-    UPROPERTY(EditAnywhere, Category = "Test") FAIDataProviderFloatValue ScoreMultiplier;
+    UPROPERTY(EditAnywhere, Category = "Test") FGameplayTag Tag_Required;  // CHANGE: Must be in Actor to see
+    UPROPERTY(EditAnywhere, Category = "Test") FGameplayTag Tag_Data_To_Query;  // CHANGE: Data Tag, we want to get some differents data
+    UPROPERTY(EditAnywhere, Category = "Test") FAIDataProviderFloatValue Score_Multiplier;  // CHANGE: Multiplier, can change or receive from StateTree or other
 };
 //------------------------------------------------------------------------------------------------------------

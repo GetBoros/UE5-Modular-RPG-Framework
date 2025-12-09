@@ -17,45 +17,36 @@ UGBAI_EQS::UGBAI_EQS()
 	TestPurpose = EEnvTestPurpose::Score;
 }
 //------------------------------------------------------------------------------------------------------------
-void UGBAI_EQS::RunTest(FEnvQueryInstance& QueryInstance) const
+void UGBAI_EQS::RunTest(FEnvQueryInstance &query_instance) const
 {
-    UObject* QueryOwner = QueryInstance.Owner.Get();
-    if (!QueryOwner)
+    float queried_value;
+    AActor *item_actor;
+    
+    UObject *query_owner = query_instance.Owner.Get();
+    if (query_owner == 0)
         return;
+    
+    Score_Multiplier.BindData(query_owner, query_instance.QueryID);
+    const float multiplier_value = Score_Multiplier.GetValue();
 
-    ScoreMultiplier.BindData(QueryOwner, QueryInstance.QueryID);
-    const float MultiplierValue = ScoreMultiplier.GetValue();
-
-    for (FEnvQueryInstance::ItemIterator It(this, QueryInstance); It; ++It)
+    for (FEnvQueryInstance::ItemIterator it(this, query_instance); it; ++it)
     {
-        AActor* ItemActor = GetItemActor(QueryInstance, It.GetIndex());
-        if (!ItemActor)
+        item_actor = GetItemActor(query_instance, it.GetIndex() );
+        if (item_actor == 0)
         {
-            It.ForceItemState(EEnvItemStatus::Failed);
+            it.ForceItemState(EEnvItemStatus::Failed);
             continue;
         }
 
-        if (!ItemActor->Implements<UGBC_AI_Queryable_Interface>())
-        {
-            It.ForceItemState(EEnvItemStatus::Failed);
-            continue;
-        }
+        if (IGBC_AI_Queryable_Interface::Execute_Query_Float_Value_By_Tag(item_actor, Tag_Data_To_Query, queried_value) )   // «апрашиваем значение по тегу, который задан в редакторе
+        {// CHANGE: »спользуем встроенные в тест параметры дл€ min/max
 
-        // --- Happy Path: если все проверки пройдены, выполн€ем основную логику ---
-
-        float QueriedValue = 0.0f;
-        // «апрашиваем значение по тегу, который задан в редакторе
-        if (IGBC_AI_Queryable_Interface::Execute_Query_Float_Value_By_Tag(ItemActor, DataToQueryTag, QueriedValue))
-        {
-            const float FinalScore = QueriedValue * MultiplierValue;
-            // CHANGE: »спользуем встроенные в тест параметры дл€ min/max
-            It.SetScore(TestPurpose, FilterType, FinalScore, BoolValue.GetValue(), BoolValue.GetValue());
+            const float final_score = queried_value * multiplier_value;
+            
+            it.SetScore(TestPurpose, FilterType, final_score, BoolValue.GetValue(), BoolValue.GetValue() );
         }
         else
-        {
-            // »нтерфейс есть, но на наш конкретный тег он ответить не смог
-            It.ForceItemState(EEnvItemStatus::Failed);
-        }
+            it.ForceItemState(EEnvItemStatus::Failed);  // »нтерфейс есть, но на наш конкретный тег он ответить не смог
     }
 }
 //------------------------------------------------------------------------------------------------------------
