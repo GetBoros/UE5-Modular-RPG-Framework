@@ -2,6 +2,10 @@
 #include <GBG_Food.h>
 #include <GameplayTagContainer.h>
 //------------------------------------------------------------------------------------------------------------
+UE_DEFINE_GAMEPLAY_TAG(TAG_TEST, "Event.NonStatic");
+UE_DEFINE_GAMEPLAY_TAG_COMMENT(TAG_TEST_COMMENT, "Event.Comment", "Hello world");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Event_Explode, "Event.Static");
+//------------------------------------------------------------------------------------------------------------
 
 
 
@@ -33,5 +37,10 @@ bool AGBG_Food::Query_Float_Value_By_Tag_Implementation(FGameplayTag data_tag, f
     }
 
     return false;
+}
+//------------------------------------------------------------------------------------------------------------
+void AGBG_Food::GetOwnedGameplayTags(FGameplayTagContainer &tag_container) const
+{
+    tag_container.AppendTags(GameplayTags);
 }
 //------------------------------------------------------------------------------------------------------------
