@@ -20,7 +20,7 @@ public:
 	virtual void BeginPlay();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	virtual void GetOwnedGameplayTags(FGameplayTagContainer &tag_container) const;
-	virtual bool Query_Float_Value_By_Tag_Implementation(FGameplayTag data_tag, float &out_value) const;
+	virtual bool Query_Float_Value_By_Tag_Implementation(FGameplayTag data_tag, float &out_value)	;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI") float NutritionValue = 10.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameplayTags") FGameplayTagContainer GameplayTags;

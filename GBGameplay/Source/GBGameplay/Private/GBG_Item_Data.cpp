@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------------------------------------------
 #include <GBG_Item_Data.h>
-#include <GBGameplay.h>
 #include <GameplayTagContainer.h>
 //------------------------------------------------------------------------------------------------------------
 UE_DEFINE_GAMEPLAY_TAG(TAG_TEST, "Food.Apple");
@@ -27,7 +26,7 @@ void UGBG_Item_Data::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 //------------------------------------------------------------------------------------------------------------
-bool UGBG_Item_Data::Query_Float_Value_By_Tag_Implementation(FGameplayTag data_tag, float& out_value) const
+bool UGBG_Item_Data::Query_Float_Value_By_Tag_Implementation(FGameplayTag data_tag, float& out_value)
 {
     if (data_tag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("Food"))))
     {

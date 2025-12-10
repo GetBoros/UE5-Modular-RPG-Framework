@@ -23,11 +23,11 @@ void UGBAI_EnvQueryTest_Tag_Data::RunTest(FEnvQueryInstance &query_instance) con
 {
     float queried_value;
     AActor *item_actor;
-    
+    UActorComponent *interface_comp;
     UObject *query_owner = query_instance.Owner.Get();
+    
     if (query_owner == 0)
         return;
-    
     Score_Multiplier.BindData(query_owner, query_instance.QueryID);
     const float multiplier_value = Score_Multiplier.GetValue();
 
@@ -40,27 +40,15 @@ void UGBAI_EnvQueryTest_Tag_Data::RunTest(FEnvQueryInstance &query_instance) con
             continue;
         }
 
-        const TScriptInterface<IGBC_AI_Queryable_Interface> queryable_object = item_actor;
+        interface_comp = item_actor->FindComponentByInterface(UGBC_AI_Queryable_Interface::StaticClass());
 
-        if (queryable_object && IGBC_AI_Queryable_Interface::Execute_Query_Float_Value_By_Tag(queryable_object.GetObject(), Tag_Data_To_Query, queried_value) )
+        if (interface_comp && IGBC_AI_Queryable_Interface::Execute_Query_Float_Value_By_Tag(interface_comp, Tag_Data_To_Query, queried_value) )
         {
             const float final_score = queried_value * multiplier_value;
             it.SetScore(TestPurpose, FilterType, final_score, FloatValueMin.GetValue(), FloatValueMax.GetValue());
         }
         else
-        {
             it.ForceItemState(EEnvItemStatus::Failed);
-        }
-
-        //if (IGBC_AI_Queryable_Interface::Execute_Query_Float_Value_By_Tag(item_actor, Tag_Data_To_Query, queried_value))   // Get value by tags, which set in editor
-        //{
-        //    const float final_score = queried_value * multiplier_value;
-
-        //    it.SetScore(TestPurpose, FilterType, final_score, BoolValue.GetValue(), BoolValue.GetValue());  // Useing base in test settings for min/max score
-        //}
-        //else
-        //    it.ForceItemState(EEnvItemStatus::Failed);  // Интерфейс есть, но на наш конкретный тег он ответить не смог
-
     }
 }
 //------------------------------------------------------------------------------------------------------------
