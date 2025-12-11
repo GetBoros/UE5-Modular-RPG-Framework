@@ -1,10 +1,12 @@
 //------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include <Components/ActorComponent.h>
-#include <NativeGameplayTags.h>
 #include <Interfaces/GBC_AI_Queryable_Interface.h>
+
+#include <NativeGameplayTags.h>
 #include <GameplayTagAssetInterface.h>
+#include <Components/ActorComponent.h>
+
 #include <GBG_Item_Data.generated.h>
 //------------------------------------------------------------------------------------------------------------
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_TEST)
@@ -18,12 +20,12 @@ public:
 	UGBG_Item_Data();
 
 	virtual void BeginPlay();
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void TickComponent(float delta_time, ELevelTick tick_type, FActorComponentTickFunction *this_tick_function);
 	virtual void GetOwnedGameplayTags(FGameplayTagContainer &tag_container) const;
-	virtual bool Query_Float_Value_By_Tag_Implementation(FGameplayTag data_tag, float &out_value)	;
+	virtual bool Query_Float_Value_By_Tag_Implementation(const FGameplayTag &data_tag, float &out_value);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI") float NutritionValue = 10.0f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameplayTags") FGameplayTagContainer GameplayTags;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite) float NutritionValue = 10.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite) FGameplayTagContainer GameplayTags;
 
 };
 //------------------------------------------------------------------------------------------------------------

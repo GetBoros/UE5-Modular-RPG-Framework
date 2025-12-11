@@ -1,9 +1,9 @@
 //------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include "UObject/Interface.h"
-#include "GameplayTagContainer.h"
-#include "GBC_AI_Queryable_Interface.generated.h"
+#include <UObject/Interface.h>
+#include <GameplayTagContainer.h>
+#include <GBC_AI_Queryable_Interface.generated.h>
 //------------------------------------------------------------------------------------------------------------
 UINTERFACE(Blueprintable) class UGBC_AI_Queryable_Interface : public UInterface
 {
@@ -15,6 +15,6 @@ class GBCORE_API IGBC_AI_Queryable_Interface
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AI|Query") bool Query_Float_Value_By_Tag(FGameplayTag data_tag, float& out_value);
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AI|Query") bool Query_Float_Value_By_Tag(const FGameplayTag &data_tag, float &out_value);
 };
 //------------------------------------------------------------------------------------------------------------

@@ -40,12 +40,11 @@ void UGBAI_EnvQueryTest_Tag_Data::RunTest(FEnvQueryInstance &query_instance) con
             continue;
         }
 
-        interface_comp = item_actor->FindComponentByInterface(UGBC_AI_Queryable_Interface::StaticClass());
-
-        if (interface_comp && IGBC_AI_Queryable_Interface::Execute_Query_Float_Value_By_Tag(interface_comp, Tag_Data_To_Query, queried_value) )
+        interface_comp = item_actor->FindComponentByInterface(UGBC_AI_Queryable_Interface::StaticClass() );
+        if (interface_comp != 0 && IGBC_AI_Queryable_Interface::Execute_Query_Float_Value_By_Tag(interface_comp, Tag_Data_To_Query, queried_value) == true)
         {
             const float final_score = queried_value * multiplier_value;
-            it.SetScore(TestPurpose, FilterType, final_score, FloatValueMin.GetValue(), FloatValueMax.GetValue());
+            it.SetScore(TestPurpose, FilterType, final_score, FloatValueMin.GetValue(), FloatValueMax.GetValue() );
         }
         else
             it.ForceItemState(EEnvItemStatus::Failed);
