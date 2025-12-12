@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <Actors/GBG_Food.h>
 #include <Components/GBG_Item_Data.h>
+#include <Subsystems/GBG_Food_Subsystem.h>
 //------------------------------------------------------------------------------------------------------------
 
 
@@ -17,6 +18,23 @@ AGBG_Food::AGBG_Food()
 void AGBG_Food::BeginPlay()
 {
 	Super::BeginPlay();
+
+    if (UWorld *world = GetWorld() )  // Получаем подсистему и регистрируемся
+    {
+        if (UGBG_Food_Subsystem *food_sys = world->GetSubsystem<UGBG_Food_Subsystem>() )
+            food_sys->Register_Food(this);
+    }
+}
+//------------------------------------------------------------------------------------------------------------
+void AGBG_Food::EndPlay(const EEndPlayReason::Type end_play_reason)
+{
+    if (UWorld *world = GetWorld() )  // Обязательно отписываемся при уничтожении!
+    {
+        if (UGBG_Food_Subsystem *food_sys = world->GetSubsystem<UGBG_Food_Subsystem>() )
+            food_sys->Unregister_Food(this);
+    }
+
+    Super::EndPlay(end_play_reason);
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Food::Tick(float delta_time)

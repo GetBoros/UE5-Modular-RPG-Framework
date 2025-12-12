@@ -14,6 +14,7 @@ public:
 	AGBG_Food();
 
 	virtual void BeginPlay();
+	virtual void EndPlay(const EEndPlayReason::Type end_play_reason);
 	virtual void Tick(float delta_time);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) UGBG_Item_Data *Item_Data_Component;
