@@ -34,8 +34,8 @@ public class GBAI : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core", "CoreUObject", "Engine", "Slate", "SlateCore",
-                "GameplayTags", "StateTreeModule", "GameplayStateTreeModule", "AIModule"
+				"Core", "CoreUObject", "Engine", "Slate", "SlateCore",  // Base
+                "GameplayTags", "StateTreeModule", "GameplayStateTreeModule", "AIModule", "DeveloperSettings"  // Custom
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
@@ -47,5 +47,17 @@ public class GBAI : ModuleRules
 				// ... add any modules that your module loads dynamically here ...
 			}
 			);
-	}
+
+
+        if (Target.bBuildDeveloperTools || (Target.Configuration != UnrealTargetConfiguration.Shipping && Target.Configuration != UnrealTargetConfiguration.Test))
+        {
+            PrivateDependencyModuleNames.Add("GameplayDebugger");
+            PublicDefinitions.Add("WITH_GAMEPLAY_DEBUGGER=1");
+        }
+        else
+        {
+            PublicDefinitions.Add("WITH_GAMEPLAY_DEBUGGER=0");
+        }
+
+    }
 }

@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <AI/GBAI_Character.h>
 #include <AI/GBAI_Controller.h>
+#include "Settings/GBAI_Settings.h" 
 //------------------------------------------------------------------------------------------------------------
 
 
@@ -21,6 +22,24 @@ void AGBAI_Character::BeginPlay()
 void AGBAI_Character::Tick(float delta_time)
 {
 	Super::Tick(delta_time);
+
+	// Получаем доступ к настройкам (это очень быстро, так как CDO уже в памяти)
+	const UGBAI_Settings* ai_settings = GetDefault<UGBAI_Settings>();
+
+	if (ai_settings != 0)
+	{
+		//// Применяем глобальный множитель
+		//const float final_hunger_rate = Base_Hunger_Rate * ai_settings->Global_Hunger_Multiplier;
+
+		//Current_Hunger += final_hunger_rate * delta_time;
+
+		//// Если включен дебаг - рисуем
+		//if (ai_settings->Draw_Debug_Hunger == true)
+		//{
+		//	// Тут можно вызвать твой метод отрисовки дебага
+		//	// Draw_Hunger_Debug(); 
+		//}
+	}
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBAI_Character::EndPlay(const EEndPlayReason::Type end_play_reason)
