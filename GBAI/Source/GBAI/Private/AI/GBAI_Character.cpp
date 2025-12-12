@@ -1,9 +1,11 @@
 //------------------------------------------------------------------------------------------------------------
 #include <AI/GBAI_Character.h>
 #include <AI/GBAI_Controller.h>
-#include "Settings/GBAI_Settings.h" 
+#include "Settings/GBAI_Settings.h"
+#include "VisualLogger/VisualLogger.h" // CHANGE: Обязательно для UE_VLOG
 //------------------------------------------------------------------------------------------------------------
-
+DEFINE_LOG_CATEGORY_STATIC(LogGBAI, Log, All);
+//------------------------------------------------------------------------------------------------------------
 
 
 
@@ -23,9 +25,18 @@ void AGBAI_Character::Tick(float delta_time)
 {
 	Super::Tick(delta_time);
 
-	// Получаем доступ к настройкам (это очень быстро, так как CDO уже в памяти)
-	const UGBAI_Settings* ai_settings = GetDefault<UGBAI_Settings>();
+	// Visual Logger
+	UE_VLOG(this, LogGBAI, Log, TEXT("Hunger: %.2f | State: %s"), Get_Hunger(), TEXT("Roaming"));
 
+	if (Get_Hunger() < 20.0f)
+	{
+		const FVector head_location = GetActorLocation() + FVector(0, 0, 90);
+		// CHANGE: Здесь тоже меняем на LogGBAI
+		UE_VLOG_LOCATION(this, LogGBAI, Warning, head_location, 30.0f, FColor::Red, TEXT("Low Food!"));
+	}
+
+	// Project Settings
+	const UGBAI_Settings* ai_settings = GetDefault<UGBAI_Settings>();
 	if (ai_settings != 0)
 	{
 		//// Применяем глобальный множитель
@@ -87,5 +98,36 @@ FGenericTeamId AGBAI_Character::GetGenericTeamId() const
 float AGBAI_Character::Get_Hunger() const
 {
 	return 10.0f;
+}
+//------------------------------------------------------------------------------------------------------------
+void AGBAI_Character::Spawn_Loot()
+{
+	// 1. Проверяем, назначил ли дизайнер вообще что-то в слот
+	if (Loot_Item_Class.IsNull() == true)
+	{
+		return;
+	}
+
+	// 2. Пытаемся получить класс. 
+	// Get() вернет указатель, ТОЛЬКО если класс УЖЕ загружен в память кем-то другим.
+	UClass* class_to_spawn = Loot_Item_Class.Get();
+
+	// 3. Если не загружен - грузим принудительно прямо сейчас.
+	if (class_to_spawn == 0)
+	{
+		// В этот момент происходит обращение к диску и загрузка ассета
+		class_to_spawn = Loot_Item_Class.LoadSynchronous();
+	}
+
+	// 4. Спавним как обычно
+	if (class_to_spawn != 0)
+	{
+		FVector spawn_loc = GetActorLocation() + FVector(0, 0, 50);
+		FRotator spawn_rot = GetActorRotation();
+
+		GetWorld()->SpawnActor<AActor>(class_to_spawn, spawn_loc, spawn_rot);
+
+		UE_LOG(LogTemp, Log, TEXT("Loot Spawned via Soft Reference!"));
+	}
 }
 //------------------------------------------------------------------------------------------------------------

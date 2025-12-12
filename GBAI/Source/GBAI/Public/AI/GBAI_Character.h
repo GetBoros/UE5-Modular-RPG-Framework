@@ -29,7 +29,11 @@ public:
 
 	float Get_Hunger() const;
 
+	void Spawn_Loot();
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI") AGBAI_Controller *AI_Controller;
+	UPROPERTY(EditAnywhere, Category = "Loot") TSoftClassPtr<AActor> Loot_Item_Class;
+
 
 };
 //------------------------------------------------------------------------------------------------------------
