@@ -6,29 +6,29 @@
 
 
 // UGBG_Food_Subsystem
-void UGBG_Food_Subsystem::Register_Food(AActor *food_actor)
+void UGBG_Food_Subsystem::Register(AActor *actor)
 {
-    if (food_actor && !All_Food_On_Level.Contains(food_actor) )
-        All_Food_On_Level.Add(food_actor);
+    if (actor != 0 && Registred_Actors.Contains(actor) == false)
+        Registred_Actors.Add(actor);
 }
 //------------------------------------------------------------------------------------------------------------
-void UGBG_Food_Subsystem::Unregister_Food(AActor *food_actor)
+void UGBG_Food_Subsystem::Unregister(AActor *actor)
 {
-    if (food_actor)
-        All_Food_On_Level.Remove(food_actor);
+    if (actor != 0)
+        Registred_Actors.Remove(actor);
 }
 //------------------------------------------------------------------------------------------------------------
 AActor *UGBG_Food_Subsystem::Get_Closest_Food(const FVector &location) const
 {
-    float min_distance_sq = FLT_MAX;  // Максимально возможное число
-    AActor *closest_actor = nullptr;
+    float min_distance_sq = FLT_MAX;  // Max value in float
+    AActor *closest_actor = 0;
 
-    for (AActor *food_actor : All_Food_On_Level)
+    for (AActor *food_actor : Registred_Actors)
     {
-        if (!IsValid(food_actor) )  // Проверка на валидность (на случай если актор уничтожен, но не отписался)
-            continue;
+        if (IsValid(food_actor) != true)
+            continue;  // if actor not valid, destroyed but not unsub
 
-        const float dist_sq = FVector::DistSquared(location, food_actor->GetActorLocation() );  // Считаем дистанцию в квадрате (это быстрее, чем обычная дистанция с корнем)
+        const float dist_sq = FVector::DistSquared(location, food_actor->GetActorLocation() );  // It`s faster
 
         if (dist_sq < min_distance_sq)
         {
@@ -36,7 +36,6 @@ AActor *UGBG_Food_Subsystem::Get_Closest_Food(const FVector &location) const
             closest_actor = food_actor;
         }
     }
-
     return closest_actor;
 }
 //------------------------------------------------------------------------------------------------------------

@@ -9,11 +9,11 @@ UCLASS() class GBGAMEPLAY_API UGBG_Food_Subsystem : public UWorldSubsystem
     GENERATED_BODY()
 
 public:
-    void Register_Food(AActor *food_actor);
-    void Unregister_Food(AActor *food_actor);
+    void Register(AActor *actor);
+    void Unregister(AActor *actor);
 
-    UFUNCTION(BlueprintCallable, Category = "AI|Food") AActor *Get_Closest_Food(const FVector &location) const;  // Поиск ближайшей еды (оптимизированный, без GetAllActorsOfClass)
+    UFUNCTION(BlueprintCallable, Category = "AI|Food") AActor *Get_Closest_Food(const FVector &location) const;  // Find closest actor (optimized without GetAllActorsOfClass
     
-    UPROPERTY() TArray<AActor *> All_Food_On_Level;  // Храним список всей еды. Используем TWeakObjectPtr, чтобы не крашнуться, если актор удалят мимо нас (safety first).
+    UPROPERTY() TArray<AActor *> Registred_Actors;  // Stored all actor. Use TWeakObjectPtr if need to not get crash, (safety first)
 };
 //------------------------------------------------------------------------------------------------------------

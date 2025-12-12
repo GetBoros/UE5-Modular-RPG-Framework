@@ -19,19 +19,19 @@ void AGBG_Food::BeginPlay()
 {
 	Super::BeginPlay();
 
-    if (UWorld *world = GetWorld() )  // Получаем подсистему и регистрируемся
+    if (UWorld *world = GetWorld() )
     {
         if (UGBG_Food_Subsystem *food_sys = world->GetSubsystem<UGBG_Food_Subsystem>() )
-            food_sys->Register_Food(this);
+            food_sys->Register(this);
     }
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Food::EndPlay(const EEndPlayReason::Type end_play_reason)
 {
-    if (UWorld *world = GetWorld() )  // Обязательно отписываемся при уничтожении!
+    if (UWorld *world = GetWorld() )
     {
         if (UGBG_Food_Subsystem *food_sys = world->GetSubsystem<UGBG_Food_Subsystem>() )
-            food_sys->Unregister_Food(this);
+            food_sys->Unregister(this);
     }
 
     Super::EndPlay(end_play_reason);
