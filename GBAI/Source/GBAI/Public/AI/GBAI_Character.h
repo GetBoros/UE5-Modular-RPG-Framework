@@ -7,6 +7,7 @@
 #include <GBAI_Character.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class AGBAI_Controller;
+class UGBAI_Settings;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class GBAI_API AGBAI_Character : public ACharacter, public IGenericTeamAgentInterface
 {
@@ -28,12 +29,13 @@ public:
 	virtual FGenericTeamId GetGenericTeamId() const;  // IGenericTeamAgentInterface
 
 	float Get_Hunger() const;
+	
+	UFUNCTION() void Spawn_Loot(const FGameplayTag &requested_action_tag);
 
-	void Spawn_Loot();
+	const UGBAI_Settings* AI_Settings;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI") AGBAI_Controller *AI_Controller;
 	UPROPERTY(EditAnywhere, Category = "Loot") TSoftClassPtr<AActor> Loot_Item_Class;
-
 
 };
 //------------------------------------------------------------------------------------------------------------

@@ -1,11 +1,12 @@
 //------------------------------------------------------------------------------------------------------------
 #include <AI/GBAI_Character.h>
 #include <AI/GBAI_Controller.h>
-#include "Settings/GBAI_Settings.h"
-#include "VisualLogger/VisualLogger.h" // CHANGE: Обязательно для UE_VLOG
+#include <Settings/GBAI_Settings.h>
+#include <VisualLogger/VisualLogger.h>
 //------------------------------------------------------------------------------------------------------------
 DEFINE_LOG_CATEGORY_STATIC(LogGBAI, Log, All);
 //------------------------------------------------------------------------------------------------------------
+
 
 
 
@@ -19,38 +20,34 @@ AGBAI_Character::AGBAI_Character()
 void AGBAI_Character::BeginPlay()
 {
 	Super::BeginPlay();
+
+	AI_Settings = GetDefault<UGBAI_Settings>();  // !!! EXAMPLES Project Settings
+	Spawn_Loot(FGameplayTag::RequestGameplayTag(FName("Hello world") ) );  // !!! EXAMPLES SoftObjectPtr Example
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBAI_Character::Tick(float delta_time)
 {
+	constexpr float food_low_value = 20.0f;
+
 	Super::Tick(delta_time);
-
-	// Visual Logger
-	UE_VLOG(this, LogGBAI, Log, TEXT("Hunger: %.2f | State: %s"), Get_Hunger(), TEXT("Roaming"));
-
-	if (Get_Hunger() < 20.0f)
+	
+	if (Get_Hunger() < food_low_value)
 	{
 		const FVector head_location = GetActorLocation() + FVector(0, 0, 90);
-		// CHANGE: Здесь тоже меняем на LogGBAI
-		UE_VLOG_LOCATION(this, LogGBAI, Warning, head_location, 30.0f, FColor::Red, TEXT("Low Food!"));
+		
+		UE_VLOG_LOCATION(this, LogGBAI, Warning, head_location, 30.0f, FColor::Red, TEXT("Low Food!") );
 	}
 
-	// Project Settings
-	const UGBAI_Settings* ai_settings = GetDefault<UGBAI_Settings>();
-	if (ai_settings != 0)
+	if (AI_Settings != 0)
 	{
-		//// Применяем глобальный множитель
-		//const float final_hunger_rate = Base_Hunger_Rate * ai_settings->Global_Hunger_Multiplier;
+		const float final_hunger_rate = 1.0f * AI_Settings->Global_Hunger_Multiplier;  // Apply global multiplier
+		const float hunger = Get_Hunger() + final_hunger_rate * delta_time;
 
-		//Current_Hunger += final_hunger_rate * delta_time;
-
-		//// Если включен дебаг - рисуем
-		//if (ai_settings->Draw_Debug_Hunger == true)
-		//{
-		//	// Тут можно вызвать твой метод отрисовки дебага
-		//	// Draw_Hunger_Debug(); 
-		//}
+		if (AI_Settings->Draw_Debug_Hunger == true)
+			int yy = 0;  // Can add some debug visualisation
 	}
+
+	UE_VLOG(this, LogGBAI, Log, TEXT("Hunger: %.2f | State: %s"), Get_Hunger(), TEXT("Roaming") );  // !!! EXAMPLES Visual Logger
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBAI_Character::EndPlay(const EEndPlayReason::Type end_play_reason)
@@ -65,15 +62,16 @@ void AGBAI_Character::PossessedBy(AController *controller)
 	Super::PossessedBy(controller);
 
 	AI_Controller = Cast<AGBAI_Controller>(controller);
-	//if (IsValid(AI_Controller) == true)
-	//	AI_Controller->On_AI_Action_Requested.AddDynamic(this, &AGBAI_Character::Handle_On_AI_Action_Requested);
+	if (IsValid(AI_Controller) == true)
+		AI_Controller->On_AI_Action_Requested.AddDynamic(this, &AGBAI_Character::Spawn_Loot);
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBAI_Character::UnPossessed()
 {
 	if (AI_Controller != 0)
-	//	AI_Controller->On_AI_Action_Requested.RemoveDynamic(this, &AGBAI_Character::Handle_On_AI_Action_Requested);
-	//AI_Controller = 0;
+		AI_Controller->On_AI_Action_Requested.RemoveDynamic(this, &AGBAI_Character::Spawn_Loot);
+	
+	AI_Controller = 0;
 
 	Super::UnPossessed();
 }
@@ -100,34 +98,23 @@ float AGBAI_Character::Get_Hunger() const
 	return 10.0f;
 }
 //------------------------------------------------------------------------------------------------------------
-void AGBAI_Character::Spawn_Loot()
+void AGBAI_Character::Spawn_Loot(const FGameplayTag &requested_action_tag)
 {
-	// 1. Проверяем, назначил ли дизайнер вообще что-то в слот
+	FRotator spawn_rot = GetActorRotation();
+	FVector spawn_loc = GetActorLocation() + FVector(0, 0, 50);
+	UClass *class_to_spawn;
+
 	if (Loot_Item_Class.IsNull() == true)
-	{
-		return;
-	}
+		return;  // If empty slot
 
-	// 2. Пытаемся получить класс. 
-	// Get() вернет указатель, ТОЛЬКО если класс УЖЕ загружен в память кем-то другим.
-	UClass* class_to_spawn = Loot_Item_Class.Get();
-
-	// 3. Если не загружен - грузим принудительно прямо сейчас.
+	class_to_spawn = Loot_Item_Class.Get();  // If loaded class_to_spawn is valid
 	if (class_to_spawn == 0)
-	{
-		// В этот момент происходит обращение к диску и загрузка ассета
-		class_to_spawn = Loot_Item_Class.LoadSynchronous();
-	}
+		class_to_spawn = Loot_Item_Class.LoadSynchronous();  // If not loaded load()
+	if (class_to_spawn == 0)
+		return;
 
-	// 4. Спавним как обычно
-	if (class_to_spawn != 0)
-	{
-		FVector spawn_loc = GetActorLocation() + FVector(0, 0, 50);
-		FRotator spawn_rot = GetActorRotation();
+	GetWorld()->SpawnActor<AActor>(class_to_spawn, spawn_loc, spawn_rot);
 
-		GetWorld()->SpawnActor<AActor>(class_to_spawn, spawn_loc, spawn_rot);
-
-		UE_LOG(LogTemp, Log, TEXT("Loot Spawned via Soft Reference!"));
-	}
+	UE_LOG(LogTemp, Log, TEXT("Loot Spawned via Soft Reference!") );
 }
 //------------------------------------------------------------------------------------------------------------

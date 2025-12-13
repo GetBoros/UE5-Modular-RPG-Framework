@@ -6,7 +6,7 @@
 
 #include "GBAI_Controller.generated.h"
 //------------------------------------------------------------------------------------------------------------
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_AI_Action_Requested_Delegate, FGameplayTag, requested_action_tag);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_AI_Action_Requested_Delegate, const FGameplayTag &, requested_action_tag);
 //------------------------------------------------------------------------------------------------------------
 class UStateTreeAIComponent;
 class UAIPerceptionComponent;
@@ -16,6 +16,7 @@ UCLASS() class GBAI_API AGBAI_Controller : public ADetourCrowdAIController
 {
 	GENERATED_BODY()
 	
+public:
 	AGBAI_Controller();
 
 	virtual void BeginPlay();
