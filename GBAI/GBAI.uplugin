@@ -19,8 +19,13 @@
 			"Name": "GBAI",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
-		}
-	],
+		},
+                {
+                "Name": "GBAIEditor",
+                "Type": "Editor",
+                "LoadingPhase": "PostEngineInit"
+                }
+	        ],
 	"Plugins": [
 		{
 			"Name": "GBCore",

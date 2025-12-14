@@ -13,7 +13,7 @@ UCLASS() class GBCORE_API UGBC_Gameplay_Message_Subsystem : public UGameInstance
     GENERATED_BODY()
 
 public:
-    UFUNCTION(BlueprintCallable, Category = "EventBus") void Broadcast_Message(FGameplayTag EventTag, const UObject* Payload = nullptr);  // Send event fire and forgot
+    UFUNCTION(BlueprintCallable, Category = "EventBus") void Broadcast_Message(FGameplayTag event_tag, const UObject *payload);  // Send event fire and forgot
 
     FDelegateHandle Register_Listener(FGameplayTag event_tag, TFunction<void(FGameplayTag, const UObject *)> callback);
     void Unregister_Listener(FGameplayTag event_tag, FDelegateHandle handle);
