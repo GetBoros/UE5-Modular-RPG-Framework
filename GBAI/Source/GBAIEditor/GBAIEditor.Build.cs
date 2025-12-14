@@ -16,15 +16,9 @@ public class GBAIEditor : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"CoreUObject",
-				"Engine",
-				"Slate",
-				"SlateCore",
-				"UnrealEd",    // <--- Самое важное. Доступ к функционалу редактора.
-				"GBAI",        // <--- Зависимость от нашего Runtime модуля, чтобы видеть его классы.
-                "GameplayTags",
-                "GameplayDebugger",
-				"AIModule"
+				"CoreUObject", "Engine", "Slate", "SlateCore", 
+				"UnrealEd", "GBAI", "GameplayDebugger", "AIModule",
+                "GameplayDebugger"
             }
         );
 	}
