@@ -20,12 +20,17 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
 		},
-                {
-                "Name": "GBAIEditor",
-                "Type": "Editor",
-                "LoadingPhase": "PostEngineInit"
-                }
-	        ],
+        {
+			"Name": "GBAIEditor",
+			"Type": "Editor",
+			"LoadingPhase": "PostEngineInit"
+        },
+		{
+			"Name": "GBAIUtils",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault" // Load earlier then all, other can use it || PreDefault
+		}
+	            ],
 	"Plugins": [
 		{
 			"Name": "GBCore",
