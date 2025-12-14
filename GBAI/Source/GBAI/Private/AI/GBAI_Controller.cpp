@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <AI/GBAI_Controller.h>
 #include <AI/GBAI_Types.h>
-#include <Subsystems/GBEventBusSubsystem.h>
+#include <Subsystems/GBC_Gameplay_Message_Subsystem.h>
 
 #include <Components/StateTreeAIComponent.h>
 #include <Perception/AISenseConfig_Sight.h>
@@ -35,11 +35,32 @@ AGBAI_Controller ::AGBAI_Controller ()
 //------------------------------------------------------------------------------------------------------------
 void AGBAI_Controller ::BeginPlay()
 {
+	UGBC_Gameplay_Message_Subsystem *gameplay_message_subsystem;
+	FGameplayTag tag_death = FGameplayTag::RequestGameplayTag("Food.Sugar");  // ПОДПИСКА Мы говорим: "Зови меня ТОЛЬКО если умрет игрок"
+
 	Super::BeginPlay();
 
-	UGBEventBusSubsystem *eventbussubsystem = GetGameInstance()->GetSubsystem<UGBEventBusSubsystem>();
-	if (eventbussubsystem != 0)
-		eventbussubsystem->OnEventDispatched.AddDynamic(this, &AGBAI_Controller::Handle_Game_Event);  // Sub to delegate
+	gameplay_message_subsystem = GetGameInstance()->GetSubsystem<UGBC_Gameplay_Message_Subsystem>();
+	if (gameplay_message_subsystem == 0)
+		return;
+
+	gameplay_message_subsystem->On_Event_Dispatched.AddDynamic(this, &AGBAI_Controller::Handle_Game_Event);  // Sub to delegate
+	Player_Died_Handle = gameplay_message_subsystem->Register_Listener(tag_death, [this](FGameplayTag tag, const UObject* payload)  // Используем лямбду или привязываем метод
+		{
+			this->On_Target_Died(tag, payload);
+		});
+}
+//------------------------------------------------------------------------------------------------------------
+void AGBAI_Controller::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	UGBC_Gameplay_Message_Subsystem *gameplay_message_subsystem;
+	FGameplayTag tag_death = FGameplayTag::RequestGameplayTag("Food.Sugar");
+
+	gameplay_message_subsystem = GetGameInstance()->GetSubsystem<UGBC_Gameplay_Message_Subsystem>();  // ОТПИСКА (Обязательно!)
+	if (gameplay_message_subsystem != 0)
+		gameplay_message_subsystem->Unregister_Listener(tag_death, Player_Died_Handle);
+
+	Super::EndPlay(EndPlayReason);
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBAI_Controller::Handle_Game_Event(FGameplayTag event_tag, const UObject *payload)
@@ -80,6 +101,12 @@ void AGBAI_Controller ::Send_State_Tree_Event(const FGameplayTag gameplay_tag)
 	state_tree_event.Tag = gameplay_tag;
 
 	AI_State_Tree->SendStateTreeEvent(state_tree_event);
+}
+//------------------------------------------------------------------------------------------------------------
+void AGBAI_Controller::On_Target_Died(FGameplayTag tag, const UObject* payload)
+{
+	int yy = 0;
+	yy++;
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBAI_Controller ::On_Target_Perception_Updated(AActor *actor, FAIStimulus stimulus)

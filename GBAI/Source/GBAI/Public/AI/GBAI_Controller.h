@@ -20,6 +20,7 @@ public:
 	AGBAI_Controller();
 
 	virtual void BeginPlay();
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
 	virtual void OnPossess(APawn *in_pawn);
 
 	void Set_Patrol_Data(const float patrol_radius, const FVector patrol_center_location);
@@ -30,6 +31,10 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = "AI") FOn_AI_Action_Requested_Delegate On_AI_Action_Requested;
 
 private:
+private:
+	FDelegateHandle Player_Died_Handle; // Храним билет, чтобы потом отписаться
+	void On_Target_Died(FGameplayTag tag, const UObject* payload);
+
 	UFUNCTION(Category = "AI_Perception Event|Internal") void On_Target_Perception_Updated(AActor *actor, FAIStimulus stimulus);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI", meta = (AllowPrivateAccess = "true") ) float Patrol_Radius;

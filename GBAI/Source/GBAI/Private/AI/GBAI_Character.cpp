@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <AI/GBAI_Character.h>
 #include <AI/GBAI_Controller.h>
-#include <Subsystems/GBEventBusSubsystem.h>
+#include <Subsystems/GBC_Gameplay_Message_Subsystem.h>
 #include <Settings/GBAI_Settings.h>
 
 #include <VisualLogger/VisualLogger.h>
@@ -21,16 +21,16 @@ AGBAI_Character::AGBAI_Character()
 //------------------------------------------------------------------------------------------------------------
 void AGBAI_Character::BeginPlay()
 {
-	UGBEventBusSubsystem *event_bus_subsystem;
+	UGBC_Gameplay_Message_Subsystem *event_bus_subsystem;
 
 	Super::BeginPlay();
 
 	AI_Settings = GetDefault<UGBAI_Settings>();  // !!! EXAMPLES Project Settings
 	Spawn_Loot(FGameplayTag::RequestGameplayTag(FName("Food.Apple") ) );  // !!! EXAMPLES SoftObjectPtr Example
 
-	event_bus_subsystem = GetGameInstance()->GetSubsystem<UGBEventBusSubsystem>();  // !!! TEMP EXAMPLES 
+	event_bus_subsystem = GetGameInstance()->GetSubsystem<UGBC_Gameplay_Message_Subsystem >();  // !!! TEMP EXAMPLES 
 	if (event_bus_subsystem != 0)
-		event_bus_subsystem->BroadcastEvent(FGameplayTag::RequestGameplayTag("Food.Sugar"), this);  // !!! TEMP Example better struct or payload interface
+		event_bus_subsystem->Broadcast_Message(FGameplayTag::RequestGameplayTag("Food.Sugar"), this);  // !!! TEMP Example better struct or payload interface
 
 }
 //------------------------------------------------------------------------------------------------------------
