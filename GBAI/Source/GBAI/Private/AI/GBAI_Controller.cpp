@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <AI/GBAI_Controller.h>
 #include <AI/GBAI_Types.h>
+#include <Subsystems/GBEventBusSubsystem.h>
 
 #include <Components/StateTreeAIComponent.h>
 #include <Perception/AISenseConfig_Sight.h>
@@ -35,6 +36,21 @@ AGBAI_Controller ::AGBAI_Controller ()
 void AGBAI_Controller ::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UGBEventBusSubsystem *eventbussubsystem = GetGameInstance()->GetSubsystem<UGBEventBusSubsystem>();
+	if (eventbussubsystem != 0)
+		eventbussubsystem->OnEventDispatched.AddDynamic(this, &AGBAI_Controller::Handle_Game_Event);  // Sub to delegate
+}
+//------------------------------------------------------------------------------------------------------------
+void AGBAI_Controller::Handle_Game_Event(FGameplayTag event_tag, const UObject *payload)
+{
+	int yy = 0;
+
+	if (event_tag.MatchesTag(FGameplayTag::RequestGameplayTag("Food.Sugar") ) )  // Filter
+	{
+		if (payload == GetPawn() )
+			yy++;
+	}
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBAI_Controller ::OnPossess(APawn *in_pawn)

@@ -23,7 +23,8 @@ public:
 	virtual void OnPossess(APawn *in_pawn);
 
 	void Set_Patrol_Data(const float patrol_radius, const FVector patrol_center_location);
-
+	
+	UFUNCTION(BlueprintCallable, Category = "AI") void Handle_Game_Event(FGameplayTag event_tag, const UObject *payload);  // !!! TEMP EXAMPLE
 	UFUNCTION(BlueprintCallable, Category = "AI") void Send_State_Tree_Event(const FGameplayTag gameplay_tag);
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = "AI") FOn_AI_Action_Requested_Delegate On_AI_Action_Requested;

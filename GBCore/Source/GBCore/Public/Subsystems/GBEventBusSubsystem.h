@@ -1,38 +1,28 @@
 //------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include "CoreMinimal.h"
-#include "Subsystems/GameInstanceSubsystem.h" // Живет всю игру, даже при смене уровней
+#include "Subsystems/GameInstanceSubsystem.h"
 #include "GameplayTagContainer.h"
 #include "GBEventBusSubsystem.generated.h"
 //------------------------------------------------------------------------------------------------------------
-// Объявляем делегат. Payload (полезная нагрузка) может быть UObject* или struct.
-// Для простоты передадим Актора-инициатора и опциональные параметры.
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FGBGameEventDelegate, FGameplayTag, EventTag, const UObject*, Payload);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FGBGameEventDelegate, FGameplayTag, event_tag, const UObject *, payload);
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class GBCORE_API UGBEventBusSubsystem : public UGameInstanceSubsystem
 {
     GENERATED_BODY()
 
 public:
-    // Отправить событие (Fire & Forget)
-    UFUNCTION(BlueprintCallable, Category = "EventBus")
-    void BroadcastEvent(FGameplayTag EventTag, const UObject* Payload = nullptr);
+    UFUNCTION(BlueprintCallable, Category = "EventBus") void BroadcastEvent(FGameplayTag EventTag, const UObject* Payload = nullptr);  // Send event fire and forgot
 
-    // Подписаться на событие (C++ версия)
-    // Возвращаем хендл, чтобы можно было отписаться
-    FDelegateHandle RegisterListener(FGameplayTag EventTag, const TFunction<void(FGameplayTag, const UObject*)>& Callback);
+    FDelegateHandle RegisterListener(FGameplayTag event_tag, const TFunction<void(FGameplayTag, const UObject *)> &callback);  // Sub for event and return handle for unsub
 
-    // Отписаться
-    void UnregisterListener(FGameplayTag EventTag, FDelegateHandle Handle);
+    void UnregisterListener(FGameplayTag EventTag, FDelegateHandle Handle);  // Unsub
 
-private:
     // Словарь: Тег события -> Список подписчиков (C++ native delegates)
     // Для Blueprints реализация сложнее (нужен Map с Dynamic Delegates),
     // но для C++ TMap<Tag, MulticastDelegate> - идеально.
 
-    // Упрощенный вариант для примера (общий бродкаст):
-    UPROPERTY(BlueprintAssignable, Category = "EventBus")
-    FGBGameEventDelegate OnEventDispatched;
+    UPROPERTY(BlueprintAssignable, Category = "EventBus") FGBGameEventDelegate OnEventDispatched;  // Example
 };
 //------------------------------------------------------------------------------------------------------------
