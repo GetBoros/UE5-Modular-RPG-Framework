@@ -10,6 +10,7 @@ UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) ) class UGB_Regen
 
 public:
     UGB_RegenComponent();
+
     virtual void TickComponent(float delta_time, ELevelTick tick_type, FActorComponentTickFunction *this_tick_function);
 };
 //------------------------------------------------------------------------------------------------------------
