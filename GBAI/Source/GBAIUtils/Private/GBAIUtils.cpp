@@ -1,19 +1,19 @@
 //------------------------------------------------------------------------------------------------------------
 #include <GBAIUtils.h>
 //------------------------------------------------------------------------------------------------------------
-#define LOCTEXT_NAMESPACE "FGBAIEditorModule"
+#define LOCTEXT_NAMESPACE "FGBAIUtilsModule"
 //------------------------------------------------------------------------------------------------------------
-void FGBAIEditorModule::StartupModule()
+void FGBAIUtilsModule::StartupModule()
 {
-    UE_LOG(LogTemp, Warning, TEXT("GBAIEditor Module Started!"));
+    UE_LOG(LogTemp, Warning, TEXT("GBAIUtils Module Started!") );
 }
 //------------------------------------------------------------------------------------------------------------
-void FGBAIEditorModule::ShutdownModule()
+void FGBAIUtilsModule::ShutdownModule()
 {
 
 }
 //------------------------------------------------------------------------------------------------------------
 #undef LOCTEXT_NAMESPACE
 //------------------------------------------------------------------------------------------------------------
-IMPLEMENT_MODULE(FGBAIEditorModule, GBAIEditor)
+IMPLEMENT_MODULE(FGBAIUtilsModule, GBAIUtils)
 //------------------------------------------------------------------------------------------------------------

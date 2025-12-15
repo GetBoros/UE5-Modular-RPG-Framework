@@ -6,17 +6,16 @@
 
 
 // UGBAI_Library
-void UGBAI_Library::LogGBEvent(const FString &msg)
+void UGBAI_Library::Log_GB_Event(const FString &msg)
 {
-    // В Shipping билде этот макрос станет пустым местом, но сама функция вызовется (потратив 0.000001ms).
     UE_LOG(LogTemp, Log, TEXT("[GB_LOG]: %s"), *msg);
 }
 //------------------------------------------------------------------------------------------------------------
-bool UGBAI_Library::IsActorValid(const AActor* ActorToCheck)
+bool UGBAI_Library::Is_Actor_Valid(const AActor *actor_to_check)
 {
-    if (!ActorToCheck)
+    if (actor_to_check != 0)
         return false;
 
-    return IsValid(ActorToCheck);
+    return IsValid(actor_to_check);
 }
 //------------------------------------------------------------------------------------------------------------

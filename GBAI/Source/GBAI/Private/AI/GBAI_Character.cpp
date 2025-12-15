@@ -4,6 +4,7 @@
 #include <Subsystems/GBC_Gameplay_Message_Subsystem.h>
 #include <Settings/GBAI_Settings.h>
 
+#include "Components/GameFrameworkComponentManager.h"
 #include <VisualLogger/VisualLogger.h>
 //------------------------------------------------------------------------------------------------------------
 DEFINE_LOG_CATEGORY_STATIC(LogGBAI, Log, All);
@@ -59,9 +60,17 @@ void AGBAI_Character::Tick(float delta_time)
 	UE_VLOG(this, LogGBAI, Log, TEXT("Hunger: %.2f | State: %s"), Get_Hunger(), TEXT("Roaming") );  // !!! EXAMPLES Visual Logger
 }
 //------------------------------------------------------------------------------------------------------------
+void AGBAI_Character::PreInitializeComponents()
+{
+	Super::PreInitializeComponents();
+	UGameFrameworkComponentManager::AddGameFrameworkComponentReceiver(this);
+}
+//------------------------------------------------------------------------------------------------------------
 void AGBAI_Character::EndPlay(const EEndPlayReason::Type end_play_reason)
 {
 	//AI_Stat_Component->On_Changed_Stamina.RemoveDynamic(this, &AGBAI_Character::On_Stamina_Changed);
+
+	UGameFrameworkComponentManager::RemoveGameFrameworkComponentReceiver(this);
 
 	Super::EndPlay(end_play_reason);
 }

@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class GBAI : ModuleRules
+public class GBFeature_RegenRuntime : ModuleRules
 {
-	public GBAI(ReadOnlyTargetRules Target) : base(Target)
+	public GBFeature_RegenRuntime(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		
@@ -25,7 +25,7 @@ public class GBAI : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-                "GBCore"
+				"Core",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -34,11 +34,15 @@ public class GBAI : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core", "CoreUObject", "Engine", "Slate", "SlateCore",  // Base
-                "GameplayTags", "StateTreeModule", "GameplayStateTreeModule", "AIModule", "DeveloperSettings", "ModularGameplay"  // Custom
+				"CoreUObject",
+				"Engine",
+				"Slate",
+				"SlateCore",
+				"GBAI",
+				"GBAIUtils"
 				// ... add private dependencies that you statically link with here ...	
 			}
-			);
+            );
 		
 		
 		DynamicallyLoadedModuleNames.AddRange(
@@ -47,5 +51,5 @@ public class GBAI : ModuleRules
 				// ... add any modules that your module loads dynamically here ...
 			}
 			);
-    }
+	}
 }

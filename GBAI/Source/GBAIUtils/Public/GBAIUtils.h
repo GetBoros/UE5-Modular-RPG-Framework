@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-class FGBAIEditorModule : public IModuleInterface
+class FGBAIUtilsModule : public IModuleInterface
 {
 public:
 	virtual void StartupModule();

@@ -9,7 +9,7 @@
 class AGBAI_Controller;
 class UGBAI_Settings;
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class GBAI_API AGBAI_Character : public ACharacter, public IGenericTeamAgentInterface
+UCLASS(Blueprintable, BlueprintType) class GBAI_API AGBAI_Character : public ACharacter, public IGenericTeamAgentInterface
 {
 	GENERATED_BODY()
 
@@ -25,6 +25,9 @@ public:
 
 	virtual void SetupPlayerInputComponent(UInputComponent *player_input_component);
 	virtual void PostInitializeComponents();
+
+	virtual void PreInitializeComponents() override;
+
 
 	virtual FGenericTeamId GetGenericTeamId() const;  // IGenericTeamAgentInterface
 
