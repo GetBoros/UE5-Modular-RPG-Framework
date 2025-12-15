@@ -5,7 +5,7 @@
 //------------------------------------------------------------------------------------------------------------
 void FGBAIUtilsModule::StartupModule()
 {
-    UE_LOG(LogTemp, Warning, TEXT("GBAIUtils Module Started!") );
+    UE_LOG(LogTemp, Display, TEXT("GBAIUtils Module Started!") );
 }
 //------------------------------------------------------------------------------------------------------------
 void FGBAIUtilsModule::ShutdownModule()

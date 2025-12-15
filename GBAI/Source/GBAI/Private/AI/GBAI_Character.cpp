@@ -4,6 +4,9 @@
 #include <Subsystems/GBC_Gameplay_Message_Subsystem.h>
 #include <Settings/GBAI_Settings.h>
 
+#include "Engine/AssetManager.h"
+// #include "Types/GBC_Item_Data.h"
+
 #include "Components/GameFrameworkComponentManager.h"
 #include <VisualLogger/VisualLogger.h>
 //------------------------------------------------------------------------------------------------------------
@@ -33,6 +36,22 @@ void AGBAI_Character::BeginPlay()
 	if (event_bus_subsystem != 0)
 		event_bus_subsystem->Broadcast_Message(FGameplayTag::RequestGameplayTag("Food.Sugar"), this);  // !!! TEMP Example better struct or payload interface
 
+	// !!! TEMP EXAMPLE Data Driven Example
+	UAssetManager &AssetManager = UAssetManager::Get();
+	FPrimaryAssetType ItemAssetType("Item");
+	TArray<FPrimaryAssetId> AssetIdList;
+	
+	AssetManager.GetPrimaryAssetIdList(ItemAssetType, AssetIdList);
+
+	if (AssetIdList.Num() > 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("=== Found %d items registered in Asset Manager! ==="), AssetIdList.Num() );
+
+		for (const FPrimaryAssetId& AssetId : AssetIdList)
+			UE_LOG(LogTemp, Log, TEXT("  - Found Item: %s"), *AssetId.ToString());
+	}
+	else
+		UE_LOG(LogTemp, Error, TEXT("=== No items found! Check Asset Manager settings and paths. ==="));
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBAI_Character::Tick(float delta_time)
