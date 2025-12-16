@@ -1,9 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
 #include <AI/GBAI_EnvQueryTest_Tag_Data.h>
-
 #include <Interfaces/GBC_AI_Queryable_Interface.h>
-
-#include <GameplayTagAssetInterface.h>
 #include <EnvironmentQuery/Items/EnvQueryItemType_Actor.h>
 //------------------------------------------------------------------------------------------------------------
 

@@ -34,7 +34,7 @@ public class GBAI : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core", "CoreUObject", "Engine", "Slate", "SlateCore",  // Base
+				"Core", "CoreUObject", "Engine",  // Base
                 "GameplayTags", "StateTreeModule", "GameplayStateTreeModule", "AIModule", "DeveloperSettings", "ModularGameplay"  // Custom
 				// ... add private dependencies that you statically link with here ...	
 			}

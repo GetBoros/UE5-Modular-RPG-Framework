@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include "Engine/DataAsset.h"
-#include "GBC_Item_Data.generated.h"
+#include <Engine/DataAsset.h>
+#include <GBC_Item_Data.generated.h>
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class GBCORE_API UGBC_Item_Data : public UPrimaryDataAsset
 {

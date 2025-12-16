@@ -1,13 +1,12 @@
 //------------------------------------------------------------------------------------------------------------
 #include <AI/GBAI_Character.h>
 #include <AI/GBAI_Controller.h>
+
 #include <Subsystems/GBC_Gameplay_Message_Subsystem.h>
 #include <Settings/GBAI_Settings.h>
 
-#include "Engine/AssetManager.h"
-// #include "Types/GBC_Item_Data.h"
-
-#include "Components/GameFrameworkComponentManager.h"
+#include <Engine/AssetManager.h>
+#include <Components/GameFrameworkComponentManager.h>
 #include <VisualLogger/VisualLogger.h>
 //------------------------------------------------------------------------------------------------------------
 DEFINE_LOG_CATEGORY_STATIC(LogGBAI, Log, All);
@@ -26,32 +25,29 @@ AGBAI_Character::AGBAI_Character()
 void AGBAI_Character::BeginPlay()
 {
 	UGBC_Gameplay_Message_Subsystem *event_bus_subsystem;
+	UAssetManager &asset_manager = UAssetManager::Get();
+	FPrimaryAssetType item_asset_type("Item");
+	TArray<FPrimaryAssetId> asset_id_list;
 
 	Super::BeginPlay();
-
 	AI_Settings = GetDefault<UGBAI_Settings>();  // !!! EXAMPLES Project Settings
 	Spawn_Loot(FGameplayTag::RequestGameplayTag(FName("Food.Apple") ) );  // !!! EXAMPLES SoftObjectPtr Example
-
 	event_bus_subsystem = GetGameInstance()->GetSubsystem<UGBC_Gameplay_Message_Subsystem >();  // !!! TEMP EXAMPLES 
+	asset_manager.GetPrimaryAssetIdList(item_asset_type, asset_id_list);
+
 	if (event_bus_subsystem != 0)
 		event_bus_subsystem->Broadcast_Message(FGameplayTag::RequestGameplayTag("Food.Sugar"), this);  // !!! TEMP Example better struct or payload interface
 
 	// !!! TEMP EXAMPLE Data Driven Example
-	UAssetManager &AssetManager = UAssetManager::Get();
-	FPrimaryAssetType ItemAssetType("Item");
-	TArray<FPrimaryAssetId> AssetIdList;
-	
-	AssetManager.GetPrimaryAssetIdList(ItemAssetType, AssetIdList);
-
-	if (AssetIdList.Num() > 0)
+	if (asset_id_list.Num() > 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("=== Found %d items registered in Asset Manager! ==="), AssetIdList.Num() );
+		UE_LOG(LogTemp, Warning, TEXT("=== Found %d items registered in Asset Manager! ==="), asset_id_list.Num() );
 
-		for (const FPrimaryAssetId& AssetId : AssetIdList)
-			UE_LOG(LogTemp, Log, TEXT("  - Found Item: %s"), *AssetId.ToString());
+		for (const FPrimaryAssetId &asset_id : asset_id_list)
+			UE_LOG(LogTemp, Log, TEXT("  - Found Item: %s"), *asset_id.ToString() );
 	}
 	else
-		UE_LOG(LogTemp, Error, TEXT("=== No items found! Check Asset Manager settings and paths. ==="));
+		UE_LOG(LogTemp, Error, TEXT("=== No items found! Check Asset Manager settings and paths. ===") );
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBAI_Character::Tick(float delta_time)
@@ -79,16 +75,8 @@ void AGBAI_Character::Tick(float delta_time)
 	UE_VLOG(this, LogGBAI, Log, TEXT("Hunger: %.2f | State: %s"), Get_Hunger(), TEXT("Roaming") );  // !!! EXAMPLES Visual Logger
 }
 //------------------------------------------------------------------------------------------------------------
-void AGBAI_Character::PreInitializeComponents()
-{
-	Super::PreInitializeComponents();
-	UGameFrameworkComponentManager::AddGameFrameworkComponentReceiver(this);
-}
-//------------------------------------------------------------------------------------------------------------
 void AGBAI_Character::EndPlay(const EEndPlayReason::Type end_play_reason)
 {
-	//AI_Stat_Component->On_Changed_Stamina.RemoveDynamic(this, &AGBAI_Character::On_Stamina_Changed);
-
 	UGameFrameworkComponentManager::RemoveGameFrameworkComponentReceiver(this);
 
 	Super::EndPlay(end_play_reason);
@@ -118,11 +106,16 @@ void AGBAI_Character::SetupPlayerInputComponent(UInputComponent *player_input_co
 	Super::SetupPlayerInputComponent(player_input_component);
 }
 //------------------------------------------------------------------------------------------------------------
+void AGBAI_Character::PreInitializeComponents()
+{
+	Super::PreInitializeComponents();
+
+	UGameFrameworkComponentManager::AddGameFrameworkComponentReceiver(this);
+}
+//------------------------------------------------------------------------------------------------------------
 void AGBAI_Character::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-
-	//AI_Stat_Component->On_Changed_Stamina.AddDynamic(this, &AGBAI_Character::On_Stamina_Changed);  // !!! TEMP
 }
 //------------------------------------------------------------------------------------------------------------
 FGenericTeamId AGBAI_Character::GetGenericTeamId() const

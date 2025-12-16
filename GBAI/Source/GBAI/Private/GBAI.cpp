@@ -5,7 +5,7 @@
 //------------------------------------------------------------------------------------------------------------
 void FGBAIModule::StartupModule()
 {
-    UE_LOG(LogTemp, Log, TEXT("GBAI: Gameplay Debugger Category Registered"));
+    UE_LOG(LogTemp, Log, TEXT("GBAI: Gameplay Debugger Category Registered") );
 }
 //------------------------------------------------------------------------------------------------------------
 void FGBAIModule::ShutdownModule()

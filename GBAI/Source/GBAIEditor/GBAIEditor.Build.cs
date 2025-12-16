@@ -16,9 +16,8 @@ public class GBAIEditor : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"CoreUObject", "Engine", "Slate", "SlateCore", 
-				"UnrealEd", "GBAI", "GameplayDebugger", "AIModule",
-                "GameplayDebugger"
+				"CoreUObject", "Engine",  // Core
+				"UnrealEd", "GBAI", "GameplayDebugger", "AIModule"  // Custom
             }
         );
 	}

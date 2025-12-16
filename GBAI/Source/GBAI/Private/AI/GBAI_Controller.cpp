@@ -36,7 +36,8 @@ AGBAI_Controller ::AGBAI_Controller ()
 void AGBAI_Controller ::BeginPlay()
 {
 	UGBC_Gameplay_Message_Subsystem *gameplay_message_subsystem;
-	FGameplayTag tag_death = FGameplayTag::RequestGameplayTag("Food.Sugar");  // ПОДПИСКА Мы говорим: "Зови меня ТОЛЬКО если умрет игрок"
+	FGameplayTag tag_sugar = FGameplayTag::RequestGameplayTag("Food.Sugar");  // if has tag, get ref
+	auto callback_on_is_tag_sugar = [this](FGameplayTag tag, const UObject *payload) { this->On_Is_Tag_Sugar(tag, payload); };
 
 	Super::BeginPlay();
 
@@ -45,20 +46,17 @@ void AGBAI_Controller ::BeginPlay()
 		return;
 
 	gameplay_message_subsystem->On_Event_Dispatched.AddDynamic(this, &AGBAI_Controller::Handle_Game_Event);  // Sub to delegate
-	Player_Died_Handle = gameplay_message_subsystem->Register_Listener(tag_death, [this](FGameplayTag tag, const UObject* payload)  // Используем лямбду или привязываем метод
-		{
-			this->On_Target_Died(tag, payload);
-		});
+	Handle_Listener_On_Is_Tag_Sugar = gameplay_message_subsystem->Register_Listener(tag_sugar, callback_on_is_tag_sugar);
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBAI_Controller::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	UGBC_Gameplay_Message_Subsystem *gameplay_message_subsystem;
-	FGameplayTag tag_death = FGameplayTag::RequestGameplayTag("Food.Sugar");
+	FGameplayTag tag_sugar = FGameplayTag::RequestGameplayTag("Food.Sugar");
 
-	gameplay_message_subsystem = GetGameInstance()->GetSubsystem<UGBC_Gameplay_Message_Subsystem>();  // ОТПИСКА (Обязательно!)
+	gameplay_message_subsystem = GetGameInstance()->GetSubsystem<UGBC_Gameplay_Message_Subsystem>();  // Unsub
 	if (gameplay_message_subsystem != 0)
-		gameplay_message_subsystem->Unregister_Listener(tag_death, Player_Died_Handle);
+		gameplay_message_subsystem->Unregister_Listener(tag_sugar, Handle_Listener_On_Is_Tag_Sugar);
 
 	Super::EndPlay(EndPlayReason);
 }
@@ -68,10 +66,8 @@ void AGBAI_Controller::Handle_Game_Event(FGameplayTag event_tag, const UObject *
 	int yy = 0;
 
 	if (event_tag.MatchesTag(FGameplayTag::RequestGameplayTag("Food.Sugar") ) )  // Filter
-	{
 		if (payload == GetPawn() )
-			yy++;
-	}
+			yy++;  // !!! TEMP EXAMPLE
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBAI_Controller ::OnPossess(APawn *in_pawn)
@@ -96,14 +92,14 @@ void AGBAI_Controller ::Send_State_Tree_Event(const FGameplayTag gameplay_tag)
 	FInstancedStruct instanced_struct;
 
 	instanced_struct = FInstancedStruct::Make(payload_test);
-	state_tree_event.Origin = TEXT("BOROS MOLODEC");//GetFName();
+	state_tree_event.Origin = TEXT("BOROS MOLODEC");
 	state_tree_event.Payload = instanced_struct;
 	state_tree_event.Tag = gameplay_tag;
 
 	AI_State_Tree->SendStateTreeEvent(state_tree_event);
 }
 //------------------------------------------------------------------------------------------------------------
-void AGBAI_Controller::On_Target_Died(FGameplayTag tag, const UObject* payload)
+void AGBAI_Controller::On_Is_Tag_Sugar(FGameplayTag tag, const UObject *payload)
 {
 	int yy = 0;
 	yy++;

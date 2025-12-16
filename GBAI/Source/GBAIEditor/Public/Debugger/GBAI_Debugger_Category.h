@@ -1,8 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include "CoreMinimal.h"
-#include "GameplayDebuggerCategory.h"
+#include <GameplayDebuggerCategory.h>
 //------------------------------------------------------------------------------------------------------------
 class AActor;
 class APlayerController;
@@ -13,30 +12,28 @@ class FGBAI_Debugger_Category : public FGameplayDebuggerCategory
 public:
     FGBAI_Debugger_Category();
 
-    virtual void CollectData(APlayerController* owner_pc, AActor* debug_actor) override;
-    virtual void DrawData(APlayerController* owner_pc, FGameplayDebuggerCanvasContext& canvas_context) override;
+    virtual void CollectData(APlayerController *owner_pc, AActor *debug_actor);
+    virtual void DrawData(APlayerController *owner_pc, FGameplayDebuggerCanvasContext &canvas_context);
 
     static TSharedRef<FGameplayDebuggerCategory> MakeInstance();
 
 protected:
     struct FDebugData
     {
-        FString actor_name;
-        float current_hunger = -1.0f;
-        FString current_state;
-        bool has_food_component = false;
+        bool Has_Food_Component = false;
+        float Current_Hunger = -1.0f;
+        FString Actor_Name;
+        FString Current_State;
 
-        // --- CHANGE: Добавляем метод сериализации --- FArchive &ar - это "поток" данных. Оператор << работает в обе стороны (запись и чтение).
-        void Serialize(FArchive& ar)
+        // --- CHANGE: Add method for serialization FArchive &ar - this "thread" data. Operator << work for both adges (read and write)
+        void Serialize(FArchive &ar)
         {
-            ar << actor_name;
-            ar << current_hunger;
-            ar << current_state;
-            ar << has_food_component;
+            ar << Actor_Name;
+            ar << Current_Hunger;
+            ar << Current_State;
+            ar << Has_Food_Component;
         }
-        // --------------------------------------------
     };
-
     FDebugData data;
 };
 //------------------------------------------------------------------------------------------------------------

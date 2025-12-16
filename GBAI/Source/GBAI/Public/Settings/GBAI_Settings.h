@@ -1,14 +1,9 @@
 //------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include "Engine/DeveloperSettings.h"
-#include "GBAI_Settings.generated.h"
+#include <Engine/DeveloperSettings.h>
+#include <GBAI_Settings.generated.h>
 //------------------------------------------------------------------------------------------------------------
-/**
- * Global Setting Project Settings
- * Config = Game означает save to DefaultGame.ini
- * defaultconfig can Edit in Project Settings
- */
 UCLASS(Config = Game, defaultconfig, meta = (DisplayName = "GB AI Settings") ) class GBAI_API UGBAI_Settings : public UDeveloperSettings
 {
     GENERATED_BODY()

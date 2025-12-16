@@ -24,18 +24,16 @@ public:
 	virtual void UnPossessed();
 
 	virtual void SetupPlayerInputComponent(UInputComponent *player_input_component);
+	virtual void PreInitializeComponents();
 	virtual void PostInitializeComponents();
-
-	virtual void PreInitializeComponents() override;
-
 
 	virtual FGenericTeamId GetGenericTeamId() const;  // IGenericTeamAgentInterface
 
 	float Get_Hunger() const;
 	
-	UFUNCTION() void Spawn_Loot(const FGameplayTag &requested_action_tag);
-
 	const UGBAI_Settings* AI_Settings;
+
+	UFUNCTION() void Spawn_Loot(const FGameplayTag &requested_action_tag);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI") AGBAI_Controller *AI_Controller;
 	UPROPERTY(EditAnywhere, Category = "Loot") TSoftClassPtr<AActor> Loot_Item_Class;

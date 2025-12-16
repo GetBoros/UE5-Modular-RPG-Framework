@@ -31,9 +31,8 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = "AI") FOn_AI_Action_Requested_Delegate On_AI_Action_Requested;
 
 private:
-private:
-	FDelegateHandle Player_Died_Handle; // Храним билет, чтобы потом отписаться
-	void On_Target_Died(FGameplayTag tag, const UObject* payload);
+	FDelegateHandle Handle_Listener_On_Is_Tag_Sugar;  // Handle ticket for unsub when needded
+	void On_Is_Tag_Sugar(FGameplayTag tag, const UObject *payload);
 
 	UFUNCTION(Category = "AI_Perception Event|Internal") void On_Target_Perception_Updated(AActor *actor, FAIStimulus stimulus);
 
