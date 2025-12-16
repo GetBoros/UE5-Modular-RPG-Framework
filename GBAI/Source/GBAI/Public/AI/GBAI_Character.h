@@ -31,7 +31,7 @@ public:
 
 	float Get_Hunger() const;
 	
-	const UGBAI_Settings* AI_Settings;
+	const UGBAI_Settings *AI_Settings;
 
 	UFUNCTION() void Spawn_Loot(const FGameplayTag &requested_action_tag);
 

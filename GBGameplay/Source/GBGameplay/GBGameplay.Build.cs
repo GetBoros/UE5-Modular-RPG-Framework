@@ -34,9 +34,9 @@ public class GBGameplay : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core", "CoreUObject", "Engine", "Slate", "SlateCore",  // Base
-                "GameplayTags"  // Custom
-			}
+				"Core", "CoreUObject", "Engine",  // Base
+                "GameplayTags",  "EnhancedInput", "GameplayAbilities", "GameplayTags", "GameplayTasks"  // Custom
+            }
             );
 		
 		
