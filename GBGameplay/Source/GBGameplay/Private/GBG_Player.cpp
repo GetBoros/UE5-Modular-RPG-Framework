@@ -2,6 +2,8 @@
 #include <GBG_Player.h>
 #include <GBG_Player_Controller.h>
 #include <EnhancedInputComponent.h>
+#include <AbilitySystemComponent.h>
+#include <GBG_Attribute_Set.h>
 //------------------------------------------------------------------------------------------------------------
 
 
@@ -11,6 +13,12 @@
 AGBG_Player::AGBG_Player()
 {
 	PrimaryActorTick.bCanEverTick = true;
+
+	Ability_System_Component = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
+	Ability_System_Component->SetIsReplicated(true);
+	Ability_System_Component->SetReplicationMode(EGameplayEffectReplicationMode::Mixed); // Mixed - стандарт для персонажа 
+
+	Attribute_Set = CreateDefaultSubobject<UGBG_Attribute_Set>(TEXT("AttributeSet"));
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::BeginPlay()
@@ -25,6 +33,13 @@ void AGBG_Player::BeginPlay()
 void AGBG_Player::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+void AGBG_Player::PossessedBy(AController* new_controller)
+{
+	Super::PossessedBy(new_controller);
+
+	if (Ability_System_Component != 0)
+		Ability_System_Component->InitAbilityActorInfo(this, this);
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::SetupPlayerInputComponent(UInputComponent *player_input_component)
@@ -42,7 +57,7 @@ void AGBG_Player::SetupPlayerInputComponent(UInputComponent *player_input_compon
 //------------------------------------------------------------------------------------------------------------
 UAbilitySystemComponent* AGBG_Player::GetAbilitySystemComponent() const
 {
-	return 0;
+	return Ability_System_Component;
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::Move(const FInputActionValue &value)
