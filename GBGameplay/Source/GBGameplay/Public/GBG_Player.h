@@ -10,6 +10,7 @@ class UInputComponent;
 class UInputAction;
 class UAbilitySystemComponent;
 class UGBG_Attribute_Set;
+class UGameplayEffect;
 struct FInputActionValue;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class GBGAMEPLAY_API AGBG_Player : public ACharacter, public IAbilitySystemInterface
@@ -19,12 +20,12 @@ UCLASS() class GBGAMEPLAY_API AGBG_Player : public ACharacter, public IAbilitySy
 public:
 	AGBG_Player();
 	
-	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
-	virtual void PossessedBy(AController *new_controller) override; // <--- Важно для инициализации GAS на сервере
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void BeginPlay();
+	virtual void Tick(float delta_time);
+	virtual void PossessedBy(AController *new_controller);
+	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent);
 
-	virtual UAbilitySystemComponent *GetAbilitySystemComponent() const override;
+	virtual UAbilitySystemComponent *GetAbilitySystemComponent() const;
 
 	UGBG_Attribute_Set *GetAttributeSet() const { return Attribute_Set; }
 
@@ -36,6 +37,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Jump;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true") ) UAbilitySystemComponent *Ability_System_Component;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GAS") TSubclassOf<UGameplayEffect> Default_Attributes_Effect;  // GEffect
 	UPROPERTY() UGBG_Attribute_Set *Attribute_Set;
 	
 };

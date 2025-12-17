@@ -23,8 +23,8 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_Health) FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS(UGBG_Attribute_Set, Health);
 
-	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_MaxHealth) FGameplayAttributeData MaxHealth;
-	ATTRIBUTE_ACCESSORS(UGBG_Attribute_Set, MaxHealth);
+	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_Health_Max) FGameplayAttributeData Health_Max;
+	ATTRIBUTE_ACCESSORS(UGBG_Attribute_Set, Health_Max);
 
 	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_Stamina) FGameplayAttributeData Stamina;
 	static FGameplayAttribute GetStaminaAttribute();  // ATTRIBUTE_ACCESSORS
@@ -32,7 +32,7 @@ public:
 	void SetStamina(float new_val);
 	void InitStamina(float new_val);
 
-	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_MaxStamina) FGameplayAttributeData MaxStamina;
+	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_Stamina_Max) FGameplayAttributeData Stamina_Max;
 	static FGameplayAttribute GetMaxStaminaAttribute();
 	float GetMaxStamina() const;
 	void SetMaxStamina(float new_val);
@@ -40,8 +40,8 @@ public:
 
 protected:
 	UFUNCTION() virtual void OnRep_Health(const FGameplayAttributeData &old_health);
-	UFUNCTION() virtual void OnRep_MaxHealth(const FGameplayAttributeData &old_max_health);
+	UFUNCTION() virtual void OnRep_Health_Max(const FGameplayAttributeData &old_health_max);
 	UFUNCTION() virtual void OnRep_Stamina(const FGameplayAttributeData &old_stamina);
-	UFUNCTION() virtual void OnRep_MaxStamina(const FGameplayAttributeData &old_max_stamina);
+	UFUNCTION() virtual void OnRep_Stamina_Max(const FGameplayAttributeData &old_stamina_max);
 };
 //------------------------------------------------------------------------------------------------------------

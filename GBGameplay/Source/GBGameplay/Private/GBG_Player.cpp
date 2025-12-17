@@ -30,16 +30,29 @@ void AGBG_Player::BeginPlay()
 	ensureMsgf(Action_Jump, TEXT("Please insert something in BP") );
 }
 //------------------------------------------------------------------------------------------------------------
-void AGBG_Player::Tick(float DeltaTime)
+void AGBG_Player::Tick(float delta_time)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(delta_time);
 }
-void AGBG_Player::PossessedBy(AController* new_controller)
+//------------------------------------------------------------------------------------------------------------
+void AGBG_Player::PossessedBy(AController *new_controller)
 {
 	Super::PossessedBy(new_controller);
 
-	if (Ability_System_Component != 0)
-		Ability_System_Component->InitAbilityActorInfo(this, this);
+	if (Ability_System_Component == 0)
+		return;
+
+	Ability_System_Component->InitAbilityActorInfo(this, this);
+
+	if (Default_Attributes_Effect == 0)  // Apply Game Effect for set up starting attributes
+		return;
+
+	FGameplayEffectContextHandle effect_context = Ability_System_Component->MakeEffectContext();  // Create handle
+	effect_context.AddSourceObject(this);  // add handle
+	FGameplayEffectSpecHandle spec_handle = Ability_System_Component->MakeOutgoingSpec(Default_Attributes_Effect, 1, effect_context);
+	
+	if (spec_handle.IsValid() == true)
+		Ability_System_Component->ApplyGameplayEffectSpecToSelf(*spec_handle.Data.Get() );  // Apply effect to self
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::SetupPlayerInputComponent(UInputComponent *player_input_component)
@@ -55,7 +68,7 @@ void AGBG_Player::SetupPlayerInputComponent(UInputComponent *player_input_compon
 	}
 }
 //------------------------------------------------------------------------------------------------------------
-UAbilitySystemComponent* AGBG_Player::GetAbilitySystemComponent() const
+UAbilitySystemComponent *AGBG_Player::GetAbilitySystemComponent() const
 {
 	return Ability_System_Component;
 }
@@ -83,6 +96,6 @@ void AGBG_Player::Look(const FInputActionValue &value)
 		return;
 	
 	AddControllerYawInput(look_axis_vector.X);
-	AddControllerPitchInput(look_axis_vector .Y);
+	AddControllerPitchInput(look_axis_vector.Y);
 }
 //------------------------------------------------------------------------------------------------------------
