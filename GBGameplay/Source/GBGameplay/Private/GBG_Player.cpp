@@ -14,11 +14,11 @@ AGBG_Player::AGBG_Player()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	Ability_System_Component = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
+	Ability_System_Component = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent") );
 	Ability_System_Component->SetIsReplicated(true);
-	Ability_System_Component->SetReplicationMode(EGameplayEffectReplicationMode::Mixed); // Mixed - стандарт для персонажа 
+	Ability_System_Component->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);  // Mixed standart for Character
 
-	Attribute_Set = CreateDefaultSubobject<UGBG_Attribute_Set>(TEXT("AttributeSet"));
+	Attribute_Set = CreateDefaultSubobject<UGBG_Attribute_Set>(TEXT("AttributeSet") );
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::BeginPlay()
@@ -59,7 +59,7 @@ void AGBG_Player::SetupPlayerInputComponent(UInputComponent *player_input_compon
 {
 	Super::SetupPlayerInputComponent(player_input_component);
 
-	if (UEnhancedInputComponent *enhanced_input_component = Cast<UEnhancedInputComponent>(player_input_component))
+	if (UEnhancedInputComponent *enhanced_input_component = Cast<UEnhancedInputComponent>(player_input_component) )
 	{
 		enhanced_input_component->BindAction(Action_Move, ETriggerEvent::Triggered, this, &AGBG_Player::Move);
 		enhanced_input_component->BindAction(Action_Jump, ETriggerEvent::Started, this, &ACharacter::Jump);
