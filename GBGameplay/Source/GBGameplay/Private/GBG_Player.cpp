@@ -41,7 +41,6 @@ void AGBG_Player::PossessedBy(AController *new_controller)
 
 	if (Ability_System_Component == 0)
 		return;
-
 	Ability_System_Component->InitAbilityActorInfo(this, this);
 
 	if (Default_Attributes_Effect == 0)  // Apply Game Effect for set up starting attributes
