@@ -9,8 +9,9 @@
 class UInputComponent;
 class UInputAction;
 class UAbilitySystemComponent;
-class UGBG_Attribute_Set;
 class UGameplayEffect;
+class UGBG_Attribute_Set;
+class UGBG_Gameplay_Ability;
 struct FInputActionValue;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class GBGAMEPLAY_API AGBG_Player : public ACharacter, public IAbilitySystemInterface
@@ -31,13 +32,17 @@ public:
 
 	void Move(const FInputActionValue &value);
 	void Look(const FInputActionValue &value);
+	void On_Sprint(const FInputActionValue &value);
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Move = 0;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Look = 0;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Jump = 0;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Sprint = 0;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GAS") TSubclassOf<UGameplayEffect> Default_Attributes_Effect;  // GEffect
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GAS") TArray<TSubclassOf<UGBG_Gameplay_Ability> > Default_Abilities;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true") ) UAbilitySystemComponent *Ability_System_Component = 0;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GAS") TSubclassOf<UGameplayEffect> Default_Attributes_Effect;  // GEffect
 	UPROPERTY() UGBG_Attribute_Set *Attribute_Set;
 	
 };

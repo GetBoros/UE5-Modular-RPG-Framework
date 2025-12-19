@@ -1,9 +1,11 @@
 //------------------------------------------------------------------------------------------------------------
 #include <GBG_Player.h>
 #include <GBG_Player_Controller.h>
+#include <GBG_Gameplay_Ability.h>
+#include <GBG_Attribute_Set.h>
+
 #include <EnhancedInputComponent.h>
 #include <AbilitySystemComponent.h>
-#include <GBG_Attribute_Set.h>
 //------------------------------------------------------------------------------------------------------------
 
 
@@ -28,6 +30,7 @@ void AGBG_Player::BeginPlay()
 	ensureMsgf(Action_Move, TEXT("Please insert something in BP") );
 	ensureMsgf(Action_Look, TEXT("Please insert something in BP") );
 	ensureMsgf(Action_Jump, TEXT("Please insert something in BP") );
+	ensureMsgf(Action_Sprint, TEXT("Please insert something in BP") );
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::Tick(float delta_time)
@@ -52,6 +55,19 @@ void AGBG_Player::PossessedBy(AController *new_controller)
 	
 	if (spec_handle.IsValid() == true)
 		Ability_System_Component->ApplyGameplayEffectSpecToSelf(*spec_handle.Data.Get() );  // Apply effect to self
+
+	for (const auto ability_class : Default_Abilities)  // Learn abilities by default
+	{
+		if (ability_class == 0)
+			continue;
+
+		const UGBG_Gameplay_Ability *ability_cdo = ability_class->GetDefaultObject<UGBG_Gameplay_Ability>();  // Get Input id from ability template
+		
+		int32 input_id = ability_cdo ? ability_cdo->Input_ID : 0;  // Get Input id or set 0
+		FGameplayAbilitySpec ability_spec(ability_class, 1, input_id, this);
+
+		Ability_System_Component->GiveAbility(ability_spec);  // Give ability to player
+	}
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::SetupPlayerInputComponent(UInputComponent *player_input_component)
@@ -64,6 +80,7 @@ void AGBG_Player::SetupPlayerInputComponent(UInputComponent *player_input_compon
 		enhanced_input_component->BindAction(Action_Jump, ETriggerEvent::Started, this, &ACharacter::Jump);
 		enhanced_input_component->BindAction(Action_Jump, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 		enhanced_input_component->BindAction(Action_Look, ETriggerEvent::Triggered, this, &AGBG_Player::Look);
+		enhanced_input_component->BindAction(Action_Sprint, ETriggerEvent::Started, this, &AGBG_Player::On_Sprint);
 	}
 }
 //------------------------------------------------------------------------------------------------------------
@@ -96,5 +113,26 @@ void AGBG_Player::Look(const FInputActionValue &value)
 	
 	AddControllerYawInput(look_axis_vector.X);
 	AddControllerPitchInput(look_axis_vector.Y);
+}
+//------------------------------------------------------------------------------------------------------------
+void AGBG_Player::On_Sprint(const FInputActionValue &value)
+{
+	if (Ability_System_Component == 0)
+		return;
+
+	// Мы передаем в AbilitySystemComponent InputID той способности, которую хотим активировать.
+	// Мы договорились, что у Спринта Input_ID = 1.
+	// В будущем это можно сделать более гибко, получая ID из самого Input Action.
+	// Но для простоты туториала пока используем "магическое число".
+	const int32 sprint_input_id = 1;
+	Ability_System_Component->AbilityLocalInputPressed(sprint_input_id);
+
+	// If release
+	//if (Ability_System_Component == 0)
+	//	return;
+
+	//// То же самое для отпускания кнопки.
+	//const int32 sprint_input_id = 1;
+	//Ability_System_Component->AbilityLocalInputReleased(sprint_input_id);
 }
 //------------------------------------------------------------------------------------------------------------
