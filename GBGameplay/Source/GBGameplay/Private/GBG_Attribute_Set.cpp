@@ -1,5 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
 #include <GBG_Attribute_Set.h>
+#include <AbilitySystemComponent.h>
 #include <Net/UnrealNetwork.h>
 //------------------------------------------------------------------------------------------------------------
 
@@ -22,59 +23,104 @@ void UGBG_Attribute_Set::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &O
 	DOREPLIFETIME_CONDITION_NOTIFY(UGBG_Attribute_Set, Stamina_Max, COND_None, REPNOTIFY_Always);
 }
 //------------------------------------------------------------------------------------------------------------
-FGameplayAttribute UGBG_Attribute_Set::GetStaminaAttribute()
+void UGBG_Attribute_Set::Init_Health(float new_val)
 {
-	// Этот код находит C++ свойство "Stamina" в классе и возвращает его как FGameplayAttribute
-	static FProperty* Property = FindFieldChecked<FProperty>(UGBG_Attribute_Set::StaticClass(), GET_MEMBER_NAME_CHECKED(UGBG_Attribute_Set, Stamina));
-	return FGameplayAttribute(Property);
+	Health.SetBaseValue(new_val);
+	Health.SetCurrentValue(new_val);
 }
 //------------------------------------------------------------------------------------------------------------
-float UGBG_Attribute_Set::GetStamina() const
+void UGBG_Attribute_Set::Init_Stamina(float new_val)
+{
+	Stamina.SetBaseValue(new_val);
+	Stamina.SetCurrentValue(new_val);
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBG_Attribute_Set::Init_Health_Max(float new_val)
+{
+	Health_Max.SetBaseValue(new_val);
+	Health_Max.SetCurrentValue(new_val);
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBG_Attribute_Set::Init_Stamina_Max(float new_val)
+{
+	Stamina_Max.SetBaseValue(new_val);
+	Stamina_Max.SetCurrentValue(new_val);
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBG_Attribute_Set::Set_Health(float new_val)
+{
+	UAbilitySystemComponent *asc = GetOwningAbilitySystemComponent();
+	if (asc != 0)
+		asc->SetNumericAttributeBase(GetHealthAttribute(), new_val);  // Right way to change value
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBG_Attribute_Set::Set_Health_Max(float new_val)
+{
+	UAbilitySystemComponent *asc = GetOwningAbilitySystemComponent();
+	if (asc != 0)
+		asc->SetNumericAttributeBase(GetMaxHealthAttribute(), new_val);  // Right way to change value
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBG_Attribute_Set::Set_Stamina(float new_val)
+{
+	UAbilitySystemComponent *asc = GetOwningAbilitySystemComponent();
+	if (asc != 0)
+		asc->SetNumericAttributeBase(GetStaminaAttribute(), new_val);
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBG_Attribute_Set::Set_Stamina_Max(float new_val)
+{
+	UAbilitySystemComponent *asc = GetOwningAbilitySystemComponent();
+	if (asc != 0)
+		asc->SetNumericAttributeBase(GetMaxStaminaAttribute(), new_val);
+}
+//------------------------------------------------------------------------------------------------------------
+float UGBG_Attribute_Set::Get_Health() const
+{
+	return Health.GetCurrentValue();
+}
+//------------------------------------------------------------------------------------------------------------
+float UGBG_Attribute_Set::Get_Health_Max() const
+{
+	return Health_Max.GetCurrentValue();
+}
+//------------------------------------------------------------------------------------------------------------
+float UGBG_Attribute_Set::Get_Stamina() const
 {
 	return Stamina.GetCurrentValue();
 }
 //------------------------------------------------------------------------------------------------------------
-void UGBG_Attribute_Set::SetStamina(float new_val)
+float UGBG_Attribute_Set::Get_Stamina_Max() const
 {
-	UAbilitySystemComponent* asc = GetOwningAbilitySystemComponent();
-	if (asc != 0)
-	{
-		// Правильный способ изменить базовое значение атрибута
-		asc->SetNumericAttributeBase(GetStaminaAttribute(), new_val);
-	}
+	return Stamina_Max.GetCurrentValue();
 }
 //------------------------------------------------------------------------------------------------------------
-void UGBG_Attribute_Set::InitStamina(float new_val)
+FGameplayAttribute UGBG_Attribute_Set::GetHealthAttribute()
 {
-	// Этот метод используется для первоначальной установки значения, до начала игры
-	Stamina.SetBaseValue(new_val);
-	Stamina.SetCurrentValue(new_val);
+	static FProperty *property = FindFieldChecked<FProperty>(UGBG_Attribute_Set::StaticClass(), GET_MEMBER_NAME_CHECKED(UGBG_Attribute_Set, Health) );  // Find property in class and return as FGameplayAttribute
+
+	return FGameplayAttribute(property);
+}
+//------------------------------------------------------------------------------------------------------------
+FGameplayAttribute UGBG_Attribute_Set::GetMaxHealthAttribute()
+{
+	static FProperty *property = FindFieldChecked<FProperty>(UGBG_Attribute_Set::StaticClass(), GET_MEMBER_NAME_CHECKED(UGBG_Attribute_Set, Health_Max) );  // Find property in class and return as FGameplayAttribute
+
+	return FGameplayAttribute(property);
+}
+//------------------------------------------------------------------------------------------------------------
+FGameplayAttribute UGBG_Attribute_Set::GetStaminaAttribute()
+{
+	static FProperty *property = FindFieldChecked<FProperty>(UGBG_Attribute_Set::StaticClass(), GET_MEMBER_NAME_CHECKED(UGBG_Attribute_Set, Stamina) );
+
+	return FGameplayAttribute(property);
 }
 //------------------------------------------------------------------------------------------------------------
 FGameplayAttribute UGBG_Attribute_Set::GetMaxStaminaAttribute()
 {
 	static FProperty *property = FindFieldChecked<FProperty>(UGBG_Attribute_Set::StaticClass(), GET_MEMBER_NAME_CHECKED(UGBG_Attribute_Set, Stamina_Max) );
+
 	return FGameplayAttribute(property);
-}
-//------------------------------------------------------------------------------------------------------------
-float UGBG_Attribute_Set::GetMaxStamina() const
-{
-	return Stamina_Max.GetCurrentValue();
-}
-//------------------------------------------------------------------------------------------------------------
-void UGBG_Attribute_Set::SetMaxStamina(float new_val)
-{
-	UAbilitySystemComponent* asc = GetOwningAbilitySystemComponent();
-	if (asc != 0)
-	{
-		asc->SetNumericAttributeBase(GetMaxStaminaAttribute(), new_val);
-	}
-}
-//------------------------------------------------------------------------------------------------------------
-void UGBG_Attribute_Set::InitMaxStamina(float new_val)
-{
-	Stamina_Max.SetBaseValue(new_val);
-	Stamina_Max.SetCurrentValue(new_val);
 }
 //------------------------------------------------------------------------------------------------------------
 void UGBG_Attribute_Set::OnRep_Health(const FGameplayAttributeData &old_health)
