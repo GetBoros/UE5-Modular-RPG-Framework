@@ -1,9 +1,8 @@
 //------------------------------------------------------------------------------------------------------------
 #include <GBG_Player.h>
-#include <GBG_Player_Controller.h>
 
-#include <GBG_Gameplay_Ability.h>
-#include <GBG_Attribute_Set.h>
+#include <GAS/GBG_Gameplay_Ability.h>
+#include <GAS/GBG_Attribute_Set.h>
 
 #include <EnhancedInputComponent.h>
 #include <AbilitySystemComponent.h>

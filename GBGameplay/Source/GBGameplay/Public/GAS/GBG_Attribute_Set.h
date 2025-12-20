@@ -23,7 +23,6 @@ public:
 	void Set_Stamina(float new_val);
 	void Set_Stamina_Max(float new_val);
 
-
 	float Get_Health() const;
 	float Get_Health_Max() const;
 	float Get_Stamina() const;
