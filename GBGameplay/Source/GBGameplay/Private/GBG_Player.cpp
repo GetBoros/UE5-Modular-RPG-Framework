@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <GBG_Player.h>
 #include <GBG_Player_Controller.h>
+
 #include <GBG_Gameplay_Ability.h>
 #include <GBG_Attribute_Set.h>
 
@@ -80,7 +81,8 @@ void AGBG_Player::SetupPlayerInputComponent(UInputComponent *player_input_compon
 		enhanced_input_component->BindAction(Action_Jump, ETriggerEvent::Started, this, &ACharacter::Jump);
 		enhanced_input_component->BindAction(Action_Jump, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 		enhanced_input_component->BindAction(Action_Look, ETriggerEvent::Triggered, this, &AGBG_Player::Look);
-		enhanced_input_component->BindAction(Action_Sprint, ETriggerEvent::Started, this, &AGBG_Player::On_Sprint);
+		enhanced_input_component->BindAction(Action_Sprint, ETriggerEvent::Started, this, &AGBG_Player::On_Sprint_Bgn);
+		enhanced_input_component->BindAction(Action_Sprint, ETriggerEvent::Completed, this, &AGBG_Player::On_Sprint_End);
 	}
 }
 //------------------------------------------------------------------------------------------------------------
@@ -115,24 +117,21 @@ void AGBG_Player::Look(const FInputActionValue &value)
 	AddControllerPitchInput(look_axis_vector.Y);
 }
 //------------------------------------------------------------------------------------------------------------
-void AGBG_Player::On_Sprint(const FInputActionValue &value)
+void AGBG_Player::On_Sprint_Bgn(const FInputActionValue &value)
 {
+	constexpr int32 sprint_input_id = 1;  // !!! TEMP Magic number || Can receive ID from Input Action
+
 	if (Ability_System_Component == 0)
 		return;
+	Ability_System_Component->AbilityLocalInputPressed(sprint_input_id);  // Ability_System_Component know what input id is a sprint so use it
+}
+//------------------------------------------------------------------------------------------------------------
+void AGBG_Player::On_Sprint_End(const FInputActionValue &value)
+{
+	constexpr int32 sprint_input_id = 1;  // !!! TEMP Magic number || Can receive ID from Input Action
 
-	// Мы передаем в AbilitySystemComponent InputID той способности, которую хотим активировать.
-	// Мы договорились, что у Спринта Input_ID = 1.
-	// В будущем это можно сделать более гибко, получая ID из самого Input Action.
-	// Но для простоты туториала пока используем "магическое число".
-	const int32 sprint_input_id = 1;
-	Ability_System_Component->AbilityLocalInputPressed(sprint_input_id);
-
-	// If release
-	//if (Ability_System_Component == 0)
-	//	return;
-
-	//// То же самое для отпускания кнопки.
-	//const int32 sprint_input_id = 1;
-	//Ability_System_Component->AbilityLocalInputReleased(sprint_input_id);
+	if (Ability_System_Component == 0)
+		return;
+	Ability_System_Component->AbilityLocalInputReleased(sprint_input_id);  // Ability_System_Component know what input id is a sprint so use it
 }
 //------------------------------------------------------------------------------------------------------------

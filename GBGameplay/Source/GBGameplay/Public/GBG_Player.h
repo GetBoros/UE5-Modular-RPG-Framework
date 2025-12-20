@@ -32,7 +32,8 @@ public:
 
 	void Move(const FInputActionValue &value);
 	void Look(const FInputActionValue &value);
-	void On_Sprint(const FInputActionValue &value);
+	void On_Sprint_Bgn(const FInputActionValue &value);
+	void On_Sprint_End(const FInputActionValue &value);
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Move = 0;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Look = 0;
