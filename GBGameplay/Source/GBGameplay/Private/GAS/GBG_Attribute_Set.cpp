@@ -22,6 +22,7 @@ void UGBG_Attribute_Set::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &O
 	DOREPLIFETIME_CONDITION_NOTIFY(UGBG_Attribute_Set, Health_Max, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGBG_Attribute_Set, Stamina, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGBG_Attribute_Set, Stamina_Max, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGBG_Attribute_Set, Stamina_Threshold, COND_None, REPNOTIFY_Always);
 }
 //------------------------------------------------------------------------------------------------------------
 void UGBG_Attribute_Set::PostGameplayEffectExecute(const FGameplayEffectModCallbackData &data)
@@ -34,10 +35,12 @@ void UGBG_Attribute_Set::PostGameplayEffectExecute(const FGameplayEffectModCallb
     if (asc == 0)
         return;
 
-     if (attribute == GetHealthAttribute() )  // Health Logic
+    if (attribute == GetHealthAttribute() )  // Health Logic
 		Handle_Health_Change(asc);
 	else if (attribute == GetStaminaAttribute() )  // Stamina logic
 		Handle_Stamina_Change(asc);
+	else if (attribute == GetStaminaThresholdAttribute() )
+		 Handle_Stamina_Threshold_Change(asc);
 }
 //------------------------------------------------------------------------------------------------------------
 void UGBG_Attribute_Set::Init_Health(float new_val)
@@ -62,6 +65,12 @@ void UGBG_Attribute_Set::Init_Stamina_Max(float new_val)
 {
 	Stamina_Max.SetBaseValue(new_val);
 	Stamina_Max.SetCurrentValue(new_val);
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBG_Attribute_Set::Init_Stamina_Threshold(float new_val)
+{
+	Stamina_Threshold.SetBaseValue(new_val);
+	Stamina_Threshold.SetCurrentValue(new_val);
 }
 //------------------------------------------------------------------------------------------------------------
 void UGBG_Attribute_Set::Set_Health(float new_val)
@@ -92,6 +101,13 @@ void UGBG_Attribute_Set::Set_Stamina_Max(float new_val)
 		asc->SetNumericAttributeBase(GetMaxStaminaAttribute(), new_val);
 }
 //------------------------------------------------------------------------------------------------------------
+void UGBG_Attribute_Set::Set_Stamina_Threshold(float new_val)
+{
+	UAbilitySystemComponent* asc = GetOwningAbilitySystemComponent();
+	if (asc != 0)
+		asc->SetNumericAttributeBase(GetStaminaThresholdAttribute(), new_val);
+}
+//------------------------------------------------------------------------------------------------------------
 float UGBG_Attribute_Set::Get_Health() const
 {
 	return Health.GetCurrentValue();
@@ -110,6 +126,11 @@ float UGBG_Attribute_Set::Get_Stamina() const
 float UGBG_Attribute_Set::Get_Stamina_Max() const
 {
 	return Stamina_Max.GetCurrentValue();
+}
+//------------------------------------------------------------------------------------------------------------
+float UGBG_Attribute_Set::Get_Stamina_Threshold() const
+{
+	return Stamina_Threshold.GetCurrentValue();
 }
 //------------------------------------------------------------------------------------------------------------
 FGameplayAttribute UGBG_Attribute_Set::GetHealthAttribute()
@@ -140,6 +161,13 @@ FGameplayAttribute UGBG_Attribute_Set::GetMaxStaminaAttribute()
 	return FGameplayAttribute(property);
 }
 //------------------------------------------------------------------------------------------------------------
+FGameplayAttribute UGBG_Attribute_Set::GetStaminaThresholdAttribute()
+{
+	static FProperty *property = FindFieldChecked<FProperty>(UGBG_Attribute_Set::StaticClass(), GET_MEMBER_NAME_CHECKED(UGBG_Attribute_Set, Stamina_Threshold) );
+
+	return FGameplayAttribute(property);
+}
+//------------------------------------------------------------------------------------------------------------
 void UGBG_Attribute_Set::OnRep_Health(const FGameplayAttributeData &old_health)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGBG_Attribute_Set, Health, old_health);
@@ -160,6 +188,11 @@ void UGBG_Attribute_Set::OnRep_Stamina_Max(const FGameplayAttributeData &old_sta
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGBG_Attribute_Set, Stamina_Max, old_stamina_max);
 }
 //------------------------------------------------------------------------------------------------------------
+void UGBG_Attribute_Set::OnRep_Stamina_Threshold(const FGameplayAttributeData &old_stamina_max)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGBG_Attribute_Set, Stamina_Threshold, old_stamina_max);
+}
+//------------------------------------------------------------------------------------------------------------
 void UGBG_Attribute_Set::Handle_Health_Change(UAbilitySystemComponent *asc)
 {
 	float current_health = Get_Health();
@@ -177,20 +210,35 @@ void UGBG_Attribute_Set::Handle_Health_Change(UAbilitySystemComponent *asc)
 //------------------------------------------------------------------------------------------------------------
 void UGBG_Attribute_Set::Handle_Stamina_Change(UAbilitySystemComponent *asc)
 {
-	float stamina_current = Get_Stamina();
-	float stamina_max = Get_Stamina_Max();
-    float clamped_stamina = FMath::Clamp(stamina_current, 0.0f, stamina_max);  // B. CLAMPING (Golden Standard): Modify value IMMEDIATELY to prevent "dirty" data
     static FGameplayTag tag_fatigued = FGameplayTag::RequestGameplayTag(FName("State.Fatigued") );  // C. GAMEPLAY LOGIC (Reaction): Cache tag (static var initialized once per game session)
-
-    if (stamina_current != clamped_stamina)  // If value was different (e.g. was -5, became 0) -> update it
+	const bool is_owner_fatigued = asc->HasMatchingGameplayTag(tag_fatigued);
+	const float stamina_current = Get_Stamina();
+	const float stamina_max = Get_Stamina_Max();
+	const float stamina_threshold_precent = Get_Stamina_Threshold();
+	const float threshold_value = stamina_max * stamina_threshold_precent;
+    const float clamped_stamina = FMath::Clamp(stamina_current, 0.0f, stamina_max);  // B. CLAMPING (Golden Standard): Modify value IMMEDIATELY to prevent "dirty" data
+    
+	if (stamina_current != clamped_stamina)  // If value was different (e.g. was -5, became 0) -> update it
         Set_Stamina(clamped_stamina);
         
-    if (clamped_stamina <= Stamina_Fatigue_Threshold)  // Example Logic: If stamina < 20% -> apply debuff (In real project 0.2f should be in Config/DataAsset)
+    if (clamped_stamina <= threshold_value)  // Example Logic: If stamina < 20% -> apply debuff (In real project 0.2f should be in Config/DataAsset)
 	{
-		if (asc->HasMatchingGameplayTag(tag_fatigued) != true)  // if tag already added, not add again
+		if (is_owner_fatigued != true)  // if tag already added, not add again
 			asc->AddLooseGameplayTag(tag_fatigued);
 	}
     else
-        asc->RemoveLooseGameplayTag(tag_fatigued);
+	{
+		if (is_owner_fatigued == true)  // Remove fatigue
+			asc->RemoveLooseGameplayTag(tag_fatigued);
+	}
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBG_Attribute_Set::Handle_Stamina_Threshold_Change(UAbilitySystemComponent *asc)
+{
+	float current_val = Get_Stamina_Threshold();  // Get data from BP
+	float clamped_val = FMath::Clamp(current_val, 0.0f, 1.0f);
+
+	if (current_val != clamped_val)  // change value to clamped if not equal
+		Set_Stamina_Threshold(clamped_val);
 }
 //------------------------------------------------------------------------------------------------------------
