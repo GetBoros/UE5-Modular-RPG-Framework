@@ -188,16 +188,16 @@ void UGBG_Attribute_Set::OnRep_Stamina_Max(const FGameplayAttributeData &old_sta
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGBG_Attribute_Set, Stamina_Max, old_stamina_max);
 }
 //------------------------------------------------------------------------------------------------------------
-void UGBG_Attribute_Set::OnRep_Stamina_Threshold(const FGameplayAttributeData &old_stamina_max)
+void UGBG_Attribute_Set::OnRep_Stamina_Threshold(const FGameplayAttributeData &old_stamina_threshold)
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UGBG_Attribute_Set, Stamina_Threshold, old_stamina_max);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGBG_Attribute_Set, Stamina_Threshold, old_stamina_threshold);
 }
 //------------------------------------------------------------------------------------------------------------
 void UGBG_Attribute_Set::Handle_Health_Change(UAbilitySystemComponent *asc)
 {
-	float current_health = Get_Health();
-	float max_health = Get_Health_Max();
-    float clamped_health = FMath::Clamp(current_health, 0.0f, max_health);
+	const float current_health = Get_Health();
+	const float max_health = Get_Health_Max();
+    const float clamped_health = FMath::Clamp(current_health, 0.0f, max_health);
         
     if (current_health != clamped_health)
         Set_Health(clamped_health);
@@ -235,8 +235,8 @@ void UGBG_Attribute_Set::Handle_Stamina_Change(UAbilitySystemComponent *asc)
 //------------------------------------------------------------------------------------------------------------
 void UGBG_Attribute_Set::Handle_Stamina_Threshold_Change(UAbilitySystemComponent *asc)
 {
-	float current_val = Get_Stamina_Threshold();  // Get data from BP
-	float clamped_val = FMath::Clamp(current_val, 0.0f, 1.0f);
+	const float current_val = Get_Stamina_Threshold();  // Get data from BP
+	const float clamped_val = FMath::Clamp(current_val, 0.0f, 1.0f);
 
 	if (current_val != clamped_val)  // change value to clamped if not equal
 		Set_Stamina_Threshold(clamped_val);

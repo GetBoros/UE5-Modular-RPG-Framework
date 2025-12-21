@@ -49,7 +49,7 @@ protected:
 	UFUNCTION() virtual void OnRep_Health_Max(const FGameplayAttributeData &old_health_max);
 	UFUNCTION() virtual void OnRep_Stamina(const FGameplayAttributeData &old_stamina);
 	UFUNCTION() virtual void OnRep_Stamina_Max(const FGameplayAttributeData &old_stamina_max);
-	UFUNCTION() virtual void OnRep_Stamina_Threshold(const FGameplayAttributeData &old_stamina_max);
+	UFUNCTION() virtual void OnRep_Stamina_Threshold(const FGameplayAttributeData &old_stamina_threshold);
 
 private:
 	void Handle_Health_Change(UAbilitySystemComponent *asc);
