@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <GAS/GBG_Attribute_Set.h>
 #include <AbilitySystemComponent.h>
+#include <GameplayEffectExtension.h>
 #include <Net/UnrealNetwork.h>
 //------------------------------------------------------------------------------------------------------------
 
@@ -21,6 +22,22 @@ void UGBG_Attribute_Set::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &O
 	DOREPLIFETIME_CONDITION_NOTIFY(UGBG_Attribute_Set, Health_Max, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGBG_Attribute_Set, Stamina, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGBG_Attribute_Set, Stamina_Max, COND_None, REPNOTIFY_Always);
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBG_Attribute_Set::PostGameplayEffectExecute(const FGameplayEffectModCallbackData &data)
+{
+    Super::PostGameplayEffectExecute(data);
+
+    FGameplayAttribute attribute = data.EvaluatedData.Attribute;
+    UAbilitySystemComponent *asc = GetOwningAbilitySystemComponent();
+
+    if (asc == 0)
+        return;
+
+     if (attribute == GetHealthAttribute() )  // Health Logic
+		Handle_Health_Change(asc);
+	else if (attribute == GetStaminaAttribute() )  // Stamina logic
+		Handle_Stamina_Change(asc);
 }
 //------------------------------------------------------------------------------------------------------------
 void UGBG_Attribute_Set::Init_Health(float new_val)
@@ -141,5 +158,39 @@ void UGBG_Attribute_Set::OnRep_Stamina(const FGameplayAttributeData &old_stamina
 void UGBG_Attribute_Set::OnRep_Stamina_Max(const FGameplayAttributeData &old_stamina_max)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGBG_Attribute_Set, Stamina_Max, old_stamina_max);
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBG_Attribute_Set::Handle_Health_Change(UAbilitySystemComponent *asc)
+{
+	float current_health = Get_Health();
+	float max_health = Get_Health_Max();
+    float clamped_health = FMath::Clamp(current_health, 0.0f, max_health);
+        
+    if (current_health != clamped_health)
+        Set_Health(clamped_health);
+
+    if (clamped_health <= 0.0f)  // If HP dropped to 0 -> notify owner about death
+    {
+		// Usually call Character function here: OwnerCharacter->Die(); Or send Gameplay Event "Event.Death"
+    }
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBG_Attribute_Set::Handle_Stamina_Change(UAbilitySystemComponent *asc)
+{
+	float stamina_current = Get_Stamina();
+	float stamina_max = Get_Stamina_Max();
+    float clamped_stamina = FMath::Clamp(stamina_current, 0.0f, stamina_max);  // B. CLAMPING (Golden Standard): Modify value IMMEDIATELY to prevent "dirty" data
+    static FGameplayTag tag_fatigued = FGameplayTag::RequestGameplayTag(FName("State.Fatigued") );  // C. GAMEPLAY LOGIC (Reaction): Cache tag (static var initialized once per game session)
+
+    if (stamina_current != clamped_stamina)  // If value was different (e.g. was -5, became 0) -> update it
+        Set_Stamina(clamped_stamina);
+        
+    if (clamped_stamina <= Stamina_Fatigue_Threshold)  // Example Logic: If stamina < 20% -> apply debuff (In real project 0.2f should be in Config/DataAsset)
+	{
+		if (asc->HasMatchingGameplayTag(tag_fatigued) != true)  // if tag already added, not add again
+			asc->AddLooseGameplayTag(tag_fatigued);
+	}
+    else
+        asc->RemoveLooseGameplayTag(tag_fatigued);
 }
 //------------------------------------------------------------------------------------------------------------

@@ -11,7 +11,8 @@ UCLASS() class GBGAMEPLAY_API UGBG_Attribute_Set : public UAttributeSet
 public:
 	UGBG_Attribute_Set();
 
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const override;  // Important for replication in game
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const;  // Important for replication in game
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData &data);  // Effected by some GE
 
 	void Init_Health(float new_val);
 	void Init_Health_Max(float new_val);
@@ -38,11 +39,18 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_Stamina) FGameplayAttributeData Stamina;
 	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_Stamina_Max) FGameplayAttributeData Stamina_Max;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config") float Stamina_Fatigue_Threshold = 125.0f;
+
 protected:
 	UFUNCTION() virtual void OnRep_Health(const FGameplayAttributeData &old_health);
 	UFUNCTION() virtual void OnRep_Health_Max(const FGameplayAttributeData &old_health_max);
 	UFUNCTION() virtual void OnRep_Stamina(const FGameplayAttributeData &old_stamina);
 	UFUNCTION() virtual void OnRep_Stamina_Max(const FGameplayAttributeData &old_stamina_max);
+
+private:
+	void Handle_Health_Change(UAbilitySystemComponent *asc);
+	void Handle_Stamina_Change(UAbilitySystemComponent *asc);
+
 };
 //------------------------------------------------------------------------------------------------------------
 
