@@ -25,7 +25,7 @@ public class GBUI : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core",
+				"Core", "UMG"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -35,7 +35,7 @@ public class GBUI : ModuleRules
 			new string[]
 			{
 				"CoreUObject", "Engine", "Slate", "SlateCore",
-				// ... add private dependencies that you statically link with here ...	
+				"GameplayAbilities", "GameplayTags", "GBCore", "GBGameplay"
 			}
 			);
 		
