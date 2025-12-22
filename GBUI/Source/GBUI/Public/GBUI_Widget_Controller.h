@@ -14,6 +14,7 @@ UCLASS(Blueprintable, BlueprintType) class GBUI_API UGBUI_Widget_Controller : pu
 
 public:
     virtual void Bind_Callbacks_To_Dependencies();  // Called to bind this controller to attribute changes in the AttributeSet
+
     UFUNCTION(BlueprintCallable) virtual void Broadcast_Initial_Values();  // Called after params are set to broadcast initial values to the widget
     UFUNCTION(BlueprintCallable) void Set_Widget_Controller_Params(APlayerController *pc, APlayerState *ps, UAbilitySystemComponent *asc, UAttributeSet *as);  // UI to set up the controller
     

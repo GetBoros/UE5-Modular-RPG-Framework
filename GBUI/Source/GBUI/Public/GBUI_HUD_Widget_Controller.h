@@ -15,14 +15,14 @@ public:
     virtual void Bind_Callbacks_To_Dependencies();
     
     UPROPERTY(BlueprintAssignable) FOnAttributeChangedSignature On_Health_Changed;  // Delegates that Widgets can bind to, to receive updates.
-    UPROPERTY(BlueprintAssignable) FOnAttributeChangedSignature On_Max_Health_Changed;
+    UPROPERTY(BlueprintAssignable) FOnAttributeChangedSignature On_Health_Max_Changed;
     UPROPERTY(BlueprintAssignable) FOnAttributeChangedSignature On_Stamina_Changed;
-    UPROPERTY(BlueprintAssignable) FOnAttributeChangedSignature On_Max_Stamina_Changed;
+    UPROPERTY(BlueprintAssignable) FOnAttributeChangedSignature On_Stamina_Max_Changed;
 
 protected:
-    void Health_Changed(const struct FOnAttributeChangeData& data);  // Callback functions that will be bound to GAS attribute change events.
-    void Max_Health_Changed(const struct FOnAttributeChangeData& data);
-    void Stamina_Changed(const struct FOnAttributeChangeData& data);
-    void Max_Stamina_Changed(const struct FOnAttributeChangeData& data);
+    void Health_Changed(const struct FOnAttributeChangeData &data);  // Callback functions that will be bound to GAS attribute change events.
+    void Health_Max_Changed(const struct FOnAttributeChangeData &data);
+    void Stamina_Changed(const struct FOnAttributeChangeData &data);
+    void Stamina_Max_Changed(const struct FOnAttributeChangeData &data);
 };
 //------------------------------------------------------------------------------------------------------------
