@@ -12,17 +12,18 @@ void UGBUI_HUD_Widget_Controller::Broadcast_Initial_Values()
 {
     Super::Broadcast_Initial_Values();
 
-    if (Attribute_Set == 0) return;
+    if (Attribute_Set == 0)
+        return;
 
     // We need our specific Attribute Set to get the values
-    const UGBG_Attribute_Set* gbg_attribute_set = Cast<UGBG_Attribute_Set>(Attribute_Set);
+    const UGBG_Attribute_Set *gbg_attribute_set = Cast<UGBG_Attribute_Set>(Attribute_Set);
     if (gbg_attribute_set == 0) return;
 
     // Broadcast every attribute's current value to the UI
-    On_Health_Changed.Broadcast(gbg_attribute_set->Get_Health());
-    On_Max_Health_Changed.Broadcast(gbg_attribute_set->Get_Health_Max());
-    On_Stamina_Changed.Broadcast(gbg_attribute_set->Get_Stamina());
-    On_Max_Stamina_Changed.Broadcast(gbg_attribute_set->Get_Stamina_Max());
+    On_Health_Changed.Broadcast(gbg_attribute_set->Get_Health() );
+    On_Max_Health_Changed.Broadcast(gbg_attribute_set->Get_Health_Max() );
+    On_Stamina_Changed.Broadcast(gbg_attribute_set->Get_Stamina() );
+    On_Max_Stamina_Changed.Broadcast(gbg_attribute_set->Get_Stamina_Max() );
 }
 //------------------------------------------------------------------------------------------------------------
 void UGBUI_HUD_Widget_Controller::Bind_Callbacks_To_Dependencies()
