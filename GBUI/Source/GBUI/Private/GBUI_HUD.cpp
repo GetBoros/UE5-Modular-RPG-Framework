@@ -24,10 +24,12 @@ void AGBUI_HUD::BeginPlay()
     APlayerController *pc;
     AGBG_Player *gb_player;
     UAttributeSet *as;
-    UAbilitySystemComponent *asc;
     UGBUI_Widget_Controller *widget_controller;
+    UAbilitySystemComponent *asc;
     UGBUI_User_Widget *smart_widget;
 
+    Super::BeginPlay();
+    
     // 1.0. HUD Init
     if (HUD_Widget_Class == 0)
         return;
@@ -64,8 +66,7 @@ void AGBUI_HUD::BeginPlay()
     if (smart_widget == 0)
         return;
     smart_widget->Set_Widget_Controller(widget_controller);  // Pass the controller to the widget
-    
-    Super::BeginPlay();
+    widget_controller->Broadcast_Initial_Values();  // Need to broad cast data if bind after broadcast
 }
 //------------------------------------------------------------------------------------------------------------
 UGBUI_Widget_Controller *AGBUI_HUD::Get_Controller_Widget(const FController_Widget_Params &params)

@@ -24,8 +24,12 @@ void UGBUI_Widget_Controller::Bind_Callbacks_To_Dependencies()
     if (Ability_System_Component == 0 || Attribute_Set == 0)
         return;
 
-    On_Stamina_Changed.Broadcast(Attribute_Set->Get_Stamina() );  // Send initial value. Receive current and send to our UI
-
     Ability_System_Component->GetGameplayAttributeValueChangeDelegate(Attribute_Set->GetStaminaAttribute() ).AddUObject(this, &UGBUI_Widget_Controller::On_Stamina_Changed_Callback);  // Call our func when value chang
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBUI_Widget_Controller::Broadcast_Initial_Values()
+{
+    if (Attribute_Set != 0)
+        On_Stamina_Changed.Broadcast(Attribute_Set->Get_Stamina() );
 }
 //------------------------------------------------------------------------------------------------------------

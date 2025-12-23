@@ -22,10 +22,10 @@ USTRUCT(BlueprintType) struct FController_Widget_Params
 
     }
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<APlayerController> Player_Controller = nullptr;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<APlayerState> Player_State = nullptr;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UAbilitySystemComponent> Ability_System_Component = nullptr;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UAttributeSet> Attribute_Set = nullptr;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<APlayerController> Player_Controller = 0;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<APlayerState> Player_State = 0;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UAbilitySystemComponent> Ability_System_Component = 0;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UAttributeSet> Attribute_Set = 0;
 };
 //------------------------------------------------------------------------------------------------------------
 UCLASS(Blueprintable, BlueprintType) class GBUI_API UGBUI_Widget_Controller : public UObject
@@ -37,6 +37,7 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "GBUI | Controller") void Set_Widget_Controller_Params(const FController_Widget_Params &params);
     UFUNCTION(BlueprintCallable, Category = "GBUI | Controller") void Bind_Callbacks_To_Dependencies();
+    UFUNCTION(BlueprintCallable, Category = "GBUI | Controller") void Broadcast_Initial_Values();
     
     UPROPERTY(BlueprintAssignable, Category = "GBUI | Events") FOn_Attribute_Change_Signature On_Stamina_Changed;
     UPROPERTY(BlueprintReadOnly, Category = "GBUI | Data") TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
