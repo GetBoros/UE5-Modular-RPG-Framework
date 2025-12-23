@@ -17,7 +17,8 @@
 
 // AGBUI_HUD
 void AGBUI_HUD::BeginPlay()
-{
+{// !!! TEMP Maybe make a lot of methods
+
     IAbilitySystemInterface *as_interface;
     APawn *controlled_pawn;
     APlayerState *ps;
