@@ -2,26 +2,45 @@
 #pragma once
 //------------------------------------------------------------------------------------------------------------
 #include <UObject/Object.h>
+#include <GameplayEffectTypes.h>
 #include <GBUI_Widget_Controller.generated.h>
+//------------------------------------------------------------------------------------------------------------
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_Attribute_Change_Signature, float, new_value);
 //------------------------------------------------------------------------------------------------------------
 class UAbilitySystemComponent;
 class UAttributeSet;
+class UGBG_Attribute_Set;
 //------------------------------------------------------------------------------------------------------------
+USTRUCT(BlueprintType) struct FController_Widget_Params
+{
+    GENERATED_BODY()
 
+    FController_Widget_Params() {}
+    FController_Widget_Params(APlayerController *pc, APlayerState *ps, UAbilitySystemComponent *asc, UAttributeSet *as)
+     : Player_Controller(pc), Player_State(ps), Ability_System_Component(asc), Attribute_Set(as) 
+    {
+
+    }
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<APlayerController> Player_Controller = nullptr;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<APlayerState> Player_State = nullptr;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UAbilitySystemComponent> Ability_System_Component = nullptr;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UAttributeSet> Attribute_Set = nullptr;
+};
+//------------------------------------------------------------------------------------------------------------
 UCLASS(Blueprintable, BlueprintType) class GBUI_API UGBUI_Widget_Controller : public UObject
 {
     GENERATED_BODY()
 
 public:
-    virtual void Bind_Callbacks_To_Dependencies();  // Called to bind this controller to attribute changes in the AttributeSet
+    void On_Stamina_Changed_Callback(const FOnAttributeChangeData &data);
 
-    UFUNCTION(BlueprintCallable) virtual void Broadcast_Initial_Values();  // Called after params are set to broadcast initial values to the widget
-    UFUNCTION(BlueprintCallable) void Set_Widget_Controller_Params(APlayerController *pc, APlayerState *ps, UAbilitySystemComponent *asc, UAttributeSet *as);  // UI to set up the controller
+    UFUNCTION(BlueprintCallable, Category = "GBUI | Controller") void Set_Widget_Controller_Params(const FController_Widget_Params &params);
+    UFUNCTION(BlueprintCallable, Category = "GBUI | Controller") void Bind_Callbacks_To_Dependencies();
     
-protected:
-    UPROPERTY(BlueprintReadOnly) TObjectPtr<APlayerController> Player_Controller;  // Pointers to the core gameplay objects
-    UPROPERTY(BlueprintReadOnly) TObjectPtr<APlayerState> Player_State;
-    UPROPERTY(BlueprintReadOnly) TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
-    UPROPERTY(BlueprintReadOnly) TObjectPtr<UAttributeSet> Attribute_Set;
+    UPROPERTY(BlueprintAssignable, Category = "GBUI | Events") FOn_Attribute_Change_Signature On_Stamina_Changed;
+    UPROPERTY(BlueprintReadOnly, Category = "GBUI | Data") TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
+    UPROPERTY(BlueprintReadOnly, Category = "GBUI | Data") TObjectPtr<const UGBG_Attribute_Set> Attribute_Set;
+    
 };
 //------------------------------------------------------------------------------------------------------------

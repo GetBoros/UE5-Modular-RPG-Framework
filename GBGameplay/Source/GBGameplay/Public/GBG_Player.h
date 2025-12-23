@@ -1,10 +1,9 @@
 //------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include "AbilitySystemInterface.h"
-
-#include "GameFramework/Character.h"
-#include "GBG_Player.generated.h"
+#include <AbilitySystemInterface.h>
+#include <GameFramework/Character.h>
+#include <GBG_Player.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class UInputComponent;
 class UInputAction;
@@ -44,7 +43,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GAS") TArray<TSubclassOf<UGBG_Gameplay_Ability> > Default_Abilities;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true") ) UAbilitySystemComponent *Ability_System_Component = 0;
-	UPROPERTY() UGBG_Attribute_Set *Attribute_Set;
+	UPROPERTY(VisibleAnywhere) UGBG_Attribute_Set *Attribute_Set;
 	
 };
 //------------------------------------------------------------------------------------------------------------
