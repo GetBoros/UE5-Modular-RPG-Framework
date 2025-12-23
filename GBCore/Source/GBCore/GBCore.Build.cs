@@ -25,8 +25,8 @@ public class GBCore : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core",
-                "GameplayTags"  // If in public can use includes, but for compile need add to private or public same "GameplayTags"
+				"Core"
+                  // If in public can use includes, but for compile need add to private or public same "GameplayTags"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -35,8 +35,8 @@ public class GBCore : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"CoreUObject",
-				"Engine",
+				"CoreUObject", "Engine",
+				"GameplayTags", "GameplayAbilities", "GameplayTasks"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

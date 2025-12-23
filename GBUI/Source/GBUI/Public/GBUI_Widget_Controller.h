@@ -10,22 +10,21 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_Attribute_Change_Signature, floa
 class UAbilitySystemComponent;
 class UAttributeSet;
 class UGBG_Attribute_Set;
+class UGBC_Attribute_Info;
 //------------------------------------------------------------------------------------------------------------
 USTRUCT(BlueprintType) struct FController_Widget_Params
 {
     GENERATED_BODY()
 
-    FController_Widget_Params() {}
+    FController_Widget_Params() { }
     FController_Widget_Params(APlayerController *pc, APlayerState *ps, UAbilitySystemComponent *asc, UAttributeSet *as)
-     : Player_Controller(pc), Player_State(ps), Ability_System_Component(asc), Attribute_Set(as) 
-    {
-
-    }
+     : Player_Controller(pc), Player_State(ps), Ability_System_Component(asc), Attribute_Set(as) { }
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<APlayerController> Player_Controller = 0;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<APlayerState> Player_State = 0;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UAbilitySystemComponent> Ability_System_Component = 0;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UAttributeSet> Attribute_Set = 0;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UGBC_Attribute_Info> Attribute_Info_Asset = nullptr;
 };
 //------------------------------------------------------------------------------------------------------------
 UCLASS(Blueprintable, BlueprintType) class GBUI_API UGBUI_Widget_Controller : public UObject
@@ -42,6 +41,7 @@ public:
     UPROPERTY(BlueprintAssignable, Category = "GBUI | Events") FOn_Attribute_Change_Signature On_Stamina_Changed;
     UPROPERTY(BlueprintReadOnly, Category = "GBUI | Data") TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
     UPROPERTY(BlueprintReadOnly, Category = "GBUI | Data") TObjectPtr<const UGBG_Attribute_Set> Attribute_Set;
+    UPROPERTY(BlueprintReadOnly, Category = "GBUI | Data") TObjectPtr<UGBC_Attribute_Info> Attribute_Info;
     
 };
 //------------------------------------------------------------------------------------------------------------

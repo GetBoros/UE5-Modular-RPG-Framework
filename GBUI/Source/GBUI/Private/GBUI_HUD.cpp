@@ -60,7 +60,9 @@ void AGBUI_HUD::BeginPlay()
     as = gb_player->GetAttributeSet();
     
     // 3.0. Create Controlled Widget Init
-    widget_controller = Get_Controller_Widget(FController_Widget_Params(pc, ps, asc, as) );
+    FController_Widget_Params params(pc, ps, asc, as);
+    params.Attribute_Info_Asset = Attribute_Info_Data;
+    widget_controller = Get_Controller_Widget(params);
 
     // 3.1. Cast our "dumb" widget to our "smart" base class
     smart_widget = Cast<UGBUI_User_Widget>(HUD_Widget);

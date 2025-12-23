@@ -6,6 +6,7 @@
 #include <GBUI_HUD.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class UGBUI_Widget_Controller;
+class UGBC_Attribute_Info;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class GBUI_API AGBUI_HUD : public AHUD
 {
@@ -18,6 +19,7 @@ public:
 
     UPROPERTY(EditDefaultsOnly) TSubclassOf<UUserWidget> HUD_Widget_Class;
 	UPROPERTY(EditDefaultsOnly) TSubclassOf<UGBUI_Widget_Controller> Controller_Widget_Class;
+	UPROPERTY(EditDefaultsOnly) TObjectPtr<UGBC_Attribute_Info> Attribute_Info_Data;
 
 private:
     UPROPERTY() UUserWidget *HUD_Widget;
