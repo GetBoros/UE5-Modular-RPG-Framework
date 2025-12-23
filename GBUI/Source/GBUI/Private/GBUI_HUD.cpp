@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
-#include <GBUI.h>
 #include <GBUI_HUD.h>
+#include <GBUI_User_Widget.h>
 
 #include <GAS/GBG_Attribute_Set.h> 
 #include <GBG_Player.h> 
@@ -26,8 +26,7 @@ void AGBUI_HUD::BeginPlay()
     UAttributeSet *as;
     UAbilitySystemComponent *asc;
     UGBUI_Widget_Controller *widget_controller;
-
-    Super::BeginPlay();
+    UGBUI_User_Widget *smart_widget;
 
     // 1.0. HUD Init
     if (HUD_Widget_Class == 0)
@@ -36,7 +35,7 @@ void AGBUI_HUD::BeginPlay()
     HUD_Widget = CreateWidget<UUserWidget>(GetWorld(), HUD_Widget_Class);
     if (HUD_Widget == 0)
         return;
-    HUD_Widget->AddToViewport();
+    HUD_Widget->AddToViewport();  // Must be last
 
     // 1.1. Get Player State and controlled pawn from player controller
     pc = GetOwningPlayerController();
@@ -60,11 +59,13 @@ void AGBUI_HUD::BeginPlay()
     // 3.0. Create Controlled Widget Init
     widget_controller = Get_Controller_Widget(FController_Widget_Params(pc, ps, asc, as) );
 
-    // 3. СВЯЗКА (View <-> Controller)
-    // Пока мы просто создали контроллер. Виджет о нем еще не знает.
-    // В следующем шаге мы научим Виджет принимать этот контроллер.
-    // HUD_Widget->SetWidgetController(widget_controller); <--- ЭТО БУДЕТ ДАЛЬШЕ
-
+    // 3.1. Cast our "dumb" widget to our "smart" base class
+    smart_widget = Cast<UGBUI_User_Widget>(HUD_Widget);
+    if (smart_widget == 0)
+        return;
+    smart_widget->Set_Widget_Controller(widget_controller);  // Pass the controller to the widget
+    
+    Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
 UGBUI_Widget_Controller *AGBUI_HUD::Get_Controller_Widget(const FController_Widget_Params &params)
