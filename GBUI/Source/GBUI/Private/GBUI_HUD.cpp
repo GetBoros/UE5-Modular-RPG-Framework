@@ -20,7 +20,6 @@ void AGBUI_HUD::BeginPlay()
     APawn *controlled_pawn;
     APlayerState *ps;
     APlayerController *pc;
-    UAttributeSet *as;
     UGBUI_Widget_Controller *widget_controller;
     UAbilitySystemComponent *asc;
     UGBUI_User_Widget *smart_widget;
@@ -44,25 +43,19 @@ void AGBUI_HUD::BeginPlay()
     controlled_pawn = pc->GetPawn();
 
     // 2.0. Get ASC from controlled pawn useing interface
-    as_interface = Cast<IAbilitySystemInterface>(controlled_pawn);
+    as_interface = Cast<IAbilitySystemInterface>(controlled_pawn);  // Try to find interface if implented
+    if (as_interface == 0)
+        as_interface = Cast<IAbilitySystemInterface>(ps);
     if (as_interface == 0)
         return;
     asc = as_interface->GetAbilitySystemComponent();
     
-    // 2.1. Get Attribute Set (GENERIC WAY - DECOUPLED)
-    const TArray<UAttributeSet *> &sets = asc->GetSpawnedAttributes();
-    if (sets.Num() < 0)
-        return;
-    as = sets[0];
-
     // 3.0. Create Controlled Widget Init
-    FController_Widget_Params params(pc, ps, asc, as);
-    params.Attribute_Info_Asset = Attribute_Info_Data;
-    widget_controller = Get_Controller_Widget(params);
+    widget_controller = Get_Controller_Widget(FController_Widget_Params(pc, ps, asc, Attribute_Info_Data) );
 
     // 3.1. Cast our "dumb" widget to our "smart" base class
     smart_widget = Cast<UGBUI_User_Widget>(HUD_Widget);
-    if (smart_widget == 0)
+    if (smart_widget == 0)  // If parent not UGBUI_User_Widget return
         return;
     smart_widget->Set_Widget_Controller(widget_controller);  // Pass the controller to the widget
     widget_controller->Broadcast_Initial_Values();  // Need to broad cast data if bind after broadcast
