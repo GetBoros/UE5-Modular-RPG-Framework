@@ -8,7 +8,6 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_Attribute_Change_Signature, float, new_value);
 //------------------------------------------------------------------------------------------------------------
 class UAbilitySystemComponent;
-class UAttributeSet;
 class UGBG_Attribute_Set;
 class UGBC_Attribute_Info;
 //------------------------------------------------------------------------------------------------------------
@@ -40,7 +39,7 @@ public:
     
     UPROPERTY(BlueprintAssignable, Category = "GBUI | Events") FOn_Attribute_Change_Signature On_Stamina_Changed;
     UPROPERTY(BlueprintReadOnly, Category = "GBUI | Data") TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
-    UPROPERTY(BlueprintReadOnly, Category = "GBUI | Data") TObjectPtr<const UGBG_Attribute_Set> Attribute_Set;
+    UPROPERTY(BlueprintReadOnly, Category = "GBUI | Data") TObjectPtr<const UAttributeSet> Attribute_Set;
     UPROPERTY(BlueprintReadOnly, Category = "GBUI | Data") TObjectPtr<UGBC_Attribute_Info> Attribute_Info;
     
 };

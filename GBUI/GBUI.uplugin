@@ -25,10 +25,6 @@
 		{
 			"Name": "GBCore",
 			"Enabled": true
-		},
-		{
-			"Name": "GBGameplay",
-			"Enabled": true
 		}
 	]
 }

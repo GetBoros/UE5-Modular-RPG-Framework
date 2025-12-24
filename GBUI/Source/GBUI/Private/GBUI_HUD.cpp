@@ -2,9 +2,6 @@
 #include <GBUI_HUD.h>
 #include <GBUI_User_Widget.h>
 
-#include <GAS/GBG_Attribute_Set.h> 
-#include <GBG_Player.h> 
-
 #include <Blueprint/UserWidget.h>
 #include <GameFramework/PlayerController.h>
 #include <GameFramework/PlayerState.h>
@@ -23,7 +20,6 @@ void AGBUI_HUD::BeginPlay()
     APawn *controlled_pawn;
     APlayerState *ps;
     APlayerController *pc;
-    AGBG_Player *gb_player;
     UAttributeSet *as;
     UGBUI_Widget_Controller *widget_controller;
     UAbilitySystemComponent *asc;
@@ -53,12 +49,12 @@ void AGBUI_HUD::BeginPlay()
         return;
     asc = as_interface->GetAbilitySystemComponent();
     
-    // 2.1. Get Attribute set from our controlled pawn
-    gb_player = Cast<AGBG_Player>(controlled_pawn);  // Попытка 2: Получить AttributeSet через каст к нашему классу
-    if (gb_player == 0)
+    // 2.1. Get Attribute Set (GENERIC WAY - DECOUPLED)
+    const TArray<UAttributeSet *> &sets = asc->GetSpawnedAttributes();
+    if (sets.Num() < 0)
         return;
-    as = gb_player->GetAttributeSet();
-    
+    as = sets[0];
+
     // 3.0. Create Controlled Widget Init
     FController_Widget_Params params(pc, ps, asc, as);
     params.Attribute_Info_Asset = Attribute_Info_Data;

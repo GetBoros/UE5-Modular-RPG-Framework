@@ -35,7 +35,7 @@ public class GBUI : ModuleRules
 			new string[]
 			{
 				"CoreUObject", "Engine", "Slate", "SlateCore",
-				"GameplayAbilities", "GameplayTags", "GBCore", "GBGameplay"
+				"GameplayAbilities", "GameplayTags", "GBCore"
 			}
 			);
 		
