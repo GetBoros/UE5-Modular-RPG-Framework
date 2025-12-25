@@ -6,9 +6,9 @@
 
 
 // UGBUI_User_Widget
-void UGBUI_User_Widget::Set_Widget_Controller(UObject *in_controller)
+void UGBUI_User_Widget::Set_Widget_Controller(UGBUI_Widget_Controller *widget_controller)
 {
-    Widget_Controller = Cast<UGBUI_Widget_Controller>(in_controller);
+    Widget_Controller = widget_controller;
 
     On_Widget_Controller_Set();
 }

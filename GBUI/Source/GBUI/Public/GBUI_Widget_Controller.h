@@ -1,7 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include <UObject/Object.h>
 #include <Types/GBC_Attribute_Info.h>
 #include <GameplayEffectTypes.h>
 #include <GBUI_Widget_Controller.generated.h>
@@ -32,20 +31,19 @@ UCLASS(Blueprintable, BlueprintType) class GBUI_API UGBUI_Widget_Controller : pu
 public:
     UGBUI_Widget_Controller();
 
-    void On_Stamina_Changed_Callback(const FOnAttributeChangeData &data);
-
-    UFUNCTION(BlueprintCallable) void Set_Widget_Controller_Params(const FController_Widget_Params &params);
-    UFUNCTION(BlueprintCallable) void Bind_Callbacks_To_Dependencies();
-    UFUNCTION(BlueprintCallable) void Broadcast_Initial_Values();
+    void Init(const FController_Widget_Params &params);
+    void Broadcast_Initial_Values();
     
-    UPROPERTY(BlueprintAssignable, Category = "GBUI | Events") FOn_Attribute_Change_Signature On_Stamina_Changed;
-
-    UPROPERTY(BlueprintReadOnly, Category = "GBUI | Data") TObjectPtr<UGBC_Attribute_Info> Attribute_Info;
-    UPROPERTY(BlueprintReadOnly, Category = "GBUI | Data") TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
-    
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GBUI | Config") FGameplayTag Stamina_Tag;
+protected:
+    UPROPERTY(BlueprintAssignable) FOn_Attribute_Change_Signature On_Stamina_Changed;  // Can bind from BP
+    UPROPERTY(BlueprintReadOnly) TObjectPtr<UGBC_Attribute_Info> Attribute_Info;
+    UPROPERTY(BlueprintReadOnly) TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) FGameplayTag Stamina_Tag;
 
 private:
+    void Bind_Callbacks_To_Dependencies();
+    void On_Stamina_Changed_Callback(const FOnAttributeChangeData &data);
+
     FGBC_Attribute_Info_Item Attribute_Info_Stamina;
 
 };

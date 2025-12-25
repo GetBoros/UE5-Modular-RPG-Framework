@@ -11,11 +11,10 @@ UCLASS() class GBUI_API UGBUI_User_Widget : public UUserWidget
     GENERATED_BODY()
 
 public:
-    UFUNCTION(BlueprintImplementableEvent, Category = "GBUI | Widget") void On_Widget_Controller_Set();  // BP Event called when controller_widget setup
+    UFUNCTION(BlueprintImplementableEvent) void On_Widget_Controller_Set();  // BP Event called when controller_widget setup
     
-    UFUNCTION(BlueprintCallable, Category = "GBUI | Widget") void Set_Widget_Controller(UObject *in_controller);  // hud can send controller here
-    
-    UPROPERTY(BlueprintReadOnly, Category = "GBUI | Widget") TObjectPtr<UGBUI_Widget_Controller> Widget_Controller;
+    UFUNCTION(BlueprintCallable) void Set_Widget_Controller(UGBUI_Widget_Controller *widget_controller);  // hud can send controller here
+    UPROPERTY(BlueprintReadOnly) TObjectPtr<UGBUI_Widget_Controller> Widget_Controller;
     
 };
 //------------------------------------------------------------------------------------------------------------
