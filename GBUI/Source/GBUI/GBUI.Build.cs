@@ -34,8 +34,8 @@ public class GBUI : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"CoreUObject", "Engine", "Slate", "SlateCore",
-				"GameplayAbilities", "GameplayTags", "GBCore"
+				"CoreUObject", "Engine", "Slate", "SlateCore",  // Core
+				"GameplayAbilities", "GameplayTags", "GBCore"  // Custom
 			}
 			);
 		
