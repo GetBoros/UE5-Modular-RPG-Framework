@@ -77,8 +77,8 @@ void AGBG_Player::SetupPlayerInputComponent(UInputComponent *player_input_compon
 	if (UEnhancedInputComponent *enhanced_input_component = Cast<UEnhancedInputComponent>(player_input_component) )
 	{
 		enhanced_input_component->BindAction(Action_Move, ETriggerEvent::Triggered, this, &AGBG_Player::Move);
-		enhanced_input_component->BindAction(Action_Jump, ETriggerEvent::Started, this, &ACharacter::Jump);
-		enhanced_input_component->BindAction(Action_Jump, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+		enhanced_input_component->BindAction(Action_Jump, ETriggerEvent::Started, this, &AGBG_Player::On_Jump_Bgn);
+		enhanced_input_component->BindAction(Action_Jump, ETriggerEvent::Completed, this, &AGBG_Player::On_Jump_End);
 		enhanced_input_component->BindAction(Action_Look, ETriggerEvent::Triggered, this, &AGBG_Player::Look);
 		enhanced_input_component->BindAction(Action_Sprint, ETriggerEvent::Started, this, &AGBG_Player::On_Sprint_Bgn);
 		enhanced_input_component->BindAction(Action_Sprint, ETriggerEvent::Completed, this, &AGBG_Player::On_Sprint_End);
@@ -114,6 +114,16 @@ void AGBG_Player::Look(const FInputActionValue &value)
 	
 	AddControllerYawInput(look_axis_vector.X);
 	AddControllerPitchInput(look_axis_vector.Y);
+}
+//------------------------------------------------------------------------------------------------------------
+void AGBG_Player::On_Jump_Bgn(const FInputActionValue &value)
+{
+	Jump();
+}
+//------------------------------------------------------------------------------------------------------------
+void AGBG_Player::On_Jump_End(const FInputActionValue &value)
+{
+	StopJumping();
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::On_Sprint_Bgn(const FInputActionValue &value)
