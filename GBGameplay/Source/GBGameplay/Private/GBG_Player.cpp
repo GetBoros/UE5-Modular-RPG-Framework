@@ -144,3 +144,12 @@ void AGBG_Player::On_Sprint_End(const FInputActionValue &value)
 	Ability_System_Component->AbilityLocalInputReleased(sprint_input_id);  // Ability_System_Component know what input id is a sprint so use it
 }
 //------------------------------------------------------------------------------------------------------------
+void AGBG_Player::Temp(float trace_distance, const FVector forward, const FVector cam_location, FVector& start, FVector& end)
+{
+	if (trace_distance == 0)
+		trace_distance = 5000.0f;
+	
+	start = cam_location;
+	end = forward * trace_distance + cam_location;
+}
+//------------------------------------------------------------------------------------------------------------

@@ -36,6 +36,8 @@ public:
 	void On_Sprint_Bgn(const FInputActionValue &value);
 	void On_Sprint_End(const FInputActionValue &value);
 
+	UFUNCTION(BlueprintCallable) void Temp(float trace_distance, const FVector forward, const FVector cam_location, FVector &start, FVector &end);
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Move = 0;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Look = 0;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Jump = 0;
