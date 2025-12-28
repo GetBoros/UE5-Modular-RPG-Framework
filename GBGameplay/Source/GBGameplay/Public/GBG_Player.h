@@ -11,6 +11,7 @@ class UAbilitySystemComponent;
 class UGameplayEffect;
 class UGBG_Attribute_Set;
 class UGBG_Gameplay_Ability;
+class UGBG_Destructible_Interaction;
 struct FInputActionValue;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class GBGAMEPLAY_API AGBG_Player : public ACharacter, public IAbilitySystemInterface
@@ -36,7 +37,7 @@ public:
 	void On_Sprint_Bgn(const FInputActionValue &value);
 	void On_Sprint_End(const FInputActionValue &value);
 
-	UFUNCTION(BlueprintCallable) void Temp(float trace_distance, const FVector forward, const FVector cam_location, FVector &start, FVector &end);
+	UFUNCTION(BlueprintCallable) void Perform_Interaction();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Move = 0;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Look = 0;
@@ -48,6 +49,8 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true") ) UAbilitySystemComponent *Ability_System_Component = 0;
 	UPROPERTY(VisibleAnywhere) UGBG_Attribute_Set *Attribute_Set;
-	
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components") UGBG_Destructible_Interaction *Destructible_Interaction_Component;
+
 };
 //------------------------------------------------------------------------------------------------------------

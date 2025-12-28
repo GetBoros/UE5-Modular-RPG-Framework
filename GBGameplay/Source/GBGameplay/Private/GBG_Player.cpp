@@ -4,6 +4,8 @@
 #include <GAS/GBG_Gameplay_Ability.h>
 #include <GAS/GBG_Attribute_Set.h>
 
+#include <Components/GBG_Destructible_Interaction.h>
+
 #include <EnhancedInputComponent.h>
 #include <AbilitySystemComponent.h>
 //------------------------------------------------------------------------------------------------------------
@@ -21,6 +23,7 @@ AGBG_Player::AGBG_Player()
 	Ability_System_Component->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);  // Mixed standart for Character
 
 	Attribute_Set = CreateDefaultSubobject<UGBG_Attribute_Set>(TEXT("AttributeSet") );
+	Destructible_Interaction_Component = CreateDefaultSubobject<UGBG_Destructible_Interaction>(TEXT("DestructibleInteractionComponent") );
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::BeginPlay()
@@ -144,12 +147,13 @@ void AGBG_Player::On_Sprint_End(const FInputActionValue &value)
 	Ability_System_Component->AbilityLocalInputReleased(sprint_input_id);  // Ability_System_Component know what input id is a sprint so use it
 }
 //------------------------------------------------------------------------------------------------------------
-void AGBG_Player::Temp(float trace_distance, const FVector forward, const FVector cam_location, FVector& start, FVector& end)
+void AGBG_Player::Perform_Interaction()
 {
-	if (trace_distance == 0)
-		trace_distance = 5000.0f;
-	
-	start = cam_location;
-	end = forward * trace_distance + cam_location;
+	FHitResult HitResult;
+
+	if (Destructible_Interaction_Component)
+	{
+		Destructible_Interaction_Component->PerformInteractionTrace(HitResult);
+	}
 }
 //------------------------------------------------------------------------------------------------------------
