@@ -13,10 +13,16 @@ public:
 	
 	virtual void BeginPlay();
 	virtual void TickComponent(float delta_time, ELevelTick tick_type, FActorComponentTickFunction *this_tick_function);
-		
-	UFUNCTION(BlueprintCallable) void Perform_Interaction_Trace(AActor *&result);
+	
+	UFUNCTION(BlueprintCallable) void Interact();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction") float Trace_Distance = 5000.0f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction|Spawning") TSubclassOf<AActor> Actor_Class_To_Spawn;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction|Spawning") ESpawnActorCollisionHandlingMethod Spawn_Collision_Method = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction|Spawning") TSubclassOf<AActor> Actor_Class_To_Spawn;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction|Spawning") FName Tag_Destructible;
+
+private:
+	void Find_Target_Under_Reticle(FHitResult &hit_result) const;
+	void Try_Spawn_Destructible(const FHitResult &hit_result);
+
 };

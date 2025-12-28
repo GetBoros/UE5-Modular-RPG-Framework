@@ -34,6 +34,7 @@ void AGBG_Player::BeginPlay()
 	ensureMsgf(Action_Look, TEXT("Please insert something in BP") );
 	ensureMsgf(Action_Jump, TEXT("Please insert something in BP") );
 	ensureMsgf(Action_Sprint, TEXT("Please insert something in BP") );
+	ensureMsgf(Action_Interact, TEXT("Please insert something in BP") );
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::Tick(float delta_time)
@@ -85,6 +86,7 @@ void AGBG_Player::SetupPlayerInputComponent(UInputComponent *player_input_compon
 		enhanced_input_component->BindAction(Action_Look, ETriggerEvent::Triggered, this, &AGBG_Player::Look);
 		enhanced_input_component->BindAction(Action_Sprint, ETriggerEvent::Started, this, &AGBG_Player::On_Sprint_Bgn);
 		enhanced_input_component->BindAction(Action_Sprint, ETriggerEvent::Completed, this, &AGBG_Player::On_Sprint_End);
+		enhanced_input_component->BindAction(Action_Interact, ETriggerEvent::Started, this, &AGBG_Player::On_Interact);
 	}
 }
 //------------------------------------------------------------------------------------------------------------
@@ -147,8 +149,8 @@ void AGBG_Player::On_Sprint_End(const FInputActionValue &value)
 	Ability_System_Component->AbilityLocalInputReleased(sprint_input_id);  // Ability_System_Component know what input id is a sprint so use it
 }
 //------------------------------------------------------------------------------------------------------------
-void AGBG_Player::Perform_Interaction()
+void AGBG_Player::On_Interact(const FInputActionValue& value)
 {
-
+	Destructible_Interaction_Component->Interact();
 }
 //------------------------------------------------------------------------------------------------------------

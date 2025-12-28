@@ -36,13 +36,13 @@ public:
 	void On_Jump_End(const FInputActionValue &value);
 	void On_Sprint_Bgn(const FInputActionValue &value);
 	void On_Sprint_End(const FInputActionValue &value);
-
-	UFUNCTION(BlueprintCallable) void Perform_Interaction();
+	void On_Interact(const FInputActionValue &value);
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Move = 0;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Look = 0;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Jump = 0;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Sprint = 0;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Interact = 0;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GAS") TSubclassOf<UGameplayEffect> Default_Attributes_Effect;  // GEffect
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GAS") TArray<TSubclassOf<UGBG_Gameplay_Ability> > Default_Abilities;
