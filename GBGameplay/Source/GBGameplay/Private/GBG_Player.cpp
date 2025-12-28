@@ -149,10 +149,7 @@ void AGBG_Player::On_Sprint_End(const FInputActionValue &value)
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::Perform_Interaction()
 {
-	bool is_actor_with_tag;
-	FTransform transform;
-
-	if (Destructible_Interaction_Component)
-		Destructible_Interaction_Component->PerformInteractionTrace(is_actor_with_tag, transform);
+	if (Destructible_Interaction_Component != 0)
+		Destructible_Interaction_Component->Perform_Interaction_Trace();
 }
 //------------------------------------------------------------------------------------------------------------

@@ -18,6 +18,8 @@ UGBG_Destructible_Interaction::UGBG_Destructible_Interaction()
 void UGBG_Destructible_Interaction::BeginPlay()
 {
 	Super::BeginPlay();
+
+	ensureMsgf(Actor_Class_To_Spawn, TEXT("Hello world") );
 }
 //------------------------------------------------------------------------------------------------------------
 void UGBG_Destructible_Interaction::TickComponent(float delta_time, ELevelTick tick_type, FActorComponentTickFunction *this_tick_function)
@@ -25,46 +27,61 @@ void UGBG_Destructible_Interaction::TickComponent(float delta_time, ELevelTick t
 	Super::TickComponent(delta_time, tick_type, this_tick_function);
 }
 //------------------------------------------------------------------------------------------------------------
-void UGBG_Destructible_Interaction::PerformInteractionTrace(bool &is_actor_with_tag, FTransform &transform)
+void UGBG_Destructible_Interaction::Perform_Interaction_Trace()
 {
-	AActor* MyOwner = GetOwner();
-	if (!MyOwner)
-		return; // Если владельца нет, выходим
+	bool is_hit;
+	FHitResult hit_result;
+	FCollisionQueryParams collision_params;
+	FVector spawn_location;
+	FRotator spawn_rotation;
 
-	UWorld* World = GetWorld();
-	if (!World)
-		return; // Если мира нет, выходим
+	AActor *hit_actor, *new_actor, *owner;
+	APawn *instigator;
+	UWorld *world;
+	APlayerCameraManager *camera_manager;
 
-	APlayerCameraManager* CameraManager = UGameplayStatics::GetPlayerCameraManager(World, 0);
-	if (!CameraManager)
+	owner = GetOwner();
+	if (owner == 0)
 		return;
 
-	const FVector CameraLocation = CameraManager->GetCameraLocation();
-	const FVector ForwardVector = CameraManager->GetCameraRotation().Vector(); // Получаем вектор направления из ротации камеры
-	const FVector StartTrace = CameraLocation;
-	const FVector EndTrace = StartTrace + (ForwardVector * TraceDistance);
-
-	FHitResult HitResult;
-	FCollisionQueryParams CollisionParams;
-	CollisionParams.AddIgnoredActor(MyOwner);
-
-	bool bHit = World->LineTraceSingleByChannel(HitResult, StartTrace, EndTrace, ECC_Visibility, CollisionParams);
-	DrawDebugLine(World, StartTrace, EndTrace, bHit ? FColor::Green : FColor::Red, false, 5.0f, 0, 1.0f);
-
-	if (bHit == false)
+	world = GetWorld();
+	if (world == 0)
 		return;
-	AActor* HitActor = HitResult.GetActor();
-	if (HitActor)
-		UE_LOG(LogTemp, Warning, TEXT("Trace hit actor: %s"), *HitActor->GetName());
 
-	if (HitResult.GetComponent()->ComponentHasTag(TEXT("Temp") ) )
-	{
-		// Spawn Actor | Make Transform | Set Class | 
+	camera_manager = UGameplayStatics::GetPlayerCameraManager(world, 0);
+	if (camera_manager == 0)
+		return;
 
-		// For spawn actor set Activation type triger
+	const FVector forward_vector = camera_manager->GetCameraRotation().Vector();
+	const FVector start_trace = camera_manager->GetCameraLocation();
+	const FVector end_trace = start_trace + (forward_vector * Trace_Distance);
 
-		is_actor_with_tag = true;
-		transform.SetLocation(HitResult.Location);
-	}
+	collision_params.AddIgnoredActor(owner);
+	is_hit = world->LineTraceSingleByChannel(hit_result, start_trace, end_trace, ECC_Visibility, collision_params);
+	DrawDebugLine(world, start_trace, end_trace, is_hit ? FColor::Green : FColor::Red, false, 5.0f, 0, 1.0f);
+
+	if (is_hit == false)
+		return;
+	
+	hit_actor = hit_result.GetActor();
+	if (hit_actor == 0)
+		UE_LOG(LogTemp, Warning, TEXT("Trace hit actor: %s"), *hit_actor->GetName() );
+
+	if (hit_result.GetComponent()->ComponentHasTag(TEXT("Temp")) != true)
+		return;
+	UE_LOG(LogTemp, Log, TEXT("Trace hit valid component on actor: %s"), *hit_result.GetActor()->GetName() );
+	
+	if (Actor_Class_To_Spawn == 0)
+		return;
+
+	spawn_location = hit_result.Location;
+	spawn_rotation = FRotator::ZeroRotator;
+	instigator = Cast<APawn>(owner);
+	
+	const FTransform spawn_transform(spawn_rotation, spawn_location);
+	new_actor = world->SpawnActorDeferred<AActor>(Actor_Class_To_Spawn, spawn_transform, owner, instigator, Spawn_Collision_Method);
+	new_actor->SetLifeSpan(0.2f);
+
+	UGameplayStatics::FinishSpawningActor(new_actor, spawn_transform);
 }
 //------------------------------------------------------------------------------------------------------------
