@@ -27,7 +27,7 @@ void UGBG_Destructible_Interaction::TickComponent(float delta_time, ELevelTick t
 	Super::TickComponent(delta_time, tick_type, this_tick_function);
 }
 //------------------------------------------------------------------------------------------------------------
-void UGBG_Destructible_Interaction::Perform_Interaction_Trace()
+void UGBG_Destructible_Interaction::Perform_Interaction_Trace(AActor *&result)
 {
 	bool is_hit;
 	FHitResult hit_result;
@@ -65,7 +65,7 @@ void UGBG_Destructible_Interaction::Perform_Interaction_Trace()
 	
 	hit_actor = hit_result.GetActor();
 	if (hit_actor == 0)
-		UE_LOG(LogTemp, Warning, TEXT("Trace hit actor: %s"), *hit_actor->GetName() );
+		return;
 
 	if (hit_result.GetComponent()->ComponentHasTag(TEXT("Temp")) != true)
 		return;
@@ -79,9 +79,9 @@ void UGBG_Destructible_Interaction::Perform_Interaction_Trace()
 	instigator = Cast<APawn>(owner);
 	
 	const FTransform spawn_transform(spawn_rotation, spawn_location);
-	new_actor = world->SpawnActorDeferred<AActor>(Actor_Class_To_Spawn, spawn_transform, owner, instigator, Spawn_Collision_Method);
-	new_actor->SetLifeSpan(0.2f);
-
+	new_actor = world->SpawnActorDeferred<AActor>(Actor_Class_To_Spawn, spawn_transform, owner, 0, Spawn_Collision_Method);
+	new_actor->SetLifeSpan(2.0f);  // 0.2f to short times
 	UGameplayStatics::FinishSpawningActor(new_actor, spawn_transform);
+	result = new_actor;
 }
 //------------------------------------------------------------------------------------------------------------

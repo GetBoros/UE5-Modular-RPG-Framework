@@ -149,7 +149,6 @@ void AGBG_Player::On_Sprint_End(const FInputActionValue &value)
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::Perform_Interaction()
 {
-	if (Destructible_Interaction_Component != 0)
-		Destructible_Interaction_Component->Perform_Interaction_Trace();
+
 }
 //------------------------------------------------------------------------------------------------------------

@@ -14,7 +14,7 @@ public:
 	virtual void BeginPlay();
 	virtual void TickComponent(float delta_time, ELevelTick tick_type, FActorComponentTickFunction *this_tick_function);
 		
-	UFUNCTION(BlueprintCallable) void Perform_Interaction_Trace();
+	UFUNCTION(BlueprintCallable) void Perform_Interaction_Trace(AActor *&result);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction") float Trace_Distance = 5000.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction|Spawning") TSubclassOf<AActor> Actor_Class_To_Spawn;
