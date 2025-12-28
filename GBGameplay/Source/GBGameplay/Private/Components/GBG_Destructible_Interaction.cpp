@@ -25,7 +25,7 @@ void UGBG_Destructible_Interaction::TickComponent(float delta_time, ELevelTick t
 	Super::TickComponent(delta_time, tick_type, this_tick_function);
 }
 //------------------------------------------------------------------------------------------------------------
-void UGBG_Destructible_Interaction::PerformInteractionTrace(FHitResult &HitResult)
+void UGBG_Destructible_Interaction::PerformInteractionTrace(bool &is_actor_with_tag, FTransform &transform)
 {
 	AActor* MyOwner = GetOwner();
 	if (!MyOwner)
@@ -44,17 +44,27 @@ void UGBG_Destructible_Interaction::PerformInteractionTrace(FHitResult &HitResul
 	const FVector StartTrace = CameraLocation;
 	const FVector EndTrace = StartTrace + (ForwardVector * TraceDistance);
 
+	FHitResult HitResult;
 	FCollisionQueryParams CollisionParams;
-	CollisionParams.AddIgnoredActor(MyOwner); // ВАЖНО: Игнорируем самого игрока, чтобы луч не попал в него
+	CollisionParams.AddIgnoredActor(MyOwner);
 
 	bool bHit = World->LineTraceSingleByChannel(HitResult, StartTrace, EndTrace, ECC_Visibility, CollisionParams);
 	DrawDebugLine(World, StartTrace, EndTrace, bHit ? FColor::Green : FColor::Red, false, 5.0f, 0, 1.0f);
 
-	if (bHit)
+	if (bHit == false)
+		return;
+	AActor* HitActor = HitResult.GetActor();
+	if (HitActor)
+		UE_LOG(LogTemp, Warning, TEXT("Trace hit actor: %s"), *HitActor->GetName());
+
+	if (HitResult.GetComponent()->ComponentHasTag(TEXT("Temp") ) )
 	{
-		AActor* HitActor = HitResult.GetActor();
-		if (HitActor)
-			UE_LOG(LogTemp, Warning, TEXT("Trace hit actor: %s"), *HitActor->GetName());
+		// Spawn Actor | Make Transform | Set Class | 
+
+		// For spawn actor set Activation type triger
+
+		is_actor_with_tag = true;
+		transform.SetLocation(HitResult.Location);
 	}
 }
 //------------------------------------------------------------------------------------------------------------
