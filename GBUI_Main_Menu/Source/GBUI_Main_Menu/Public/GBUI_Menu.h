@@ -1,16 +1,16 @@
 ﻿//------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include "GBUI_Main_Menu.h"
-//------------------------------------------------------------------------------------------------------------
-#include "Menu_Main.generated.h"
+#include <Blueprint/UserWidget.h>
+
+#include <GBUI_Menu.generated.h>
 //------------------------------------------------------------------------------------------------------------
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOn_Button_Pressed);
 //------------------------------------------------------------------------------------------------------------
 class UTextBlock;
 class UImage;
 //------------------------------------------------------------------------------------------------------------
-UCLASS(meta = (DisableNativeTick) ) class UGBLab_Menu_Main_Button : public UUserWidget
+UCLASS(meta = (DisableNativeTick) ) class UGBUI_Main_Menu_Button : public UUserWidget
 {
 	GENERATED_BODY()
 
@@ -31,7 +31,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite) UMaterialInstanceDynamic *Button_DMI_BG= 0;
 };
 //------------------------------------------------------------------------------------------------------------
-UCLASS(meta = (DisableNativeTick) ) class GBUI_MAIN_MENU_API UGBLab_Menu_Main: public UUserWidget
+UCLASS(meta = (DisableNativeTick) ) class GBUI_MAIN_MENU_API UGBUI_Main_Menu : public UUserWidget
 {
 	GENERATED_BODY()
 	
