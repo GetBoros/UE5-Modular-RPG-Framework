@@ -30,8 +30,8 @@ public:
 
 	UGBG_Attribute_Set *GetAttributeSet() const { return Attribute_Set; }
 
-	void Move(const FInputActionValue &value);
-	void Look(const FInputActionValue &value);
+	void On_Move(const FInputActionValue &value);
+	void On_Look(const FInputActionValue &value);
 	void On_Jump_Bgn(const FInputActionValue &value);
 	void On_Jump_End(const FInputActionValue &value);
 	void On_Sprint_Bgn(const FInputActionValue &value);

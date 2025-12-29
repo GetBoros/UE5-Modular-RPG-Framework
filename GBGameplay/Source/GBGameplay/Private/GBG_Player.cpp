@@ -63,7 +63,7 @@ void AGBG_Player::PossessedBy(AController *new_controller)
 	if (spec_handle.IsValid() == true)
 		Ability_System_Component->ApplyGameplayEffectSpecToSelf(*spec_handle.Data.Get() );  // Apply effect to self
 
-	for (const auto &ability_class : Default_Abilities)  // Learn abilities by default
+	for (const TSubclassOf<UGBG_Gameplay_Ability> &ability_class : Default_Abilities)  // Learn abilities by default || 
 	{
 		if (ability_class == 0)
 			continue;
@@ -87,10 +87,10 @@ void AGBG_Player::SetupPlayerInputComponent(UInputComponent *player_input_compon
 	enhanced_input_component = Cast<UEnhancedInputComponent>(player_input_component);
 	if (enhanced_input_component != 0)
 	{
-		enhanced_input_component->BindAction(Action_Move, ETriggerEvent::Triggered, this, &AGBG_Player::Move);
+		enhanced_input_component->BindAction(Action_Move, ETriggerEvent::Triggered, this, &AGBG_Player::On_Move);
 		enhanced_input_component->BindAction(Action_Jump, ETriggerEvent::Started, this, &AGBG_Player::On_Jump_Bgn);
 		enhanced_input_component->BindAction(Action_Jump, ETriggerEvent::Completed, this, &AGBG_Player::On_Jump_End);
-		enhanced_input_component->BindAction(Action_Look, ETriggerEvent::Triggered, this, &AGBG_Player::Look);
+		enhanced_input_component->BindAction(Action_Look, ETriggerEvent::Triggered, this, &AGBG_Player::On_Look);
 		enhanced_input_component->BindAction(Action_Sprint, ETriggerEvent::Started, this, &AGBG_Player::On_Sprint_Bgn);
 		enhanced_input_component->BindAction(Action_Sprint, ETriggerEvent::Completed, this, &AGBG_Player::On_Sprint_End);
 		enhanced_input_component->BindAction(Action_Interact, ETriggerEvent::Started, this, &AGBG_Player::On_Interact);
@@ -102,7 +102,7 @@ UAbilitySystemComponent *AGBG_Player::GetAbilitySystemComponent() const
 	return Ability_System_Component;
 }
 //------------------------------------------------------------------------------------------------------------
-void AGBG_Player::Move(const FInputActionValue &value)
+void AGBG_Player::On_Move(const FInputActionValue &value)
 {
 	FVector2D movement_vector = value.Get<FVector2D>();
 	const FRotator rotation = Controller->GetControlRotation();
@@ -117,7 +117,7 @@ void AGBG_Player::Move(const FInputActionValue &value)
 	AddMovementInput(right_direction , movement_vector.X);
 }
 //------------------------------------------------------------------------------------------------------------
-void AGBG_Player::Look(const FInputActionValue &value)
+void AGBG_Player::On_Look(const FInputActionValue &value)
 {
 	FVector2D look_axis_vector = value.Get<FVector2D>();
 
