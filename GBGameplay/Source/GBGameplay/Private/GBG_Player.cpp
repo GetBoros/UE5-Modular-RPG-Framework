@@ -44,6 +44,9 @@ void AGBG_Player::Tick(float delta_time)
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::PossessedBy(AController *new_controller)
 {
+	int32 input_id;
+	UGBG_Gameplay_Ability *ability_cdo;
+
 	Super::PossessedBy(new_controller);
 
 	if (Ability_System_Component == 0)
@@ -60,25 +63,29 @@ void AGBG_Player::PossessedBy(AController *new_controller)
 	if (spec_handle.IsValid() == true)
 		Ability_System_Component->ApplyGameplayEffectSpecToSelf(*spec_handle.Data.Get() );  // Apply effect to self
 
-	for (const auto ability_class : Default_Abilities)  // Learn abilities by default
+	for (const auto &ability_class : Default_Abilities)  // Learn abilities by default
 	{
 		if (ability_class == 0)
 			continue;
 
-		const UGBG_Gameplay_Ability *ability_cdo = ability_class->GetDefaultObject<UGBG_Gameplay_Ability>();  // Get Input id from ability template
-		
-		int32 input_id = ability_cdo ? ability_cdo->Input_ID : 0;  // Get Input id or set 0
-		FGameplayAbilitySpec ability_spec(ability_class, 1, input_id, this);
+		ability_cdo = ability_class->GetDefaultObject<UGBG_Gameplay_Ability>();  // Get Input id from ability template
+		if (ability_cdo != 0)
+			input_id = ability_cdo->Input_ID;
+		else
+			input_id = 0;
 
-		Ability_System_Component->GiveAbility(ability_spec);  // Give ability to player
+		Ability_System_Component->GiveAbility(FGameplayAbilitySpec(ability_class, 1, input_id, this) );  // Give ability to player
 	}
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::SetupPlayerInputComponent(UInputComponent *player_input_component)
 {
+	UEnhancedInputComponent *enhanced_input_component;
+
 	Super::SetupPlayerInputComponent(player_input_component);
 
-	if (UEnhancedInputComponent *enhanced_input_component = Cast<UEnhancedInputComponent>(player_input_component) )
+	enhanced_input_component = Cast<UEnhancedInputComponent>(player_input_component);
+	if (enhanced_input_component != 0)
 	{
 		enhanced_input_component->BindAction(Action_Move, ETriggerEvent::Triggered, this, &AGBG_Player::Move);
 		enhanced_input_component->BindAction(Action_Jump, ETriggerEvent::Started, this, &AGBG_Player::On_Jump_Bgn);
