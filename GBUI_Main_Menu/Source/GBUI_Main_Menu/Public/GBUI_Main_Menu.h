@@ -7,7 +7,7 @@
 #include "Blueprint/UserWidget.h"
 
 //------------------------------------------------------------------------------------------------------------
-class FGBLabMenuMainModule : public IModuleInterface
+class FGBUI_Main_MenuModule : public IModuleInterface
 {
 public:
 	virtual void StartupModule();

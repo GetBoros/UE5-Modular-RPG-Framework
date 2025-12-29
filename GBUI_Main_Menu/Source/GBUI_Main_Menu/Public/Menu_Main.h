@@ -1,7 +1,7 @@
 ﻿//------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include "GBLabMenuMain.h"
+#include "GBUI_Main_Menu.h"
 //------------------------------------------------------------------------------------------------------------
 #include "Menu_Main.generated.h"
 //------------------------------------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite) UMaterialInstanceDynamic *Button_DMI_BG= 0;
 };
 //------------------------------------------------------------------------------------------------------------
-UCLASS(meta = (DisableNativeTick) ) class GBLABMENUMAIN_API UGBLab_Menu_Main: public UUserWidget
+UCLASS(meta = (DisableNativeTick) ) class GBUI_MAIN_MENU_API UGBLab_Menu_Main: public UUserWidget
 {
 	GENERATED_BODY()
 	
