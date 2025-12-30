@@ -39,6 +39,7 @@ public class GBUI_Main_Menu : ModuleRules
 				"Slate",
 				"SlateCore",
                 "UMG",
+                "InputCore"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

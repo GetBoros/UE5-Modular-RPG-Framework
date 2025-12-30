@@ -16,6 +16,68 @@ void UGBUI_Main_Menu_Button::NativePreConstruct()
 	Super::NativePreConstruct();
 }
 //------------------------------------------------------------------------------------------------------------
+void UGBUI_Main_Menu_Button::NativeConstruct()
+{
+	Super::NativeConstruct();
+
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBUI_Main_Menu_Button::NativeOnMouseEnter(const FGeometry &in_geometry, const FPointerEvent &in_mouse_event)
+{
+	Super::NativeOnMouseEnter(in_geometry, in_mouse_event);
+
+	Play_Animation(1.0f, Button_DMI_BG);
+	SetFocus();
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBUI_Main_Menu_Button::NativeOnMouseLeave(const FPointerEvent &in_mouse_event)
+{
+	Super::NativeOnMouseLeave(in_mouse_event);
+
+	if (IsFocusable() != true)
+		Play_Animation(0.0f, Button_DMI_BG);
+}
+//------------------------------------------------------------------------------------------------------------
+FReply UGBUI_Main_Menu_Button::NativeOnFocusReceived(const FGeometry &in_geometry, const FFocusEvent &in_focus_event)
+{
+	Play_Animation(1.0f, Button_DMI_BG);
+
+	return Super::NativeOnFocusReceived(in_geometry, in_focus_event);
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBUI_Main_Menu_Button::NativeOnFocusLost(const FFocusEvent &in_focus_event)
+{
+	Super::NativeOnFocusLost(in_focus_event);
+
+	Play_Animation(0.0f, Button_DMI_BG);
+}
+//------------------------------------------------------------------------------------------------------------
+FReply UGBUI_Main_Menu_Button::NativeOnMouseButtonDown(const FGeometry& in_geometry, const FPointerEvent& in_mouse_event)
+{
+	On_Button_Pressed.Broadcast();
+
+	return FReply::Handled();
+}
+//------------------------------------------------------------------------------------------------------------
+FReply UGBUI_Main_Menu_Button::NativeOnKeyDown(const FGeometry& in_geometry, const FKeyEvent& in_key_event)
+{
+	if (in_key_event.GetKey() != EKeys::Enter)
+		return FReply::Unhandled();
+
+	On_Button_Pressed.Broadcast();
+
+	return FReply::Unhandled();
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBUI_Main_Menu_Button::Update_Hover_State(bool b_is_hovered)
+{
+	if (Button_DMI_BG == 0 && Hover_Material != 0)
+		Button_DMI_BG = UMaterialInstanceDynamic::Create(Hover_Material, this);
+
+	if (Button_DMI_BG != 0)
+		Button_DMI_BG->SetScalarParameterValue("Hovered", b_is_hovered ? 1.0f : 0.0f);
+}
+//------------------------------------------------------------------------------------------------------------
 void UGBUI_Main_Menu_Button::Init_Widget(UTextBlock *text, UImage *image)
 {
 	Button_TB = text;
