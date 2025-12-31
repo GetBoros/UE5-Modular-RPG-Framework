@@ -1,8 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
 #include <GBUI_Main_Menu_Button.h>
-
 #include <Materials/MaterialInstanceDynamic.h>
-
 #include <Components/Image.h>
 #include <Components/TextBlock.h>
 //------------------------------------------------------------------------------------------------------------
@@ -15,7 +13,15 @@ void UGBUI_Main_Menu_Button::NativePreConstruct()
 {
 	Super::NativePreConstruct();
 
-	ensureMsgf(Button_MI_BG, TEXT("Work if has this") );
+	ensureMsgf(Button_Material_Instance, TEXT("Need Material Instance with parameter Hovered") );
+	if (Button_Material_Instance == 0)
+		return;
+
+	Button_DMI = UMaterialInstanceDynamic::Create(Button_Material_Instance, this);
+
+	Button_TB->SetText(Button_Text);
+	Button_Image->SetBrushFromMaterial(Button_DMI);
+	Button_DMI->SetScalarParameterValue(Button_MI_Scalar_Param, 0.0f);
 }
 //------------------------------------------------------------------------------------------------------------
 void UGBUI_Main_Menu_Button::NativeConstruct()
@@ -27,7 +33,7 @@ void UGBUI_Main_Menu_Button::NativeOnMouseEnter(const FGeometry &in_geometry, co
 {
 	Super::NativeOnMouseEnter(in_geometry, in_mouse_event);
 
-	Play_Animation(1.0f, Button_DMI_BG);
+	Set_Material_Scalar(1.0f, Button_DMI);
 	SetFocus();
 }
 //------------------------------------------------------------------------------------------------------------
@@ -36,12 +42,12 @@ void UGBUI_Main_Menu_Button::NativeOnMouseLeave(const FPointerEvent &in_mouse_ev
 	Super::NativeOnMouseLeave(in_mouse_event);
 
 	if (IsFocusable() != true)
-		Play_Animation(0.0f, Button_DMI_BG);
+		Set_Material_Scalar(0.0f, Button_DMI);
 }
 //------------------------------------------------------------------------------------------------------------
 FReply UGBUI_Main_Menu_Button::NativeOnFocusReceived(const FGeometry &in_geometry, const FFocusEvent &in_focus_event)
 {
-	Play_Animation(1.0f, Button_DMI_BG);
+	Set_Material_Scalar(1.0f, Button_DMI);
 
 	return Super::NativeOnFocusReceived(in_geometry, in_focus_event);
 }
@@ -50,7 +56,7 @@ void UGBUI_Main_Menu_Button::NativeOnFocusLost(const FFocusEvent &in_focus_event
 {
 	Super::NativeOnFocusLost(in_focus_event);
 
-	Play_Animation(0.0f, Button_DMI_BG);
+	Set_Material_Scalar(0.0f, Button_DMI);
 }
 //------------------------------------------------------------------------------------------------------------
 FReply UGBUI_Main_Menu_Button::NativeOnMouseButtonDown(const FGeometry &in_geometry, const FPointerEvent &in_mouse_event)
@@ -70,19 +76,8 @@ FReply UGBUI_Main_Menu_Button::NativeOnKeyDown(const FGeometry &in_geometry, con
 	return FReply::Handled();  // !!! TEMP Unhandled can be
 }
 //------------------------------------------------------------------------------------------------------------
-void UGBUI_Main_Menu_Button::Init_Widget(UTextBlock *text, UImage *image)
+void UGBUI_Main_Menu_Button::Set_Material_Scalar(const float scalar, UMaterialInstanceDynamic *material_instance_dynamic) const
 {
-	Button_TB = text;
-	Button_Image = image;
-	Button_DMI_BG = UMaterialInstanceDynamic::Create(Button_MI_BG, this);
-
-	Button_TB->SetText(Button_Text);
-	Button_Image->SetBrushFromMaterial(Button_DMI_BG);
-	Button_DMI_BG->SetScalarParameterValue(Material_Scalar_Param, 0.0f);
-}
-//------------------------------------------------------------------------------------------------------------
-void UGBUI_Main_Menu_Button::Play_Animation(const float value, UMaterialInstanceDynamic *material_instance_dynamic) const
-{
-	material_instance_dynamic->SetScalarParameterValue(Material_Scalar_Param, value);
+	material_instance_dynamic->SetScalarParameterValue(Button_MI_Scalar_Param, scalar);
 }
 //------------------------------------------------------------------------------------------------------------
