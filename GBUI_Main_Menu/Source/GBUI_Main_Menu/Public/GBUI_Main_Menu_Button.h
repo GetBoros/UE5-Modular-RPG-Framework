@@ -1,4 +1,4 @@
-////------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
 #include <Blueprint/UserWidget.h>
@@ -25,9 +25,9 @@ public:
 
 	void Set_Material_Scalar(const float scalar, UMaterialInstanceDynamic *material_instance_dynamic) const;
 
-	UMaterialInstanceDynamic *Button_DMI = 0;
+	UMaterialInstanceDynamic *Button_DMI = 0;  // Created if set Button_Material_Instance
 
-	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOn_Button_Pressed On_Button_Pressed;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOn_Button_Pressed On_Button_Pressed;  // Broadcast when pressed on button
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ExposeOnSpawn = "true") ) FText Button_Text;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ExposeOnSpawn = "true") ) FName Button_MI_Scalar_Param = FName("Hovered");
@@ -35,5 +35,6 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget) ) UImage *Button_Image = 0;
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget) ) UTextBlock *Button_TB = 0;
+
 };
 //------------------------------------------------------------------------------------------------------------
