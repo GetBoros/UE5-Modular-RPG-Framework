@@ -67,6 +67,11 @@ void AGBUI_HUD::BeginPlay()
     widget_controller->Broadcast_Initial_Values();  
 }
 //------------------------------------------------------------------------------------------------------------
+void AGBUI_HUD::Show_Menu_Main()
+{
+
+}
+//------------------------------------------------------------------------------------------------------------
 UGBUI_Widget_Controller *AGBUI_HUD::Get_Widget_Controller(const FController_Widget_Params &params)
 {
     if (Controller_Widget != 0)

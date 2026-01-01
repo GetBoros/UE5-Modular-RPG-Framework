@@ -15,6 +15,8 @@ UCLASS() class GBUI_API AGBUI_HUD : public AHUD
 public:
 	virtual void BeginPlay();
     
+	void Show_Menu_Main();
+
 	UFUNCTION(BlueprintCallable, Category = "GBUI") UGBUI_Widget_Controller *Get_Widget_Controller(const FController_Widget_Params &params);
 
     UPROPERTY(EditDefaultsOnly) TSubclassOf<UUserWidget> HUD_Widget_Class;
