@@ -34,12 +34,9 @@ public class GBUI_Main_Menu : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"CoreUObject",
-				"Engine",
-				"Slate",
-				"SlateCore",
-                "UMG",
-                "InputCore"
+				"CoreUObject", "Engine", "Slate",   // Core
+				"SlateCore", "UMG", "InputCore",  // UI
+                "GameplayTags"  // Custom
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

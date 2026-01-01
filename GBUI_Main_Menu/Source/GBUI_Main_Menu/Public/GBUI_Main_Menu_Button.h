@@ -25,7 +25,7 @@ public:
 
 	void Set_Material_Scalar(const float scalar, UMaterialInstanceDynamic *material_instance_dynamic) const;
 
-	UMaterialInstanceDynamic *Button_DMI = 0;  // Created if set Button_Material_Instance
+	UPROPERTY(Transient) UMaterialInstanceDynamic *Button_DMI = 0;  // Created if set Button_Material_Instance
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOn_Button_Pressed On_Button_Pressed;  // Broadcast when pressed on button
 
