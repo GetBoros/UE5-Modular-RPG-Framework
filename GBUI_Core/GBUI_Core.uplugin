@@ -2,7 +2,7 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
-	"FriendlyName": "GBUI",
+	"FriendlyName": "GBUI_Core",
 	"Description": "",
 	"Category": "Other",
 	"CreatedBy": "Adonis",
@@ -16,7 +16,7 @@
 	"Installed": false,
 	"Modules": [
 		{
-			"Name": "GBUI",
+			"Name": "GBUI_Core",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
 		}

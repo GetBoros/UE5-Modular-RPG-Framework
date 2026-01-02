@@ -9,7 +9,7 @@ class UGBUI_Main_Menu;
 class UGBUI_Widget_Controller;
 class UGBC_Attribute_Info;
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class GBUI_API AGBUI_HUD : public AHUD
+UCLASS() class GBUI_CORE_API AGBUI_HUD : public AHUD
 {
 	GENERATED_BODY()
 	
@@ -18,7 +18,7 @@ public:
     
 	void Show_Menu_Main(APlayerController *player_controller);
 
-	UFUNCTION(BlueprintCallable, Category = "GBUI") UGBUI_Widget_Controller *Get_Widget_Controller(const FController_Widget_Params &params);
+	UFUNCTION(BlueprintCallable) UGBUI_Widget_Controller *Get_Widget_Controller(const FController_Widget_Params &params);
 
     UPROPERTY(EditDefaultsOnly) TSubclassOf<UUserWidget> HUD_Widget_Class;
 	UPROPERTY(EditDefaultsOnly) TSubclassOf<UGBUI_Widget_Controller> Controller_Widget_Class;

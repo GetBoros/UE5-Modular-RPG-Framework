@@ -24,7 +24,7 @@ USTRUCT(BlueprintType) struct FController_Widget_Params
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UGBC_Attribute_Info> Attribute_Info_Asset = 0;
 };
 //------------------------------------------------------------------------------------------------------------
-UCLASS(Blueprintable, BlueprintType) class GBUI_API UGBUI_Widget_Controller : public UObject
+UCLASS(Blueprintable, BlueprintType) class GBUI_CORE_API UGBUI_Widget_Controller : public UObject
 {
     GENERATED_BODY()
 

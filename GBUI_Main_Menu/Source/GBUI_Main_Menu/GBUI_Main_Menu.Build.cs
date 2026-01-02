@@ -36,7 +36,7 @@ public class GBUI_Main_Menu : ModuleRules
 			{
 				"CoreUObject", "Engine", "Slate",   // Core
 				"SlateCore", "UMG", "InputCore",  // UI
-                "GameplayTags", "GBUI"  // Custom
+                "GameplayTags", "GBUI_Core"  // Custom
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

@@ -6,7 +6,7 @@
 //------------------------------------------------------------------------------------------------------------
 class UGBUI_Widget_Controller;
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class GBUI_API UGBUI_User_Widget : public UUserWidget
+UCLASS() class GBUI_CORE_API UGBUI_User_Widget : public UUserWidget
 {
     GENERATED_BODY()
 

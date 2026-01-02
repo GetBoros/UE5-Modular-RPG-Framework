@@ -3,7 +3,7 @@
 #include <GBUI_Main_Menu_Button.h>
 #include <GBUI_User_Widget.h>
 
-#include <Components/VerticalBox.h>
+#include <GameFramework/PlayerController.h>
 //------------------------------------------------------------------------------------------------------------
 
 
@@ -17,15 +17,16 @@ void UGBUI_Main_Menu::NativePreConstruct()
 //------------------------------------------------------------------------------------------------------------
 void UGBUI_Main_Menu::NativeConstruct()
 {
+    APlayerController *player_controller;
+	FInputModeUIOnly input_mode_data;
+
 	Super::NativeConstruct();
 
-	UE_LOG(LogTemp, Warning, TEXT("NativeConstruct Called! Object: %p, Name: %s"), this, *GetName());
-	//FDebug::DumpStackTraceToLog();
+	input_mode_data.SetWidgetToFocus(Button_New_Game->TakeWidget() );
+	input_mode_data.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
 
-    if (VB_Button_Container == 0)
-        return;
-
-    VB_Button_Container->ClearChildren();  // !!! TEMP
+	player_controller = GetOwningPlayer();
+	player_controller->SetInputMode(input_mode_data);
 }
 //------------------------------------------------------------------------------------------------------------
 void UGBUI_Main_Menu::Temp()
@@ -40,6 +41,23 @@ void UGBUI_Main_Menu::Temp()
 //------------------------------------------------------------------------------------------------------------
 void UGBUI_Main_Menu::Test()
 {
+
+}
+//------------------------------------------------------------------------------------------------------------
+
+
+
+
+// UGBUI_Main_Menu_HUD
+void UGBUI_Main_Menu_HUD::NativePreConstruct()
+{
+	Super::NativePreConstruct();
+
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBUI_Main_Menu_HUD::NativeConstruct()
+{
+	Super::NativeConstruct();
 
 }
 //------------------------------------------------------------------------------------------------------------

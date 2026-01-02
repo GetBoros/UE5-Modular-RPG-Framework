@@ -1,11 +1,11 @@
 //------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-class FGBUIModule : public IModuleInterface
+class FGBUI_CoreModule : public IModuleInterface
 {
 public:
 
-	virtual void StartupModule() override;
-	virtual void ShutdownModule() override;
+	virtual void StartupModule();
+	virtual void ShutdownModule();
 };
 //------------------------------------------------------------------------------------------------------------

@@ -25,3 +25,17 @@ public:
 
 };
 //------------------------------------------------------------------------------------------------------------
+class UGBUI_Main_Menu;
+//------------------------------------------------------------------------------------------------------------
+UCLASS(meta = (DisableNativeTick) ) class GBUI_MAIN_MENU_API UGBUI_Main_Menu_HUD : public UUserWidget
+{
+	GENERATED_BODY()
+
+public:
+    virtual void NativePreConstruct();
+    virtual void NativeConstruct();
+
+    UPROPERTY(BlueprintReadOnly, meta = (BindWidget) ) UGBUI_Main_Menu *Menu_Main;
+
+};
+//------------------------------------------------------------------------------------------------------------
