@@ -5,6 +5,7 @@
 #include <GameFramework/HUD.h>
 #include <GBUI_HUD.generated.h>
 //------------------------------------------------------------------------------------------------------------
+class UGBUI_Main_Menu;
 class UGBUI_Widget_Controller;
 class UGBC_Attribute_Info;
 //------------------------------------------------------------------------------------------------------------

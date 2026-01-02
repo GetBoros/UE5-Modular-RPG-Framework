@@ -23,6 +23,7 @@ void AGBUI_HUD::BeginPlay()
     UGBUI_Widget_Controller *widget_controller;
     UAbilitySystemComponent *ability_system_component;
     UGBUI_User_Widget *gbui_user_widget;
+    FInputModeUIOnly input_mode_data;
 
     Super::BeginPlay();
     
@@ -45,6 +46,10 @@ void AGBUI_HUD::BeginPlay()
         return;
     player_state = player_controller->PlayerState;
     controlled_pawn = player_controller->GetPawn();
+
+    //input_mode_data.SetWidgetToFocus(Menu_Main->Button_To_Focus->TakeWidget() );
+    input_mode_data.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+    player_controller->SetInputMode(input_mode_data);
 
     // 2.0. Get ASC from controlled pawn useing interface
     ability_system_interface = Cast<IAbilitySystemInterface>(controlled_pawn);  // Try to find interface if implented
