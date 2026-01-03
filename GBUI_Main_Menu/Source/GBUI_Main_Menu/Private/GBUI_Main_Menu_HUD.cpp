@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------------------------------------
-#include <GBUI_HUD.h>
+#include <GBUI_Main_Menu_HUD.h>
 #include <GBUI_User_Widget.h>
 
 #include <Blueprint/UserWidget.h>
@@ -12,8 +12,8 @@
 
 
 
-// AGBUI_HUD
-void AGBUI_HUD::BeginPlay()
+// AGBUI_Main_Menu_HUD
+void AGBUI_Main_Menu_HUD::BeginPlay()
 {// !!! TEMP Maybe make a lot of methods
 
     IAbilitySystemInterface *ability_system_interface;
@@ -67,16 +67,7 @@ void AGBUI_HUD::BeginPlay()
     widget_controller->Broadcast_Initial_Values();  
 }
 //------------------------------------------------------------------------------------------------------------
-void AGBUI_HUD::Show_Menu_Main(APlayerController *player_controller)
-{
-    FInputModeUIOnly input_mode_data;
-
-    //input_mode_data.SetWidgetToFocus(Menu_Main->Button_To_Focus->TakeWidget() );
-    input_mode_data.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-    player_controller->SetInputMode(input_mode_data);
-}
-//------------------------------------------------------------------------------------------------------------
-UGBUI_Widget_Controller *AGBUI_HUD::Get_Widget_Controller(const FController_Widget_Params &params)
+UGBUI_Widget_Controller *AGBUI_Main_Menu_HUD::Get_Widget_Controller(const FController_Widget_Params &params)
 {
     if (Controller_Widget != 0)
         return Controller_Widget;
