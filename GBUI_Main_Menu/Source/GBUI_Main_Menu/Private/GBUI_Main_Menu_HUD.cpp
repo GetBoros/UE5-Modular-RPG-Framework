@@ -19,10 +19,10 @@ void AGBUI_Main_Menu_HUD::BeginPlay()
     IAbilitySystemInterface *ability_system_interface;
     APawn *controlled_pawn;
     APlayerState *player_state;
+    UGBUI_User_Widget *gbui_user_widget;
     APlayerController *player_controller;
     UGBUI_Widget_Controller *widget_controller;
     UAbilitySystemComponent *ability_system_component;
-    UGBUI_User_Widget *gbui_user_widget;
 
     Super::BeginPlay();
     
