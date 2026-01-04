@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <Types/GBC_Attribute_Info.h>
 #include <GameplayEffectTypes.h>
-#include <GBUI_Widget_Controller.generated.h>
+#include <GBUIC_Widget_Controller.generated.h>
 //------------------------------------------------------------------------------------------------------------
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_Attribute_Change_Signature, float, new_value);
 //------------------------------------------------------------------------------------------------------------
@@ -24,12 +24,12 @@ USTRUCT(BlueprintType) struct FController_Widget_Params
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UGBC_Attribute_Info> Attribute_Info_Asset = 0;
 };
 //------------------------------------------------------------------------------------------------------------
-UCLASS(Blueprintable, BlueprintType) class GBUI_CORE_API UGBUI_Widget_Controller : public UObject
+UCLASS(Blueprintable, BlueprintType) class GBUI_CORE_API UGBUIC_Widget_Controller : public UObject
 {
     GENERATED_BODY()
 
 public:
-    UGBUI_Widget_Controller();
+    UGBUIC_Widget_Controller();
 
     void Init(const FController_Widget_Params &params);
     void Broadcast_Initial_Values();

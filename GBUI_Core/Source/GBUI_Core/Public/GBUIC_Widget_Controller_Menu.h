@@ -1,12 +1,12 @@
 //------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include "GBUI_Widget_Controller.h"
-#include "GBUIC_Widget_Controller_Menu.generated.h"
+#include <GBUIC_Widget_Controller.h>
+#include <GBUIC_Widget_Controller_Menu.generated.h>
 //------------------------------------------------------------------------------------------------------------
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_Menu_State_Changed_Signature, FGameplayTag, new_state_tag);
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class GBUI_CORE_API UGBUIC_Widget_Controller_Menu : public UGBUI_Widget_Controller
+UCLASS() class GBUI_CORE_API UGBUIC_Widget_Controller_Menu : public UGBUIC_Widget_Controller
 {
 	GENERATED_BODY()
 

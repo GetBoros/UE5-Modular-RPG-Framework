@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
 #include <GBUI_Main_Menu_HUD.h>
-#include <GBUI_User_Widget.h>
+#include <GBUIC_User_Widget.h>
 
 #include <Blueprint/UserWidget.h>
 #include <GameFramework/PlayerController.h>
@@ -19,9 +19,9 @@ void AGBUI_Main_Menu_HUD::BeginPlay()
     IAbilitySystemInterface *ability_system_interface;
     APawn *controlled_pawn;
     APlayerState *player_state;
-    UGBUI_User_Widget *gbui_user_widget;
+    UGBUIC_User_Widget *gbui_user_widget;
     APlayerController *player_controller;
-    UGBUI_Widget_Controller *widget_controller;
+    UGBUIC_Widget_Controller *widget_controller;
     UAbilitySystemComponent *ability_system_component;
 
     Super::BeginPlay();
@@ -37,7 +37,6 @@ void AGBUI_Main_Menu_HUD::BeginPlay()
     HUD_Widget = CreateWidget<UUserWidget>(GetWorld(), HUD_Widget_Class);
     if (HUD_Widget == 0)
         return;
-    HUD_Widget->AddToViewport();  // Must be last
 
     // 1.1. Get Player State and controlled pawn from player controller
     player_controller = GetOwningPlayerController();
@@ -58,16 +57,18 @@ void AGBUI_Main_Menu_HUD::BeginPlay()
     widget_controller = Get_Widget_Controller(FController_Widget_Params(player_controller, player_state, ability_system_component, Attribute_Info_Data) );
 
     // 3.1. Set Widget Controller to our base User Widget
-    gbui_user_widget = Cast<UGBUI_User_Widget>(HUD_Widget);
+    gbui_user_widget = Cast<UGBUIC_User_Widget>(HUD_Widget);
     if (gbui_user_widget == 0)
-        return;  // If parent not UGBUI_User_Widget return
+        return;  // If parent not UGBUIC_User_Widget return
     gbui_user_widget->Set_Widget_Controller(widget_controller);  // Pass the controller to the widget
 
     // 3.2. Finally if all settings are good, make broadcast and update value in HUD_Widget
-    widget_controller->Broadcast_Initial_Values();  
+    widget_controller->Broadcast_Initial_Values();
+    HUD_Widget->AddToViewport();  // Must be last
+
 }
 //------------------------------------------------------------------------------------------------------------
-UGBUI_Widget_Controller *AGBUI_Main_Menu_HUD::Get_Widget_Controller(const FController_Widget_Params &params)
+UGBUIC_Widget_Controller *AGBUI_Main_Menu_HUD::Get_Widget_Controller(const FController_Widget_Params &params)
 {
     if (Controller_Widget != 0)
         return Controller_Widget;
@@ -75,7 +76,7 @@ UGBUI_Widget_Controller *AGBUI_Main_Menu_HUD::Get_Widget_Controller(const FContr
     if (Controller_Widget_Class == 0)
         return 0;
 
-    Controller_Widget = NewObject<UGBUI_Widget_Controller>(this, Controller_Widget_Class);
+    Controller_Widget = NewObject<UGBUIC_Widget_Controller>(this, Controller_Widget_Class);
     Controller_Widget->Init(params);
 
     return Controller_Widget;

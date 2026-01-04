@@ -1,7 +1,8 @@
 //------------------------------------------------------------------------------------------------------------
 #include <GBUI_Main_Menu_Menu.h>
 #include <GBUI_Main_Menu_Button.h>
-#include <GBUI_User_Widget.h>
+#include <GBUIC_User_Widget.h>
+#include <GBUIC_Widget_Controller_Menu.h>
 
 #include <GameFramework/PlayerController.h>
 //------------------------------------------------------------------------------------------------------------

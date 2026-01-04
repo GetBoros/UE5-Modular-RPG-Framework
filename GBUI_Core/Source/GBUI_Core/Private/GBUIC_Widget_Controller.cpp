@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------------------------------------
-#include <GBUI_Widget_Controller.h>
+#include <GBUIC_Widget_Controller.h>
 #include <AbilitySystemComponent.h>
 //------------------------------------------------------------------------------------------------------------
 
@@ -7,13 +7,13 @@
 
 
 
-// UGBUI_Widget_Controller
-UGBUI_Widget_Controller::UGBUI_Widget_Controller()
+// UGBUIC_Widget_Controller
+UGBUIC_Widget_Controller::UGBUIC_Widget_Controller()
 {
     Stamina_Tag = FGameplayTag::RequestGameplayTag(FName("Attributes.Vitality.Stamina") );
 }
 //------------------------------------------------------------------------------------------------------------
-void UGBUI_Widget_Controller::Init(const FController_Widget_Params &params)
+void UGBUIC_Widget_Controller::Init(const FController_Widget_Params &params)
 {
     Ability_System_Component = params.Ability_System_Component;
     Attribute_Info = params.Attribute_Info_Asset;
@@ -22,7 +22,7 @@ void UGBUI_Widget_Controller::Init(const FController_Widget_Params &params)
     Bind_Callbacks_To_Dependencies();
 }
 //------------------------------------------------------------------------------------------------------------
-void UGBUI_Widget_Controller::Broadcast_Initial_Values()
+void UGBUIC_Widget_Controller::Broadcast_Initial_Values()
 {
     if (Ability_System_Component == 0 || Attribute_Info == 0)
         return;
@@ -31,16 +31,16 @@ void UGBUI_Widget_Controller::Broadcast_Initial_Values()
         On_Stamina_Changed.Broadcast(Ability_System_Component->GetNumericAttribute(Attribute_Info_Stamina.Attribute_To_Bind) );
 }
 //------------------------------------------------------------------------------------------------------------
-void UGBUI_Widget_Controller::Bind_Callbacks_To_Dependencies()
+void UGBUIC_Widget_Controller::Bind_Callbacks_To_Dependencies()
 {
     if (Ability_System_Component == 0 || Attribute_Info == 0)
         return;
 
     if (Attribute_Info_Stamina.Attribute_To_Bind.IsValid() == true)
-        Ability_System_Component->GetGameplayAttributeValueChangeDelegate(Attribute_Info_Stamina.Attribute_To_Bind).AddUObject(this, &UGBUI_Widget_Controller::On_Stamina_Changed_Callback);
+        Ability_System_Component->GetGameplayAttributeValueChangeDelegate(Attribute_Info_Stamina.Attribute_To_Bind).AddUObject(this, &UGBUIC_Widget_Controller::On_Stamina_Changed_Callback);
 }
 //------------------------------------------------------------------------------------------------------------
-void UGBUI_Widget_Controller::On_Stamina_Changed_Callback(const FOnAttributeChangeData &data)
+void UGBUIC_Widget_Controller::On_Stamina_Changed_Callback(const FOnAttributeChangeData &data)
 {
     On_Stamina_Changed.Broadcast(data.NewValue);
 }
