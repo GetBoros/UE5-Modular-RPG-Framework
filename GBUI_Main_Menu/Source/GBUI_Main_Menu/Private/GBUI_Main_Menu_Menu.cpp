@@ -28,20 +28,25 @@ void UGBUI_Main_Menu::NativeConstruct()
 
 	player_controller = GetOwningPlayer();
 	player_controller->SetInputMode(input_mode_data);
+
+	Init();
 }
 //------------------------------------------------------------------------------------------------------------
-void UGBUI_Main_Menu::Temp()
+void UGBUI_Main_Menu::Init()
 {
-    UGBUI_Main_Menu_Button *test = Cast<UGBUI_Main_Menu_Button>(Button_New_Game);
+    UGBUI_Main_Menu_Button *menu_button_new_game = Cast<UGBUI_Main_Menu_Button>(Button_New_Game);
 
-	if (test != 0)
+	if (menu_button_new_game == 0)
 		return;
 
-	test->On_Button_Pressed.AddDynamic(this, &UGBUI_Main_Menu::Test);
+	menu_button_new_game->On_Button_Pressed.AddUniqueDynamic(this, &UGBUI_Main_Menu::Handle_Button_New_Game);
 }
 //------------------------------------------------------------------------------------------------------------
-void UGBUI_Main_Menu::Test()
+void UGBUI_Main_Menu::Handle_Button_New_Game()
 {
+	UGBUIC_Widget_Controller_Menu *menu_widget_controller = Cast<UGBUIC_Widget_Controller_Menu>(Widget_Controller);
+	FGameplayTag tag = FGameplayTag::RequestGameplayTag(TEXT("UI.Menu.NewGame") );
 
+	menu_widget_controller->Set_Menu_State(tag);
 }
 //------------------------------------------------------------------------------------------------------------

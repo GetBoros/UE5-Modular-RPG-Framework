@@ -18,8 +18,8 @@ public:
     virtual void NativeConstruct();
 
     //UFUNCTION(BlueprintPure, Category = "GBUI | Widget") UGBUIC_Widget_Controller_Menu *Get_Menu_Controller();
-    UFUNCTION(BlueprintCallable) void Temp();
-    UFUNCTION(BlueprintCallable) void Test();
+    UFUNCTION(BlueprintCallable) void Init();
+    UFUNCTION(BlueprintCallable) void Handle_Button_New_Game();
 
     // !!! TEMP Experimental
     UPROPERTY(BlueprintReadOnly, meta = (BindWidget) ) UVerticalBox *VB_Button_Container;

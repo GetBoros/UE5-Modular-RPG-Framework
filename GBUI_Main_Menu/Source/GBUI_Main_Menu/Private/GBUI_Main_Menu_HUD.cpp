@@ -14,8 +14,7 @@
 
 // AGBUI_Main_Menu_HUD
 void AGBUI_Main_Menu_HUD::BeginPlay()
-{// !!! TEMP Maybe make a lot of methods
-
+{
     IAbilitySystemInterface *ability_system_interface;
     APawn *controlled_pawn;
     APlayerState *player_state;
@@ -30,7 +29,7 @@ void AGBUI_Main_Menu_HUD::BeginPlay()
     ensureMsgf(Controller_Widget_Class, L"Don`t forget set");
     ensureMsgf(Attribute_Info_Data, L"Don`t forget set");
 
-    // 1.0. HUD Init
+    // 1.0. HUD Widget Create
     if (HUD_Widget_Class == 0)
         return;
 
@@ -64,8 +63,9 @@ void AGBUI_Main_Menu_HUD::BeginPlay()
 
     // 3.2. Finally if all settings are good, make broadcast and update value in HUD_Widget
     widget_controller->Broadcast_Initial_Values();
-    HUD_Widget->AddToViewport();  // Must be last
 
+    // 4.1. Initialize all widget after setting up other settings
+    HUD_Widget->AddToViewport();  // Must be last
 }
 //------------------------------------------------------------------------------------------------------------
 UGBUIC_Widget_Controller *AGBUI_Main_Menu_HUD::Get_Widget_Controller(const FController_Widget_Params &params)
