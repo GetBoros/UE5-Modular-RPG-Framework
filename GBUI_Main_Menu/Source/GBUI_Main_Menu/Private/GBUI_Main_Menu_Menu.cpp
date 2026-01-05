@@ -6,6 +6,11 @@
 
 #include <GameFramework/PlayerController.h>
 //------------------------------------------------------------------------------------------------------------
+UE_DEFINE_GAMEPLAY_TAG(TAG_MENU_NEW_GAME, "UI.Menu.NewGame");
+UE_DEFINE_GAMEPLAY_TAG(TAG_MENU_LOAD, "UI.Menu.Load");
+UE_DEFINE_GAMEPLAY_TAG(TAG_MENU_SETTINGS, "UI.Menu.Settings");
+UE_DEFINE_GAMEPLAY_TAG(TAG_MENU_EXIT, "UI.Menu.Exit");
+//------------------------------------------------------------------------------------------------------------
 
 
 
@@ -32,6 +37,11 @@ void UGBUI_Main_Menu::NativeConstruct()
 	Init();
 }
 //------------------------------------------------------------------------------------------------------------
+UGBUIC_Widget_Controller_Menu* UGBUI_Main_Menu::Get_Menu_Controller()
+{
+	return Cast<UGBUIC_Widget_Controller_Menu>(Widget_Controller);
+}
+//------------------------------------------------------------------------------------------------------------
 void UGBUI_Main_Menu::Init()
 {
     UGBUI_Main_Menu_Button *menu_button_new_game = Cast<UGBUI_Main_Menu_Button>(Button_New_Game);
@@ -44,9 +54,29 @@ void UGBUI_Main_Menu::Init()
 //------------------------------------------------------------------------------------------------------------
 void UGBUI_Main_Menu::Handle_Button_New_Game()
 {
-	UGBUIC_Widget_Controller_Menu *menu_widget_controller = Cast<UGBUIC_Widget_Controller_Menu>(Widget_Controller);
 	FGameplayTag tag = FGameplayTag::RequestGameplayTag(TEXT("UI.Menu.NewGame") );
 
-	menu_widget_controller->Set_Menu_State(tag);
+	Get_Menu_Controller()->Set_Menu_State(tag);
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBUI_Main_Menu::Handle_Button_Load()
+{
+	FGameplayTag tag = FGameplayTag::RequestGameplayTag(TEXT("UI.Menu.Load") );
+
+	Get_Menu_Controller()->Set_Menu_State(tag);
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBUI_Main_Menu::Handle_Button_Settings()
+{
+	FGameplayTag tag = FGameplayTag::RequestGameplayTag(TEXT("UI.Menu.Settings") );
+
+	Get_Menu_Controller()->Set_Menu_State(tag);
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBUI_Main_Menu::Handle_Button_Exit()
+{
+	FGameplayTag tag = FGameplayTag::RequestGameplayTag(TEXT("UI.Menu.Exit") );
+
+	Get_Menu_Controller()->Set_Menu_State(tag);
 }
 //------------------------------------------------------------------------------------------------------------
