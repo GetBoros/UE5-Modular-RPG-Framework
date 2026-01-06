@@ -34,7 +34,7 @@ public class TLGame : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"CoreUObject", "Engine", "Slate", "SlateCore",  // Core
+				"CoreUObject", "Engine", "Slate", "SlateCore", "UMG",  // Core
 				"GameplayTags"  // Custom
 				// ... add private dependencies that you statically link with here ...	
 			}
