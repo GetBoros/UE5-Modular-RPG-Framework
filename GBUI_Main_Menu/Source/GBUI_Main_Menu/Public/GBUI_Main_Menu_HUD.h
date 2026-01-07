@@ -24,6 +24,10 @@ public:
     UPROPERTY(EditDefaultsOnly) TObjectPtr<UGBC_Attribute_Info> Attribute_Info_Data;
 
 private:
+    void Init();
+    
+    void Get_HUD_Widget();
+
     UPROPERTY() UUserWidget *HUD_Widget;
     UPROPERTY() UGBUIC_Widget_Controller *Controller_Widget;
 

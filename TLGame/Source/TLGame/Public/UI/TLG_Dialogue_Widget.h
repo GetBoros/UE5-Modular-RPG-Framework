@@ -2,14 +2,14 @@
 #pragma once
 //------------------------------------------------------------------------------------------------------------
 #include <Data/TLTypes.h>
-#include <Blueprint/UserWidget.h>
+#include <GBUIC_User_Widget.h>
 #include <TLG_Dialogue_Widget.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class UTextBlock;
 class UVerticalBox;
 class UButton;
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class TLGAME_API UTLG_Dialogue_Widget : public UUserWidget
+UCLASS() class TLGAME_API UTLG_Dialogue_Widget : public UGBUIC_User_Widget
 {
 	GENERATED_BODY()
 

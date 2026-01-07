@@ -35,7 +35,7 @@ public class TLGame : ModuleRules
 			new string[]
 			{
 				"CoreUObject", "Engine", "Slate", "SlateCore", "UMG",  // Core
-				"GameplayTags"  // Custom
+				"GameplayTags", "GBUI_Core"  // Custom
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
