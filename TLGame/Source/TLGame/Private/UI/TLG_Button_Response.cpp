@@ -12,11 +12,11 @@ void UTLG_Button_Response::NativeConstruct()
 {
     Super::NativeConstruct();
 
-    if (Btn_Click == 0)
+    if (Button_Click == 0)
         return;
 
-    Btn_Click->OnClicked.RemoveDynamic(this, &UTLG_Button_Response::Handle_Button_Clicked);
-    Btn_Click->OnClicked.AddDynamic(this, &UTLG_Button_Response::Handle_Button_Clicked);
+    Button_Click->OnClicked.RemoveDynamic(this, &UTLG_Button_Response::Handle_Button_Clicked);
+    Button_Click->OnClicked.AddDynamic(this, &UTLG_Button_Response::Handle_Button_Clicked);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Button_Response::Init(const FPlayer_Response& data, int32 index)
