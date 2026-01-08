@@ -10,7 +10,6 @@
 // ATLG_Player_State
 ATLG_Player_State::ATLG_Player_State()
 {
-    // Создаем ASC
     Ability_System_Component = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("Ability_System_Component") );
     if (Ability_System_Component != 0)
     {

@@ -3,7 +3,6 @@
 //------------------------------------------------------------------------------------------------------------
 #include <GameFramework/PlayerState.h>
 #include <AbilitySystemInterface.h>
-#include <GameplayTagContainer.h>
 
 #include <TLG_Player_State.generated.h>
 //------------------------------------------------------------------------------------------------------------
@@ -17,12 +16,13 @@ UCLASS() class TLGAME_API ATLG_Player_State : public APlayerState, public IAbili
 public:
     ATLG_Player_State();
 
-    virtual UAbilitySystemComponent *GetAbilitySystemComponent() const override;
+    virtual UAbilitySystemComponent *GetAbilitySystemComponent() const;
 
     UFUNCTION(BlueprintCallable) UTLG_Attribute_Set *Get_Attribute_Set() const;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly) TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
-    UPROPERTY() TObjectPtr<UTLG_Attribute_Set> Attribute_Set;
+private:
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
+    UPROPERTY(meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Attribute_Set> Attribute_Set;
 
 };
 //------------------------------------------------------------------------------------------------------------
