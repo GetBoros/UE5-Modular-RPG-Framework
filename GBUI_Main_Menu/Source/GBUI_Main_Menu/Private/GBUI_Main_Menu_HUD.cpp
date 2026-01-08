@@ -23,7 +23,8 @@ void AGBUI_Main_Menu_HUD::BeginPlay()
 
     Init();
 
-    HUD_Widget->AddToViewport();  // Must be last
+    if (HUD_Widget != 0)
+        HUD_Widget->AddToViewport();
 
 }
 //------------------------------------------------------------------------------------------------------------
@@ -72,7 +73,7 @@ void AGBUI_Main_Menu_HUD::Init()
     // 2.1. Get ASC from controlled pawn useing interface
     player_state = player_controller->PlayerState;
     controlled_pawn = player_controller->GetPawn();
-    ability_system_interface = Cast<IAbilitySystemInterface>(controlled_pawn);  // Try to find interface if implented
+    ability_system_interface = Cast<IAbilitySystemInterface>(controlled_pawn);  // Try to find interface if implemented
     if (ability_system_interface == 0)
         ability_system_interface = Cast<IAbilitySystemInterface>(player_state);
     if (ability_system_interface == 0)

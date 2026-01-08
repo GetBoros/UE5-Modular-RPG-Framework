@@ -13,34 +13,32 @@
 // UTLG_Dialogue_Widget
 void UTLG_Dialogue_Widget::Setup_Dialogue_Node(const FDialogue_Node &node_data)
 {
-    UUserWidget *new_button;
-    UTLG_Button_Response *btn;
+    UUserWidget *button_response_widget;
+    UTLG_Button_Response *button_response;
 
     Current_Node = node_data;
 
     if (Text_NPC_Line != 0)
-        Text_NPC_Line->SetText(node_data.NPC_Line);  // 1. Устанавливаем текст врага
-
+        Text_NPC_Line->SetText(node_data.NPC_Line);  // Set npc text line
     
-    if (Container_Response_Buttons != 0)
-        Container_Response_Buttons->ClearChildren();  // 2. Чистим старые кнопки (если были)
+    if (Buttons_Response_Container != 0)
+        Buttons_Response_Container->ClearChildren();  // clear all other child if need
 
-    if (Response_Button_Class == 0 && Container_Response_Buttons == 0)
+    if (Button_Response_Class == 0 || Buttons_Response_Container == 0)
         return;
 
-    for (int32 i = 0; i < node_data.Player_Responses.Num(); ++i)  // 3. Спавним новые кнопки
+    for (int32 i = 0; i < node_data.Player_Responses.Num(); i++)  // Spawn Button_Response_Class and attach to Buttons_Response_Container 
     {
         const FPlayer_Response &response = node_data.Player_Responses[i];
 
-        new_button = CreateWidget<UUserWidget>(this, Response_Button_Class);
-        btn = Cast<UTLG_Button_Response>(new_button);
-
-        if (btn != 0)
+        button_response_widget = CreateWidget<UUserWidget>(this, Button_Response_Class);
+        button_response = Cast<UTLG_Button_Response>(button_response_widget);
+        if (button_response != 0)
         {
-            btn->Init(response, i);
-            btn->On_Response_Clicked_Delegate.AddDynamic(this, &UTLG_Dialogue_Widget::Handle_Response_Clicked);
+            button_response->Init(response, i);
+            button_response->On_Response_Clicked_Delegate.AddDynamic(this, &UTLG_Dialogue_Widget::Handle_Response_Clicked);
             
-            Container_Response_Buttons->AddChild(btn);
+            Buttons_Response_Container->AddChild(button_response);
         }
     }
 }
@@ -48,6 +46,6 @@ void UTLG_Dialogue_Widget::Setup_Dialogue_Node(const FDialogue_Node &node_data)
 void UTLG_Dialogue_Widget::Handle_Response_Clicked(int32 response_index)
 {
     if (Current_Node.Player_Responses.IsValidIndex(response_index) )
-        On_Response_Selected(Current_Node.Player_Responses[response_index]);  // Сообщаем блюпринтам или системе, что выбор сделан
+        On_Response_Selected(Current_Node.Player_Responses[response_index]);  // Call BP Event Player make his choice
 }
 //------------------------------------------------------------------------------------------------------------

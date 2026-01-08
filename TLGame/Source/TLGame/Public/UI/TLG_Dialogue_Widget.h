@@ -14,15 +14,15 @@ UCLASS() class TLGAME_API UTLG_Dialogue_Widget : public UGBUIC_User_Widget
 	GENERATED_BODY()
 
 public:
-    FDialogue_Node Current_Node;  // Текущие данные (чтобы знать, что мы выбрали)
+    FDialogue_Node Current_Node;  // Current data need to know what we choose
     
-    UFUNCTION(BlueprintImplementableEvent) void On_Response_Selected(const FPlayer_Response &selected_response);  // Событие для Блюпринта: "Игрок выбрал ответ, делай что хочешь (анимации, звук)"
-    UFUNCTION(BlueprintCallable) void Setup_Dialogue_Node(const FDialogue_Node &node_data);  // Главная функция: Вызвать её, чтобы показать конкретную фразу
-    UFUNCTION() void Handle_Response_Clicked(int32 response_index);  // Функция обработки клика (свяжем её с кнопками)
+    UFUNCTION(BlueprintImplementableEvent) void On_Response_Selected(const FPlayer_Response &selected_response);  // Event Player resonse | can add sound or else
+    UFUNCTION(BlueprintCallable) void Setup_Dialogue_Node(const FDialogue_Node &node_data);  // Main func call her to show primary dialogue
+    UFUNCTION() void Handle_Response_Clicked(int32 response_index);
     
-    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_NPC_Line;  // --- UI Elements (BindWidget) --- // Эти переменные должны совпадать с именами в Designer (WBP)
-    UPROPERTY(meta = (BindWidget)) TObjectPtr<UVerticalBox> Container_Response_Buttons;  // Контейнер, куда будем спавнить кнопки ответов
-    UPROPERTY(EditDefaultsOnly, Category = "ToxicLove|UI") TSubclassOf<UUserWidget> Response_Button_Class;  // Класс кнопки, которую будем спавнить (WBP_ResponseButton)
+    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_NPC_Line;
+    UPROPERTY(meta = (BindWidget)) TObjectPtr<UVerticalBox> Buttons_Response_Container;  // Used for spawn button or widgets
+    UPROPERTY(EditDefaultsOnly, Category = "ToxicLove|UI") TSubclassOf<UUserWidget> Button_Response_Class;  // Widget Button to spawn in container
 
 };
 //------------------------------------------------------------------------------------------------------------

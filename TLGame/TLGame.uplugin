@@ -27,6 +27,10 @@
 			"Enabled": true
 		},
 		{
+			"Name": "GBUI_Core",
+			"Enabled": true
+		},
+		{
 			"Name": "GameplayAbilities",
 			"Enabled": true
 		}
