@@ -13,7 +13,7 @@ UCLASS() class TLGAME_API UTLG_HUD_Widget : public UUserWidget
     GENERATED_BODY()
 
 public:
-    virtual void NativeConstruct() override;
+    virtual void NativeConstruct();
 
     void Init_GAS_Attributes();
 

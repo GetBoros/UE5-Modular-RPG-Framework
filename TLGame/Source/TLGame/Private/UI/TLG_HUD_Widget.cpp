@@ -45,18 +45,17 @@ void UTLG_HUD_Widget::Init_GAS_Attributes()
     // Call BP Events to first init
     On_Sanity_Updated(Attribute_Set->GetSanity(), Attribute_Set->GetSanity_Max() );
     On_Dominance_Updated(Attribute_Set->GetDominance() );
-
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_HUD_Widget::Handle_Sanity_Changed(const FOnAttributeChangeData &data)
 {
-    float current = data.NewValue;
-    float max = 100.0f;
+    float sanity_curr = data.NewValue;
+    float sanity_max = 100.0f;
 
     if (Attribute_Set != 0)
-        max = Attribute_Set->GetSanity_Max();
+        sanity_max = Attribute_Set->GetSanity_Max();
 
-    On_Sanity_Updated(current, max);
+    On_Sanity_Updated(sanity_curr, sanity_max);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_HUD_Widget::Handle_Dominance_Changed(const FOnAttributeChangeData &data)
