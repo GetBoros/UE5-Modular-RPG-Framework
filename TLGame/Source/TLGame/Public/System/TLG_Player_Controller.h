@@ -22,8 +22,10 @@ public:
     void Apply_Response_Cost(float cost);
     void Apply_Response_Effects(const FGameplayTagContainer &tags);
 
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere) TObjectPtr<UTLG_Dialogue_Widget> Dialogue_Widget;
+
 private:
     UPROPERTY(EditDefaultsOnly) TSubclassOf<UTLG_Dialogue_Widget> Dialogue_Widget_Class;
-    UPROPERTY() TObjectPtr<UTLG_Dialogue_Widget> Dialogue_Widget;
+
 };
 //------------------------------------------------------------------------------------------------------------

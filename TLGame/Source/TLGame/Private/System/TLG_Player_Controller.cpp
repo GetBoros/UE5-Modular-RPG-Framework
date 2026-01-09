@@ -13,12 +13,10 @@
 // ATLG_Player_Controller
 void ATLG_Player_Controller::BeginPlay()
 {
-    Super::BeginPlay();
-
+    ensureMsgf(Dialogue_Widget_Class, TEXT("Init in BP") );
     bShowMouseCursor = true;
     SetInputMode(FInputModeUIOnly() );
 
-    // 1. Создаем UI Диалога (скрытым)
     if (Dialogue_Widget_Class == 0)
         return;
 
@@ -28,6 +26,8 @@ void ATLG_Player_Controller::BeginPlay()
 
     Dialogue_Widget->AddToViewport();
     Dialogue_Widget->SetVisibility(ESlateVisibility::Hidden);
+
+    Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
 ATLG_Player_State *ATLG_Player_Controller::Get_TLG_Player_State() const

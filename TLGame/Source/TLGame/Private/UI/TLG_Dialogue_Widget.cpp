@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <UI/TLG_Dialogue_Widget.h>
 #include <UI/TLG_Button_Response.h>
+#include <System/TLG_Player_Controller.h>
 
 #include <Components/TextBlock.h>
 #include <Components/VerticalBox.h>
@@ -45,7 +46,20 @@ void UTLG_Dialogue_Widget::Setup_Dialogue_Node(const FDialogue_Node &node_data)
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Dialogue_Widget::Handle_Response_Clicked(int32 response_index)
 {
-    if (Current_Node.Player_Responses.IsValidIndex(response_index) )
-        On_Response_Selected(Current_Node.Player_Responses[response_index]);  // Call BP Event Player make his choice
+    APlayerController *player_controller;
+    ATLG_Player_Controller *tlg_player_controller;
+
+    if (Current_Node.Player_Responses.IsValidIndex(response_index) == false)
+        return;
+
+    On_Response_Selected(Current_Node.Player_Responses[response_index]);  // Visuals (BP)
+
+    player_controller = GetOwningPlayer();
+    if (player_controller == 0)
+        return;
+
+    tlg_player_controller = Cast<ATLG_Player_Controller>(player_controller);
+    if (tlg_player_controller != 0)
+        tlg_player_controller->Process_Player_Decision(Current_Node.Player_Responses[response_index]);  // Send data to controller logic
 }
 //------------------------------------------------------------------------------------------------------------
