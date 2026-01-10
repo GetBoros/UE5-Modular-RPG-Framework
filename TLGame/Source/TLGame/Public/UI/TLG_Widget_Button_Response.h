@@ -3,14 +3,14 @@
 //------------------------------------------------------------------------------------------------------------
 #include <Data/TLTypes.h>
 #include <Blueprint/UserWidget.h>
-#include <TLG_Button_Response.generated.h>
+#include <TLG_Widget_Button_Response.generated.h>
 //------------------------------------------------------------------------------------------------------------
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_Response_Clicked, int32, index);
 //------------------------------------------------------------------------------------------------------------
 class UButton;
 class UTextBlock;
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class TLGAME_API UTLG_Button_Response : public UUserWidget
+UCLASS() class TLGAME_API UTLG_Widget_Button_Response : public UUserWidget
 {
 	GENERATED_BODY()
 
@@ -28,4 +28,3 @@ public:
 	
 };
 //------------------------------------------------------------------------------------------------------------
-

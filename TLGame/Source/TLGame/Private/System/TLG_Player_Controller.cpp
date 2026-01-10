@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <System/TLG_Player_Controller.h>
 #include <System/TLG_Player_State.h>
-#include <UI/TLG_Dialogue_Widget.h>
+#include <UI/TLG_Widget_Dialogue.h>
 
 #include <Abilities/TLG_Attribute_Set.h>
 #include <AbilitySystemComponent.h>
@@ -14,13 +14,14 @@
 void ATLG_Player_Controller::BeginPlay()
 {
     ensureMsgf(Dialogue_Widget_Class, TEXT("Init in BP") );
+
     bShowMouseCursor = true;
     SetInputMode(FInputModeUIOnly() );
 
     if (Dialogue_Widget_Class == 0)
         return;
 
-    Dialogue_Widget = CreateWidget<UTLG_Dialogue_Widget>(this, Dialogue_Widget_Class);
+    Dialogue_Widget = CreateWidget<UTLG_Widget_Dialogue>(this, Dialogue_Widget_Class);
     if (Dialogue_Widget == 0)
         return;
 

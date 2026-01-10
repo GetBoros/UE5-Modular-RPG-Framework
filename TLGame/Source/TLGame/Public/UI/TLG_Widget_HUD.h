@@ -3,12 +3,12 @@
 //------------------------------------------------------------------------------------------------------------
 #include <Blueprint/UserWidget.h>
 #include <GameplayEffectTypes.h>
-#include <TLG_HUD_Widget.generated.h>
+#include <TLG_Widget_HUD.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class UAbilitySystemComponent;
 class UTLG_Attribute_Set;
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class TLGAME_API UTLG_HUD_Widget : public UUserWidget
+UCLASS() class TLGAME_API UTLG_Widget_HUD : public UUserWidget
 {
     GENERATED_BODY()
 

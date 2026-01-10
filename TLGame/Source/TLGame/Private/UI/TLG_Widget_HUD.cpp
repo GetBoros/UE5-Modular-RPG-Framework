@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------------------------------------
-#include <UI/TLG_HUD_Widget.h>
+#include <UI/TLG_Widget_HUD.h>
 #include <System/TLG_Player_State.h>
 #include <Abilities/TLG_Attribute_Set.h>
 
@@ -9,15 +9,15 @@
 
 
 
-// UTLG_HUD_Widget
-void UTLG_HUD_Widget::NativeConstruct()
+// UTLG_Widget_HUD
+void UTLG_Widget_HUD::NativeConstruct()
 {
     Super::NativeConstruct();
 
     Init_GAS_Attributes();  // For single it`s oke here
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_HUD_Widget::Init_GAS_Attributes()
+void UTLG_Widget_HUD::Init_GAS_Attributes()
 {
     APlayerController *player_controller;
     ATLG_Player_State *player_state;
@@ -39,15 +39,15 @@ void UTLG_HUD_Widget::Init_GAS_Attributes()
     if (ASC == 0 || Attribute_Set == 0)
         return;
     
-    ASC->GetGameplayAttributeValueChangeDelegate(Attribute_Set->GetSanityAttribute() ).AddUObject(this, &UTLG_HUD_Widget::Handle_Sanity_Changed);
-    ASC->GetGameplayAttributeValueChangeDelegate(Attribute_Set->GetDominanceAttribute() ).AddUObject(this, &UTLG_HUD_Widget::Handle_Dominance_Changed);
+    ASC->GetGameplayAttributeValueChangeDelegate(Attribute_Set->GetSanityAttribute() ).AddUObject(this, &UTLG_Widget_HUD::Handle_Sanity_Changed);
+    ASC->GetGameplayAttributeValueChangeDelegate(Attribute_Set->GetDominanceAttribute() ).AddUObject(this, &UTLG_Widget_HUD::Handle_Dominance_Changed);
 
     // Call BP Events to first init
     On_Sanity_Updated(Attribute_Set->GetSanity(), Attribute_Set->GetSanity_Max() );
     On_Dominance_Updated(Attribute_Set->GetDominance() );
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_HUD_Widget::Handle_Sanity_Changed(const FOnAttributeChangeData &data)
+void UTLG_Widget_HUD::Handle_Sanity_Changed(const FOnAttributeChangeData &data)
 {
     float sanity_curr = data.NewValue;
     float sanity_max = 100.0f;
@@ -58,7 +58,7 @@ void UTLG_HUD_Widget::Handle_Sanity_Changed(const FOnAttributeChangeData &data)
     On_Sanity_Updated(sanity_curr, sanity_max);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_HUD_Widget::Handle_Dominance_Changed(const FOnAttributeChangeData &data)
+void UTLG_Widget_HUD::Handle_Dominance_Changed(const FOnAttributeChangeData &data)
 {
     On_Dominance_Updated(data.NewValue);
 }

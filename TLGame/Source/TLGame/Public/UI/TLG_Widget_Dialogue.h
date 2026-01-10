@@ -3,13 +3,13 @@
 //------------------------------------------------------------------------------------------------------------
 #include <Data/TLTypes.h>
 #include <GBUIC_User_Widget.h>
-#include <TLG_Dialogue_Widget.generated.h>
+#include <TLG_Widget_Dialogue.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class UTextBlock;
 class UVerticalBox;
 class UButton;
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class TLGAME_API UTLG_Dialogue_Widget : public UGBUIC_User_Widget
+UCLASS() class TLGAME_API UTLG_Widget_Dialogue : public UGBUIC_User_Widget
 {
 	GENERATED_BODY()
 

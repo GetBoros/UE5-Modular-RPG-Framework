@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
-#include <UI/TLG_Dialogue_Widget.h>
-#include <UI/TLG_Button_Response.h>
+#include <UI/TLG_Widget_Dialogue.h>
+#include <UI/TLG_Widget_Button_Response.h>
 #include <System/TLG_Player_Controller.h>
 
 #include <Components/TextBlock.h>
@@ -11,11 +11,11 @@
 
 
 
-// UTLG_Dialogue_Widget
-void UTLG_Dialogue_Widget::Setup_Dialogue_Node(const FDialogue_Node &node_data)
+// UTLG_Widget_Dialogue
+void UTLG_Widget_Dialogue::Setup_Dialogue_Node(const FDialogue_Node &node_data)
 {
     UUserWidget *button_response_widget;
-    UTLG_Button_Response *button_response;
+    UTLG_Widget_Button_Response *button_response;
 
     Current_Node = node_data;
 
@@ -33,18 +33,18 @@ void UTLG_Dialogue_Widget::Setup_Dialogue_Node(const FDialogue_Node &node_data)
         const FPlayer_Response &response = node_data.Player_Responses[i];
 
         button_response_widget = CreateWidget<UUserWidget>(this, Button_Response_Class);
-        button_response = Cast<UTLG_Button_Response>(button_response_widget);
+        button_response = Cast<UTLG_Widget_Button_Response>(button_response_widget);
         if (button_response != 0)
         {
             button_response->Init(response, i);
-            button_response->On_Response_Clicked_Delegate.AddDynamic(this, &UTLG_Dialogue_Widget::Handle_Response_Clicked);
+            button_response->On_Response_Clicked_Delegate.AddDynamic(this, &UTLG_Widget_Dialogue::Handle_Response_Clicked);
             
             Buttons_Response_Container->AddChild(button_response);
         }
     }
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Dialogue_Widget::Handle_Response_Clicked(int32 response_index)
+void UTLG_Widget_Dialogue::Handle_Response_Clicked(int32 response_index)
 {
     APlayerController *player_controller;
     ATLG_Player_Controller *tlg_player_controller;
