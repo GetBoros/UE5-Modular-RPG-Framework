@@ -39,15 +39,15 @@ void UTLG_Widget_HUD::Init_GAS_Attributes()
     if (ASC == 0 || Attribute_Set == 0)
         return;
     
-    ASC->GetGameplayAttributeValueChangeDelegate(Attribute_Set->GetSanityAttribute() ).AddUObject(this, &UTLG_Widget_HUD::Handle_Sanity_Changed);
-    ASC->GetGameplayAttributeValueChangeDelegate(Attribute_Set->GetDominanceAttribute() ).AddUObject(this, &UTLG_Widget_HUD::Handle_Dominance_Changed);
+    ASC->GetGameplayAttributeValueChangeDelegate(Attribute_Set->GetSanityAttribute() ).AddUObject(this, &UTLG_Widget_HUD::Handle_Changed_Sanity);
+    ASC->GetGameplayAttributeValueChangeDelegate(Attribute_Set->GetDominanceAttribute() ).AddUObject(this, &UTLG_Widget_HUD::Handle_Changed_Dominance);
 
     // Call BP Events to first init
-    On_Sanity_Updated(Attribute_Set->GetSanity(), Attribute_Set->GetSanity_Max() );
-    On_Dominance_Updated(Attribute_Set->GetDominance() );
+    On_Updated_Sanity(Attribute_Set->GetSanity(), Attribute_Set->GetSanity_Max() );
+    On_Updated_Dominance(Attribute_Set->GetDominance() );
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Handle_Sanity_Changed(const FOnAttributeChangeData &data)
+void UTLG_Widget_HUD::Handle_Changed_Sanity(const FOnAttributeChangeData &data)
 {
     float sanity_curr = data.NewValue;
     float sanity_max = 100.0f;
@@ -55,11 +55,11 @@ void UTLG_Widget_HUD::Handle_Sanity_Changed(const FOnAttributeChangeData &data)
     if (Attribute_Set != 0)
         sanity_max = Attribute_Set->GetSanity_Max();
 
-    On_Sanity_Updated(sanity_curr, sanity_max);
+    On_Updated_Sanity(sanity_curr, sanity_max);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Handle_Dominance_Changed(const FOnAttributeChangeData &data)
+void UTLG_Widget_HUD::Handle_Changed_Dominance(const FOnAttributeChangeData &data)
 {
-    On_Dominance_Updated(data.NewValue);
+    On_Updated_Dominance(data.NewValue);
 }
 //------------------------------------------------------------------------------------------------------------

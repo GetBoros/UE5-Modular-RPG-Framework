@@ -17,13 +17,13 @@ public:
 
     void Init_GAS_Attributes();
 
-    void Handle_Sanity_Changed(const FOnAttributeChangeData &data);
-    void Handle_Dominance_Changed(const FOnAttributeChangeData &data);
-
-    UFUNCTION(BlueprintImplementableEvent) void On_Sanity_Updated(float new_value, float max_value);
-    UFUNCTION(BlueprintImplementableEvent) void On_Dominance_Updated(float new_value);
+    UFUNCTION(BlueprintImplementableEvent) void On_Updated_Sanity(const float sanity_curr, const float sanity_max);
+    UFUNCTION(BlueprintImplementableEvent) void On_Updated_Dominance(const float dominance_curr);
 
 private:
+    void Handle_Changed_Sanity(const FOnAttributeChangeData &data);
+    void Handle_Changed_Dominance(const FOnAttributeChangeData &data);
+
     UPROPERTY() TObjectPtr<UAbilitySystemComponent> ASC;
     UPROPERTY() TObjectPtr<UTLG_Attribute_Set> Attribute_Set;
 };
