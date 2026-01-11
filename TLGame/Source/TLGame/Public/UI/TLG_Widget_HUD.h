@@ -24,7 +24,7 @@ private:
     void Handle_Changed_Sanity(const FOnAttributeChangeData &data);
     void Handle_Changed_Dominance(const FOnAttributeChangeData &data);
 
-    UPROPERTY() TObjectPtr<UAbilitySystemComponent> ASC;
+    UPROPERTY() TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
     UPROPERTY() TObjectPtr<UTLG_Attribute_Set> Attribute_Set;
 };
 //------------------------------------------------------------------------------------------------------------

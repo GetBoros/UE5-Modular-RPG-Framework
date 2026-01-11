@@ -22,7 +22,7 @@ void UTLG_Widget_HUD::Init_GAS_Attributes()
     APlayerController *player_controller;
     ATLG_Player_State *player_state;
 
-    if (ASC != 0 && Attribute_Set != 0)
+    if (Ability_System_Component != 0 && Attribute_Set != 0)
         return;
 
     player_controller = GetOwningPlayer();
@@ -33,14 +33,14 @@ void UTLG_Widget_HUD::Init_GAS_Attributes()
     if (player_state == 0)
         return;
 
-    ASC = player_state->GetAbilitySystemComponent();
+    Ability_System_Component = player_state->GetAbilitySystemComponent();
     Attribute_Set = player_state->Get_Attribute_Set();
 
-    if (ASC == 0 || Attribute_Set == 0)
+    if (Ability_System_Component == 0 || Attribute_Set == 0)
         return;
     
-    ASC->GetGameplayAttributeValueChangeDelegate(Attribute_Set->GetSanityAttribute() ).AddUObject(this, &UTLG_Widget_HUD::Handle_Changed_Sanity);
-    ASC->GetGameplayAttributeValueChangeDelegate(Attribute_Set->GetDominanceAttribute() ).AddUObject(this, &UTLG_Widget_HUD::Handle_Changed_Dominance);
+    Ability_System_Component->GetGameplayAttributeValueChangeDelegate(Attribute_Set->GetSanityAttribute() ).AddUObject(this, &UTLG_Widget_HUD::Handle_Changed_Sanity);
+    Ability_System_Component->GetGameplayAttributeValueChangeDelegate(Attribute_Set->GetDominanceAttribute() ).AddUObject(this, &UTLG_Widget_HUD::Handle_Changed_Dominance);
 
     // Call BP Events to first init
     On_Updated_Sanity(Attribute_Set->GetSanity(), Attribute_Set->GetSanity_Max() );

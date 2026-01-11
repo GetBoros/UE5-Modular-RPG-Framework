@@ -2,7 +2,7 @@
 #pragma once
 //------------------------------------------------------------------------------------------------------------
 #include <GameFramework/PlayerController.h>
-#include <Data/TLTypes.h>
+#include <Data/TLG_Types.h>
 
 #include <TLG_Player_Controller.generated.h>
 //------------------------------------------------------------------------------------------------------------

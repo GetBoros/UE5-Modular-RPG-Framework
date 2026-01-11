@@ -4,7 +4,7 @@
 #include <GameplayTagContainer.h>
 #include <Engine/DataTable.h>
 
-#include <TLTypes.generated.h>
+#include <TLG_Types.generated.h>
 //------------------------------------------------------------------------------------------------------------
 UENUM(BlueprintType) enum class EDialogue_Response_Category : uint8
 {
