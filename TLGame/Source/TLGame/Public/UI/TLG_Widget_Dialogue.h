@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <Data/TLG_Types.h>
 #include <GBUIC_User_Widget.h>
+
 #include <TLG_Widget_Dialogue.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class UTextBlock;
@@ -20,7 +21,7 @@ public:
     UFUNCTION(BlueprintCallable) void Setup_Dialogue_Node(const FDialogue_Node &node_data);  // Main func call her to show primary dialogue
     UFUNCTION() void Handle_Response_Clicked(int32 response_index);
     
-    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_NPC_Line;
+    UPROPERTY(BlueprintReadWrite, meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_NPC_Line;
     UPROPERTY(meta = (BindWidget)) TObjectPtr<UVerticalBox> Buttons_Response_Container;  // Used for spawn button or widgets
     UPROPERTY(EditDefaultsOnly, Category = "ToxicLove|UI") TSubclassOf<UUserWidget> Button_Response_Class;  // Widget Button to spawn in container
 

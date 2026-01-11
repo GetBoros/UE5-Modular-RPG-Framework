@@ -28,7 +28,7 @@ void UTLG_Widget_Dialogue::Setup_Dialogue_Node(const FDialogue_Node &node_data)
     if (Button_Response_Class == 0 || Buttons_Response_Container == 0)
         return;
 
-    for (int32 i = 0; i < node_data.Player_Responses.Num(); i++)  // Spawn Button_Response_Class and attach to Buttons_Response_Container 
+    for (int32 i = 0; i < node_data.Player_Responses.Num(); i++)  // Spawn Button_Response_Class and attach to Buttons_Response_Container, and bind On_Clicked
     {
         const FPlayer_Response &response = node_data.Player_Responses[i];
 
