@@ -1,11 +1,11 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "0.1",
-	"FriendlyName": "GBUI_Core",
+	"VersionName": "0.2",
+	"FriendlyName": "GBLabProgressionSystem",
 	"Description": "",
 	"Category": "Other",
-	"CreatedBy": "Adonis",
+	"CreatedBy": "GBLab",
 	"CreatedByURL": "",
 	"DocsURL": "",
 	"MarketplaceURL": "",
@@ -16,15 +16,9 @@
 	"Installed": false,
 	"Modules": [
 		{
-			"Name": "GBUI_Core",
+			"Name": "GBLabProgressionSystem",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
-		}
-	],
-	"Plugins": [
-		{
-			"Name": "GBCore",
-			"Enabled": true
 		}
 	]
 }
