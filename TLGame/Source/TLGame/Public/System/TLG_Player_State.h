@@ -6,8 +6,9 @@
 
 #include <TLG_Player_State.generated.h>
 //------------------------------------------------------------------------------------------------------------
-class UAbilitySystemComponent;
 class UTLG_Attribute_Set;
+
+class UAbilitySystemComponent;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API ATLG_Player_State : public APlayerState, public IAbilitySystemInterface
 {

@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <AttributeSet.h>
 #include <AbilitySystemComponent.h>
+
 #include <TLG_Attribute_Set.generated.h>
 //------------------------------------------------------------------------------------------------------------
 #define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
