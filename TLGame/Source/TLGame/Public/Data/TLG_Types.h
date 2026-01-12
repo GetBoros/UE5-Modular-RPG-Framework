@@ -20,8 +20,10 @@ USTRUCT(BlueprintType) struct FPlayer_Response
     GENERATED_BODY()
 
 public:
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dialogue") float Sanity_Cost = 0.0f;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dialogue") EDialogue_Response_Category Category = EDialogue_Response_Category::Aggressive;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dialogue") float Sanity_Cost = 0.0f;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dialogue") FName Next_Row_ID;  // Next response ID if none dialogue end
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dialogue") FText Response_Text;  // Text on button example "Stop talk"
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dialogue") FGameplayTagContainer Apply_Tags;  // Add tag on response
 

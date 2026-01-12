@@ -12,22 +12,27 @@ void ATLG_HUD::BeginPlay()
 {
 	Super::BeginPlay();
 
+    Get_TLG_Widget_HUD();
+}
+//------------------------------------------------------------------------------------------------------------
+UTLG_Widget_HUD *ATLG_HUD::Get_TLG_Widget_HUD()
+{
+    if (HUD_Widget != 0)
+        return HUD_Widget;
+
     if (HUD_Widget_Class == 0)
-        return;
+        return 0;
 
     HUD_Widget = CreateWidget<UTLG_Widget_HUD>(GetOwningPlayerController(), HUD_Widget_Class);
-    if (HUD_Widget == 0)
-        return;
+    if (HUD_Widget != 0)
+        HUD_Widget->AddToViewport();
 
-    HUD_Widget->AddToViewport();
+    return HUD_Widget;
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_HUD::Dialogue_Show_Node(const FDialogue_Node &node)
 {
-    if (HUD_Widget == 0)
-        return;
-
-    HUD_Widget->Dialogue_Show_Node(node);
+    Get_TLG_Widget_HUD()->Dialogue_Show_Node(node);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_HUD::Dialogue_Hide()

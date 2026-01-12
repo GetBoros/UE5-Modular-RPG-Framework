@@ -22,8 +22,11 @@ public:
     UFUNCTION() void Handle_Response_Clicked(int32 response_index);
     
     UPROPERTY(BlueprintReadWrite, meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_NPC_Line;
-    UPROPERTY(meta = (BindWidget)) TObjectPtr<UVerticalBox> Buttons_Response_Container;  // Used for spawn button or widgets
+    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UVerticalBox> Buttons_Response_Container;  // Used for spawn button or widgets
     UPROPERTY(EditDefaultsOnly, Category = "ToxicLove|UI") TSubclassOf<UUserWidget> Button_Response_Class;  // Widget Button to spawn in container
+
+private:
+
 
 };
 //------------------------------------------------------------------------------------------------------------

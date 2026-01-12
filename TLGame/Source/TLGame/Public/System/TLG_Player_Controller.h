@@ -21,8 +21,12 @@ public:
 private:
     void Apply_Response_Cost(float cost);
     void Apply_Response_Effects(const FGameplayTagContainer &tags);
+    void Go_To_Next_Node(FName row_id);  // Функция для загрузки следующего узла
 
-    UFUNCTION(BlueprintCallable, meta=(AllowPrivateAccess = "true") ) void Dialogue_Start(const FDialogue_Node &node);
+    UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true") ) void Dialogue_Start(const FDialogue_Node &node);
+    UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true") ) void Dialogue_Start_Row(FName row_id);  // Запускает диалог по ID строки из таблицы
+
+    UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UDataTable> Dialogue_Data_Table;
 
     ATLG_HUD *Get_TLG_HUD() const;
     ATLG_Player_State *Get_TLG_Player_State() const;
