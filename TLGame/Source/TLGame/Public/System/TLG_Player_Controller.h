@@ -6,8 +6,8 @@
 
 #include <TLG_Player_Controller.generated.h>
 //------------------------------------------------------------------------------------------------------------
-class UTLG_Widget_Dialogue;
 class ATLG_Player_State;
+class ATLG_HUD;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API ATLG_Player_Controller : public APlayerController
 {
@@ -17,10 +17,15 @@ public:
     virtual void BeginPlay();
 
     UFUNCTION(BlueprintCallable) void Process_Player_Decision(const FPlayer_Response &choice);  // Call UI when player press button
-
-    ATLG_Player_State *Get_TLG_Player_State() const;
+    
+private:
     void Apply_Response_Cost(float cost);
     void Apply_Response_Effects(const FGameplayTagContainer &tags);
+
+    UFUNCTION(BlueprintCallable, meta=(AllowPrivateAccess = "true") ) void Dialogue_Start(const FDialogue_Node &node);
+
+    ATLG_HUD *Get_TLG_HUD() const;
+    ATLG_Player_State *Get_TLG_Player_State() const;
 
 };
 //------------------------------------------------------------------------------------------------------------

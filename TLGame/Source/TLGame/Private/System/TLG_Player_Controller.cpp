@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <System/TLG_Player_Controller.h>
 #include <System/TLG_Player_State.h>
-#include <UI/TLG_Widget_Dialogue.h>
+#include <System/TLG_HUD.h>
 
 #include <Abilities/TLG_Attribute_Set.h>
 #include <AbilitySystemComponent.h>
@@ -17,16 +17,12 @@ void ATLG_Player_Controller::BeginPlay()
     
     bShowMouseCursor = true;
     SetInputMode(FInputModeUIOnly() );
-
-}
-//------------------------------------------------------------------------------------------------------------
-ATLG_Player_State *ATLG_Player_Controller::Get_TLG_Player_State() const
-{
-    return GetPlayerState<ATLG_Player_State>();
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Process_Player_Decision(const FPlayer_Response &choice)
 {
+    ATLG_HUD *hud = Get_TLG_HUD();
+
     if (choice.Sanity_Cost > 0.0f)
         Apply_Response_Cost(choice.Sanity_Cost);
 
@@ -34,6 +30,8 @@ void ATLG_Player_Controller::Process_Player_Decision(const FPlayer_Response &cho
         Apply_Response_Effects(choice.Apply_Tags);  // Apply tag (Effects)
 
     UE_LOG(LogTemp, Warning, TEXT("Player chose: %s"), *choice.Response_Text.ToString() );
+ 
+    hud->Dialogue_Hide();
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Apply_Response_Cost(float cost)
@@ -66,5 +64,25 @@ void ATLG_Player_Controller::Apply_Response_Effects(const FGameplayTagContainer 
         return;
     
     ability_system_component->AddLooseGameplayTags(tags);  // !!! TEMP Add tags to player, in future split logic and for enemies
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Dialogue_Start(const FDialogue_Node& node)
+{
+    ATLG_HUD *hud = Get_TLG_HUD();
+
+    if (hud == 0)
+        return;
+ 
+    hud->Dialogue_Show_Node(node);
+}
+//------------------------------------------------------------------------------------------------------------
+ATLG_HUD *ATLG_Player_Controller::Get_TLG_HUD() const
+{
+    return GetHUD<ATLG_HUD>();
+}
+//------------------------------------------------------------------------------------------------------------
+ATLG_Player_State *ATLG_Player_Controller::Get_TLG_Player_State() const
+{
+    return GetPlayerState<ATLG_Player_State>();
 }
 //------------------------------------------------------------------------------------------------------------

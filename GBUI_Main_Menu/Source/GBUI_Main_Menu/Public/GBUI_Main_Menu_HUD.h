@@ -15,7 +15,7 @@ UCLASS() class GBUI_MAIN_MENU_API AGBUI_Main_Menu_HUD : public AHUD
     GENERATED_BODY()
 
 public:
-    virtual void BeginPlay();  // !!! TEMP Maybe make a lot of methods
+    virtual void BeginPlay();
 
     UFUNCTION(BlueprintCallable) UGBUIC_Widget_Controller *Get_Widget_Controller(const FController_Widget_Params &params);
 

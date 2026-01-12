@@ -1,5 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
 #include <UI/TLG_Widget_HUD.h>
+#include <UI/TLG_Widget_Dialogue.h>
 #include <System/TLG_Player_State.h>
 #include <Abilities/TLG_Attribute_Set.h>
 
@@ -15,6 +16,23 @@ void UTLG_Widget_HUD::NativeConstruct()
     Super::NativeConstruct();
 
     Init_GAS_Attributes();  // For single it`s oke here
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::Dialogue_Show_Node(const FDialogue_Node& node_data)
+{
+    if (Widget_Dialogue == 0)
+        return;
+    
+    Widget_Dialogue->SetVisibility(ESlateVisibility::Visible);
+    Widget_Dialogue->Setup_Dialogue_Node(node_data);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::Dialogue_Hide()
+{
+    if (Widget_Dialogue == 0)
+        return;
+
+    Widget_Dialogue->SetVisibility(ESlateVisibility::Hidden);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Init_GAS_Attributes()

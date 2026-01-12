@@ -3,10 +3,13 @@
 //------------------------------------------------------------------------------------------------------------
 #include <Blueprint/UserWidget.h>
 #include <GameplayEffectTypes.h>
+#include <Data/TLG_Types.h>
+
 #include <TLG_Widget_HUD.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class UAbilitySystemComponent;
 class UTLG_Attribute_Set;
+class UTLG_Widget_Dialogue;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API UTLG_Widget_HUD : public UUserWidget
 {
@@ -14,6 +17,9 @@ UCLASS() class TLGAME_API UTLG_Widget_HUD : public UUserWidget
 
 public:
     virtual void NativeConstruct();
+
+    UFUNCTION(BlueprintCallable, Category = "ToxicLove|UI") void Dialogue_Show_Node(const FDialogue_Node &node_data);
+    UFUNCTION(BlueprintCallable, Category = "ToxicLove|UI") void Dialogue_Hide();
 
     void Init_GAS_Attributes();
 
@@ -26,5 +32,7 @@ private:
 
     UPROPERTY() TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
     UPROPERTY() TObjectPtr<UTLG_Attribute_Set> Attribute_Set;
+    
+    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Dialogue> Widget_Dialogue;
 };
 //------------------------------------------------------------------------------------------------------------
