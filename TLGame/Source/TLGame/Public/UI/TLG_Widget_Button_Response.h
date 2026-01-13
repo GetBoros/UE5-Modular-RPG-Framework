@@ -3,12 +3,14 @@
 //------------------------------------------------------------------------------------------------------------
 #include <Data/TLG_Types.h>
 #include <Blueprint/UserWidget.h>
+
 #include <TLG_Widget_Button_Response.generated.h>
 //------------------------------------------------------------------------------------------------------------
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_Response_Clicked, int32, index);
 //------------------------------------------------------------------------------------------------------------
 class UButton;
 class UTextBlock;
+class UMaterialInstanceDynamic;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API UTLG_Widget_Button_Response : public UUserWidget
 {
@@ -17,14 +19,20 @@ UCLASS() class TLGAME_API UTLG_Widget_Button_Response : public UUserWidget
 public:
     virtual void NativeConstruct();
     
-    int32 Response_Index = -1;
-    
     UFUNCTION(BlueprintCallable) void Init(const FPlayer_Response &data, int32 index);  // Init button with data
-    UFUNCTION() void Handle_Button_Clicked();
     
     UPROPERTY(BlueprintAssignable) FOn_Response_Clicked On_Response_Clicked_Delegate;  // Делегат, на который подпишется родитель (Диалог), чтобы узнать о клике
-    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UButton> Button_Click;
-    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_Response;
 	
+private:
+    int32 Response_Index = -1;
+
+    void Update_Button_Visuals(EDialogue_Response_Category category);  // Change button color based on Response category
+    FLinearColor Get_Color_By_Category(EDialogue_Response_Category category) const;
+
+    UFUNCTION(meta = (AllowPrivateAccess = "true") ) void Handle_Button_Clicked();
+    
+    UPROPERTY(meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<UButton> Button_Click;
+    UPROPERTY(meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<UTextBlock> Text_Response;
+    UPROPERTY(meta = (AllowPrivateAccess = "true") ) TObjectPtr<UMaterialInstanceDynamic> Button_Material;
 };
 //------------------------------------------------------------------------------------------------------------
