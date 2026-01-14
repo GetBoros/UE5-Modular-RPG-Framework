@@ -6,7 +6,7 @@
 
 #include <TLG_Widget_Dialogue.generated.h>
 //------------------------------------------------------------------------------------------------------------
-class UTextBlock;
+class UTLG_Typewriter_Text;
 class UVerticalBox;
 class UButton;
 //------------------------------------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ private:
 
     UFUNCTION(meta = (BindWidget) ) void Handle_Response_Clicked(int32 response_index);
 
-    UPROPERTY(BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<UTextBlock> Text_NPC_Line;
+    UPROPERTY(BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Typewriter_Text> Text_NPC_Line;
     UPROPERTY(meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<UVerticalBox> Buttons_Response_Container;  // Used for spawn button or widgets
     
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UUserWidget> Button_Response_Class;  // Widget Button to spawn in container

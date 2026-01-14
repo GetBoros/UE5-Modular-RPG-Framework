@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <UI/TLG_Widget_Dialogue.h>
 #include <UI/TLG_Widget_Button_Response.h>
+#include <UI/TLG_Typewriter_Text.h>
 #include <System/TLG_Player_Controller.h>
 
 #include <Components/TextBlock.h>
@@ -20,7 +21,7 @@ void UTLG_Widget_Dialogue::Setup_Dialogue_Node(const FDialogue_Node &node_data)
     Current_Node = node_data;
 
     if (Text_NPC_Line != 0)
-        Text_NPC_Line->SetText(node_data.NPC_Line);  // Set npc text line
+		Text_NPC_Line->Start_Typewriter(node_data.NPC_Line, 0.03f);  // 0.03f sec per char
     
     if (Buttons_Response_Container != 0)
         Buttons_Response_Container->ClearChildren();  // clear all other child if need
