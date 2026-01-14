@@ -33,10 +33,10 @@ void UTLG_Widget_Button_Response::Init(const FPlayer_Response &data, int32 index
     if (Button_Click == 0)
         return;
 
-    Update_Button_Visuals(data.Category);
+    Button_Update_Visuals(data.Category);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Button_Response::Update_Button_Visuals(EDialogue_Response_Category category)
+void UTLG_Widget_Button_Response::Button_Update_Visuals(EDialogue_Response_Category category)
 {
     UMaterialInterface *base_mat;
     FButtonStyle style = Button_Click->GetStyle();

@@ -26,13 +26,13 @@ public:
 private:
     int32 Response_Index = -1;
 
-    void Update_Button_Visuals(EDialogue_Response_Category category);  // Change button color based on Response category
+    void Button_Update_Visuals(EDialogue_Response_Category category);  // Change button color based on Response category
     FLinearColor Get_Color_By_Category(EDialogue_Response_Category category) const;
 
     UFUNCTION(meta = (AllowPrivateAccess = "true") ) void Handle_Button_Clicked();
     
-    UPROPERTY(meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<UButton> Button_Click;
-    UPROPERTY(meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<UTextBlock> Text_Response;
+    UPROPERTY(meta = (AllowPrivateAccess = "true", BindWidget) ) TObjectPtr<UButton> Button_Click;
+    UPROPERTY(meta = (AllowPrivateAccess = "true", BindWidget) ) TObjectPtr<UTextBlock> Text_Response;
     UPROPERTY(meta = (AllowPrivateAccess = "true") ) TObjectPtr<UMaterialInstanceDynamic> Button_Material;
 };
 //------------------------------------------------------------------------------------------------------------
