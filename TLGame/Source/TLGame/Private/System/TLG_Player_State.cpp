@@ -11,14 +11,14 @@
 // ATLG_Player_State
 ATLG_Player_State::ATLG_Player_State()
 {
-    Ability_System_Component = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("Ability_System_Component") );
-    if (Ability_System_Component != 0)
-    {
-        Ability_System_Component->SetIsReplicated(true);
-        Ability_System_Component->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
-    }
-
     Attribute_Set = CreateDefaultSubobject<UTLG_Attribute_Set>(TEXT("Attribute_Set") );
+    Ability_System_Component = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("Ability_System_Component") );
+    
+    if (Ability_System_Component == 0)
+        return;
+
+    Ability_System_Component->SetIsReplicated(true);
+    Ability_System_Component->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 }
 //------------------------------------------------------------------------------------------------------------
 UAbilitySystemComponent *ATLG_Player_State::GetAbilitySystemComponent() const

@@ -48,7 +48,7 @@ void UTLG_Widget_HUD::Init_GAS_Attributes()
     On_Updated_Dominance(Attribute_Set->GetDominance() );
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Dialogue_Show_Node(const FDialogue_Node& node_data)
+void UTLG_Widget_HUD::Dialogue_Show_Node(const FDialogue_Node &node_data) const
 {
     if (Widget_Dialogue == 0)
         return;
@@ -57,7 +57,7 @@ void UTLG_Widget_HUD::Dialogue_Show_Node(const FDialogue_Node& node_data)
     Widget_Dialogue->Setup_Dialogue_Node(node_data);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Dialogue_Hide()
+void UTLG_Widget_HUD::Dialogue_Hide() const
 {
     if (Widget_Dialogue == 0)
         return;

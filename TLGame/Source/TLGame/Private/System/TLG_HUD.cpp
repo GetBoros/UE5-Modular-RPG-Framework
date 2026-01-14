@@ -10,9 +10,22 @@
 // ATLG_HUD
 void ATLG_HUD::BeginPlay()
 {
-	Super::BeginPlay();
-
     Get_TLG_Widget_HUD();
+    
+    Super::BeginPlay();
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_HUD::Dialogue_Show_Node(const FDialogue_Node &node)
+{
+    Get_TLG_Widget_HUD()->Dialogue_Show_Node(node);
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_HUD::Dialogue_Hide() const
+{
+    if (HUD_Widget == 0)
+        return;
+
+    HUD_Widget->Dialogue_Hide();
 }
 //------------------------------------------------------------------------------------------------------------
 UTLG_Widget_HUD *ATLG_HUD::Get_TLG_Widget_HUD()
@@ -28,18 +41,5 @@ UTLG_Widget_HUD *ATLG_HUD::Get_TLG_Widget_HUD()
         HUD_Widget->AddToViewport();
 
     return HUD_Widget;
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_HUD::Dialogue_Show_Node(const FDialogue_Node &node)
-{
-    Get_TLG_Widget_HUD()->Dialogue_Show_Node(node);
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_HUD::Dialogue_Hide()
-{
-    if (HUD_Widget == 0)
-        return;
-
-    HUD_Widget->Dialogue_Hide();
 }
 //------------------------------------------------------------------------------------------------------------

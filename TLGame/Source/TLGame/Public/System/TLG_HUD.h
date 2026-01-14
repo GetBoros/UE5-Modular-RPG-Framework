@@ -16,7 +16,7 @@ public:
 	virtual void BeginPlay();
 
     void Dialogue_Show_Node(const FDialogue_Node &node);
-    void Dialogue_Hide();
+    void Dialogue_Hide() const;
 
 private:
 	UTLG_Widget_HUD *Get_TLG_Widget_HUD();
