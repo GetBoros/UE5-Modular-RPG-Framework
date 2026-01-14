@@ -18,10 +18,10 @@ UCLASS() class TLGAME_API UTLG_Widget_HUD : public UUserWidget
 public:
     virtual void NativeConstruct();
 
-    UFUNCTION(BlueprintCallable, Category = "ToxicLove|UI") void Dialogue_Show_Node(const FDialogue_Node &node_data);
-    UFUNCTION(BlueprintCallable, Category = "ToxicLove|UI") void Dialogue_Hide();
-
     void Init_GAS_Attributes();
+
+    UFUNCTION(BlueprintCallable) void Dialogue_Show_Node(const FDialogue_Node &node_data);
+    UFUNCTION(BlueprintCallable) void Dialogue_Hide();
 
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Sanity(const float sanity_curr, const float sanity_max);
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Dominance(const float dominance_curr);

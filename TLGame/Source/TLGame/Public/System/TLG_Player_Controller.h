@@ -6,8 +6,9 @@
 
 #include <TLG_Player_Controller.generated.h>
 //------------------------------------------------------------------------------------------------------------
-class ATLG_Player_State;
 class ATLG_HUD;
+class ATLG_Player_State;
+class UAbilitySystemComponent;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API ATLG_Player_Controller : public APlayerController
 {
@@ -16,8 +17,8 @@ UCLASS() class TLGAME_API ATLG_Player_Controller : public APlayerController
 public:
     virtual void BeginPlay();
 
-    UFUNCTION(BlueprintCallable) void Process_Player_Decision(const FPlayer_Response &choice);  // Call UI when player press button
-    
+    void Handle_Player_Decision(const FPlayer_Response &choice);  // Call UI when player press button
+
 private:
     void Apply_Response_Cost(float cost);
     void Apply_Response_Effects(const FGameplayTagContainer &tags);
@@ -28,8 +29,8 @@ private:
 
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UDataTable> Dialogue_Data_Table;
 
-    ATLG_HUD *Get_TLG_HUD() const;
-    ATLG_Player_State *Get_TLG_Player_State() const;
-
+    ATLG_HUD *TLG_HUD;
+    ATLG_Player_State *TLG_Player_State;
+    UAbilitySystemComponent *Ability_System_Component;
 };
 //------------------------------------------------------------------------------------------------------------

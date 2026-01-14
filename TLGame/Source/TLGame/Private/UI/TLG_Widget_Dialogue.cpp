@@ -60,6 +60,6 @@ void UTLG_Widget_Dialogue::Handle_Response_Clicked(int32 response_index)
 
     tlg_player_controller = Cast<ATLG_Player_Controller>(player_controller);
     if (tlg_player_controller != 0)
-        tlg_player_controller->Process_Player_Decision(Current_Node.Player_Responses[response_index]);  // Send data to controller logic
+        tlg_player_controller->Handle_Player_Decision(Current_Node.Player_Responses[response_index]);  // Send data to player controller logic
 }
 //------------------------------------------------------------------------------------------------------------

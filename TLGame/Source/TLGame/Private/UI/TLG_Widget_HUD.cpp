@@ -18,23 +18,6 @@ void UTLG_Widget_HUD::NativeConstruct()
     Init_GAS_Attributes();  // For single it`s oke here
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Dialogue_Show_Node(const FDialogue_Node& node_data)
-{
-    if (Widget_Dialogue == 0)
-        return;
-    
-    Widget_Dialogue->SetVisibility(ESlateVisibility::Visible);
-    Widget_Dialogue->Setup_Dialogue_Node(node_data);
-}
-//------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Dialogue_Hide()
-{
-    if (Widget_Dialogue == 0)
-        return;
-
-    Widget_Dialogue->SetVisibility(ESlateVisibility::Hidden);
-}
-//------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Init_GAS_Attributes()
 {
     APlayerController *player_controller;
@@ -63,6 +46,23 @@ void UTLG_Widget_HUD::Init_GAS_Attributes()
     // Call BP Events to first init
     On_Updated_Sanity(Attribute_Set->GetSanity(), Attribute_Set->GetSanity_Max() );
     On_Updated_Dominance(Attribute_Set->GetDominance() );
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::Dialogue_Show_Node(const FDialogue_Node& node_data)
+{
+    if (Widget_Dialogue == 0)
+        return;
+    
+    Widget_Dialogue->SetVisibility(ESlateVisibility::Visible);
+    Widget_Dialogue->Setup_Dialogue_Node(node_data);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::Dialogue_Hide()
+{
+    if (Widget_Dialogue == 0)
+        return;
+
+    Widget_Dialogue->SetVisibility(ESlateVisibility::Hidden);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Handle_Changed_Sanity(const FOnAttributeChangeData &data)
