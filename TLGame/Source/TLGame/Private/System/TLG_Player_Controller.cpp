@@ -13,37 +13,60 @@
 // ATLG_Player_Controller
 void ATLG_Player_Controller::BeginPlay()
 {
+    // 1.0. Init
     TLG_HUD = GetHUD<ATLG_HUD>();
     TLG_Player_State = GetPlayerState<ATLG_Player_State>();
     if (TLG_Player_State != 0)
         Ability_System_Component = TLG_Player_State->GetAbilitySystemComponent();
 
+    // 2.0. Check
     ensureMsgf(TLG_HUD, TEXT("Need HUD implemented from ATLG_HUD") );
     ensureMsgf(TLG_Player_State, TEXT("Need Player State implemented from ATLG_Player_State") );
     ensureMsgf(Ability_System_Component, TEXT("Not Implemented interface") );
-    ensureMsgf(Dialogue_Data_Table, TEXT("Can be useful") );
+    ensureMsgf(Dialogue_Data_Table, TEXT("Need Dialogue_Data_Table to be valid or change to get ") );
     
-    if (Dialogue_Data_Table != 0)
-        Dialogue_Start_Row(FName("Intro") );
-
+    // 3.0. Settings
     bShowMouseCursor = true;
     SetInputMode(FInputModeUIOnly() );
 
+    Dialogue_Start(FName("Intro") );
+
+    // 4.0. Blueprint logic
     Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &choice)
 {
+    // 1.0. Apply response if needed
     if (choice.Sanity_Cost > 0.0f)
         Apply_Response_Cost(choice.Sanity_Cost);
 
     if (choice.Apply_Tags.IsValid() )
         Apply_Response_Effects(choice.Apply_Tags);  // Apply tag (Effects)
 
-	if (choice.Next_Row_ID.IsNone() )  // If no next row, end dialogue
-        TLG_HUD->Dialogue_Hide();
+    // 1.1. Show next dialugue if next row exists
+    if (choice.Next_Row_ID.IsNone() != true)
+        Dialogue_Start(choice.Next_Row_ID);
     else
-        Dialogue_Start_Row(choice.Next_Row_ID);
+        Dialogue_End();
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
+{
+    static const FString context(TEXT("Dialogue Context") );
+
+    if (const FDialogue_Node *next_node = Dialogue_Data_Table->FindRow<FDialogue_Node>(row_id, context, true) )
+        TLG_HUD->Dialogue_Show_Node(*next_node);
+    else
+        Dialogue_End();
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Dialogue_End()
+{
+    TLG_HUD->Dialogue_Hide();
+
+    SetInputMode(FInputModeGameOnly() );
+    bShowMouseCursor = false;
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Apply_Response_Cost(float cost)
@@ -54,30 +77,5 @@ void ATLG_Player_Controller::Apply_Response_Cost(float cost)
 void ATLG_Player_Controller::Apply_Response_Effects(const FGameplayTagContainer &tags)
 {
     Ability_System_Component->AddLooseGameplayTags(tags);  // !!! TEMP Add tags to player, in future split logic and for enemies
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Go_To_Next_Node(FName row_id)
-{
-    const FDialogue_Node *next_node = Dialogue_Data_Table->FindRow<FDialogue_Node>(row_id, TEXT("Dialogue Context") );
-    
-    if (next_node != 0)
-        Dialogue_Start(*next_node);
-    else
-        UE_LOG(LogTemp, Error, TEXT("Dialogue Row not found: %s"), *row_id.ToString() );
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Dialogue_Start(const FDialogue_Node& node)
-{
-    TLG_HUD->Dialogue_Show_Node(node);
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Dialogue_Start_Row(FName row_id)
-{
-    static const FString context_string(TEXT("Dialogue Context") );
-
-    if (FDialogue_Node *row_data = Dialogue_Data_Table->FindRow<FDialogue_Node>(row_id, context_string, true))
-        TLG_HUD->Dialogue_Show_Node(*row_data);  // Why *? need &
-    else
-        UE_LOG(LogTemp, Error, TEXT("Dialogue Row NOT FOUND: %s"), *row_id.ToString() );  // !!! Or maybe call Dialogue_Show_Node with none node
 }
 //------------------------------------------------------------------------------------------------------------

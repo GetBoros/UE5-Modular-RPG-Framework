@@ -20,17 +20,16 @@ public:
     void Handle_Player_Decision(const FPlayer_Response &choice);  // Call UI when player press button
 
 private:
+    void Dialogue_Start(const FName &row_id);
+    void Dialogue_End();
+
     void Apply_Response_Cost(float cost);
     void Apply_Response_Effects(const FGameplayTagContainer &tags);
-    void Go_To_Next_Node(FName row_id);  // Функция для загрузки следующего узла
 
-    UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true") ) void Dialogue_Start(const FDialogue_Node &node);
-    UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true") ) void Dialogue_Start_Row(FName row_id);  // Запускает диалог по ID строки из таблицы
+    UPROPERTY(meta = (AllowPrivateAccess = "true") ) ATLG_HUD *TLG_HUD;
+    UPROPERTY(meta = (AllowPrivateAccess = "true") ) ATLG_Player_State *TLG_Player_State;
+    UPROPERTY(meta = (AllowPrivateAccess = "true") ) UAbilitySystemComponent *Ability_System_Component;
+    UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UDataTable> Dialogue_Data_Table;  // !!! TEMP Need take from enemy
 
-    UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UDataTable> Dialogue_Data_Table;
-
-    ATLG_HUD *TLG_HUD;
-    ATLG_Player_State *TLG_Player_State;
-    UAbilitySystemComponent *Ability_System_Component;
 };
 //------------------------------------------------------------------------------------------------------------
