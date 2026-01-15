@@ -22,13 +22,13 @@ public:
     void Dialogue_Show_Node(const FDialogue_Node &node_data) const;
     void Dialogue_Hide() const;
 
-    UFUNCTION(BlueprintImplementableEvent) void On_Updated_Sanity(const float sanity_curr, const float sanity_max);
-    UFUNCTION(BlueprintImplementableEvent) void On_Updated_Dominance(const float dominance_curr);
+    UFUNCTION(BlueprintImplementableEvent) void On_Updated_Sanity(float sanity_curr, float sanity_max);
+    UFUNCTION(BlueprintImplementableEvent) void On_Updated_Dominance(float dominance_curr);
 
 private:
-    void Init_GAS_Attributes();
+    void Init();
 
-    void Set_Image_Background_Texture(UTexture2D *image_background_texture);
+    void Set_Image_Background_Texture(UTexture2D *image_background_texture) const;
 
     void Handle_Changed_Sanity(const FOnAttributeChangeData &data);
     void Handle_Changed_Dominance(const FOnAttributeChangeData &data);
