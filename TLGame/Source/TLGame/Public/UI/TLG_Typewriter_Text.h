@@ -22,8 +22,8 @@ public:
 
 private:
     int32 Current_Char_Index = 0;
-    FString Full_Text_String;
 
+    FString Full_Text_String;
     FTimerHandle Typewriter_Timer_Handle;
 };
 //------------------------------------------------------------------------------------------------------------
