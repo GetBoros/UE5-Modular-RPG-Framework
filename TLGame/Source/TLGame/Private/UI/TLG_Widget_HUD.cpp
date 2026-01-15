@@ -5,6 +5,7 @@
 #include <Abilities/TLG_Attribute_Set.h>
 
 #include <AbilitySystemComponent.h>
+#include <Components/Image.h>
 //------------------------------------------------------------------------------------------------------------
 
 
@@ -16,15 +17,15 @@ void UTLG_Widget_HUD::NativeConstruct()
     Super::NativeConstruct();
 
     Init_GAS_Attributes();  // For single it`s oke here
+
+    ensureMsgf(Attribute_Set, TEXT("Init_GAS_Attributes can`t get Attribute_Set") );
+    ensureMsgf(Ability_System_Component, TEXT("Init_GAS_Attributes can`t get Ability_System_Component") );
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Init_GAS_Attributes()
 {
     APlayerController *player_controller;
     ATLG_Player_State *player_state;
-
-    if (Ability_System_Component != 0 && Attribute_Set != 0)
-        return;
 
     player_controller = GetOwningPlayer();
     if (player_controller == 0)
@@ -50,19 +51,18 @@ void UTLG_Widget_HUD::Init_GAS_Attributes()
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Dialogue_Show_Node(const FDialogue_Node &node_data) const
 {
-    if (Widget_Dialogue == 0)
-        return;
-    
     Widget_Dialogue->SetVisibility(ESlateVisibility::Visible);
     Widget_Dialogue->Setup_Dialogue_Node(node_data);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Dialogue_Hide() const
 {
-    if (Widget_Dialogue == 0)
-        return;
-
     Widget_Dialogue->SetVisibility(ESlateVisibility::Hidden);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::Set_Image_Background_Texture(UTexture2D *image_background_texture)
+{
+    Image_Background->SetBrushFromTexture(image_background_texture);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Handle_Changed_Sanity(const FOnAttributeChangeData &data)

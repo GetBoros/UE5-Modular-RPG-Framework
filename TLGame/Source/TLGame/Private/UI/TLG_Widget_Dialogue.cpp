@@ -7,12 +7,25 @@
 #include <Components/TextBlock.h>
 #include <Components/VerticalBox.h>
 #include <Components/Button.h>
+#include <Components/RetainerBox.h>
+#include <Materials/MaterialInstanceDynamic.h>
 //------------------------------------------------------------------------------------------------------------
 
 
 
 
 // UTLG_Widget_Dialogue
+void UTLG_Widget_Dialogue::NativeConstruct()
+{
+    Super::NativeConstruct();
+
+    if (RB_NPC_Line_Effect != 0)
+        Effect_Material = RB_NPC_Line_Effect->GetEffectMaterial();  // Создаем динамический материал из того, что назначено в редакторе
+
+    Set_Text_Distortion(0.005f);
+    Set_Text_Tint(FLinearColor(0.484f, 0.484f, 0.484f) );
+}
+//------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Dialogue::Setup_Dialogue_Node(const FDialogue_Node &node_data)
 {
     UUserWidget *button_response_widget;
@@ -43,6 +56,18 @@ void UTLG_Widget_Dialogue::Setup_Dialogue_Node(const FDialogue_Node &node_data)
             Buttons_Response_Container->AddChild(button_response);
         }
     }
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Dialogue::Set_Text_Distortion(const float value) const
+{
+    if (Effect_Material != 0)
+        Effect_Material->SetScalarParameterValue(FName("Power"), value);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Dialogue::Set_Text_Tint(const FLinearColor &linear_color) const
+{
+    if (Effect_Material != 0)
+        Effect_Material->SetVectorParameterValue(FName("Tint"), linear_color);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Dialogue::Handle_Response_Clicked(int32 response_index)
