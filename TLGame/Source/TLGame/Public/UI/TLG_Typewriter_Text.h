@@ -14,16 +14,16 @@ UCLASS() class TLGAME_API UTLG_Typewriter_Text : public UTextBlock
 public:
     void Start_Typewriter(const FText &text_to_type, float speed = 0.05f);
     void Skip_Typewriter();
-    
-    UFUNCTION() void Handle_Typewriter_Tick();  // Функция, которую будет дергать таймер
 
     UPROPERTY(BlueprintAssignable) FOn_Typewriter_Finished On_Typewriter_Finished;
-
 
 private:
     int32 Current_Char_Index = 0;
 
     FString Full_Text_String;
     FTimerHandle Typewriter_Timer_Handle;
+    
+    UFUNCTION(meta = (AllowPrivateAccess = "true") ) void Handle_Typewriter_Tick();  // Func for delegate
+
 };
 //------------------------------------------------------------------------------------------------------------

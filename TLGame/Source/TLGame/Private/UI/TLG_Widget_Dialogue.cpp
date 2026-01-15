@@ -21,7 +21,7 @@ void UTLG_Widget_Dialogue::Setup_Dialogue_Node(const FDialogue_Node &node_data)
     Current_Node = node_data;
 
     if (Text_NPC_Line != 0)
-		Text_NPC_Line->Start_Typewriter(node_data.NPC_Line, 0.03f);  // 0.03f sec per char
+		Text_NPC_Line->Start_Typewriter(node_data.NPC_Line, 0.06f);  // 0.03f sec per char
     
     if (Buttons_Response_Container != 0)
         Buttons_Response_Container->ClearChildren();  // clear all other child if need
