@@ -17,7 +17,7 @@
 void UTLG_Widget_Dialogue::NativeConstruct()
 {
 	constexpr float distortion_power_effect = 0.005f;
-	constexpr float grey_linear_color = 0.484f;
+	constexpr float grey_linear_color = 1.0f;
 
     ensureMsgf(Button_Response_Class, TEXT("Need init add buttons to button container") );
 
