@@ -17,14 +17,15 @@
 void UTLG_Widget_Dialogue::NativeConstruct()
 {
 	constexpr float distortion_power_effect = 0.005f;
-	constexpr float grey_linear_color = 1.0f;
+	constexpr float linear_color_grey = 0.484f;
+	constexpr float linear_color_white = 1.0f;
 
     ensureMsgf(Button_Response_Class, TEXT("Need init add buttons to button container") );
 
 	Effect_Material = RB_NPC_Line_Effect->GetEffectMaterial();  // Get dynamic material from retainer box
 
     Set_Text_Distortion(distortion_power_effect);
-    Set_Text_Tint(FLinearColor(grey_linear_color, grey_linear_color, grey_linear_color) );
+    Set_Text_Tint(FLinearColor(linear_color_white, linear_color_white, linear_color_white) );
     
     Super::NativeConstruct();
 }

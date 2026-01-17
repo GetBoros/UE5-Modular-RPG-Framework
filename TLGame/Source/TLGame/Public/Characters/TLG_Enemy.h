@@ -16,7 +16,7 @@ public:
     UFUNCTION(BlueprintCallable) UTLG_Enemy_Data *Get_Enemy_Data() const;
 
 private:
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Enemy_Data> Enemy_Data;  // —юда в редакторе положишь DA_Hysteric
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Enemy_Data> Enemy_Data;  // From BP can put example DA_Hysteric
 
 };
 //------------------------------------------------------------------------------------------------------------
