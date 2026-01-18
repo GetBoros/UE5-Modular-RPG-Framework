@@ -4,8 +4,8 @@
 #include <UI/TLG_Typewriter_Text.h>
 #include <System/TLG_Player_Controller.h>
 
-#include <Components/RetainerBox.h>
 #include <Materials/MaterialInstanceDynamic.h>
+#include <Components/RetainerBox.h>
 #include <Components/VerticalBox.h>
 #include <Components/Button.h>
 //------------------------------------------------------------------------------------------------------------
