@@ -38,6 +38,7 @@ void UTLG_Widget_Dialogue::Setup_Dialogue_Node(const FDialogue_Node &node_data)
     Current_Node = node_data;
 
     Text_NPC_Line->Start_Typewriter(node_data.NPC_Line, 0.06f);  // 0.03f sec per char
+    Text_Speaker_Name->SetText(FText::FromString("Marina") );
     Buttons_Response_Container->ClearChildren();  // clear all other child if need
 
     for (int32 i = 0; i < node_data.Player_Responses.Num(); i++)  // Spawn Button_Response_Class and attach to Buttons_Response_Container, and bind On_Clicked
