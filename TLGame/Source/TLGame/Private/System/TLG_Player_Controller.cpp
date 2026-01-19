@@ -41,12 +41,12 @@ void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &choi
     if (choice.Sanity_Cost > 0.0f)
         Apply_Response_Cost(choice.Sanity_Cost);
 
-    if (choice.Apply_Tags.IsValid() )
-        Apply_Response_Effects(choice.Apply_Tags);  // Apply tag (Effects)
+    if (choice.Tags_Apply.IsValid() )
+        Apply_Response_Effects(choice.Tags_Apply);  // Apply tag (Effects)
 
     // 1.1. Show next dialugue if next row exists
-    if (choice.Next_Row_ID.IsNone() != true)
-        Dialogue_Start(choice.Next_Row_ID);
+    if (choice.Row_ID_Next.IsNone() != true)
+        Dialogue_Start(choice.Row_ID_Next);
     else
         Dialogue_End();
 }

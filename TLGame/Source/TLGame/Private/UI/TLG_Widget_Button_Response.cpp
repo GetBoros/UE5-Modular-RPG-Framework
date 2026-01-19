@@ -27,7 +27,7 @@ void UTLG_Widget_Button_Response::Init(const FPlayer_Response &data, int32 index
     Response_Index = index;
 
     if (Text_Response != 0)
-        Text_Response->SetText(data.Response_Text);
+        Text_Response->SetText(data.Text_Response);
 
     
     if (Button_Click == 0)

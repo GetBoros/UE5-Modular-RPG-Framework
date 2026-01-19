@@ -37,7 +37,7 @@ void UTLG_Widget_Dialogue::Setup_Dialogue_Node(const FDialogue_Node &node_data)
 
     Current_Node = node_data;
 
-    Text_NPC_Line->Start_Typewriter(node_data.NPC_Line, 0.06f);  // 0.03f sec per char
+    Text_NPC_Line->Start_Typewriter(node_data.Text_NPC_Line, 0.06f);  // 0.03f sec per char
     Text_Speaker_Name->SetText(FText::FromString("Kate") );
     VB_Buttons_Response_Container->ClearChildren();  // clear all other child if need
 
