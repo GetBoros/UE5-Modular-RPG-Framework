@@ -33,7 +33,7 @@ private:
 
     UPROPERTY(BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Typewriter_Text> Text_NPC_Line;
     UPROPERTY(meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<URetainerBox> RB_NPC_Line_Effect;
-    UPROPERTY(meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<UVerticalBox> Buttons_Response_Container;  // Used for spawn button or widgets
+    UPROPERTY(meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<UVerticalBox> VB_Buttons_Response_Container;  // Used for spawn button or widgets
     UPROPERTY(meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<UTextBlock> Text_Speaker_Name;
 
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UUserWidget> Button_Response_Class;  // Widget Button to spawn in container
