@@ -3,9 +3,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <GameplayTagContainer.h>
 #include <Engine/DataTable.h>
-
 #include <NativeGameplayTags.h>
-#include <GameplayTagAssetInterface.h>
 
 #include <TLG_Types.generated.h>
 //------------------------------------------------------------------------------------------------------------
@@ -42,14 +40,15 @@ USTRUCT(BlueprintType) struct FDialogue_Node : public FTableRowBase
     GENERATED_BODY()
 
 public:
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) FName Row_ID;  // ID for Next data table row
     UPROPERTY(EditAnywhere, BlueprintReadWrite) FText Text_Name_Speaker;  // Main hero or enemy
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (MultiLine = true) ) FText Text_NPC_Line;  // Oponent text "Are you say something"
+
     UPROPERTY(EditAnywhere, BlueprintReadWrite) FGameplayTag Tag_Portrait;  // Visual.Portrait.Angry
     UPROPERTY(EditAnywhere, BlueprintReadWrite) FGameplayTag Tag_Sound;  // Audio.SFX.Scream
-
     UPROPERTY(EditAnywhere, BlueprintReadWrite) FGameplayTagContainer Required_Conditions;  // Condition, if has tag can add additional response
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (MultiLine = true) ) FText Text_NPC_Line;  // Oponent text "Are you say something"
+    
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FPlayer_Response> Player_Responses;  // Response list
-	UPROPERTY(EditAnywhere, BlueprintReadWrite) FName Row_ID;  // ID for Next data table row
     
 };
 //------------------------------------------------------------------------------------------------------------
