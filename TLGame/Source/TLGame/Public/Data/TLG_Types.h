@@ -10,6 +10,9 @@
 #include <TLG_Types.generated.h>
 //------------------------------------------------------------------------------------------------------------
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_PORTRAIT_AGGRESSIVE)
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_PORTRAIT_SUBMISSIVE)
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_PORTRAIT_LOGICAL)
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_PORTRAIT_SILENT)
 //------------------------------------------------------------------------------------------------------------
 UENUM(BlueprintType) enum class EDialogue_Response_Category : uint8
 {
