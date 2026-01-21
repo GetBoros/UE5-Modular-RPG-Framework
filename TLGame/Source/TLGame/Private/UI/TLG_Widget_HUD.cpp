@@ -53,13 +53,13 @@ void UTLG_Widget_HUD::Init()
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Dialogue_Show_Node(const FDialogue_Node &node_data) const
 {
-    Widget_Dialogue->SetVisibility(ESlateVisibility::Visible);
-    Widget_Dialogue->Setup_Dialogue_Node(node_data);
+    TLG_Widget_Dialogue->SetVisibility(ESlateVisibility::Visible);
+    TLG_Widget_Dialogue->Setup_Dialogue_Node(node_data);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Dialogue_Hide() const
 {
-    Widget_Dialogue->SetVisibility(ESlateVisibility::Hidden);
+    TLG_Widget_Dialogue->SetVisibility(ESlateVisibility::Hidden);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Set_Image_Background_Texture(UTexture2D *image_background_texture) const

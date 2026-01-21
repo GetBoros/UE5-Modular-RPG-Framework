@@ -36,7 +36,7 @@ private:
     UPROPERTY() TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
     UPROPERTY() TObjectPtr<UTLG_Attribute_Set> Attribute_Set;
     
-    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Dialogue> Widget_Dialogue;
+    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Dialogue> TLG_Widget_Dialogue;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UImage> Image_Background;
 };
 //------------------------------------------------------------------------------------------------------------
