@@ -37,9 +37,25 @@ void ATLG_Player_Controller::BeginPlay()
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &choice)
 {
-    // 1.0. Apply response if needed
-    if (choice.Sanity_Cost > 0.0f)
-        Apply_Response_Cost(choice.Sanity_Cost);
+	switch (choice.Category)  // Apply response cost
+    {
+    case EDialogue_Response_Category::Aggressive:
+        Ability_System_Component->ApplyModToAttribute(TLG_Player_State->Get_Attribute_Set()->GetDominanceAttribute(), EGameplayModOp::Additive, choice.Sanity_Cost);
+        break;
+
+    case EDialogue_Response_Category::Logical:
+        break;
+
+    case EDialogue_Response_Category::Silent:
+        break;
+
+    case EDialogue_Response_Category::Submissive:
+        Ability_System_Component->ApplyModToAttribute(TLG_Player_State->Get_Attribute_Set()->GetSanityAttribute(), EGameplayModOp::Additive, choice.Sanity_Cost);
+        break;
+
+    default:
+        break;
+    }
 
     if (choice.Tags_Apply.IsValid() )
         Apply_Response_Effects(choice.Tags_Apply);  // Apply tag (Effects)
@@ -67,11 +83,6 @@ void ATLG_Player_Controller::Dialogue_End()
 
     SetInputMode(FInputModeGameOnly() );
     bShowMouseCursor = false;
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Apply_Response_Cost(float cost)
-{
-    Ability_System_Component->ApplyModToAttribute(TLG_Player_State->Get_Attribute_Set()->GetSanityAttribute(), EGameplayModOp::Additive, -cost);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Apply_Response_Effects(const FGameplayTagContainer &tags)
