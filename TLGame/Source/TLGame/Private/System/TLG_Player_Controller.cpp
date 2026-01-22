@@ -37,20 +37,24 @@ void ATLG_Player_Controller::BeginPlay()
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &choice)
 {
+	const float response_cost = choice.Response_Cost;
+
 	switch (choice.Category)  // Apply response cost
     {
     case EDialogue_Response_Category::Aggressive:
-        Ability_System_Component->ApplyModToAttribute(TLG_Player_State->Get_Attribute_Set()->GetDominanceAttribute(), EGameplayModOp::Additive, choice.Sanity_Cost);
+        Ability_System_Component->ApplyModToAttribute(TLG_Player_State->Get_Attribute_Set()->GetDominanceAttribute(), EGameplayModOp::Additive, response_cost);
         break;
 
     case EDialogue_Response_Category::Logical:
+        Ability_System_Component->ApplyModToAttribute(TLG_Player_State->Get_Attribute_Set()->GetEmpathyAttribute(), EGameplayModOp::Additive, response_cost);
+
         break;
 
     case EDialogue_Response_Category::Silent:
         break;
 
     case EDialogue_Response_Category::Submissive:
-        Ability_System_Component->ApplyModToAttribute(TLG_Player_State->Get_Attribute_Set()->GetSanityAttribute(), EGameplayModOp::Additive, choice.Sanity_Cost);
+        Ability_System_Component->ApplyModToAttribute(TLG_Player_State->Get_Attribute_Set()->GetSanityAttribute(), EGameplayModOp::Additive, response_cost);
         break;
 
     default:

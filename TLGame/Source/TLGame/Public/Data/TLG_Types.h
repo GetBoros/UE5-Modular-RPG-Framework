@@ -27,7 +27,7 @@ USTRUCT(BlueprintType) struct FPlayer_Response
 
 public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite) EDialogue_Response_Category Category = EDialogue_Response_Category::Aggressive;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite) float Sanity_Cost = 0.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite) float Response_Cost = 0.0f;  // Based on category can affect different attribute
     
     UPROPERTY(EditAnywhere, BlueprintReadWrite) FName Row_ID_Next;  // Next response ID if none dialogue end
     UPROPERTY(EditAnywhere, BlueprintReadWrite) FText Text_Response;  // Text on button example "Stop talk"
