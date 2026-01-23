@@ -20,6 +20,7 @@ void UTLG_Widget_HUD::NativeConstruct()
 
     ensureMsgf(Attribute_Set, TEXT("Init_GAS_Attributes can`t get Attribute_Set") );
     ensureMsgf(Ability_System_Component, TEXT("Init_GAS_Attributes can`t get Ability_System_Component") );
+    ensureMsgf(Floating_Text_Class, TEXT("Floating Text Class not setting up") );
  
     Super::NativeConstruct();
 }
@@ -50,6 +51,8 @@ void UTLG_Widget_HUD::Init()
 
     // 2.0. Call BP Events to first init
     Prev_Sanity = Attribute_Set->GetSanity();
+	Dominance_Prev = Attribute_Set->GetDominance();
+
     On_Updated_Sanity(Attribute_Set->GetSanity(), Attribute_Set->GetSanity_Max() );
     On_Updated_Dominance(Attribute_Set->GetDominance() );
 }
@@ -67,15 +70,7 @@ void UTLG_Widget_HUD::Dialogue_Hide() const
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Updated_Temp_Implementation(float sanity_curr, float sanity_max)
 {
-    // Сюда пишем C++ логику, которая должна выполниться по дефолту.
-    // Например, если ты забиндил ProgressBar в C++, можно обновить его тут.
-
-    // Пример:
-    // if (PB_Sanity != 0 && sanity_max > 0)
-    //    PB_Sanity->SetPercent(sanity_curr / sanity_max);
-
-    // Или просто оставь пустым, если пока нечего писать, но хочешь иметь возможность в будущем.
-    // UE_LOG(LogTemp, Warning, TEXT("Sanity Updated: %f"), sanity_curr);
+    // !!! TEMP
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Set_Image_Background_Texture(UTexture2D *image_background_texture) const
@@ -87,6 +82,7 @@ void UTLG_Widget_HUD::Handle_Changed_Sanity(const FOnAttributeChangeData &data)
 {
     float sanity_curr = data.NewValue;
     float sanity_max = 100.0f;
+    float delta = 0.0f;;
 
     if (Attribute_Set != 0)  // Problev with dominance
         sanity_max = Attribute_Set->GetSanity_Max();
@@ -99,12 +95,12 @@ void UTLG_Widget_HUD::Handle_Changed_Sanity(const FOnAttributeChangeData &data)
         return;
     }
 
-    float delta = sanity_curr - Prev_Sanity;
+    delta = sanity_curr - Prev_Sanity;
 
-    if (!FMath::IsNearlyZero(delta) )  // 3. Если есть изменение - показываем текст
-        Spawn_Text_Delta(delta, FText::FromString("Sanity") );
+	if (FMath::IsNearlyZero(delta) != true)  // if has change spawn floating text
+        Spawn_Floating_Text(delta, FText::FromString("Sanity") );
 
-    Prev_Sanity = sanity_curr;  // 4. Запоминаем новое значение
+    Prev_Sanity = sanity_curr;
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Handle_Changed_Dominance(const FOnAttributeChangeData &data)
@@ -121,13 +117,13 @@ void UTLG_Widget_HUD::Handle_Changed_Dominance(const FOnAttributeChangeData &dat
 
     float delta = current - Dominance_Prev;
 
-    if (!FMath::IsNearlyZero(delta))
-        Spawn_Text_Delta(delta, FText::FromString("Dominance"));
+    if (FMath::IsNearlyZero(delta) != true)
+        Spawn_Floating_Text(delta, FText::FromString("Dominance") );
 
     Dominance_Prev = current;
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Spawn_Text_Delta(float delta, const FText &name_text)
+void UTLG_Widget_HUD::Spawn_Floating_Text(float delta, const FText &name_text)
 {
     UUserWidget *widget;
     UTLG_Widget_Floating_Text *float_widget;

@@ -26,7 +26,7 @@ public:
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Sanity(float sanity_curr, float sanity_max);
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Dominance(float dominance_curr);
 
-    UFUNCTION(BlueprintNativeEvent) void On_Updated_Temp(float sanity_curr, float sanity_max);
+    UFUNCTION(BlueprintNativeEvent) void On_Updated_Temp(float sanity_curr, float sanity_max);  // !!! TEMP Example
 
 private:
     void Init();
@@ -36,7 +36,7 @@ private:
     void Handle_Changed_Sanity(const FOnAttributeChangeData &data);
     void Handle_Changed_Dominance(const FOnAttributeChangeData &data);
     
-    void Spawn_Text_Delta(float delta, const FText &name_text);
+    void Spawn_Floating_Text(const float delta, const FText &name_text);
 
     float Prev_Sanity = -1.0f;
     float Dominance_Prev = -1.0f;
