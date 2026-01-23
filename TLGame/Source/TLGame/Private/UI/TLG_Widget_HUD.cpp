@@ -88,7 +88,7 @@ void UTLG_Widget_HUD::Handle_Changed_Sanity(const FOnAttributeChangeData &data)
     float sanity_curr = data.NewValue;
     float sanity_max = 100.0f;
 
-    if (Attribute_Set != 0)
+    if (Attribute_Set != 0)  // Problev with dominance
         sanity_max = Attribute_Set->GetSanity_Max();
 
     On_Updated_Sanity(sanity_curr, sanity_max);
