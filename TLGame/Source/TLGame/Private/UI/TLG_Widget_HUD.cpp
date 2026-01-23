@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <UI/TLG_Widget_HUD.h>
 #include <UI/TLG_Widget_Dialogue.h>
+#include <UI/TLG_Widget_Floating_Text.h>
 #include <System/TLG_Player_State.h>
 #include <Abilities/TLG_Attribute_Set.h>
 
@@ -48,6 +49,7 @@ void UTLG_Widget_HUD::Init()
     Ability_System_Component->GetGameplayAttributeValueChangeDelegate(Attribute_Set->GetDominanceAttribute() ).AddUObject(this, &UTLG_Widget_HUD::Handle_Changed_Dominance);
 
     // 2.0. Call BP Events to first init
+    Prev_Sanity = Attribute_Set->GetSanity();
     On_Updated_Sanity(Attribute_Set->GetSanity(), Attribute_Set->GetSanity_Max() );
     On_Updated_Dominance(Attribute_Set->GetDominance() );
 }
@@ -127,41 +129,23 @@ void UTLG_Widget_HUD::Handle_Changed_Dominance(const FOnAttributeChangeData &dat
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Spawn_Text_Delta(float delta, const FText &name_text)
 {
+    UUserWidget *widget;
+    UTLG_Widget_Floating_Text *float_widget;
+
     if (VB_Events == 0 || Floating_Text_Class == 0)
         return;
 
-    // 1. Создаем виджет
-    UUserWidget* widget = CreateWidget<UUserWidget>(this, Floating_Text_Class);
-    if (widget == 0) return;
+    widget = CreateWidget<UUserWidget>(this, Floating_Text_Class);
+    float_widget = Cast<UTLG_Widget_Floating_Text>(widget);
+    if (float_widget == 0)
+        return;
 
-    // 2. Формируем текст и цвет
-    FString sign = (delta > 0) ? TEXT("+") : TEXT(""); // Плюс или ничего (минус сам добавится)
-    FString full_string = FString::Printf(TEXT("%s%d %s"), *sign, FMath::RoundToInt(delta), *name_text.ToString());
-
-    FLinearColor color = (delta > 0) ? FLinearColor::Green : FLinearColor::Red;
-    // Для "Dominance" логика может быть другой (например, потеря доминации - это плохо/красный)
-    // Но пока оставим стандарт: Плюс = Зеленый, Минус = Красный.
-
-    // 3. Настраиваем виджет
-    // ВАЖНО: Чтобы передать текст в WBP_Floating_Text, у нас есть два пути:
-    // Путь А (Простой): Сделать Cast к твоему C++ классу виджета (если он есть).
-    // Путь Б (Универсальный): Использовать Reflection или Interface.
-
-    // Давай сделаем Путь В (Хак для прототипа, но рабочий):
-    // Мы предполагаем, что в WBP_Floating_Text есть переменная "Text" и "Color", которые Exposed on Spawn.
-    // Но CreateWidget в C++ не поддерживает ExposeOnSpawn так легко.
-
-    // ЛУЧШИЙ ВАРИАНТ СЕЙЧАС:
-    // Просто добавь виджет в контейнер, а настройку сделай через отдельный метод, 
-    // если WBP_Floating_Text унаследован от C++ класса.
-
-    // Если WBP_Floating_Text - это просто Blueprint, то нам нужен C++ Base Class для него.
-    // Давай создадим UTLG_Widget_FloatingText, чтобы было чисто.
-
-    VB_Events->AddChild(widget);
-
-    // TODO: Реализуй UTLG_Widget_FloatingText с методом Setup(Text, Color) и касти к нему.
-    // Пока что, чтобы код скомпилировался и работал, я оставлю создание, 
-    // но текст придется передать через Cast или Interface.
+    FString sign = (delta > 0) ? TEXT("+") : TEXT("");
+    FText final_text = FText::FromString(FString::Printf(TEXT("%s%d %s"), *sign, FMath::RoundToInt(delta), *name_text.ToString() ) );
+    FLinearColor color = (delta > 0) ? FLinearColor::Green : FLinearColor::Red;  // !!! TEMP can change if dominance to swap color
+    
+    float_widget->Setup_Visuals(final_text, color);
+    
+    VB_Events->AddChild(float_widget);
 }
 //------------------------------------------------------------------------------------------------------------
