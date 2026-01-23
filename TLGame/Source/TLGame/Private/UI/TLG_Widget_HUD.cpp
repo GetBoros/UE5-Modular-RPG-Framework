@@ -82,7 +82,7 @@ void UTLG_Widget_HUD::Handle_Changed_Sanity(const FOnAttributeChangeData &data)
 {
     float sanity_curr = data.NewValue;
     float sanity_max = 100.0f;
-    float delta = 0.0f;;
+    float delta = 0.0f;
 
     if (Attribute_Set != 0)  // Problev with dominance
         sanity_max = Attribute_Set->GetSanity_Max();
@@ -96,7 +96,6 @@ void UTLG_Widget_HUD::Handle_Changed_Sanity(const FOnAttributeChangeData &data)
     }
 
     delta = sanity_curr - Prev_Sanity;
-
 	if (FMath::IsNearlyZero(delta) != true)  // if has change spawn floating text
         Spawn_Floating_Text(delta, FText::FromString("Sanity") );
 
@@ -106,6 +105,7 @@ void UTLG_Widget_HUD::Handle_Changed_Sanity(const FOnAttributeChangeData &data)
 void UTLG_Widget_HUD::Handle_Changed_Dominance(const FOnAttributeChangeData &data)
 {
     float current = data.NewValue;
+	float delta = 0.0f;
 
     On_Updated_Dominance(data.NewValue);
 
@@ -115,7 +115,7 @@ void UTLG_Widget_HUD::Handle_Changed_Dominance(const FOnAttributeChangeData &dat
         return;
     }
 
-    float delta = current - Dominance_Prev;
+    delta = current - Dominance_Prev;
 
     if (FMath::IsNearlyZero(delta) != true)
         Spawn_Floating_Text(delta, FText::FromString("Dominance") );
