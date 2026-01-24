@@ -45,3 +45,26 @@ void UGBUIC_Widget_Controller::On_Stamina_Changed_Callback(const FOnAttributeCha
     On_Stamina_Changed.Broadcast(data.NewValue);
 }
 //------------------------------------------------------------------------------------------------------------
+
+
+
+
+// UGBUIC_Widget_Controller_Temp
+void UGBUIC_Widget_Controller_Temp::Init(const FController_Widget_Params_Temp& params)
+{
+    Player_Controller = params.Player_Controller;
+    Player_State = params.Player_State;
+    Ability_System_Component = params.Ability_System_Component;
+    Attribute_Set = params.Attribute_Set;
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBUIC_Widget_Controller_Temp::Broadcast_Initial_Values()
+{
+
+}
+//------------------------------------------------------------------------------------------------------------
+void UGBUIC_Widget_Controller_Temp::Bind_Callbacks_To_Dependencies()
+{
+
+}
+//------------------------------------------------------------------------------------------------------------
