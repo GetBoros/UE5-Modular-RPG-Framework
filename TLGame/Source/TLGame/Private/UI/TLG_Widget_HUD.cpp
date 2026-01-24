@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <UI/TLG_Widget_HUD.h>
 #include <UI/TLG_Widget_Dialogue.h>
+#include <UI/TLG_Widget_Controller.h>
 #include <UI/TLG_Widget_Floating_Text.h>
 #include <System/TLG_Player_State.h>
 #include <Abilities/TLG_Attribute_Set.h>
@@ -17,11 +18,13 @@
 void UTLG_Widget_HUD::NativeConstruct()
 {
     Init();  // For single it`s oke here
+    Init_Widget_Controller();
 
     ensureMsgf(Attribute_Set, TEXT("Init_GAS_Attributes can`t get Attribute_Set") );
     ensureMsgf(Ability_System_Component, TEXT("Init_GAS_Attributes can`t get Ability_System_Component") );
     ensureMsgf(Floating_Text_Class, TEXT("Floating Text Class not setting up") );
- 
+    ensureMsgf(Widget_Controller_Class, TEXT("Is Empty") );
+
     Super::NativeConstruct();
 }
 //------------------------------------------------------------------------------------------------------------
@@ -57,6 +60,49 @@ void UTLG_Widget_HUD::Init()
     On_Updated_Dominance(Attribute_Set->GetDominance() );
 }
 //------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::Init_Widget_Controller()
+{
+    if (TLG_Widget_Controller != 0)
+        return;
+
+    APlayerController *pc = GetOwningPlayer();
+    if (pc == 0)
+        return;
+
+    ATLG_Player_State *ps = pc->GetPlayerState<ATLG_Player_State>();
+    if (ps == 0)
+        return;
+
+    UAbilitySystemComponent *asc = ps->GetAbilitySystemComponent();
+    UTLG_Attribute_Set *as = ps->Get_Attribute_Set();
+
+    if (asc == 0 || as == 0)
+        return;
+
+    // 1. Создаем Контроллер
+    if (Widget_Controller_Class != 0)
+    {
+        TLG_Widget_Controller = NewObject<UTLG_Widget_Controller>(this, Widget_Controller_Class);
+        
+        // 2. Заполняем структуру параметров (из твоего Core)
+        FController_Widget_Params_Temp params;
+        params.Player_Controller = pc;
+        params.Player_State = ps;
+        params.Ability_System_Component = asc;
+        params.Attribute_Set = as; // Тут может потребоваться Cast, если в структуре UAttributeSet*
+        
+        TLG_Widget_Controller->Init(params);
+
+        // 3. Подписываемся на делегаты (Связываем Controller -> View)
+        TLG_Widget_Controller->On_Changed_Sanity.AddDynamic(this, &UTLG_Widget_HUD::On_Sanity_Changed_Callback);
+        TLG_Widget_Controller->On_Changed_Dominance.AddDynamic(this, &UTLG_Widget_HUD::On_Dominance_Changed_Callback);
+
+        // 4. Запускаем (Controller -> Model)
+        TLG_Widget_Controller->Bind_Callbacks_To_Dependencies();
+        TLG_Widget_Controller->Broadcast_Initial_Values();
+    }
+}
+//------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Dialogue_Show_Node(const FDialogue_Node &node_data) const
 {
     TLG_Widget_Dialogue->SetVisibility(ESlateVisibility::Visible);
@@ -66,6 +112,26 @@ void UTLG_Widget_HUD::Dialogue_Show_Node(const FDialogue_Node &node_data) const
 void UTLG_Widget_HUD::Dialogue_Hide() const
 {
     TLG_Widget_Dialogue->SetVisibility(ESlateVisibility::Hidden);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::On_Sanity_Changed_Callback(float new_value, float delta)
+{
+    On_Updated_Sanity(new_value, 100.0f); // Макс можно тоже прокинуть через контроллер, если нужно
+
+    if (!FMath::IsNearlyZero(delta))
+    {
+        Spawn_Floating_Text(delta, FText::FromString("Sanity"));
+    }
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::On_Dominance_Changed_Callback(float new_value, float delta)
+{
+    On_Updated_Dominance(new_value);
+
+    if (!FMath::IsNearlyZero(delta))
+    {
+        Spawn_Floating_Text(delta, FText::FromString("Dominance"));
+    }
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Updated_Temp_Implementation(float sanity_curr, float sanity_max)

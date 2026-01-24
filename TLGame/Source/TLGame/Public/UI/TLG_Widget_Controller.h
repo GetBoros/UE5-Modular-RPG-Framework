@@ -17,16 +17,15 @@ public:
     virtual void Broadcast_Initial_Values() override;
     virtual void Bind_Callbacks_To_Dependencies() override;
 
-    UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Sanity_Changed;
-    UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Dominance_Changed;
+    void Handle_Changed_Sanity(const FOnAttributeChangeData &data);
+    void Handle_Changed_Dominance(const FOnAttributeChangeData &data);
 
-protected:
-    void Handle_Sanity_Changed(const FOnAttributeChangeData& data);
-    void Handle_Dominance_Changed(const FOnAttributeChangeData& data);
-
-    UTLG_Attribute_Set* Get_TLG_Attribute_Set() const;
+    UTLG_Attribute_Set *Get_TLG_Attribute_Set() const;
 
     float Sanity_Prev = -1.0f;
     float Dominance_Prev = -1.0f;
+    
+    UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Sanity;
+    UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Dominance;
 };
 //------------------------------------------------------------------------------------------------------------
