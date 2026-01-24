@@ -27,27 +27,16 @@ public:
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Sanity(float sanity_curr, float sanity_max);
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Dominance(float dominance_curr);
 
-    UFUNCTION() void On_Sanity_Changed_Callback(float new_value, float delta);
-    UFUNCTION() void On_Dominance_Changed_Callback(float new_value, float delta);
-
     UFUNCTION(BlueprintNativeEvent) void On_Updated_Temp(float sanity_curr, float sanity_max);  // !!! TEMP Example
 
 private:
-    void Init();
     void Init_Widget_Controller();
-
     void Set_Image_Background_Texture(UTexture2D *image_background_texture) const;
-
-    void Handle_Changed_Sanity(const FOnAttributeChangeData &data);
-    void Handle_Changed_Dominance(const FOnAttributeChangeData &data);
-    
     void Spawn_Floating_Text(const float delta, const FText &name_text);
 
-    float Prev_Sanity = -1.0f;
-    float Dominance_Prev = -1.0f;
-
-    UPROPERTY() TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
-    UPROPERTY() TObjectPtr<UTLG_Attribute_Set> Attribute_Set;
+    UFUNCTION(meta = (AllowPrivateAccess = "true") ) void On_Changed_Callback_Sanity(float new_value, float delta);
+    UFUNCTION(meta = (AllowPrivateAccess = "true") ) void On_Changed_Callback_Dominance(float new_value, float delta);
+    
     UPROPERTY() TObjectPtr<UTLG_Widget_Controller> TLG_Widget_Controller;
 
     UPROPERTY(EditDefaultsOnly) TSubclassOf<UTLG_Widget_Controller> Widget_Controller_Class;
