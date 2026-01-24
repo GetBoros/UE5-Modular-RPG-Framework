@@ -1,14 +1,11 @@
 //------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include <Blueprint/UserWidget.h>
-#include <GameplayEffectTypes.h>
 #include <Data/TLG_Types.h>
+#include <Blueprint/UserWidget.h>
 
 #include <TLG_Widget_HUD.generated.h>
 //------------------------------------------------------------------------------------------------------------
-class UAbilitySystemComponent;
-class UTLG_Attribute_Set;
 class UTLG_Widget_Dialogue;
 class UTLG_Widget_Controller;
 class UImage;
@@ -37,13 +34,14 @@ private:
     UFUNCTION(meta = (AllowPrivateAccess = "true") ) void On_Changed_Callback_Sanity(float new_value, float delta);
     UFUNCTION(meta = (AllowPrivateAccess = "true") ) void On_Changed_Callback_Dominance(float new_value, float delta);
     
-    UPROPERTY() TObjectPtr<UTLG_Widget_Controller> TLG_Widget_Controller;
-
-    UPROPERTY(EditDefaultsOnly) TSubclassOf<UTLG_Widget_Controller> Widget_Controller_Class;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Dialogue> TLG_Widget_Dialogue;
-    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UImage> Image_Background;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UVerticalBox> VB_Events;
+    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UImage> Image_Background;
 
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UUserWidget> Floating_Text_Class;
+    UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Controller> TLG_Widget_Controller_Class;
+
+    UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Widget_Controller> TLG_Widget_Controller;
+
 };
 //------------------------------------------------------------------------------------------------------------

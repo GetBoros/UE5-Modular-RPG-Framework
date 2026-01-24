@@ -20,7 +20,7 @@ void UTLG_Widget_HUD::NativeConstruct()
     Init_Widget_Controller();
 
     ensureMsgf(Floating_Text_Class, TEXT("Floating Text Class not setting up") );
-    ensureMsgf(Widget_Controller_Class, TEXT("Is Empty") );
+    ensureMsgf(TLG_Widget_Controller_Class, TEXT("Is Empty") );
 
     Super::NativeConstruct();
 }
@@ -49,9 +49,10 @@ void UTLG_Widget_HUD::Init_Widget_Controller()
     UTLG_Attribute_Set *tlg_attribute_set;
     FController_Widget_Params_Temp controller_widget_params_temp;
 
-    if (TLG_Widget_Controller != 0)
+	if (TLG_Widget_Controller != 0)  // If already initialized
         return;
 
+	// 1.0. Initialize reguired references
     player_controller = GetOwningPlayer();
     if (player_controller == 0)
         return;
@@ -69,8 +70,9 @@ void UTLG_Widget_HUD::Init_Widget_Controller()
     controller_widget_params_temp.Player_State = tlg_player_state;
     controller_widget_params_temp.Ability_System_Component = ability_system_component;
     controller_widget_params_temp.Attribute_Set = tlg_attribute_set;
-        
-    TLG_Widget_Controller = NewObject<UTLG_Widget_Controller>(this, Widget_Controller_Class);
+    
+	// 2.0. Create and initialize tlg widget controller
+    TLG_Widget_Controller = NewObject<UTLG_Widget_Controller>(this, TLG_Widget_Controller_Class);
     TLG_Widget_Controller->Init(controller_widget_params_temp);
     
     TLG_Widget_Controller->On_Changed_Sanity.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Sanity);
