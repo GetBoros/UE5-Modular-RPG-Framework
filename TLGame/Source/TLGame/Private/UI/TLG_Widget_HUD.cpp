@@ -17,10 +17,10 @@
 // UTLG_Widget_HUD
 void UTLG_Widget_HUD::NativeConstruct()
 {
-    Init_Widget_Controller();
-
     ensureMsgf(Floating_Text_Class, TEXT("Floating Text Class not setting up") );
     ensureMsgf(TLG_Widget_Controller_Class, TEXT("Is Empty") );
+
+    Init_Widget_Controller();
 
     Super::NativeConstruct();
 }

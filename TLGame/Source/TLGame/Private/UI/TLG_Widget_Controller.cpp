@@ -10,46 +10,56 @@
 // UTLG_Widget_Controller
 void UTLG_Widget_Controller::Broadcast_Initial_Values()
 {
-    UTLG_Attribute_Set* as = Get_TLG_Attribute_Set();
-    if (as != 0)
-    {
-        Sanity_Prev = as->GetSanity();
-        Dominance_Prev = as->GetDominance();
+    UTLG_Attribute_Set *tlg_attribute_set = Get_TLG_Attribute_Set();
 
-        On_Changed_Sanity.Broadcast(Sanity_Prev, 0.0f);
-        On_Changed_Dominance.Broadcast(Dominance_Prev, 0.0f);
-    }
+    if (tlg_attribute_set == 0)
+        return;
+
+    Prev_Sanity = tlg_attribute_set->GetSanity();
+    Prev_Dominance = tlg_attribute_set->GetDominance();
+
+    On_Changed_Sanity.Broadcast(Prev_Sanity, 0.0f);
+    On_Changed_Dominance.Broadcast(Prev_Dominance, 0.0f);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Bind_Callbacks_To_Dependencies()
 {
-    UTLG_Attribute_Set* as = Get_TLG_Attribute_Set();
-    if (Ability_System_Component != 0 && as != 0)
-    {
-        Ability_System_Component->GetGameplayAttributeValueChangeDelegate(as->GetSanityAttribute() ).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Sanity);
-        Ability_System_Component->GetGameplayAttributeValueChangeDelegate(as->GetDominanceAttribute() ).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Dominance);
-    }
+    UTLG_Attribute_Set *tlg_attribute_set = Get_TLG_Attribute_Set();
+
+    if (Ability_System_Component == 0 || tlg_attribute_set == 0)
+        return;
+
+    Ability_System_Component->GetGameplayAttributeValueChangeDelegate(tlg_attribute_set->GetSanityAttribute()).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Sanity);
+    Ability_System_Component->GetGameplayAttributeValueChangeDelegate(tlg_attribute_set->GetDominanceAttribute() ).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Dominance);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Controller::Handle_Changed_Sanity(const FOnAttributeChangeData& data)
+void UTLG_Widget_Controller::Handle_Changed_Sanity(const FOnAttributeChangeData &data)
 {
-    float current = data.NewValue;
-    float delta = (Sanity_Prev >= 0.0f) ? (current - Sanity_Prev) : 0.0f;
+    const float current = data.NewValue;
+	float delta = 0.0f;
+    
+    if (Prev_Sanity >= 0.0f)
+        delta = current - Prev_Sanity;
 
-    Sanity_Prev = current;
+    Prev_Sanity = current;
+
     On_Changed_Sanity.Broadcast(current, delta);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Controller::Handle_Changed_Dominance(const FOnAttributeChangeData& data)
+void UTLG_Widget_Controller::Handle_Changed_Dominance(const FOnAttributeChangeData &data)
 {
-    float current = data.NewValue;
-    float delta = (Dominance_Prev >= 0.0f) ? (current - Dominance_Prev) : 0.0f;
+    const float current = data.NewValue;
+    float delta = 0.0f;
 
-    Dominance_Prev = current;
+    if (Prev_Dominance >= 0.0f)
+        delta = current - Prev_Dominance;
+
+    Prev_Dominance = current;
+
     On_Changed_Dominance.Broadcast(current, delta);
 }
 //------------------------------------------------------------------------------------------------------------
-UTLG_Attribute_Set* UTLG_Widget_Controller::Get_TLG_Attribute_Set() const
+UTLG_Attribute_Set *UTLG_Widget_Controller::Get_TLG_Attribute_Set() const
 {
     return Cast<UTLG_Attribute_Set>(Attribute_Set);
 }

@@ -58,7 +58,7 @@ USTRUCT(BlueprintType) struct FController_Widget_Params_Temp
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UAttributeSet> Attribute_Set = 0;
 };
 //------------------------------------------------------------------------------------------------------------
-UCLASS(Blueprintable, BlueprintType) class GBUI_CORE_API UGBUIC_Widget_Controller_Temp : public UObject
+UCLASS(Blueprintable, BlueprintType) class GBUI_CORE_API UGBUIC_Widget_Controller_Temp : public UObject  // !!! Platinum Standart
 {
     GENERATED_BODY()
 

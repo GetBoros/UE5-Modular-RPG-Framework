@@ -22,8 +22,8 @@ public:
 
     UTLG_Attribute_Set *Get_TLG_Attribute_Set() const;
 
-    float Sanity_Prev = -1.0f;
-    float Dominance_Prev = -1.0f;
+    float Prev_Sanity = -1.0f;
+    float Prev_Dominance = -1.0f;
     
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Sanity;
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Dominance;
