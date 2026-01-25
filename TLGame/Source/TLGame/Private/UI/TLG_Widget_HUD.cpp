@@ -70,6 +70,7 @@ void UTLG_Widget_HUD::Init_Widget_Controller()
     controller_widget_params_temp.Player_State = tlg_player_state;
     controller_widget_params_temp.Ability_System_Component = ability_system_component;
     controller_widget_params_temp.Attribute_Set = tlg_attribute_set;
+    controller_widget_params_temp.Attribute_Info = GBC_Attribute_Info;
     
 	// 2.0. Create and initialize tlg widget controller
     TLG_Widget_Controller = NewObject<UTLG_Widget_Controller>(this, TLG_Widget_Controller_Class);

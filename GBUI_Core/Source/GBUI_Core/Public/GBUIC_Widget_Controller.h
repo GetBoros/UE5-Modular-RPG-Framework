@@ -52,10 +52,15 @@ USTRUCT(BlueprintType) struct FController_Widget_Params_Temp
 {
     GENERATED_BODY()
     
+    FController_Widget_Params_Temp() { }
+    FController_Widget_Params_Temp(APlayerController* pc, APlayerState* ps, UAbilitySystemComponent* asc, UAttributeSet* as, UGBC_Attribute_Info* info)
+      : Player_Controller(pc), Player_State(ps), Ability_System_Component(asc), Attribute_Set(as), Attribute_Info(info) { }
+
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<APlayerController> Player_Controller = 0;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<APlayerState> Player_State = 0;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UAbilitySystemComponent> Ability_System_Component = 0;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UAttributeSet> Attribute_Set = 0;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UGBC_Attribute_Info> Attribute_Info = 0;
 };
 //------------------------------------------------------------------------------------------------------------
 UCLASS(Blueprintable, BlueprintType) class GBUI_CORE_API UGBUIC_Widget_Controller_Temp : public UObject  // !!! Platinum Standart
@@ -72,5 +77,7 @@ public:
     UPROPERTY(BlueprintReadOnly, Category = "WidgetController") TObjectPtr<APlayerState> Player_State;
     UPROPERTY(BlueprintReadOnly, Category = "WidgetController") TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
     UPROPERTY(BlueprintReadOnly, Category = "WidgetController") TObjectPtr<UAttributeSet> Attribute_Set;
+    UPROPERTY(BlueprintReadOnly, Category = "WidgetController") TObjectPtr<UGBC_Attribute_Info> Attribute_Info;
+    
 };
 //------------------------------------------------------------------------------------------------------------

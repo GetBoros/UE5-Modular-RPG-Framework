@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------------------------------------
 class UTLG_Widget_Dialogue;
 class UTLG_Widget_Controller;
+class UGBC_Attribute_Info;
 class UImage;
 class UVerticalBox;
 //------------------------------------------------------------------------------------------------------------
@@ -42,6 +43,7 @@ private:
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Controller> TLG_Widget_Controller_Class;
 
     UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Widget_Controller> TLG_Widget_Controller;
+    UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UGBC_Attribute_Info> GBC_Attribute_Info;
 
 };
 //------------------------------------------------------------------------------------------------------------

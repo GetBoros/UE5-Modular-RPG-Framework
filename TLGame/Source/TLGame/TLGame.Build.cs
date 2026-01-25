@@ -36,7 +36,7 @@ public class TLGame : ModuleRules
 			{
 				"CoreUObject", "Engine", "Slate", "SlateCore", "UMG",  // Core
 				"GameplayTags", "GameplayTasks", "GameplayAbilities",  // Core Frameworks
-				"GBUI_Core"  // Custom Frameworks
+				"GBUI_Core", "GBCore"  // Custom Frameworks
 
 				// ... add private dependencies that you statically link with here ...	
 			}

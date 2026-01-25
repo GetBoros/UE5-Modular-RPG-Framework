@@ -1,5 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
 #include <GBUIC_Widget_Controller.h>
+
 #include <AbilitySystemComponent.h>
 //------------------------------------------------------------------------------------------------------------
 
@@ -56,6 +57,7 @@ void UGBUIC_Widget_Controller_Temp::Init(const FController_Widget_Params_Temp& p
     Player_State = params.Player_State;
     Ability_System_Component = params.Ability_System_Component;
     Attribute_Set = params.Attribute_Set;
+    Attribute_Info = params.Attribute_Info;
 }
 //------------------------------------------------------------------------------------------------------------
 void UGBUIC_Widget_Controller_Temp::Broadcast_Initial_Values()
