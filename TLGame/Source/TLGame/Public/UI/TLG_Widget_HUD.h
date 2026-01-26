@@ -19,11 +19,12 @@ UCLASS() class TLGAME_API UTLG_Widget_HUD : public UUserWidget
 public:
     virtual void NativeConstruct();
 
-    void Dialogue_Show_Node(const FDialogue_Node &node_data) const;
+    void Dialogue_Show_Node(const FDialogue_Node &node_data);
     void Dialogue_Hide() const;
 
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Sanity(float sanity_curr, float sanity_max);
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Dominance(float dominance_curr);
+    UFUNCTION(BlueprintImplementableEvent) void On_Update_Enemy_Portrait(UTexture2D *texture);
 
     UFUNCTION(BlueprintNativeEvent) void On_Updated_Temp(float sanity_curr, float sanity_max);  // !!! TEMP Example
 
@@ -32,9 +33,10 @@ private:
     void Set_Image_Background_Texture(UTexture2D *image_background_texture) const;
     void Spawn_Floating_Text(const float delta, const FText &name_text);
 
-    UFUNCTION(meta = (AllowPrivateAccess = "true") ) void On_Changed_Callback_Sanity(float new_value, float delta);
-    UFUNCTION(meta = (AllowPrivateAccess = "true") ) void On_Changed_Callback_Dominance(float new_value, float delta);
+    UFUNCTION() void On_Changed_Callback_Sanity(float new_value, float delta);
+    UFUNCTION() void On_Changed_Callback_Dominance(float new_value, float delta);
     
+
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Dialogue> TLG_Widget_Dialogue;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UVerticalBox> VB_Events;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UImage> Image_Background;
@@ -42,7 +44,7 @@ private:
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UUserWidget> Floating_Text_Class;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Controller> TLG_Widget_Controller_Class;
 
-    UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Widget_Controller> TLG_Widget_Controller;
+    UPROPERTY(Transient, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Widget_Controller> TLG_Widget_Controller;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UGBC_Attribute_Info> GBC_Attribute_Info;
 
 };

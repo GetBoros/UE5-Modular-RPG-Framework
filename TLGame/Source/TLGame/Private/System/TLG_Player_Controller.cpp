@@ -2,6 +2,7 @@
 #include <System/TLG_Player_Controller.h>
 #include <System/TLG_Player_State.h>
 #include <System/TLG_HUD.h>
+#include <Data/TLG_Enemy_Data.h>
 
 #include <Abilities/TLG_Attribute_Set.h>
 #include <AbilitySystemComponent.h>
@@ -76,7 +77,10 @@ void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
     static const FString context(TEXT("Dialogue Context") );
 
     if (const FDialogue_Node *next_node = Dialogue_Data_Table->FindRow<FDialogue_Node>(row_id, context, true) )
+    {
         TLG_HUD->Dialogue_Show_Node(*next_node);
+        Update_Portrait(next_node->Tag_Portrait);
+    }
     else
         Dialogue_End();
 }
@@ -87,6 +91,17 @@ void ATLG_Player_Controller::Dialogue_End()
 
     SetInputMode(FInputModeGameOnly() );
     bShowMouseCursor = false;
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Update_Portrait(const FGameplayTag &tag_portrait)
+{
+    if (Current_Enemy_Data == 0 || TLG_HUD == 0)
+        return;
+
+    UTexture2D* portrait = Current_Enemy_Data->Get_Portrait_By_Tag(tag_portrait);
+    
+    if (portrait != 0)
+        TLG_HUD->Set_Portrait_Texture(portrait);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Apply_Response_Effects(const FGameplayTagContainer &tags)

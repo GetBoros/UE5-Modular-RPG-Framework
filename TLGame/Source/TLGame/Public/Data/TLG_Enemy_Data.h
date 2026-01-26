@@ -18,6 +18,6 @@ public:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TMap<FGameplayTag, TObjectPtr<UTexture2D>> Portraits;  // Portrets can be choosen by Gameplay tags
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TMap<FGameplayTag, TObjectPtr<UDataTable>> Dialogue_Tables;  // Choose DataTable by GameplayTags (Stage.Intro)
 
-    UDataTable *Get_Table_By_Tag(FGameplayTag tag) const;
-};
+    UTexture2D *Get_Portrait_By_Tag(const FGameplayTag &tag) const;
+    UDataTable *Get_Dialogue_Table_By_Tag(const FGameplayTag &tag) const;};
 //------------------------------------------------------------------------------------------------------------

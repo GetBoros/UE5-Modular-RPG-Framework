@@ -28,6 +28,11 @@ void ATLG_HUD::Dialogue_Hide() const
     HUD_Widget->Dialogue_Hide();
 }
 //------------------------------------------------------------------------------------------------------------
+void ATLG_HUD::Set_Portrait_Texture(UTexture2D *texture)
+{
+    Get_TLG_Widget_HUD()->On_Update_Enemy_Portrait(texture);
+}
+//------------------------------------------------------------------------------------------------------------
 UTLG_Widget_HUD *ATLG_HUD::Get_TLG_Widget_HUD()
 {
     if (HUD_Widget != 0)

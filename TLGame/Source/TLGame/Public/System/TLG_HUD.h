@@ -18,6 +18,8 @@ public:
     void Dialogue_Show_Node(const FDialogue_Node &node);
     void Dialogue_Hide() const;
 
+	void Set_Portrait_Texture(UTexture2D *texture);
+
 private:
 	UTLG_Widget_HUD *Get_TLG_Widget_HUD();
 

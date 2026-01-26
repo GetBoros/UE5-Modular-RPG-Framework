@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------------------------------------
 class ATLG_HUD;
 class ATLG_Player_State;
+class UTLG_Enemy_Data;
 class UAbilitySystemComponent;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API ATLG_Player_Controller : public APlayerController
@@ -23,6 +24,8 @@ private:
     void Dialogue_Start(const FName &row_id);
     void Dialogue_End();
 
+    void Update_Portrait(const FGameplayTag &portrait_tag);
+
     void Apply_Response_Effects(const FGameplayTagContainer &tags);
 
     UPROPERTY(meta = (AllowPrivateAccess = "true") ) ATLG_HUD *TLG_HUD;
@@ -30,5 +33,6 @@ private:
     UPROPERTY(meta = (AllowPrivateAccess = "true") ) UAbilitySystemComponent *Ability_System_Component;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UDataTable> Dialogue_Data_Table;  // !!! TEMP Need take from enemy
 
+    UPROPERTY(EditDefaultsOnly) TObjectPtr<UTLG_Enemy_Data> Current_Enemy_Data;
 };
 //------------------------------------------------------------------------------------------------------------

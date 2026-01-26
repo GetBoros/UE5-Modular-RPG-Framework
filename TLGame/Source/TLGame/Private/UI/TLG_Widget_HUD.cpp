@@ -25,7 +25,7 @@ void UTLG_Widget_HUD::NativeConstruct()
     Super::NativeConstruct();
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Dialogue_Show_Node(const FDialogue_Node &node_data) const
+void UTLG_Widget_HUD::Dialogue_Show_Node(const FDialogue_Node &node_data)
 {
     TLG_Widget_Dialogue->SetVisibility(ESlateVisibility::Visible);
     TLG_Widget_Dialogue->Setup_Dialogue_Node(node_data);
