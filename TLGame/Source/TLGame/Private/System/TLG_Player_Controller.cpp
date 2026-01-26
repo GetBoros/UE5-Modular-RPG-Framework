@@ -24,8 +24,8 @@ void ATLG_Player_Controller::BeginPlay()
     ensureMsgf(TLG_HUD, TEXT("Need HUD implemented from ATLG_HUD") );
     ensureMsgf(TLG_Player_State, TEXT("Need Player State implemented from ATLG_Player_State") );
     ensureMsgf(Ability_System_Component, TEXT("Not Implemented interface") );
-    ensureMsgf(Dialogue_Data_Table, TEXT("Need Dialogue_Data_Table to be valid or change to get ") );
-    ensureMsgf(Current_Enemy_Data, TEXT("Need Current_Enemy_Data to be valid or change to get ") );
+    ensureMsgf(Dialogue_Data_Table, TEXT("Skip Dialogue_Start or can be crit error") );
+    ensureMsgf(Current_Enemy_Data, TEXT("Skip Dialogue_Start or can be crit error") );
     
     // 3.0. Settings
     bShowMouseCursor = true;
