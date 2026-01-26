@@ -24,8 +24,6 @@ private:
     void Dialogue_Start(const FName &row_id);
     void Dialogue_End();
 
-    void Update_Portrait(const FGameplayTag &portrait_tag);
-
     void Apply_Response_Effects(const FGameplayTagContainer &tags);
 
     UPROPERTY(meta = (AllowPrivateAccess = "true") ) ATLG_HUD *TLG_HUD;

@@ -25,6 +25,7 @@ void ATLG_Player_Controller::BeginPlay()
     ensureMsgf(TLG_Player_State, TEXT("Need Player State implemented from ATLG_Player_State") );
     ensureMsgf(Ability_System_Component, TEXT("Not Implemented interface") );
     ensureMsgf(Dialogue_Data_Table, TEXT("Need Dialogue_Data_Table to be valid or change to get ") );
+    ensureMsgf(Current_Enemy_Data, TEXT("Need Current_Enemy_Data to be valid or change to get ") );
     
     // 3.0. Settings
     bShowMouseCursor = true;
@@ -75,14 +76,26 @@ void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &choi
 void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
 {
     static const FString context(TEXT("Dialogue Context") );
+    UTexture2D *portrait;
+    FDialogue_Node *next_node;
 
-    if (const FDialogue_Node *next_node = Dialogue_Data_Table->FindRow<FDialogue_Node>(row_id, context, true) )
+	// 1.0. Find next dialogue node
+	next_node = Dialogue_Data_Table->FindRow<FDialogue_Node>(row_id, context, true);  // Find node by row id
+    if (next_node == 0)
     {
-        TLG_HUD->Dialogue_Show_Node(*next_node);
-        Update_Portrait(next_node->Tag_Portrait);
-    }
-    else
         Dialogue_End();
+
+        return;
+    }
+
+	TLG_HUD->Dialogue_Show_Node(*next_node);  // Send data to Dialogue UI
+
+	// 2.0. Set enemy portrait if have  in data
+    portrait = Current_Enemy_Data->Get_Portrait_By_Tag(next_node->Tag_Portrait);
+    if (portrait == 0)
+        return;
+
+    TLG_HUD->Set_Portrait_Texture(portrait);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_End()
@@ -91,17 +104,6 @@ void ATLG_Player_Controller::Dialogue_End()
 
     SetInputMode(FInputModeGameOnly() );
     bShowMouseCursor = false;
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Update_Portrait(const FGameplayTag &tag_portrait)
-{
-    if (Current_Enemy_Data == 0 || TLG_HUD == 0)
-        return;
-
-    UTexture2D* portrait = Current_Enemy_Data->Get_Portrait_By_Tag(tag_portrait);
-    
-    if (portrait != 0)
-        TLG_HUD->Set_Portrait_Texture(portrait);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Apply_Response_Effects(const FGameplayTagContainer &tags)
