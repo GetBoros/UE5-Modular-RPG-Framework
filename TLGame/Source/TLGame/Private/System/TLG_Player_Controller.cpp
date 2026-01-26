@@ -21,12 +21,21 @@ void ATLG_Player_Controller::BeginPlay()
         Ability_System_Component = TLG_Player_State->GetAbilitySystemComponent();
 
     // 2.0. Check
-    ensureMsgf(TLG_HUD, TEXT("Need HUD implemented from ATLG_HUD") );
-    ensureMsgf(TLG_Player_State, TEXT("Need Player State implemented from ATLG_Player_State") );
-    ensureMsgf(Ability_System_Component, TEXT("Not Implemented interface") );
-    ensureMsgf(Dialogue_Data_Table, TEXT("Skip Dialogue_Start or can be crit error") );
-    ensureMsgf(Current_Enemy_Data, TEXT("Skip Dialogue_Start or can be crit error") );
-    
+    if (ensureMsgf(TLG_HUD, TEXT("Need HUD implemented from ATLG_HUD") ) != true)
+        return;
+
+    if (ensureMsgf(TLG_Player_State, TEXT("Need Player State implemented from ATLG_Player_State") ) != true)
+        return;
+
+    if (ensureMsgf(Ability_System_Component, TEXT("Not Implemented interface") ) != true)
+        return;
+
+    if (ensureMsgf(Dialogue_Data_Table, TEXT("Skip Dialogue_Start or can be crit error") ) != true)
+        return;
+
+    if (ensureMsgf(Current_Enemy_Data, TEXT("Skip Dialogue_Start or can be crit error") ) != true)
+        return;
+
     // 3.0. Settings
     bShowMouseCursor = true;
     SetInputMode(FInputModeUIOnly() );

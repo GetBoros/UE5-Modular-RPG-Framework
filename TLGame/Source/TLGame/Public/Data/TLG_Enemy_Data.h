@@ -15,7 +15,7 @@ UCLASS(BlueprintType) class TLGAME_API UTLG_Enemy_Data : public UPrimaryDataAsse
 
 public:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) FText Name;
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TMap<FGameplayTag, TObjectPtr<UTexture2D>> Portraits;  // Portrets can be choosen by Gameplay tags
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TMap<FGameplayTag, TObjectPtr<UTexture2D>> Portraits;  // !!! TEMP Portrets can be choosen by Gameplay tags
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TMap<FGameplayTag, TObjectPtr<UDataTable>> Dialogue_Tables;  // Choose DataTable by GameplayTags (Stage.Intro)
 
     UTexture2D *Get_Portrait_By_Tag(const FGameplayTag &tag) const;
