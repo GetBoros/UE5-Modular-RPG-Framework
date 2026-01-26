@@ -47,7 +47,7 @@ void UTLG_Widget_HUD::Init_Widget_Controller()
     ATLG_Player_State *tlg_player_state;
     UAbilitySystemComponent *ability_system_component;
     UTLG_Attribute_Set *tlg_attribute_set;
-    FController_Widget_Params_Temp controller_widget_params_temp;
+    FController_Widget_Params controller_widget_params;
 
 	if (TLG_Widget_Controller != 0)  // If already initialized
         return;
@@ -66,15 +66,15 @@ void UTLG_Widget_HUD::Init_Widget_Controller()
     if (ability_system_component == 0 || tlg_attribute_set == 0)
         return;
 
-    controller_widget_params_temp.Player_Controller = player_controller;
-    controller_widget_params_temp.Player_State = tlg_player_state;
-    controller_widget_params_temp.Ability_System_Component = ability_system_component;
-    controller_widget_params_temp.Attribute_Set = tlg_attribute_set;
-    controller_widget_params_temp.Attribute_Info = GBC_Attribute_Info;
+    controller_widget_params.Player_Controller = player_controller;
+    controller_widget_params.Player_State = tlg_player_state;
+    controller_widget_params.Ability_System_Component = ability_system_component;
+    controller_widget_params.Attribute_Set = tlg_attribute_set;
+    controller_widget_params.Attribute_Info = GBC_Attribute_Info;
     
 	// 2.0. Create and initialize tlg widget controller
     TLG_Widget_Controller = NewObject<UTLG_Widget_Controller>(this, TLG_Widget_Controller_Class);
-    TLG_Widget_Controller->Init(controller_widget_params_temp);
+    TLG_Widget_Controller->Init(controller_widget_params);
     
     TLG_Widget_Controller->On_Changed_Sanity.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Sanity);
     TLG_Widget_Controller->On_Changed_Dominance.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Dominance);

@@ -49,7 +49,7 @@ void AGBUI_Main_Menu_HUD::Init()
     APlayerState *player_state;
     UGBUIC_User_Widget *gbui_user_widget;
     APlayerController *player_controller;
-    UGBUIC_Widget_Controller *widget_controller;
+    UGBUIC_Widget_Controller *gbuic_widget_controller;
     UAbilitySystemComponent *ability_system_component;
 
     // 1.0. HUD Widget Create
@@ -81,8 +81,8 @@ void AGBUI_Main_Menu_HUD::Init()
     ability_system_component = ability_system_interface->GetAbilitySystemComponent();
     
     // 3.0. Get and cache Widget Controller
-    widget_controller = Get_Widget_Controller(FController_Widget_Params(player_controller, player_state, ability_system_component, Attribute_Info_Data) );
-    gbui_user_widget->Set_Widget_Controller(widget_controller);  // Pass the controller to the widget
-    widget_controller->Broadcast_Initial_Values();  // 3.2. Finally if all settings are good, make broadcast and update value in HUD_Widget
+    gbuic_widget_controller = Get_Widget_Controller(FController_Widget_Params(player_controller, player_state, ability_system_component, 0, Attribute_Info_Data) );
+    gbui_user_widget->Set_Widget_Controller(gbuic_widget_controller);  // Pass the controller to the widget
+    gbuic_widget_controller->Broadcast_Initial_Values();  // 3.2. Finally if all settings are good, make broadcast and update value in HUD_Widget
 }
 //------------------------------------------------------------------------------------------------------------

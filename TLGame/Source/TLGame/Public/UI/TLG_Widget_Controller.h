@@ -9,7 +9,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOn_Attribute_Changed_Signature, fl
 //------------------------------------------------------------------------------------------------------------
 class UTLG_Attribute_Set;
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class TLGAME_API UTLG_Widget_Controller : public UGBUIC_Widget_Controller_Temp
+UCLASS() class TLGAME_API UTLG_Widget_Controller : public UGBUIC_Widget_Controller
 {
     GENERATED_BODY()
 
