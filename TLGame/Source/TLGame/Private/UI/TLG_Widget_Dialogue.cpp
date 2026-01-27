@@ -36,7 +36,6 @@ void UTLG_Widget_Dialogue::Setup_Dialogue_Node(const FDialogue_Node &node_data)
     UTLG_Widget_Button_Response *button_response;
 
     Current_Node = node_data;
-
     if (Current_Node.Text_Name_Speaker.IsEmpty() != true)
         Text_Speaker_Name->SetText(Current_Node.Text_Name_Speaker);
     

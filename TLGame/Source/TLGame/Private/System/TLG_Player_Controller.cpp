@@ -5,7 +5,6 @@
 #include <Data/TLG_Enemy_Data.h>
 
 #include <Components/AudioComponent.h>
-#include <Sound/SoundBase.h>
 
 #include <Abilities/TLG_Attribute_Set.h>
 #include <AbilitySystemComponent.h>
@@ -48,10 +47,7 @@ void ATLG_Player_Controller::BeginPlay()
     if (ensureMsgf(TLG_Data_Location_Start, TEXT("Skip Move_To_Location or can be crit error") ) != true)
         return;
 
-    // 3.0. Settings
-    bShowMouseCursor = true;
-    SetInputMode(FInputModeUIOnly() );
-
+    // 3.0. Actions
     Move_To_Location(TLG_Data_Location_Start);
 
     // 4.0. Blueprint logic
@@ -121,6 +117,8 @@ void ATLG_Player_Controller::Move_To_Location(UTLG_Data_Location *tlg_data_locat
     else
         TLG_HUD->Dialogue_Hide();
 
+    // 4.0. Buttons
+    TLG_HUD->Update_Navigation_Buttons(tlg_data_location->TLG_Location_Exits);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
@@ -134,9 +132,13 @@ void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
         if (UTexture2D *texture_portrait = TLG_Enemy_Data_Current->Get_Portrait_By_Tag(dialogue_node_next->Tag_Portrait) )  // Set enemy portrait if have  in data
             TLG_HUD->Set_Texture_Portrait(texture_portrait);
 
+        bShowMouseCursor = true;
+        SetInputMode(FInputModeUIOnly() );
     }
     else
+    {
         Dialogue_End();
+    }
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_End()

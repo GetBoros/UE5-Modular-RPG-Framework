@@ -1,5 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
 #include <System/TLG_HUD.h>
+#include <Data/TLG_Data_Location.h>
 
 #include <UI/TLG_Widget_HUD.h>
 //------------------------------------------------------------------------------------------------------------
@@ -36,6 +37,11 @@ void ATLG_HUD::Set_Texture_Portrait(UTexture2D *texture)
 void ATLG_HUD::Set_Image_Background_Texture(UTexture2D *texture2d)
 {
     Get_TLG_Widget_HUD()->Set_Image_Background_Texture(texture2d);
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_HUD::Update_Navigation_Buttons(const TArray<FTLG_Location_Exit> &tlg_location_exits)
+{
+    HUD_Widget->Update_Navigation_Buttons(tlg_location_exits);
 }
 //------------------------------------------------------------------------------------------------------------
 UTLG_Widget_HUD *ATLG_HUD::Get_TLG_Widget_HUD()

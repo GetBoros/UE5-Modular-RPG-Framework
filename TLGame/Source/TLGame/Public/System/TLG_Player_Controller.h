@@ -21,10 +21,9 @@ public:
     virtual void BeginPlay();
 
     void Handle_Player_Decision(const FPlayer_Response &choice);  // Call UI when player press button
+    void Move_To_Location(UTLG_Data_Location *tlg_data_location);
 
 private:
-    void Move_To_Location(UTLG_Data_Location *tlg_data_location);
-    
     void Dialogue_Start(const FName &row_id);
     void Dialogue_End();
 

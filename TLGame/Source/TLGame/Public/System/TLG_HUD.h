@@ -7,6 +7,7 @@
 #include <TLG_HUD.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class UTLG_Widget_HUD;
+struct FTLG_Location_Exit;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API ATLG_HUD : public AHUD
 {
@@ -20,6 +21,7 @@ public:
 
 	void Set_Texture_Portrait(UTexture2D *texture);
 	void Set_Image_Background_Texture(UTexture2D *texture2d);
+	void Update_Navigation_Buttons(const TArray<FTLG_Location_Exit> &tlg_location_exits);
 
 private:
 	UTLG_Widget_HUD *Get_TLG_Widget_HUD();

@@ -3,8 +3,10 @@
 #include <UI/TLG_Widget_Dialogue.h>
 #include <UI/TLG_Widget_Controller.h>
 #include <UI/TLG_Widget_Floating_Text.h>
+#include "UI/TLG_Widget_Button_Navigation.h"
 #include <System/TLG_Player_State.h>
 #include <Abilities/TLG_Attribute_Set.h>
+#include <Data/TLG_Data_Location.h>
 
 #include <AbilitySystemComponent.h>
 #include <Components/Image.h>
@@ -19,6 +21,7 @@ void UTLG_Widget_HUD::NativeConstruct()
 {
     ensureMsgf(Floating_Text_Class, TEXT("Floating Text Class not setting up") );
     ensureMsgf(TLG_Widget_Controller_Class, TEXT("Is Empty") );
+    ensureMsgf(TLG_Widget_Button_Navigation_Class, TEXT("Is Empty") );
 
     Init_Widget_Controller();
 
@@ -39,6 +42,26 @@ void UTLG_Widget_HUD::Dialogue_Hide() const
 void UTLG_Widget_HUD::Set_Image_Background_Texture(UTexture2D *image_background_texture) const
 {
     Image_Background->SetBrushFromTexture(image_background_texture);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::Update_Navigation_Buttons(const TArray<FTLG_Location_Exit> &tlg_location_exits)
+{
+    UUserWidget* widget;
+    UTLG_Widget_Button_Navigation* tlg_widget_button_navigation;
+    
+    VB_Navigation->ClearChildren();
+
+    for (const FTLG_Location_Exit &location_exit: tlg_location_exits)
+    {
+        widget = CreateWidget<UUserWidget>(this, TLG_Widget_Button_Navigation_Class);
+        tlg_widget_button_navigation = Cast<UTLG_Widget_Button_Navigation>(widget);
+        if (tlg_widget_button_navigation != 0)
+        {
+            tlg_widget_button_navigation->Init(location_exit);
+
+            VB_Navigation->AddChild(tlg_widget_button_navigation);
+        }
+    }
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Updated_Temp_Implementation(float sanity_curr, float sanity_max)
