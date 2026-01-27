@@ -15,9 +15,9 @@ void ATLG_HUD::BeginPlay()
     Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_HUD::Dialogue_Show_Node(const FDialogue_Node &node)
+void ATLG_HUD::Dialogue_Node_Show(const FDialogue_Node &node)
 {
-    Get_TLG_Widget_HUD()->Dialogue_Show_Node(node);
+    Get_TLG_Widget_HUD()->Dialogue_Node_Show(node);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_HUD::Dialogue_Hide() const
@@ -28,7 +28,7 @@ void ATLG_HUD::Dialogue_Hide() const
     HUD_Widget->Dialogue_Hide();
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_HUD::Set_Portrait_Texture(UTexture2D *texture)
+void ATLG_HUD::Set_Texture_Portrait(UTexture2D *texture)
 {
     Get_TLG_Widget_HUD()->On_Update_Enemy_Portrait(texture);
 }

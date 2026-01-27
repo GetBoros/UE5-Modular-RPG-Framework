@@ -44,7 +44,6 @@ void ATLG_Player_Controller::BeginPlay()
     SetInputMode(FInputModeUIOnly() );
 
     Move_To_Location(TLG_Data_Location_Start);
-    //Dialogue_Start(FName("Intro") );
 
     // 4.0. Blueprint logic
     Super::BeginPlay();
@@ -110,26 +109,17 @@ void ATLG_Player_Controller::Move_To_Location(UTLG_Data_Location *tlg_data_locat
 void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
 {
     static const FString context(TEXT("Dialogue Context") );
-    UTexture2D *portrait;
-    FDialogue_Node *next_node;
 
-	// 1.0. Find next dialogue node
-	next_node = Dialogue_Data_Table->FindRow<FDialogue_Node>(row_id, context, true);  // Find node by row id
-    if (next_node == 0)
+    if (const FDialogue_Node *dialogue_node_next = Dialogue_Data_Table->FindRow<FDialogue_Node>(row_id, context, true) )  // Find node by row id
     {
-        Dialogue_End();
+        TLG_HUD->Dialogue_Node_Show(*dialogue_node_next);  // Send data to Dialogue UI
 
-        return;
+        if (UTexture2D *texture_portrait = TLG_Enemy_Data_Current->Get_Portrait_By_Tag(dialogue_node_next->Tag_Portrait) )  // Set enemy portrait if have  in data
+            TLG_HUD->Set_Texture_Portrait(texture_portrait);
+
     }
-
-	TLG_HUD->Dialogue_Show_Node(*next_node);  // Send data to Dialogue UI
-
-	// 2.0. Set enemy portrait if have  in data
-    portrait = TLG_Enemy_Data_Current->Get_Portrait_By_Tag(next_node->Tag_Portrait);
-    if (portrait == 0)
-        return;
-
-    TLG_HUD->Set_Portrait_Texture(portrait);
+    else
+        Dialogue_End();
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_End()

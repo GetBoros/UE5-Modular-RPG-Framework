@@ -15,10 +15,10 @@ UCLASS() class TLGAME_API ATLG_HUD : public AHUD
 public:
 	virtual void BeginPlay();
 
-    void Dialogue_Show_Node(const FDialogue_Node &node);
+    void Dialogue_Node_Show(const FDialogue_Node &node);
     void Dialogue_Hide() const;
 
-	void Set_Portrait_Texture(UTexture2D *texture);
+	void Set_Texture_Portrait(UTexture2D *texture);
 	void Set_Image_Background_Texture(UTexture2D *texture2d);
 
 private:

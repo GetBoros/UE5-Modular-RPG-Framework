@@ -19,7 +19,7 @@ UCLASS() class TLGAME_API UTLG_Widget_HUD : public UUserWidget
 public:
     virtual void NativeConstruct();
 
-    void Dialogue_Show_Node(const FDialogue_Node &node_data);
+    void Dialogue_Node_Show(const FDialogue_Node &node_data);
     void Dialogue_Hide() const;
 
     void Set_Image_Background_Texture(UTexture2D *image_background_texture) const;
