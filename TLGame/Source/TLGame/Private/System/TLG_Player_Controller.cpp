@@ -4,6 +4,9 @@
 #include <System/TLG_HUD.h>
 #include <Data/TLG_Enemy_Data.h>
 
+#include <Components/AudioComponent.h>
+#include <Sound/SoundBase.h>
+
 #include <Abilities/TLG_Attribute_Set.h>
 #include <AbilitySystemComponent.h>
 //------------------------------------------------------------------------------------------------------------
@@ -19,6 +22,12 @@ void ATLG_Player_Controller::BeginPlay()
     TLG_Player_State = GetPlayerState<ATLG_Player_State>();
     if (TLG_Player_State != 0)
         Ability_System_Component = TLG_Player_State->GetAbilitySystemComponent();
+
+    if (Audio_Component_Ambient == 0)
+    {
+        Audio_Component_Ambient = NewObject<UAudioComponent>(this);
+        Audio_Component_Ambient->RegisterComponent();  // Important for work
+    }
 
     // 2.0. Check
     if (ensureMsgf(TLG_HUD, TEXT("Need HUD implemented from ATLG_HUD") ) != true)
@@ -89,16 +98,24 @@ void ATLG_Player_Controller::Move_To_Location(UTLG_Data_Location *tlg_data_locat
 {
     float roll;
     float enemy_encounter_chance;
+    USoundBase *sound_base;
     UTexture2D *texture2d_background;
     
     TLG_Data_Location_Current = tlg_data_location;
     enemy_encounter_chance = tlg_data_location->Enemy_Encounter_Chance;
     texture2d_background = tlg_data_location->Texture2D_Background_Image;
+    sound_base = tlg_data_location->SoundBase_Ambient;
     roll = FMath::FRand();  // 2. Generate value from 0.0 to 1.0
 
+    // 1.0. Background
     if (texture2d_background != 0)  // Update Background if have in tlg_data_location
         TLG_HUD->Set_Image_Background_Texture(texture2d_background);
 
+    // 2.0. Music
+    if (sound_base != 0)  // Play music
+        Play_Ambient_Sound(sound_base);
+
+    // 3.0. Dialogue
     if (roll <= enemy_encounter_chance)  // Begin dialugue if rolled
         Dialogue_Start(FName("Intro") );
     else
@@ -133,5 +150,15 @@ void ATLG_Player_Controller::Dialogue_End()
 void ATLG_Player_Controller::Apply_Response_Effects(const FGameplayTagContainer &tags)
 {
     Ability_System_Component->AddLooseGameplayTags(tags);  // !!! TEMP Add tags to player, in future split logic and for enemies
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Play_Ambient_Sound(USoundBase *sound_base_to_play)
+{
+    if (Audio_Component_Ambient->Sound == sound_base_to_play && Audio_Component_Ambient->IsPlaying() )  // if already play return
+        return;
+
+    Audio_Component_Ambient->Stop();
+    Audio_Component_Ambient->SetSound(sound_base_to_play);
+    Audio_Component_Ambient->Play();
 }
 //------------------------------------------------------------------------------------------------------------
