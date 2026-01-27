@@ -36,6 +36,11 @@ void UTLG_Widget_HUD::Dialogue_Hide() const
     TLG_Widget_Dialogue->SetVisibility(ESlateVisibility::Hidden);
 }
 //------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::Set_Image_Background_Texture(UTexture2D *image_background_texture) const
+{
+    Image_Background->SetBrushFromTexture(image_background_texture);
+}
+//------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Updated_Temp_Implementation(float sanity_curr, float sanity_max)
 {
     // !!! TEMP
@@ -81,11 +86,6 @@ void UTLG_Widget_HUD::Init_Widget_Controller()
     
     TLG_Widget_Controller->Bind_Callbacks_To_Dependencies();
     TLG_Widget_Controller->Broadcast_Initial_Values();
-}
-//------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Set_Image_Background_Texture(UTexture2D *image_background_texture) const
-{
-    Image_Background->SetBrushFromTexture(image_background_texture);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Spawn_Floating_Text(float delta, const FText &name_text)

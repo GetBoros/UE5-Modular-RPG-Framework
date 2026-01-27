@@ -22,6 +22,8 @@ public:
     void Dialogue_Show_Node(const FDialogue_Node &node_data);
     void Dialogue_Hide() const;
 
+    void Set_Image_Background_Texture(UTexture2D *image_background_texture) const;
+
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Sanity(float sanity_curr, float sanity_max);
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Dominance(float dominance_curr);
     UFUNCTION(BlueprintImplementableEvent) void On_Update_Enemy_Portrait(UTexture2D *texture);
@@ -30,7 +32,6 @@ public:
 
 private:
     void Init_Widget_Controller();
-    void Set_Image_Background_Texture(UTexture2D *image_background_texture) const;
     void Spawn_Floating_Text(const float delta, const FText &name_text);
 
     UFUNCTION() void On_Changed_Callback_Sanity(float new_value, float delta);

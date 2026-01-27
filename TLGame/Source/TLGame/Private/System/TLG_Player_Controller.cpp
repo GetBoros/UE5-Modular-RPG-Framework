@@ -33,14 +33,18 @@ void ATLG_Player_Controller::BeginPlay()
     if (ensureMsgf(Dialogue_Data_Table, TEXT("Skip Dialogue_Start or can be crit error") ) != true)
         return;
 
-    if (ensureMsgf(Current_Enemy_Data, TEXT("Skip Dialogue_Start or can be crit error") ) != true)
+    if (ensureMsgf(TLG_Enemy_Data_Current, TEXT("Skip Dialogue_Start or can be crit error") ) != true)
+        return;
+
+    if (ensureMsgf(TLG_Data_Location_Start, TEXT("Skip Move_To_Location or can be crit error") ) != true)
         return;
 
     // 3.0. Settings
     bShowMouseCursor = true;
     SetInputMode(FInputModeUIOnly() );
 
-    Dialogue_Start(FName("Intro") );
+    Move_To_Location(TLG_Data_Location_Start);
+    //Dialogue_Start(FName("Intro") );
 
     // 4.0. Blueprint logic
     Super::BeginPlay();
@@ -82,6 +86,27 @@ void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &choi
         Dialogue_End();
 }
 //------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Move_To_Location(UTLG_Data_Location *tlg_data_location)
+{
+    float roll;
+    float enemy_encounter_chance;
+    UTexture2D *texture2d_background;
+    
+    TLG_Data_Location_Current = tlg_data_location;
+    enemy_encounter_chance = tlg_data_location->Enemy_Encounter_Chance;
+    texture2d_background = tlg_data_location->Texture2D_Background_Image;
+    roll = FMath::FRand();  // 2. Generate value from 0.0 to 1.0
+
+    if (texture2d_background != 0)  // Update Background if have in tlg_data_location
+        TLG_HUD->Set_Image_Background_Texture(texture2d_background);
+
+    if (roll <= enemy_encounter_chance)  // Begin dialugue if rolled
+        Dialogue_Start(FName("Intro") );
+    else
+        TLG_HUD->Dialogue_Hide();
+
+}
+//------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
 {
     static const FString context(TEXT("Dialogue Context") );
@@ -100,7 +125,7 @@ void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
 	TLG_HUD->Dialogue_Show_Node(*next_node);  // Send data to Dialogue UI
 
 	// 2.0. Set enemy portrait if have  in data
-    portrait = Current_Enemy_Data->Get_Portrait_By_Tag(next_node->Tag_Portrait);
+    portrait = TLG_Enemy_Data_Current->Get_Portrait_By_Tag(next_node->Tag_Portrait);
     if (portrait == 0)
         return;
 

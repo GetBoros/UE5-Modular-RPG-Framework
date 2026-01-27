@@ -13,7 +13,7 @@ UCLASS() class TLGAME_API ATLG_Enemy : public ACharacter
 public:
     ATLG_Enemy();
 
-    UFUNCTION(BlueprintCallable) UTLG_Enemy_Data *Get_Enemy_Data() const;
+    UFUNCTION(BlueprintCallable) UTLG_Enemy_Data *Get_Enemy_Data() const;  // !!! Example
 
 private:
     UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Enemy_Data> Enemy_Data;  // From BP can put example DA_Hysteric

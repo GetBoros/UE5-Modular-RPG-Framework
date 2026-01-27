@@ -33,6 +33,11 @@ void ATLG_HUD::Set_Portrait_Texture(UTexture2D *texture)
     Get_TLG_Widget_HUD()->On_Update_Enemy_Portrait(texture);
 }
 //------------------------------------------------------------------------------------------------------------
+void ATLG_HUD::Set_Image_Background_Texture(UTexture2D *texture2d)
+{
+    Get_TLG_Widget_HUD()->Set_Image_Background_Texture(texture2d);
+}
+//------------------------------------------------------------------------------------------------------------
 UTLG_Widget_HUD *ATLG_HUD::Get_TLG_Widget_HUD()
 {
     if (HUD_Widget != 0)

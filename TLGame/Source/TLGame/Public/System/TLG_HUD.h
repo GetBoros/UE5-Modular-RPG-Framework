@@ -19,6 +19,7 @@ public:
     void Dialogue_Hide() const;
 
 	void Set_Portrait_Texture(UTexture2D *texture);
+	void Set_Image_Background_Texture(UTexture2D *texture2d);
 
 private:
 	UTLG_Widget_HUD *Get_TLG_Widget_HUD();
