@@ -4,6 +4,7 @@
 #include <UI/TLG_Widget_Controller.h>
 #include <UI/TLG_Widget_Floating_Text.h>
 #include "UI/TLG_Widget_Button_Navigation.h"
+#include <UI/TLG_Widget_Portrait.h>
 #include <System/TLG_Player_State.h>
 #include <Abilities/TLG_Attribute_Set.h>
 #include <Data/TLG_Data_Location.h>
@@ -32,11 +33,15 @@ void UTLG_Widget_HUD::Dialogue_Node_Show(const FDialogue_Node &node_data)
 {
     TLG_Widget_Dialogue->SetVisibility(ESlateVisibility::Visible);
     TLG_Widget_Dialogue->Setup_Dialogue_Node(node_data);
+    TLG_Widget_Portrait_Enemy->Is_Image_Portrait_Visible(true);
+    VB_Navigation->SetVisibility(ESlateVisibility::Collapsed);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Dialogue_Hide() const
 {
     TLG_Widget_Dialogue->SetVisibility(ESlateVisibility::Hidden);
+    TLG_Widget_Portrait_Enemy->Is_Image_Portrait_Visible(false);
+    VB_Navigation->SetVisibility(ESlateVisibility::Visible);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Set_Image_Background_Texture(UTexture2D *image_background_texture) const
@@ -62,6 +67,11 @@ void UTLG_Widget_HUD::Update_Navigation_Buttons(const TArray<FTLG_Location_Exit>
             VB_Navigation->AddChild(tlg_widget_button_navigation);
         }
     }
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::Set_Image_Portrait_Texture(UTexture2D *texture)
+{
+    TLG_Widget_Portrait_Enemy->Set_Image_Portrait_Texture(texture);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Updated_Temp_Implementation(float sanity_curr, float sanity_max)

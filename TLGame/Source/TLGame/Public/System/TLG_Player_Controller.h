@@ -36,7 +36,7 @@ private:
     
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UDataTable> Dialogue_Data_Table;  // !!! TEMP Need take from enemy
 
-    UPROPERTY(EditDefaultsOnly) TObjectPtr<UTLG_Data_Enemy> TLG_Enemy_Data_Current;
+    UPROPERTY(EditDefaultsOnly) TObjectPtr<UTLG_Data_Enemy> TLG_Data_Enemy_Current;
     UPROPERTY(EditDefaultsOnly) TObjectPtr<UTLG_Data_Location> TLG_Data_Location_Start;
 
     UPROPERTY(VisibleAnywhere) TObjectPtr<UTLG_Data_Location> TLG_Data_Location_Current;

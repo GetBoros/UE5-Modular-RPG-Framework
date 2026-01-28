@@ -1,7 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
 #include <System/TLG_HUD.h>
 #include <Data/TLG_Data_Location.h>
-
 #include <UI/TLG_Widget_HUD.h>
 //------------------------------------------------------------------------------------------------------------
 
@@ -23,15 +22,12 @@ void ATLG_HUD::Dialogue_Node_Show(const FDialogue_Node &node)
 //------------------------------------------------------------------------------------------------------------
 void ATLG_HUD::Dialogue_Hide() const
 {
-    if (HUD_Widget == 0)
-        return;
-
     HUD_Widget->Dialogue_Hide();
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_HUD::Set_Texture_Portrait(UTexture2D *texture)
 {
-    Get_TLG_Widget_HUD()->On_Update_Enemy_Portrait(texture);
+    HUD_Widget->Set_Image_Portrait_Texture(texture);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_HUD::Set_Image_Background_Texture(UTexture2D *texture2d)

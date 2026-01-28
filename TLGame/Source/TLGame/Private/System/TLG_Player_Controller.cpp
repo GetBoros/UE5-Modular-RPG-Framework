@@ -41,7 +41,7 @@ void ATLG_Player_Controller::BeginPlay()
     if (ensureMsgf(Dialogue_Data_Table, TEXT("Skip Dialogue_Start or can be crit error") ) != true)
         return;
 
-    if (ensureMsgf(TLG_Enemy_Data_Current, TEXT("Skip Dialogue_Start or can be crit error") ) != true)
+    if (ensureMsgf(TLG_Data_Enemy_Current, TEXT("Skip Dialogue_Start or can be crit error") ) != true)
         return;
 
     if (ensureMsgf(TLG_Data_Location_Start, TEXT("Skip Move_To_Location or can be crit error") ) != true)
@@ -129,7 +129,7 @@ void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
     {
         TLG_HUD->Dialogue_Node_Show(*dialogue_node_next);  // Send data to Dialogue UI
 
-        if (UTexture2D *texture_portrait = TLG_Enemy_Data_Current->Get_Portrait_By_Tag(dialogue_node_next->Tag_Portrait) )  // Set enemy portrait if have  in data
+        if (UTexture2D *texture_portrait = TLG_Data_Enemy_Current->Get_Portrait_By_Tag(dialogue_node_next->Tag_Portrait) )  // Set enemy portrait if have  in data
             TLG_HUD->Set_Texture_Portrait(texture_portrait);
 
         bShowMouseCursor = true;
@@ -145,8 +145,8 @@ void ATLG_Player_Controller::Dialogue_End()
 {
     TLG_HUD->Dialogue_Hide();
 
-    SetInputMode(FInputModeGameOnly() );
-    bShowMouseCursor = false;
+    // SetInputMode(FInputModeGameOnly() );
+    // bShowMouseCursor = false;
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Apply_Response_Effects(const FGameplayTagContainer &tags)

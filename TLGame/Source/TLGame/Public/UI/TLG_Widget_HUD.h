@@ -7,6 +7,7 @@
 #include <TLG_Widget_HUD.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class UTLG_Widget_Dialogue;
+class UTLG_Widget_Portrait;
 class UTLG_Widget_Controller;
 class UTLG_Widget_Button_Navigation;
 class UGBC_Attribute_Info;
@@ -26,12 +27,14 @@ public:
 
     void Set_Image_Background_Texture(UTexture2D *image_background_texture) const;
 	void Update_Navigation_Buttons(const TArray<FTLG_Location_Exit> &tlg_location_exits);
+	void Set_Image_Portrait_Texture(UTexture2D *texture);
 
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Sanity(float sanity_curr, float sanity_max);
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Dominance(float dominance_curr);
-    UFUNCTION(BlueprintImplementableEvent) void On_Update_Enemy_Portrait(UTexture2D *texture);
 
     UFUNCTION(BlueprintNativeEvent) void On_Updated_Temp(float sanity_curr, float sanity_max);  // !!! TEMP Example
+
+    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Portrait> TLG_Widget_Portrait_Enemy;
 
 private:
     void Init_Widget_Controller();
