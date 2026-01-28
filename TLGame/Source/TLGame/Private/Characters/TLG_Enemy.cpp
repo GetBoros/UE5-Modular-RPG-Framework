@@ -11,7 +11,7 @@ ATLG_Enemy::ATLG_Enemy()
 
 }
 //------------------------------------------------------------------------------------------------------------
-UTLG_Enemy_Data *ATLG_Enemy::Get_Enemy_Data() const
+UTLG_Data_Enemy *ATLG_Enemy::Get_Enemy_Data() const
 {
     return Enemy_Data;
 }

@@ -4,12 +4,12 @@
 #include <Engine/DataAsset.h>
 #include <GameplayTagContainer.h>
 
-#include <TLG_Enemy_Data.generated.h>
+#include <TLG_Data_Enemy.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class UDataTable;
 class UTexture2D;
 //------------------------------------------------------------------------------------------------------------
-UCLASS(BlueprintType) class TLGAME_API UTLG_Enemy_Data : public UPrimaryDataAsset
+UCLASS(BlueprintType) class TLGAME_API UTLG_Data_Enemy : public UPrimaryDataAsset
 {
     GENERATED_BODY()
 

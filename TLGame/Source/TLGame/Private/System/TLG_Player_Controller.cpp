@@ -2,7 +2,7 @@
 #include <System/TLG_Player_Controller.h>
 #include <System/TLG_Player_State.h>
 #include <System/TLG_HUD.h>
-#include <Data/TLG_Enemy_Data.h>
+#include <Data/TLG_Data_Enemy.h>
 
 #include <Components/AudioComponent.h>
 

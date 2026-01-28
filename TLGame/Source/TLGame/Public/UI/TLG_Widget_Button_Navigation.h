@@ -17,12 +17,13 @@ UCLASS() class TLGAME_API UTLG_Widget_Button_Navigation : public UUserWidget
 public:
     virtual void NativeConstruct();
 
-    UFUNCTION(BlueprintCallable) void Init(const FTLG_Location_Exit &tlg_location_exit);
+    void Init(const FTLG_Location_Exit &tlg_location_exit);
 
+private:
     UFUNCTION() void Handle_Click();
-
+    
     UPROPERTY() TObjectPtr<UTLG_Data_Location> Target_Location;
-
+    
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UButton> Button_Click;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> TB_Loction_Name;
 };

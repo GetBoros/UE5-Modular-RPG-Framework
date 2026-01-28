@@ -1,12 +1,12 @@
 //------------------------------------------------------------------------------------------------------------
-#include <Data/TLG_Enemy_Data.h>
+#include <Data/TLG_Data_Enemy.h>
 //------------------------------------------------------------------------------------------------------------
 
 
 
 
-// UTLG_Enemy_Data
-UTexture2D *UTLG_Enemy_Data::Get_Portrait_By_Tag(const FGameplayTag &tag) const
+// UTLG_Data_Enemy 
+UTexture2D *UTLG_Data_Enemy::Get_Portrait_By_Tag(const FGameplayTag &tag) const
 {
     if (Portraits.Contains(tag) )
         return Portraits[tag];
@@ -14,7 +14,7 @@ UTexture2D *UTLG_Enemy_Data::Get_Portrait_By_Tag(const FGameplayTag &tag) const
     return 0;
 }
 //------------------------------------------------------------------------------------------------------------
-UDataTable *UTLG_Enemy_Data::Get_Dialogue_Table_By_Tag(const FGameplayTag &tag) const
+UDataTable *UTLG_Data_Enemy::Get_Dialogue_Table_By_Tag(const FGameplayTag &tag) const
 {
     if (Dialogue_Tables.Contains(tag) )
         return Dialogue_Tables[tag];

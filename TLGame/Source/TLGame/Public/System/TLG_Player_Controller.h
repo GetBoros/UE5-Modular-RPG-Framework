@@ -10,7 +10,7 @@
 //------------------------------------------------------------------------------------------------------------
 class ATLG_HUD;
 class ATLG_Player_State;
-class UTLG_Enemy_Data;
+class UTLG_Data_Enemy;
 class UAbilitySystemComponent;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API ATLG_Player_Controller : public APlayerController
@@ -36,7 +36,7 @@ private:
     
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UDataTable> Dialogue_Data_Table;  // !!! TEMP Need take from enemy
 
-    UPROPERTY(EditDefaultsOnly) TObjectPtr<UTLG_Enemy_Data> TLG_Enemy_Data_Current;
+    UPROPERTY(EditDefaultsOnly) TObjectPtr<UTLG_Data_Enemy> TLG_Enemy_Data_Current;
     UPROPERTY(EditDefaultsOnly) TObjectPtr<UTLG_Data_Location> TLG_Data_Location_Start;
 
     UPROPERTY(VisibleAnywhere) TObjectPtr<UTLG_Data_Location> TLG_Data_Location_Current;

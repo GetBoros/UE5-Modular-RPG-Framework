@@ -1,8 +1,9 @@
 //------------------------------------------------------------------------------------------------------------
-#include "UI/TLG_Widget_Button_Navigation.h"
+#include <UI/TLG_Widget_Button_Navigation.h>
+#include <System/TLG_Player_Controller.h>
+
 #include <Components/Button.h>
 #include <Components/TextBlock.h>
-#include <System/TLG_Player_Controller.h>
 //------------------------------------------------------------------------------------------------------------
 
 
