@@ -105,7 +105,7 @@ void ATLG_Player_Controller::Move_To_Location(UTLG_Data_Location *tlg_data_locat
 
     // 1.0. Background
     if (texture2d_background != 0)  // Update Background if have in tlg_data_location
-        TLG_HUD->Set_Image_Background_Texture(texture2d_background);
+        TLG_HUD->Set_Image_Texture_Background(texture2d_background);
 
     // 2.0. Music
     if (sound_base != 0)  // Play music
@@ -130,7 +130,7 @@ void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
         TLG_HUD->Dialogue_Node_Show(*dialogue_node_next);  // Send data to Dialogue UI
 
         if (UTexture2D *texture_portrait = TLG_Data_Enemy_Current->Get_Portrait_By_Tag(dialogue_node_next->Tag_Portrait) )  // Set enemy portrait if have  in data
-            TLG_HUD->Set_Texture_Portrait(texture_portrait);
+            TLG_HUD->Set_Image_Texture_Portrait(texture_portrait);
 
         bShowMouseCursor = true;
         SetInputMode(FInputModeUIOnly() );

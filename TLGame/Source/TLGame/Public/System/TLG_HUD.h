@@ -19,8 +19,8 @@ public:
     void Dialogue_Node_Show(const FDialogue_Node &node);
     void Dialogue_Hide() const;
 
-	void Set_Texture_Portrait(UTexture2D *texture);
-	void Set_Image_Background_Texture(UTexture2D *texture2d);
+	void Set_Image_Texture_Portrait(UTexture2D *texture);
+	void Set_Image_Texture_Background(UTexture2D *texture2d);
 	void Update_Navigation_Buttons(const TArray<FTLG_Location_Exit> &tlg_location_exits);
 
 private:

@@ -25,19 +25,19 @@ void ATLG_HUD::Dialogue_Hide() const
     HUD_Widget->Dialogue_Hide();
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_HUD::Set_Texture_Portrait(UTexture2D *texture)
+void ATLG_HUD::Set_Image_Texture_Portrait(UTexture2D *texture)
 {
-    HUD_Widget->Set_Image_Portrait_Texture(texture);
+    Get_TLG_Widget_HUD()->Set_Image_Texture_Portrait(texture);
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_HUD::Set_Image_Background_Texture(UTexture2D *texture2d)
+void ATLG_HUD::Set_Image_Texture_Background(UTexture2D *texture2d)
 {
-    Get_TLG_Widget_HUD()->Set_Image_Background_Texture(texture2d);
+    Get_TLG_Widget_HUD()->Set_Image_Texture_Background(texture2d);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_HUD::Update_Navigation_Buttons(const TArray<FTLG_Location_Exit> &tlg_location_exits)
 {
-    HUD_Widget->Update_Navigation_Buttons(tlg_location_exits);
+    Get_TLG_Widget_HUD()->Update_Navigation_Buttons(tlg_location_exits);
 }
 //------------------------------------------------------------------------------------------------------------
 UTLG_Widget_HUD *ATLG_HUD::Get_TLG_Widget_HUD()

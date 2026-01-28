@@ -44,9 +44,14 @@ void UTLG_Widget_HUD::Dialogue_Hide() const
     VB_Navigation->SetVisibility(ESlateVisibility::Visible);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Set_Image_Background_Texture(UTexture2D *image_background_texture) const
+void UTLG_Widget_HUD::Set_Image_Texture_Background(UTexture2D *image_background_texture) const
 {
     Image_Background->SetBrushFromTexture(image_background_texture);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::Set_Image_Texture_Portrait(UTexture2D *image_portrait_texture)
+{
+    TLG_Widget_Portrait_Enemy->Set_Image_Portrait_Texture(image_portrait_texture);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Update_Navigation_Buttons(const TArray<FTLG_Location_Exit> &tlg_location_exits)
@@ -67,11 +72,6 @@ void UTLG_Widget_HUD::Update_Navigation_Buttons(const TArray<FTLG_Location_Exit>
             VB_Navigation->AddChild(tlg_widget_button_navigation);
         }
     }
-}
-//------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Set_Image_Portrait_Texture(UTexture2D *texture)
-{
-    TLG_Widget_Portrait_Enemy->Set_Image_Portrait_Texture(texture);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Updated_Temp_Implementation(float sanity_curr, float sanity_max)
