@@ -20,13 +20,13 @@
 // UTLG_Widget_HUD
 void UTLG_Widget_HUD::NativeConstruct()
 {
+    Super::NativeConstruct();
+
     ensureMsgf(TLG_Widget_Text_Floating, TEXT("Floating Text Class not setting up") );
     ensureMsgf(TLG_Widget_Controller_Class, TEXT("Is Empty") );
     ensureMsgf(TLG_Widget_Button_Navigation_Class, TEXT("Is Empty") );
 
     Init_Widget_Controller();
-
-    Super::NativeConstruct();
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Dialogue_Node_Show(const FDialogue_Node &node_data)

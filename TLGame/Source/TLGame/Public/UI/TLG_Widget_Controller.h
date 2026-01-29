@@ -14,18 +14,20 @@ UCLASS() class TLGAME_API UTLG_Widget_Controller : public UGBUIC_Widget_Controll
     GENERATED_BODY()
 
 public:
-    virtual void Broadcast_Initial_Values() override;
-    virtual void Bind_Callbacks_To_Dependencies() override;
+    virtual void Broadcast_Initial_Values();
+    virtual void Bind_Callbacks_To_Dependencies();
 
-    void Handle_Changed_Sanity(const FOnAttributeChangeData &data);
-    void Handle_Changed_Dominance(const FOnAttributeChangeData &data);
+    UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Sanity;
+    UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Dominance;
+
+private:
+    void Handle_Changed_Sanity(const FOnAttributeChangeData &attribute_change_data);
+    void Handle_Changed_Dominance(const FOnAttributeChangeData &attribute_change_data);
 
     UTLG_Attribute_Set *Get_TLG_Attribute_Set() const;
 
     float Prev_Sanity = -1.0f;
     float Prev_Dominance = -1.0f;
-    
-    UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Sanity;
-    UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Dominance;
+
 };
 //------------------------------------------------------------------------------------------------------------
