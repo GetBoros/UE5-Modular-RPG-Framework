@@ -14,55 +14,45 @@ void UTLG_Widget_Button_Response::NativeConstruct()
 {
     Super::NativeConstruct();
 
-    if (Button_Click == 0)
-        return;
-
     Button_Click->OnClicked.RemoveDynamic(this, &UTLG_Widget_Button_Response::Handle_Button_Clicked);
     Button_Click->OnClicked.AddDynamic(this, &UTLG_Widget_Button_Response::Handle_Button_Clicked);
-
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Button_Response::Init(const FPlayer_Response &data, int32 index)
+void UTLG_Widget_Button_Response::Init(const FPlayer_Response &data, const int32 index)
 {
     Response_Index = index;
-
-    if (Text_Response != 0)
-        Text_Response->SetText(data.Text_Response);
-
+    TB_Response->SetText(data.Text_Response);
     
-    if (Button_Click == 0)
-        return;
-
     Button_Update_Visuals(data.Category);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Button_Response::Button_Update_Visuals(EDialogue_Response_Category category)
+void UTLG_Widget_Button_Response::Button_Update_Visuals(EDialogue_Response_Category dialogue_response_category)
 {
-    UMaterialInterface *base_mat;
-    FButtonStyle style = Button_Click->GetStyle();
+    UMaterialInterface *material_interface;
+    FButtonStyle button_style = Button_Click->GetStyle();
     
-    base_mat = Cast<UMaterialInterface>(style.Normal.GetResourceObject());
-    if (base_mat == 0)
+    material_interface = Cast<UMaterialInterface>(button_style.Normal.GetResourceObject() );
+    if (material_interface == 0)
         return;  // Not MI or M in UButton
 
-    if (Button_Material == 0)  // Create MID, and set it to our button style
+    if (MID_Button == 0)  // Create MID, and set it to our button button_style
     {
-        Button_Material = UMaterialInstanceDynamic::Create(base_mat, this);
+        MID_Button = UMaterialInstanceDynamic::Create(material_interface, this);
 
-        style.Normal.SetResourceObject(Button_Material);
-        style.Hovered.SetResourceObject(Button_Material);
-        style.Pressed.SetResourceObject(Button_Material);
+        button_style.Normal.SetResourceObject(MID_Button);
+        button_style.Hovered.SetResourceObject(MID_Button);
+        button_style.Pressed.SetResourceObject(MID_Button);
 
-        Button_Click->SetStyle(style);
+        Button_Click->SetStyle(button_style);
     }
 
-    if (Button_Material != 0)  // if material have param Color chenge it
-        Button_Material->SetVectorParameterValue(FName("Color"), Get_Color_By_Category(category) );
+    if (MID_Button != 0)  // if material have param Color chenge it
+        MID_Button->SetVectorParameterValue(FName("Color"), Get_Color_By_Category(dialogue_response_category) );
 }
 //------------------------------------------------------------------------------------------------------------
-FLinearColor UTLG_Widget_Button_Response::Get_Color_By_Category(EDialogue_Response_Category category) const
+FLinearColor UTLG_Widget_Button_Response::Get_Color_By_Category(EDialogue_Response_Category dialogue_response_category) const
 {
-    switch (category)
+    switch (dialogue_response_category)
     {
     case EDialogue_Response_Category::Aggressive:
         return FLinearColor(0.8f, 0.1f, 0.1f, 1.0f); // Red
