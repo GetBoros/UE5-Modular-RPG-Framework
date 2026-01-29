@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------------------------------------------
-#include <UI/TLG_Typewriter_Text.h>
-
+#include <Components/GBUIC_Text_Block_Typewriter.h>
 #include <TimerManager.h>
 #include <Engine/World.h>
 //------------------------------------------------------------------------------------------------------------
@@ -8,8 +7,8 @@
 
 
 
-// UTLG_Typewriter_Text
-void UTLG_Typewriter_Text::Start_Typewriter(const FText &text_to_type, float speed)
+// UGBUIC_Text_Block_Typewriter
+void UGBUIC_Text_Block_Typewriter::Start_Typewriter(const FText &text_to_type, float speed)
 {
     UWorld *world;
 
@@ -23,10 +22,10 @@ void UTLG_Typewriter_Text::Start_Typewriter(const FText &text_to_type, float spe
 
 	SetText(FText::GetEmpty() );  // Visually clear text
     
-    world->GetTimerManager().SetTimer(Typewriter_Timer_Handle, this, &UTLG_Typewriter_Text::Handle_Typewriter_Tick, speed, true);  // Enable timer to call Handle_Typewriter_Tick every 'speed' seconds
+    world->GetTimerManager().SetTimer(Typewriter_Timer_Handle, this, &UGBUIC_Text_Block_Typewriter::Handle_Typewriter_Tick, speed, true);  // Enable timer to call Handle_Typewriter_Tick every 'speed' seconds
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Typewriter_Text::Skip_Typewriter()
+void UGBUIC_Text_Block_Typewriter::Skip_Typewriter()
 {
     UWorld *world;
     
@@ -36,10 +35,10 @@ void UTLG_Typewriter_Text::Skip_Typewriter()
 
 	SetText(FText::FromString(Full_Text_String) );  // Set full text
 
-    On_Typewriter_Finished.Broadcast();
+    On_Text_Block_Typewriter_Finished.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Typewriter_Text::Handle_Typewriter_Tick()
+void UGBUIC_Text_Block_Typewriter::Handle_Typewriter_Tick()
 {
     UWorld *world;
 
@@ -55,7 +54,6 @@ void UTLG_Typewriter_Text::Handle_Typewriter_Tick()
     if (world != 0)
         world->GetTimerManager().ClearTimer(Typewriter_Timer_Handle);
 
-    On_Typewriter_Finished.Broadcast();
-
+    On_Text_Block_Typewriter_Finished.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------

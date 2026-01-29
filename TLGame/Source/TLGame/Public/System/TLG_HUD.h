@@ -2,6 +2,7 @@
 #pragma once
 //------------------------------------------------------------------------------------------------------------
 #include <GameFramework/HUD.h>
+
 #include <Data/TLG_Types.h>
 
 #include <TLG_HUD.generated.h>

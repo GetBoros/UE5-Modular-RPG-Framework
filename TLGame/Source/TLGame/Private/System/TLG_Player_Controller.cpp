@@ -2,12 +2,12 @@
 #include <System/TLG_Player_Controller.h>
 #include <System/TLG_Player_State.h>
 #include <System/TLG_HUD.h>
+
 #include <Data/TLG_Data_Enemy.h>
-
-#include <Components/AudioComponent.h>
-
 #include <Abilities/TLG_Attribute_Set.h>
+
 #include <AbilitySystemComponent.h>
+#include <Components/AudioComponent.h>
 //------------------------------------------------------------------------------------------------------------
 
 
@@ -54,11 +54,11 @@ void ATLG_Player_Controller::BeginPlay()
     Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &choice)
+void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &player_response)
 {
-	const float response_cost = choice.Response_Cost;
+	const float response_cost = player_response.Response_Cost;
 
-	switch (choice.Category)  // Apply response cost
+	switch (player_response.Category)  // Apply response cost
     {
     case EDialogue_Response_Category::Aggressive:
         Ability_System_Component->ApplyModToAttribute(TLG_Player_State->Get_Attribute_Set()->GetDominanceAttribute(), EGameplayModOp::Additive, response_cost);
@@ -80,12 +80,12 @@ void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &choi
         break;
     }
 
-    if (choice.Tags_Apply.IsValid() )
-        Apply_Response_Effects(choice.Tags_Apply);  // Apply tag (Effects)
+    if (player_response.Tags_Apply.IsValid() )
+        Apply_Response_Effects(player_response.Tags_Apply);  // Apply tag (Effects)
 
     // 1.1. Show next dialugue if next row exists
-    if (choice.Row_ID_Next.IsNone() != true)
-        Dialogue_Start(choice.Row_ID_Next);
+    if (player_response.Row_ID_Next.IsNone() != true)
+        Dialogue_Start(player_response.Row_ID_Next);
     else
         Dialogue_End();
 }
@@ -146,9 +146,9 @@ void ATLG_Player_Controller::Dialogue_End()
     TLG_HUD->Dialogue_Hide();
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Apply_Response_Effects(const FGameplayTagContainer &tags)
+void ATLG_Player_Controller::Apply_Response_Effects(const FGameplayTagContainer &gameplay_tag_container)
 {
-    Ability_System_Component->AddLooseGameplayTags(tags);  // !!! TEMP Add tags to player, in future split logic and for enemies
+    Ability_System_Component->AddLooseGameplayTags(gameplay_tag_container);  // !!! TEMP Add tags to player, in future split logic and for enemies
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Play_Ambient_Sound(USoundBase *sound_base_to_play)

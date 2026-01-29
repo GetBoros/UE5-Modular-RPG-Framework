@@ -18,11 +18,11 @@ public:
 
     virtual UAbilitySystemComponent *GetAbilitySystemComponent() const;
 
-    UFUNCTION(BlueprintCallable) UTLG_Attribute_Set *Get_Attribute_Set() const;
+    UTLG_Attribute_Set *Get_Attribute_Set() const;
 
 private:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
-    UPROPERTY(meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Attribute_Set> Attribute_Set;
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Attribute_Set> Attribute_Set;
 
 };
 //------------------------------------------------------------------------------------------------------------

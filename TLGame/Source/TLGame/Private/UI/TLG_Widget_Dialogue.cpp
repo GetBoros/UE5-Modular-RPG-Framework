@@ -1,11 +1,10 @@
 //------------------------------------------------------------------------------------------------------------
 #include <UI/TLG_Widget_Dialogue.h>
 #include <UI/TLG_Widget_Button_Response.h>
-#include <UI/TLG_Typewriter_Text.h>
 #include <System/TLG_Player_Controller.h>
 
 #include <Materials/MaterialInstanceDynamic.h>
-
+#include <Components/GBUIC_Text_Block_Typewriter.h>
 #include <Components/RetainerBox.h>
 #include <Components/VerticalBox.h>
 #include <Components/Button.h>
@@ -39,7 +38,7 @@ void UTLG_Widget_Dialogue::Setup_Dialogue_Node(const FDialogue_Node &dialogue_no
     if (Dialogue_Node_Current.Text_Name_Speaker.IsEmpty() != true)
         TB_Speaker_Name->SetText(Dialogue_Node_Current.Text_Name_Speaker);
     
-    TLG_Typewriter_Text_NPC_Line->Start_Typewriter(dialogue_node.Text_NPC_Line, 0.06f);  // 0.03f sec per char
+    GBUIC_Text_Block_Typewriter_NPC_Line->Start_Typewriter(dialogue_node.Text_NPC_Line, 0.06f);  // 0.03f sec per char
     VB_TLG_Widget_Button_Response_Container->ClearChildren();  // clear all other child if need
 
     // Spawn TLG_Widget_Button_Response_Class and attach to VB_TLG_Widget_Button_Response_Container, and bind On_Clicked

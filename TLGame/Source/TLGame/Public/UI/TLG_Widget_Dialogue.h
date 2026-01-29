@@ -6,7 +6,7 @@
 
 #include <TLG_Widget_Dialogue.generated.h>
 //------------------------------------------------------------------------------------------------------------
-class UTLG_Typewriter_Text;
+class UGBUIC_Text_Block_Typewriter;
 class UTLG_Widget_Button_Response;
 class UTextBlock;
 class UVerticalBox;
@@ -33,7 +33,7 @@ private:
 
     UPROPERTY() TObjectPtr<UMaterialInstanceDynamic> MID_Effect;
 
-    UPROPERTY(BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Typewriter_Text> TLG_Typewriter_Text_NPC_Line;
+    UPROPERTY(BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<UGBUIC_Text_Block_Typewriter> GBUIC_Text_Block_Typewriter_NPC_Line;
 
     UPROPERTY(meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<UTextBlock> TB_Speaker_Name;
     UPROPERTY(meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<URetainerBox> RB_NPC_Line_Effect;

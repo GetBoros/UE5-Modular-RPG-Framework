@@ -20,14 +20,14 @@ UCLASS() class TLGAME_API ATLG_Player_Controller : public APlayerController
 public:
     virtual void BeginPlay();
 
-    void Handle_Player_Decision(const FPlayer_Response &choice);  // Call UI when player press button
+    void Handle_Player_Decision(const FPlayer_Response &player_response);  // Call UI when player press button
     void Move_To_Location(UTLG_Data_Location *tlg_data_location);
 
 private:
     void Dialogue_Start(const FName &row_id);
     void Dialogue_End();
 
-    void Apply_Response_Effects(const FGameplayTagContainer &tags);
+    void Apply_Response_Effects(const FGameplayTagContainer &gameplay_tag_container);
     void Play_Ambient_Sound(USoundBase *sound_base_to_play);
 
     UPROPERTY(meta = (AllowPrivateAccess = "true") ) ATLG_HUD *TLG_HUD;

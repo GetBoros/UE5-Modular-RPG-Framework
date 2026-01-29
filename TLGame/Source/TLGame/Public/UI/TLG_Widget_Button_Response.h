@@ -19,7 +19,7 @@ UCLASS() class TLGAME_API UTLG_Widget_Button_Response : public UUserWidget
 public:
     virtual void NativeConstruct();
     
-    void Init(const FPlayer_Response &data, const int32 index);  // Init button with data
+    void Init(const FPlayer_Response &player_response_data, const int32 index);  // Init button with data
     
     UPROPERTY(BlueprintAssignable) FOn_Response_Clicked On_Response_Clicked_Delegate;  // Делегат, на который подпишется родитель (Диалог), чтобы узнать о клике
 	

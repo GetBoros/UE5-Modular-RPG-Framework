@@ -18,12 +18,12 @@ void UTLG_Widget_Button_Response::NativeConstruct()
     Button_Click->OnClicked.AddDynamic(this, &UTLG_Widget_Button_Response::Handle_Button_Clicked);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Button_Response::Init(const FPlayer_Response &data, const int32 index)
+void UTLG_Widget_Button_Response::Init(const FPlayer_Response &player_response_data, const int32 index)
 {
     Response_Index = index;
-    TB_Response->SetText(data.Text_Response);
+    TB_Response->SetText(player_response_data.Text_Response);
     
-    Button_Update_Visuals(data.Category);
+    Button_Update_Visuals(player_response_data.Category);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button_Response::Button_Update_Visuals(EDialogue_Response_Category dialogue_response_category)

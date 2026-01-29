@@ -9,3 +9,11 @@ public:
 
 };
 //------------------------------------------------------------------------------------------------------------
+
+
+#pragma region TASKS
+/*
+	- In Controller work with Enemy, not just DT or other data
+	- 
+*/
+#pragma endregion
