@@ -11,7 +11,6 @@
 void UTLG_Widget_Portrait::NativePreConstruct()
 {
 	Super::NativePreConstruct();
-
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Portrait::Set_Image_Portrait_Texture(UTexture2D *texture)
@@ -19,7 +18,7 @@ void UTLG_Widget_Portrait::Set_Image_Portrait_Texture(UTexture2D *texture)
 	Image_Portrait->SetBrushFromTexture(texture);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Portrait::Is_Image_Portrait_Visible(const bool is_visible)
+void UTLG_Widget_Portrait::Set_Image_Portrait_Visibility(const bool is_visible)
 {
 	if (is_visible == true)
 		Image_Portrait->SetVisibility(ESlateVisibility::Visible);

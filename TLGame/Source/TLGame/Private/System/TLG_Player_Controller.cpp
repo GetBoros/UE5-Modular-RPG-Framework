@@ -144,9 +144,6 @@ void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
 void ATLG_Player_Controller::Dialogue_End()
 {
     TLG_HUD->Dialogue_Hide();
-
-    // SetInputMode(FInputModeGameOnly() );
-    // bShowMouseCursor = false;
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Apply_Response_Effects(const FGameplayTagContainer &tags)

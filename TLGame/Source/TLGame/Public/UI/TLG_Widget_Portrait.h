@@ -15,11 +15,10 @@ public:
 	virtual void NativePreConstruct();
 
 	void Set_Image_Portrait_Texture(UTexture2D *texture);
-	void Is_Image_Portrait_Visible(const bool is_visible);
-
-	UPROPERTY(meta = (BindWidget) ) UImage *Image_Portrait;
+	void Set_Image_Portrait_Visibility(const bool is_visible);
 
 private:
+	UPROPERTY(meta = (BindWidget) ) UImage *Image_Portrait;
 
 };
 //------------------------------------------------------------------------------------------------------------

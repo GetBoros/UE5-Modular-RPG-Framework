@@ -2,7 +2,7 @@
 #include <UI/TLG_Widget_HUD.h>
 #include <UI/TLG_Widget_Dialogue.h>
 #include <UI/TLG_Widget_Controller.h>
-#include <UI/TLG_Widget_Floating_Text.h>
+#include <UI/TLG_Widget_Text_Floating.h>
 #include "UI/TLG_Widget_Button_Navigation.h"
 #include <UI/TLG_Widget_Portrait.h>
 #include <System/TLG_Player_State.h>
@@ -20,7 +20,7 @@
 // UTLG_Widget_HUD
 void UTLG_Widget_HUD::NativeConstruct()
 {
-    ensureMsgf(Floating_Text_Class, TEXT("Floating Text Class not setting up") );
+    ensureMsgf(TLG_Widget_Text_Floating, TEXT("Floating Text Class not setting up") );
     ensureMsgf(TLG_Widget_Controller_Class, TEXT("Is Empty") );
     ensureMsgf(TLG_Widget_Button_Navigation_Class, TEXT("Is Empty") );
 
@@ -33,15 +33,15 @@ void UTLG_Widget_HUD::Dialogue_Node_Show(const FDialogue_Node &node_data)
 {
     TLG_Widget_Dialogue->SetVisibility(ESlateVisibility::Visible);
     TLG_Widget_Dialogue->Setup_Dialogue_Node(node_data);
-    TLG_Widget_Portrait_Enemy->Is_Image_Portrait_Visible(true);
-    VB_Navigation->SetVisibility(ESlateVisibility::Collapsed);
+    TLG_Widget_Portrait_Enemy->Set_Image_Portrait_Visibility(true);
+    VB_Button_Navigation->SetVisibility(ESlateVisibility::Collapsed);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Dialogue_Hide() const
 {
     TLG_Widget_Dialogue->SetVisibility(ESlateVisibility::Hidden);
-    TLG_Widget_Portrait_Enemy->Is_Image_Portrait_Visible(false);
-    VB_Navigation->SetVisibility(ESlateVisibility::Visible);
+    TLG_Widget_Portrait_Enemy->Set_Image_Portrait_Visibility(false);
+    VB_Button_Navigation->SetVisibility(ESlateVisibility::Visible);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Set_Image_Texture_Background(UTexture2D *image_background_texture) const
@@ -56,20 +56,20 @@ void UTLG_Widget_HUD::Set_Image_Texture_Portrait(UTexture2D *image_portrait_text
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Update_Navigation_Buttons(const TArray<FTLG_Location_Exit> &tlg_location_exits)
 {
-    UUserWidget* widget;
-    UTLG_Widget_Button_Navigation* tlg_widget_button_navigation;
+    UUserWidget *user_widget;
+    UTLG_Widget_Button_Navigation *tlg_widget_button_navigation;
     
-    VB_Navigation->ClearChildren();
+    VB_Button_Navigation->ClearChildren();
 
     for (const FTLG_Location_Exit &location_exit: tlg_location_exits)
     {
-        widget = CreateWidget<UUserWidget>(this, TLG_Widget_Button_Navigation_Class);
-        tlg_widget_button_navigation = Cast<UTLG_Widget_Button_Navigation>(widget);
+        user_widget = CreateWidget<UUserWidget>(this, TLG_Widget_Button_Navigation_Class);
+        tlg_widget_button_navigation = Cast<UTLG_Widget_Button_Navigation>(user_widget);
         if (tlg_widget_button_navigation != 0)
         {
             tlg_widget_button_navigation->Init(location_exit);
 
-            VB_Navigation->AddChild(tlg_widget_button_navigation);
+            VB_Button_Navigation->AddChild(tlg_widget_button_navigation);
         }
     }
 }
@@ -121,26 +121,21 @@ void UTLG_Widget_HUD::Init_Widget_Controller()
     TLG_Widget_Controller->Broadcast_Initial_Values();
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Spawn_Floating_Text(float delta, const FText &name_text)
+void UTLG_Widget_HUD::Spawn_Text_Floating(float delta, const FText &name_text)
 {
-    UUserWidget *widget;
-    UTLG_Widget_Floating_Text *float_widget;
+    UTLG_Widget_Text_Floating *tlg_widget_text_floating;
 
-    if (VB_Events == 0 || Floating_Text_Class == 0)
+    tlg_widget_text_floating = CreateWidget<UTLG_Widget_Text_Floating>(this, TLG_Widget_Text_Floating);
+    if (tlg_widget_text_floating == 0)
         return;
 
-    widget = CreateWidget<UUserWidget>(this, Floating_Text_Class);
-    float_widget = Cast<UTLG_Widget_Floating_Text>(widget);
-    if (float_widget == 0)
-        return;
-
-    FString sign = (delta > 0) ? TEXT("+") : TEXT("");
-    FText final_text = FText::FromString(FString::Printf(TEXT("%s%d %s"), *sign, FMath::RoundToInt(delta), *name_text.ToString() ) );
-    FLinearColor color = (delta > 0) ? FLinearColor::Green : FLinearColor::Red;  // !!! TEMP can change if dominance to swap color
+    FString string_sign = (delta > 0) ? TEXT("+") : TEXT("");
+    FText text_final = FText::FromString(FString::Printf(TEXT("%s%d %s"), *string_sign, FMath::RoundToInt(delta), *name_text.ToString() ) );
+    FLinearColor linear_color = (delta > 0) ? FLinearColor::Green : FLinearColor::Red;  // !!! TEMP can change if dominance to swap color
     
-    float_widget->Setup_Visuals(final_text, color);
+    tlg_widget_text_floating->Setup_Visuals(text_final, linear_color);
     
-    VB_Events->AddChild(float_widget);
+    VB_Text_Floating_Events->AddChild(tlg_widget_text_floating);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Changed_Callback_Sanity(float new_value, float delta)
@@ -148,7 +143,7 @@ void UTLG_Widget_HUD::On_Changed_Callback_Sanity(float new_value, float delta)
     On_Updated_Sanity(new_value, 100.0f);
 
     if (FMath::IsNearlyZero(delta) != true)
-        Spawn_Floating_Text(delta, FText::FromString("Sanity") );
+        Spawn_Text_Floating(delta, FText::FromString("Sanity") );
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Changed_Callback_Dominance(float new_value, float delta)
@@ -156,6 +151,6 @@ void UTLG_Widget_HUD::On_Changed_Callback_Dominance(float new_value, float delta
     On_Updated_Dominance(new_value);
 
     if (FMath::IsNearlyZero(delta) != true)
-        Spawn_Floating_Text(delta, FText::FromString("Dominance") );
+        Spawn_Text_Floating(delta, FText::FromString("Dominance") );
 }
 //------------------------------------------------------------------------------------------------------------
