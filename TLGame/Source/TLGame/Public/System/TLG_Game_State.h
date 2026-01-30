@@ -5,9 +5,21 @@
 
 #include <TLG_Game_State.generated.h>
 //------------------------------------------------------------------------------------------------------------
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOn_Time_Updated, int32, hours, int32, minutes);
+//------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API ATLG_Game_State : public AGameStateBase
 {
 	GENERATED_BODY()
 	
+public:
+    ATLG_Game_State();
+
+private:
+    UFUNCTION(BlueprintCallable) void Advance_Time(int32 minutes_to_add);
+    UFUNCTION(BlueprintPure) void Get_Current_Time(int32& hours, int32& minutes) const;
+    
+    UPROPERTY(BlueprintAssignable) FOn_Time_Updated On_Time_Updated;
+    UPROPERTY(VisibleAnywhere) int32 Current_Time_Minutes;
+    UPROPERTY(EditDefaultsOnly) int32 Max_Time_Minutes = 1440;
 };
 //------------------------------------------------------------------------------------------------------------
