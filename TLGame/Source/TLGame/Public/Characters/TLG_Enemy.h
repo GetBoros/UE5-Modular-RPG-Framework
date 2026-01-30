@@ -6,7 +6,7 @@
 
 #include <TLG_Enemy.generated.h>
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class TLGAME_API ATLG_Enemy : public ACharacter
+UCLASS() class TLGAME_API ATLG_Enemy : public ACharacter  // !!! TEMP Delete
 {
     GENERATED_BODY()
 

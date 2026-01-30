@@ -50,6 +50,10 @@ void ATLG_Player_Controller::BeginPlay()
     // 3.0. Actions
     Move_To_Location(TLG_Data_Location_Start);
 
+    // 3.1. Set input mode
+    bShowMouseCursor = true;
+    SetInputMode(FInputModeUIOnly() );
+
     // 4.0. Blueprint logic
     Super::BeginPlay();
 }
@@ -131,9 +135,6 @@ void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
 
         if (UTexture2D *texture_portrait = TLG_Data_Enemy_Current->Get_Portrait_By_Tag(dialogue_node_next->Tag_Portrait) )  // Set enemy portrait if have  in data
             TLG_HUD->Set_Image_Texture_Portrait(texture_portrait);
-
-        bShowMouseCursor = true;
-        SetInputMode(FInputModeUIOnly() );
     }
     else
     {

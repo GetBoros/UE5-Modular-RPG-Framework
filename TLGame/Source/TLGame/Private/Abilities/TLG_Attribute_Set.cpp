@@ -36,7 +36,7 @@ void UTLG_Attribute_Set::PostGameplayEffectExecute(const FGameplayEffectModCallb
 
     if (data.EvaluatedData.Attribute == GetSanityAttribute() )
     {
-        float current_sanity = GetSanity();
+        const float current_sanity = GetSanity();
 
         if (current_sanity <= 0.0f)
         {
