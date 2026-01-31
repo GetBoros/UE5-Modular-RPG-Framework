@@ -2,6 +2,7 @@
 #include <System/TLG_Player_Controller.h>
 #include <System/TLG_Player_State.h>
 #include <System/TLG_HUD.h>
+#include <System/TLG_Game_State.h>
 
 #include <Data/TLG_Data_Enemy.h>
 #include <Abilities/TLG_Attribute_Set.h>
@@ -100,7 +101,8 @@ void ATLG_Player_Controller::Move_To_Location(UTLG_Data_Location *tlg_data_locat
     float enemy_encounter_chance;
     USoundBase *sound_base;
     UTexture2D *texture2d_background;
-    
+    ATLG_Game_State *tlg_game_state;
+
     TLG_Data_Location_Current = tlg_data_location;
     enemy_encounter_chance = tlg_data_location->Enemy_Encounter_Chance;
     texture2d_background = tlg_data_location->Texture2D_Background_Image;
@@ -123,6 +125,11 @@ void ATLG_Player_Controller::Move_To_Location(UTLG_Data_Location *tlg_data_locat
 
     // 4.0. Buttons
     TLG_HUD->Update_Navigation_Buttons(tlg_data_location->TLG_Location_Exits);
+
+    // 5.0.
+    tlg_game_state = GetWorld()->GetGameState<ATLG_Game_State>();
+    if (tlg_game_state != 0)
+        tlg_game_state->Advance_Time(5);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)

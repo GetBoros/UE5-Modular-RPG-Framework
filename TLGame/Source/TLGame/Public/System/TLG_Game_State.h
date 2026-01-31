@@ -14,8 +14,9 @@ UCLASS() class TLGAME_API ATLG_Game_State : public AGameStateBase
 public:
     ATLG_Game_State();
 
+    void Advance_Time(int32 minutes_to_add);
+
 private:
-    UFUNCTION(BlueprintCallable) void Advance_Time(int32 minutes_to_add);
     UFUNCTION(BlueprintPure) void Get_Current_Time(int32& hours, int32& minutes) const;
     
     UPROPERTY(BlueprintAssignable) FOn_Time_Updated On_Time_Updated;
