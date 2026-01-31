@@ -16,10 +16,11 @@ public:
 
     void Advance_Time(int32 minutes_to_add);
 
-private:
-    UFUNCTION(BlueprintPure) void Get_Current_Time(int32& hours, int32& minutes) const;
-    
     UPROPERTY(BlueprintAssignable) FOn_Time_Updated On_Time_Updated;
+
+private:
+    UFUNCTION(BlueprintPure) void Get_Current_Time(int32 &hours, int32 &minutes) const;
+    
     UPROPERTY(VisibleAnywhere) int32 Current_Time_Minutes;
     UPROPERTY(EditDefaultsOnly) int32 Max_Time_Minutes = 1440;
 };

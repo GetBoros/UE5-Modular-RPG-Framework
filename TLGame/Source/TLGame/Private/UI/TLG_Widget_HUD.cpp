@@ -7,10 +7,12 @@
 #include <UI/TLG_Widget_Portrait.h>
 #include <System/TLG_Player_State.h>
 #include <Abilities/TLG_Attribute_Set.h>
+#include <System/TLG_Game_State.h>
 #include <Data/TLG_Data_Location.h>
 
 #include <AbilitySystemComponent.h>
 #include <Components/Image.h>
+#include <Components/TextBlock.h>
 #include <Components/VerticalBox.h>
 //------------------------------------------------------------------------------------------------------------
 
@@ -25,6 +27,12 @@ void UTLG_Widget_HUD::NativeConstruct()
     ensureMsgf(TLG_Widget_Text_Floating, TEXT("Floating Text Class not setting up") );
     ensureMsgf(TLG_Widget_Controller_Class, TEXT("Is Empty") );
     ensureMsgf(TLG_Widget_Button_Navigation_Class, TEXT("Is Empty") );
+    
+    ATLG_Game_State* tlg_game_state;
+
+    tlg_game_state = GetWorld()->GetGameState<ATLG_Game_State>();
+    if (tlg_game_state != 0)
+        tlg_game_state->On_Time_Updated.AddDynamic(this, &UTLG_Widget_HUD::On_Time_Updated_Callback);
 
     Init_Widget_Controller();
 }
@@ -152,5 +160,12 @@ void UTLG_Widget_HUD::On_Changed_Callback_Dominance(float new_value, float delta
 
     if (FMath::IsNearlyZero(delta) != true)
         Spawn_Text_Floating(delta, FText::FromString("Dominance") );
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::On_Time_Updated_Callback(int32 hours, int32 minutes)
+{
+    FString time_str = FString::Printf(TEXT("%02d:%02d"), hours, minutes);
+
+    Text_Clock->SetText(FText::FromString(time_str) );
 }
 //------------------------------------------------------------------------------------------------------------

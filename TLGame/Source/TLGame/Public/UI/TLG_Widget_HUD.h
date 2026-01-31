@@ -12,6 +12,7 @@ class UTLG_Widget_Controller;
 class UTLG_Widget_Button_Navigation;
 class UTLG_Widget_Text_Floating;
 class UGBC_Attribute_Info;
+class UTextBlock;
 class UImage;
 class UVerticalBox;
 struct FTLG_Location_Exit;
@@ -41,6 +42,7 @@ private:
 
     UFUNCTION() void On_Changed_Callback_Sanity(float new_value, float delta);
     UFUNCTION() void On_Changed_Callback_Dominance(float new_value, float delta);
+    UFUNCTION() void On_Time_Updated_Callback(int32 hours, int32 minutes);
 
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UImage> Image_Background;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UVerticalBox> VB_Text_Floating_Events;
@@ -48,7 +50,7 @@ private:
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Dialogue> TLG_Widget_Dialogue;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Portrait> TLG_Widget_Portrait_Hero;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Portrait> TLG_Widget_Portrait_Enemy;
-
+    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_Clock;
 
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Controller> TLG_Widget_Controller_Class;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Text_Floating> TLG_Widget_Text_Floating;

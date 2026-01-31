@@ -129,7 +129,7 @@ void ATLG_Player_Controller::Move_To_Location(UTLG_Data_Location *tlg_data_locat
     // 5.0.
     tlg_game_state = GetWorld()->GetGameState<ATLG_Game_State>();
     if (tlg_game_state != 0)
-        tlg_game_state->Advance_Time(5);
+        tlg_game_state->Advance_Time(5); 
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
