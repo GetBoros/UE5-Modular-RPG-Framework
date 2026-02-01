@@ -42,7 +42,7 @@ private:
 
     UFUNCTION() void On_Changed_Callback_Sanity(float new_value, float delta);
     UFUNCTION() void On_Changed_Callback_Dominance(float new_value, float delta);
-    UFUNCTION() void On_Time_Updated_Callback(int32 hours, int32 minutes);
+    UFUNCTION() void On_Changed_Callback_Time_Game(int32 hours, int32 minutes);
 
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UImage> Image_Background;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UVerticalBox> VB_Text_Floating_Events;

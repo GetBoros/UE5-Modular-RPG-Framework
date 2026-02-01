@@ -21,6 +21,7 @@ USTRUCT(BlueprintType) struct FController_Widget_Params
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UAbilitySystemComponent> Ability_System_Component = 0;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UAttributeSet> Attribute_Set = 0;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<UGBC_Attribute_Info> Attribute_Info = 0;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TObjectPtr<AGameStateBase> Game_State_Base = 0;
 };
 //------------------------------------------------------------------------------------------------------------
 UCLASS(Blueprintable, BlueprintType) class GBUI_CORE_API UGBUIC_Widget_Controller : public UObject  // !!! Platinum Standart
@@ -38,6 +39,7 @@ public:
     UPROPERTY(BlueprintReadOnly, Category = "WidgetController") TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
     UPROPERTY(BlueprintReadOnly, Category = "WidgetController") TObjectPtr<UAttributeSet> Attribute_Set;
     UPROPERTY(BlueprintReadOnly, Category = "WidgetController") TObjectPtr<UGBC_Attribute_Info> Attribute_Info;
-    
+    UPROPERTY(BlueprintReadOnly, Category = "WidgetController") TObjectPtr<AGameStateBase> Game_State_Base;
+
 };
 //------------------------------------------------------------------------------------------------------------

@@ -1,5 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <UI/TLG_Widget_Controller.h>
+#include <System/TLG_Game_State.h>
+
 #include <Abilities/TLG_Attribute_Set.h>
 #include <AbilitySystemComponent.h>
 //------------------------------------------------------------------------------------------------------------
@@ -24,16 +26,22 @@ void UTLG_Widget_Controller::Broadcast_Initial_Values()
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Bind_Callbacks_To_Dependencies()
 {
-    UTLG_Attribute_Set *tlg_attribute_set = Get_TLG_Attribute_Set();
-
+    ATLG_Game_State *tlg_game_state;
+    UTLG_Attribute_Set* tlg_attribute_set;
+    
+    tlg_attribute_set = Get_TLG_Attribute_Set();
     if (Ability_System_Component == 0 || tlg_attribute_set == 0)
         return;
 
     Ability_System_Component->GetGameplayAttributeValueChangeDelegate(tlg_attribute_set->GetSanityAttribute() ).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Sanity);
     Ability_System_Component->GetGameplayAttributeValueChangeDelegate(tlg_attribute_set->GetDominanceAttribute() ).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Dominance);
 
-    if (Attribute_Info != 0)  // Нашли инфу про Sanity (иконку, название) // Можем отправить эту инфу в UI, если нужно обновить иконку динамически
+    if (Attribute_Info != 0)
         FGBC_Attribute_Info_Item SanityInfo = Attribute_Info->Find_Attribute_Info_By_Tag(FGameplayTag::RequestGameplayTag("Attribute.Player.Sanity") );
+
+    tlg_game_state = Cast<ATLG_Game_State>(Game_State_Base);
+    if (tlg_game_state != 0)
+        tlg_game_state->On_Time_Updated.AddDynamic(this, &UTLG_Widget_Controller::Handle_Changed_Time_Game);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Handle_Changed_Sanity(const FOnAttributeChangeData &attribute_change_data)
@@ -60,6 +68,11 @@ void UTLG_Widget_Controller::Handle_Changed_Dominance(const FOnAttributeChangeDa
     Prev_Dominance = current;
 
     On_Changed_Dominance.Broadcast(current, delta);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Controller::Handle_Changed_Time_Game(int32 hours, int32 minutes)
+{
+    On_Changed_Time_Game.Broadcast(hours, minutes);
 }
 //------------------------------------------------------------------------------------------------------------
 UTLG_Attribute_Set *UTLG_Widget_Controller::Get_TLG_Attribute_Set() const

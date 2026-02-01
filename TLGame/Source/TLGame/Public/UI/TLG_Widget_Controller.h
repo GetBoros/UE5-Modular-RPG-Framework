@@ -6,6 +6,7 @@
 #include <TLG_Widget_Controller.generated.h>
 //------------------------------------------------------------------------------------------------------------
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOn_Attribute_Changed_Signature, float, new_value, float, delta);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOn_Time_Updated_Signature, int32, hours, int32, minutes);
 //------------------------------------------------------------------------------------------------------------
 class UTLG_Attribute_Set;
 //------------------------------------------------------------------------------------------------------------
@@ -19,6 +20,7 @@ public:
 
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Sanity;
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Dominance;
+    UPROPERTY(BlueprintAssignable) FOn_Time_Updated_Signature On_Changed_Time_Game;
 
 private:
     void Handle_Changed_Sanity(const FOnAttributeChangeData &attribute_change_data);
@@ -28,6 +30,8 @@ private:
 
     float Prev_Sanity = -1.0f;
     float Prev_Dominance = -1.0f;
+
+    UFUNCTION() void Handle_Changed_Time_Game(int32 hours, int32 minutes);
 
 };
 //------------------------------------------------------------------------------------------------------------

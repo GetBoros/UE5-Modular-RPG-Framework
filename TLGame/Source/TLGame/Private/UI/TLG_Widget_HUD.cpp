@@ -24,16 +24,13 @@ void UTLG_Widget_HUD::NativeConstruct()
 {
     Super::NativeConstruct();
 
-    ensureMsgf(TLG_Widget_Text_Floating, TEXT("Floating Text Class not setting up") );
-    ensureMsgf(TLG_Widget_Controller_Class, TEXT("Is Empty") );
-    ensureMsgf(TLG_Widget_Button_Navigation_Class, TEXT("Is Empty") );
+    if (ensureMsgf(TLG_Widget_Text_Floating, TEXT("Floating Text Class not setting up") ) != true)
+        return;
+    if (ensureMsgf(TLG_Widget_Controller_Class, TEXT("Is Empty") ) != true)
+        return;
+    if (ensureMsgf(TLG_Widget_Button_Navigation_Class, TEXT("Is Empty") ) != true)
+        return;
     
-    ATLG_Game_State* tlg_game_state;
-
-    tlg_game_state = GetWorld()->GetGameState<ATLG_Game_State>();
-    if (tlg_game_state != 0)
-        tlg_game_state->On_Time_Updated.AddDynamic(this, &UTLG_Widget_HUD::On_Time_Updated_Callback);
-
     Init_Widget_Controller();
 }
 //------------------------------------------------------------------------------------------------------------
@@ -117,6 +114,7 @@ void UTLG_Widget_HUD::Init_Widget_Controller()
     controller_widget_params.Ability_System_Component = ability_system_component;
     controller_widget_params.Attribute_Set = tlg_attribute_set;
     controller_widget_params.Attribute_Info = GBC_Attribute_Info;
+    controller_widget_params.Game_State_Base = GetWorld()->GetGameState();
     
 	// 2.0. Create and initialize tlg widget controller
     TLG_Widget_Controller = NewObject<UTLG_Widget_Controller>(this, TLG_Widget_Controller_Class);
@@ -124,7 +122,8 @@ void UTLG_Widget_HUD::Init_Widget_Controller()
     
     TLG_Widget_Controller->On_Changed_Sanity.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Sanity);
     TLG_Widget_Controller->On_Changed_Dominance.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Dominance);
-    
+    TLG_Widget_Controller->On_Changed_Time_Game.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Time_Game);
+
     TLG_Widget_Controller->Bind_Callbacks_To_Dependencies();
     TLG_Widget_Controller->Broadcast_Initial_Values();
 }
@@ -162,7 +161,7 @@ void UTLG_Widget_HUD::On_Changed_Callback_Dominance(float new_value, float delta
         Spawn_Text_Floating(delta, FText::FromString("Dominance") );
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::On_Time_Updated_Callback(int32 hours, int32 minutes)
+void UTLG_Widget_HUD::On_Changed_Callback_Time_Game(int32 hours, int32 minutes)
 {
     FString time_str = FString::Printf(TEXT("%02d:%02d"), hours, minutes);
 
