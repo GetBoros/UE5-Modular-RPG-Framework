@@ -23,10 +23,11 @@ USTRUCT(BlueprintType) struct FTLG_Location_Action
 {
     GENERATED_BODY()
 
-    UPROPERTY(EditAnywhere, BlueprintReadOnly) FText Action_Name;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly) FText Text_Button;
     UPROPERTY(EditAnywhere, BlueprintReadOnly) int32 Time_Cost_Minutes = 15;
-    UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTag Action_Tag;
-    UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTagContainer Required_Tags;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTag Gameplay_Tag_Action;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTagContainer Gameplay_Tag_Action_Required;
+
 };
 //------------------------------------------------------------------------------------------------------------
 UCLASS(BlueprintType) class TLGAME_API UTLG_Data_Location : public UPrimaryDataAsset
@@ -41,5 +42,7 @@ public:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TObjectPtr<UTexture2D> Texture2D_Background_Image;
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TObjectPtr<USoundBase> SoundBase_Ambient;
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TArray<FTLG_Location_Exit> TLG_Location_Exits;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TArray<FTLG_Location_Action> TLG_Location_Action;
+
 };
 //------------------------------------------------------------------------------------------------------------

@@ -36,9 +36,14 @@ void ATLG_HUD::Set_Image_Texture_Background(UTexture2D *texture2d)
     Get_TLG_Widget_HUD()->Set_Image_Texture_Background(texture2d);
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_HUD::Update_Navigation_Buttons(const TArray<FTLG_Location_Exit> &tlg_location_exits)
+void ATLG_HUD::Update_Buttons_Navigation(const TArray<FTLG_Location_Exit> &tlg_location_exits)
 {
-    Get_TLG_Widget_HUD()->Update_Navigation_Buttons(tlg_location_exits);
+    Get_TLG_Widget_HUD()->Update_Buttons_Navigation(tlg_location_exits);
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_location_action)
+{
+     Get_TLG_Widget_HUD()->Update_Buttons_Actions(tlg_location_action);
 }
 //------------------------------------------------------------------------------------------------------------
 UTLG_Widget_HUD *ATLG_HUD::Get_TLG_Widget_HUD()

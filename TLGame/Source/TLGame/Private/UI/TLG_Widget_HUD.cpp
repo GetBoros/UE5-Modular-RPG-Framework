@@ -59,7 +59,7 @@ void UTLG_Widget_HUD::Set_Image_Texture_Portrait(UTexture2D *image_portrait_text
     TLG_Widget_Portrait_Enemy->Set_Image_Portrait_Texture(image_portrait_texture);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Update_Navigation_Buttons(const TArray<FTLG_Location_Exit> &tlg_location_exits)
+void UTLG_Widget_HUD::Update_Buttons_Navigation(const TArray<FTLG_Location_Exit> &tlg_location_exits)
 {
     UUserWidget *user_widget;
     UTLG_Widget_Button_Navigation *tlg_widget_button_navigation;
@@ -77,6 +77,11 @@ void UTLG_Widget_HUD::Update_Navigation_Buttons(const TArray<FTLG_Location_Exit>
             VB_Button_Navigation->AddChild(tlg_widget_button_navigation);
         }
     }
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_location_action)
+{
+	// !!! TEMP TODO same as Update_Buttons_Navigation
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Updated_Temp_Implementation(float sanity_curr, float sanity_max)

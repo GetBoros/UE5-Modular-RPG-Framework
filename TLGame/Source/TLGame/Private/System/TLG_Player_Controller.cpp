@@ -123,13 +123,15 @@ void ATLG_Player_Controller::Move_To_Location(UTLG_Data_Location *tlg_data_locat
     else
         TLG_HUD->Dialogue_Hide();
 
-    // 4.0. Buttons
-    TLG_HUD->Update_Navigation_Buttons(tlg_data_location->TLG_Location_Exits);
+    // 4.0. Buttons Location and Actions
+    TLG_HUD->Update_Buttons_Navigation(tlg_data_location->TLG_Location_Exits);
+    TLG_HUD->Update_Buttons_Actions(tlg_data_location->TLG_Location_Action);
 
     // 5.0.
     tlg_game_state = GetWorld()->GetGameState<ATLG_Game_State>();
     if (tlg_game_state != 0)
         tlg_game_state->Advance_Time(5); 
+
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
