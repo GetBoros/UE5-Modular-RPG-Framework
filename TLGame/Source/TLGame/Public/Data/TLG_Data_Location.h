@@ -19,6 +19,16 @@ USTRUCT(BlueprintType) struct FTLG_Location_Exit
 
 };
 //------------------------------------------------------------------------------------------------------------
+USTRUCT(BlueprintType) struct FTLG_Location_Action
+{
+    GENERATED_BODY()
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly) FText Action_Name;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly) int32 Time_Cost_Minutes = 15;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTag Action_Tag;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTagContainer Required_Tags;
+};
+//------------------------------------------------------------------------------------------------------------
 UCLASS(BlueprintType) class TLGAME_API UTLG_Data_Location : public UPrimaryDataAsset
 {
     GENERATED_BODY()
