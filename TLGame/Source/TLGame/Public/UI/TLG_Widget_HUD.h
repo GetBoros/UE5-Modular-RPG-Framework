@@ -49,6 +49,7 @@ private:
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UImage> Image_Background;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UVerticalBox> VB_Text_Floating_Events;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UVerticalBox> VB_Button_Navigation;
+    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UVerticalBox> VB_Button_Actions;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Dialogue> TLG_Widget_Dialogue;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Portrait> TLG_Widget_Portrait_Hero;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Portrait> TLG_Widget_Portrait_Enemy;

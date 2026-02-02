@@ -7,7 +7,6 @@
 #include <UI/TLG_Widget_Portrait.h>
 #include <System/TLG_Player_State.h>
 #include <Abilities/TLG_Attribute_Set.h>
-#include <System/TLG_Game_State.h>
 #include <Data/TLG_Data_Location.h>
 
 #include <AbilitySystemComponent.h>
@@ -61,15 +60,13 @@ void UTLG_Widget_HUD::Set_Image_Texture_Portrait(UTexture2D *image_portrait_text
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Update_Buttons_Navigation(const TArray<FTLG_Location_Exit> &tlg_location_exits)
 {
-    UUserWidget *user_widget;
     UTLG_Widget_Button_Navigation *tlg_widget_button_navigation;
     
     VB_Button_Navigation->ClearChildren();
 
     for (const FTLG_Location_Exit &location_exit: tlg_location_exits)
     {
-        user_widget = CreateWidget<UUserWidget>(this, TLG_Widget_Button_Navigation_Class);
-        tlg_widget_button_navigation = Cast<UTLG_Widget_Button_Navigation>(user_widget);
+        tlg_widget_button_navigation = CreateWidget<UTLG_Widget_Button_Navigation>(this, TLG_Widget_Button_Navigation_Class);
         if (tlg_widget_button_navigation != 0)
         {
             tlg_widget_button_navigation->Init(location_exit);
@@ -81,7 +78,21 @@ void UTLG_Widget_HUD::Update_Buttons_Navigation(const TArray<FTLG_Location_Exit>
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_location_action)
 {
-	// !!! TEMP TODO same as Update_Buttons_Navigation
+    UTLG_Widget_Button_Navigation* tlg_widget_button_navigation;
+
+    VB_Button_Actions->ClearChildren();
+
+    for (const FTLG_Location_Action &location_action : tlg_location_action)
+    {
+        tlg_widget_button_navigation = CreateWidget<UTLG_Widget_Button_Navigation>(this, TLG_Widget_Button_Navigation_Class);
+        if (tlg_widget_button_navigation != 0)
+        {
+            tlg_widget_button_navigation->Init_Temp(location_action);
+
+            VB_Button_Actions->AddChild(tlg_widget_button_navigation);
+        }
+    }
+
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Updated_Temp_Implementation(float sanity_curr, float sanity_max)
