@@ -3,7 +3,7 @@
 #include <UI/TLG_Widget_Dialogue.h>
 #include <UI/TLG_Widget_Controller.h>
 #include <UI/TLG_Widget_Text_Floating.h>
-#include "UI/TLG_Widget_Button_Navigation.h"
+#include "UI/TLG_Widget_Button.h"
 #include <UI/TLG_Widget_Portrait.h>
 #include <System/TLG_Player_State.h>
 #include <Abilities/TLG_Attribute_Set.h>

@@ -4,7 +4,7 @@
 #include <Blueprint/UserWidget.h>
 #include <Data/TLG_Data_Location.h>
 
-#include <TLG_Widget_Button_Navigation.generated.h>
+#include <TLG_Widget_Button.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class UButton;
 class UTextBlock;
