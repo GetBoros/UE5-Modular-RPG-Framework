@@ -14,9 +14,6 @@ void UTLG_Widget_Button_Navigation::NativeConstruct()
 {
     Super::NativeConstruct();
 
-    if (Button_Click == 0)
-        return;
- 
     Button_Click->OnClicked.RemoveDynamic(this, &UTLG_Widget_Button_Navigation::Handle_Click);
     Button_Click->OnClicked.AddDynamic(this, &UTLG_Widget_Button_Navigation::Handle_Click);
 }
@@ -86,5 +83,92 @@ void UTLG_Widget_Button_Navigation::Handle_Click()
     tlg_player_controller = Cast<ATLG_Player_Controller>(player_controller);
     if (tlg_player_controller != 0)
         tlg_player_controller->Move_To_Location(Target_Location);
+}
+//------------------------------------------------------------------------------------------------------------
+
+
+
+
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Button::NativeConstruct()
+{
+    Super::NativeConstruct();
+
+    if (Button_Click != 0)
+    {
+        Button_Click->OnClicked.RemoveDynamic(this, &UTLG_Widget_Button::Handle_Click_Internal);
+        Button_Click->OnClicked.AddDynamic(this, &UTLG_Widget_Button::Handle_Click_Internal);
+    }
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Button::On_Click_Action()
+{
+    // Базовая реализация пустая (или лог)
+    UE_LOG(LogTemp, Warning, TEXT("Base Button Clicked - No Logic Implemented") );
+
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Button::Handle_Click_Internal()
+{
+    On_Click_Action();
+
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Button::Set_Button_Text(const FText& text)
+{
+    if (TB_Location_Name != 0)
+    {
+        TB_Location_Name->SetText(text);
+    }
+}
+//------------------------------------------------------------------------------------------------------------
+
+
+
+
+// UTLG_Widget_Button_Action
+void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action& action_data)
+{
+    Action_Tag = action_data.Gameplay_Tag_Action;
+    Time_Cost_Minutes = action_data.Time_Cost_Minutes;
+
+    FText time_text = Format_Time_From_Minutes(Time_Cost_Minutes);
+    FText final_text = FText::Format(FText::FromString("{0} ({1})"), action_data.Text_Button, time_text);
+
+    Set_Button_Text(final_text);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Button_Action::On_Click_Action()
+{
+    // Тут мы вызываем метод контроллера для действий
+    APlayerController* pc = GetOwningPlayer();
+    if (pc == 0)
+        return;
+
+    ATLG_Player_Controller* tlg_pc = Cast<ATLG_Player_Controller>(pc);
+    if (tlg_pc != 0)
+    {
+        int yy = 0;
+        // Тебе нужно будет создать этот метод в контроллере!
+        //tlg_pc->Execute_Action(Action_Tag, Time_Cost_Minutes);
+    }
+}
+//------------------------------------------------------------------------------------------------------------
+FText UTLG_Widget_Button_Action::Format_Time_From_Minutes(int32 minutes_cost) const
+{
+    const int32 minutes_in_month = 43200;
+    const int32 minutes_in_hour = 60;
+    const int32 minutes_in_day = 1440;
+
+    if (minutes_cost >= minutes_in_month && (minutes_cost % minutes_in_month == 0))
+        return FText::Format(FText::FromString("{0}mon"), FText::AsNumber(minutes_cost / minutes_in_month));
+
+    if (minutes_cost >= minutes_in_day && (minutes_cost % minutes_in_day == 0))
+        return FText::Format(FText::FromString("{0}d"), FText::AsNumber(minutes_cost / minutes_in_day));
+
+    if (minutes_cost >= minutes_in_hour && (minutes_cost % minutes_in_hour == 0))
+        return FText::Format(FText::FromString("{0}h"), FText::AsNumber(minutes_cost / minutes_in_hour));
+
+    return FText::Format(FText::FromString("{0}min"), FText::AsNumber(minutes_cost));
 }
 //------------------------------------------------------------------------------------------------------------
