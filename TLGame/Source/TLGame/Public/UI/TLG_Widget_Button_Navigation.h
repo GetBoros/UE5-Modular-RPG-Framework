@@ -18,11 +18,13 @@ public:
     virtual void NativeConstruct();
 
     void Init(const FTLG_Location_Exit &tlg_location_exit);
-    void Init_Temp(const FTLG_Location_Action &tlg_location_action);
+    void Init(const FTLG_Location_Action &tlg_location_action);
 
 private:
     FText Format_Time_From_Minutes(int32 minutes_cost) const;
 
+    FGameplayTag Gameplay_Tag_Action;
+    
     UFUNCTION() void Handle_Click();
     
     UPROPERTY() TObjectPtr<UTLG_Data_Location> Target_Location;

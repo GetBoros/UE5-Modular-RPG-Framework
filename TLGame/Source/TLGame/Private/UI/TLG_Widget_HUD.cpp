@@ -87,12 +87,11 @@ void UTLG_Widget_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> 
         tlg_widget_button_navigation = CreateWidget<UTLG_Widget_Button_Navigation>(this, TLG_Widget_Button_Navigation_Class);
         if (tlg_widget_button_navigation != 0)
         {
-            tlg_widget_button_navigation->Init_Temp(location_action);
+            tlg_widget_button_navigation->Init(location_action);
 
             VB_Button_Actions->AddChild(tlg_widget_button_navigation);
         }
     }
-
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Updated_Temp_Implementation(float sanity_curr, float sanity_max)

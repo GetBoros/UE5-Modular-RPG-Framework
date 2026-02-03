@@ -32,13 +32,15 @@ void UTLG_Widget_Button_Navigation::Init(const FTLG_Location_Exit &exit_data)
         TB_Loction_Name->SetText(text_button);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Button_Navigation::Init_Temp(const FTLG_Location_Action &tlg_location_action)
+void UTLG_Widget_Button_Navigation::Init(const FTLG_Location_Action &tlg_location_action)
 {
     const int time_cost_minutes = tlg_location_action.Time_Cost_Minutes;
     const FText text_button = tlg_location_action.Text_Button;
     const FText text_format_pattern = FText::FromString("{0} ({1})");
     const FText text_time = Format_Time_From_Minutes(time_cost_minutes);
     const FText text_final = FText::Format(text_format_pattern, text_button, text_time);
+
+    Gameplay_Tag_Action = tlg_location_action.Gameplay_Tag_Action;
 
     if (text_button.IsEmpty() == true)
         TB_Loction_Name->SetText(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA") ) );
@@ -68,6 +70,11 @@ void UTLG_Widget_Button_Navigation::Handle_Click()
 {
     ATLG_Player_Controller *tlg_player_controller;
     APlayerController *player_controller;
+
+    if (Gameplay_Tag_Action.MatchesTag(FGameplayTag::RequestGameplayTag(TEXT("Test.StateTree.Tag3") ) ) )  // 
+    {
+        int yy = 0;
+    }
 
     if (Target_Location == 0)
         return;
