@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <GameFramework/PlayerController.h>
 
+#include <Interfaces/TLG_Interaction_Interface.h>
 #include <Data/TLG_Types.h>
 #include <Data/TLG_Data_Location.h>
 
@@ -13,15 +14,16 @@ class ATLG_Player_State;
 class UTLG_Data_Enemy;
 class UAbilitySystemComponent;
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class TLGAME_API ATLG_Player_Controller : public APlayerController
+UCLASS() class TLGAME_API ATLG_Player_Controller : public APlayerController, public ITLG_Interaction_Interface
 {
     GENERATED_BODY()
 
 public:
     virtual void BeginPlay();
+    virtual void Execute_Move_To_Location(UTLG_Data_Location *tlg_data_location);
+    virtual void Execute_Action(FGameplayTag gameplay_tag_action, int32 time_cost);
 
     void Handle_Player_Decision(const FPlayer_Response &player_response);  // Call UI when player press button
-    void Move_To_Location(UTLG_Data_Location *tlg_data_location);
 
 private:
     void Dialogue_Start(const FName &row_id);

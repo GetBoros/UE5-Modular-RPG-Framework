@@ -49,7 +49,7 @@ void ATLG_Player_Controller::BeginPlay()
         return;
 
     // 3.0. Actions
-    Move_To_Location(TLG_Data_Location_Start);
+    Execute_Move_To_Location(TLG_Data_Location_Start);
 
     // 3.1. Set input mode
     bShowMouseCursor = true;
@@ -95,7 +95,44 @@ void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &play
         Dialogue_End();
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Move_To_Location(UTLG_Data_Location *tlg_data_location)
+void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
+{
+    static const FString context(TEXT("Dialogue Context") );
+
+    if (const FDialogue_Node *dialogue_node_next = Dialogue_Data_Table->FindRow<FDialogue_Node>(row_id, context, true) )  // Find node by row id
+    {
+        TLG_HUD->Dialogue_Node_Show(*dialogue_node_next);  // Send data to Dialogue UI
+
+        if (UTexture2D *texture_portrait = TLG_Data_Enemy_Current->Get_Portrait_By_Tag(dialogue_node_next->Tag_Portrait) )  // Set enemy portrait if have  in data
+            TLG_HUD->Set_Image_Texture_Portrait(texture_portrait);
+    }
+    else
+    {
+        Dialogue_End();
+    }
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Dialogue_End()
+{
+    TLG_HUD->Dialogue_Hide();
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Apply_Response_Effects(const FGameplayTagContainer &gameplay_tag_container)
+{
+    Ability_System_Component->AddLooseGameplayTags(gameplay_tag_container);  // !!! TEMP Add tags to player, in future split logic and for enemies
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Play_Ambient_Sound(USoundBase *sound_base_to_play)
+{
+    if (Audio_Component_Ambient->Sound == sound_base_to_play && Audio_Component_Ambient->IsPlaying() )  // if already play return
+        return;
+
+    Audio_Component_Ambient->Stop();
+    Audio_Component_Ambient->SetSound(sound_base_to_play);
+    Audio_Component_Ambient->Play();
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Execute_Move_To_Location(UTLG_Data_Location *tlg_data_location)
 {
     float roll;
     float enemy_encounter_chance;
@@ -134,40 +171,8 @@ void ATLG_Player_Controller::Move_To_Location(UTLG_Data_Location *tlg_data_locat
 
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
+void ATLG_Player_Controller::Execute_Action(FGameplayTag gameplay_tag_action, int32 time_cost)
 {
-    static const FString context(TEXT("Dialogue Context") );
-
-    if (const FDialogue_Node *dialogue_node_next = Dialogue_Data_Table->FindRow<FDialogue_Node>(row_id, context, true) )  // Find node by row id
-    {
-        TLG_HUD->Dialogue_Node_Show(*dialogue_node_next);  // Send data to Dialogue UI
-
-        if (UTexture2D *texture_portrait = TLG_Data_Enemy_Current->Get_Portrait_By_Tag(dialogue_node_next->Tag_Portrait) )  // Set enemy portrait if have  in data
-            TLG_HUD->Set_Image_Texture_Portrait(texture_portrait);
-    }
-    else
-    {
-        Dialogue_End();
-    }
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Dialogue_End()
-{
-    TLG_HUD->Dialogue_Hide();
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Apply_Response_Effects(const FGameplayTagContainer &gameplay_tag_container)
-{
-    Ability_System_Component->AddLooseGameplayTags(gameplay_tag_container);  // !!! TEMP Add tags to player, in future split logic and for enemies
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Play_Ambient_Sound(USoundBase *sound_base_to_play)
-{
-    if (Audio_Component_Ambient->Sound == sound_base_to_play && Audio_Component_Ambient->IsPlaying() )  // if already play return
-        return;
-
-    Audio_Component_Ambient->Stop();
-    Audio_Component_Ambient->SetSound(sound_base_to_play);
-    Audio_Component_Ambient->Play();
+    int yy = 0;  // !!! TEMP
 }
 //------------------------------------------------------------------------------------------------------------

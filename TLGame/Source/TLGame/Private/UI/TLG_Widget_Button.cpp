@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
 #include <UI/TLG_Widget_Button.h>
-#include <System/TLG_Player_Controller.h>
+#include <Interfaces/TLG_Interaction_Interface.h>
 
 #include <Components/Button.h>
 #include <Components/TextBlock.h>
@@ -52,17 +52,15 @@ void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_ac
 void UTLG_Widget_Button_Action::Handle_Click()
 {
     APlayerController *player_controller;
-    ATLG_Player_Controller *atlg_player_controller;
+    ITLG_Interaction_Interface *interaction_interface;
 
     player_controller = GetOwningPlayer();
     if (player_controller == 0)
         return;
 
-    atlg_player_controller = Cast<ATLG_Player_Controller>(player_controller);
-    if (atlg_player_controller != 0)
-    {
-        int yy = 0;  //tlg_player_controller->Execute_Action(Action_Tag, Time_Cost_Minutes);  // !!! TEMP
-    }
+    interaction_interface = Cast<ITLG_Interaction_Interface>(player_controller);
+    if (interaction_interface != 0)
+        interaction_interface->Execute_Action(Gameplay_Tag_Action, Time_Cost_Minutes);
 }
 //------------------------------------------------------------------------------------------------------------
 FText UTLG_Widget_Button_Action::Format_Time_From_Minutes(int32 minutes_cost) const
@@ -101,8 +99,8 @@ void UTLG_Widget_Button_Navigation::Init(const FTLG_Location_Exit &exit_data)
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button_Navigation::Handle_Click()
 {
-    ATLG_Player_Controller *tlg_player_controller;
     APlayerController *player_controller;
+    ITLG_Interaction_Interface *interaction_interface;
 
     if (Target_Location == 0)
         return;
@@ -111,8 +109,8 @@ void UTLG_Widget_Button_Navigation::Handle_Click()
     if (player_controller == 0)
         return;
 
-    tlg_player_controller = Cast<ATLG_Player_Controller>(player_controller);
-    if (tlg_player_controller != 0)
-        tlg_player_controller->Move_To_Location(Target_Location);
+    interaction_interface = Cast<ITLG_Interaction_Interface>(player_controller);
+    if (interaction_interface != 0)
+        interaction_interface->Execute_Move_To_Location(Target_Location);
 }
 //------------------------------------------------------------------------------------------------------------
