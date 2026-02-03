@@ -9,7 +9,7 @@
 class UTLG_Widget_Dialogue;
 class UTLG_Widget_Portrait;
 class UTLG_Widget_Controller;
-class UTLG_Widget_Button_Navigation;
+class UTLG_Widget_Button;
 class UTLG_Widget_Text_Floating;
 class UGBC_Attribute_Info;
 class UTextBlock;
@@ -57,7 +57,8 @@ private:
 
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Controller> TLG_Widget_Controller_Class;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Text_Floating> TLG_Widget_Text_Floating;
-    UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Button_Navigation> TLG_Widget_Button_Navigation_Class;
+    UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Button> TLG_Widget_Button_Action_Class;
+    UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Button> TLG_Widget_Button_Navigation_Class;
 
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UGBC_Attribute_Info> GBC_Attribute_Info;
     UPROPERTY(Transient, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Widget_Controller> TLG_Widget_Controller;

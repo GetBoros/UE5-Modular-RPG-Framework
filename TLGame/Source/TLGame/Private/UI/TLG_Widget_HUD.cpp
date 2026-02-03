@@ -27,6 +27,8 @@ void UTLG_Widget_HUD::NativeConstruct()
         return;
     if (ensureMsgf(TLG_Widget_Controller_Class, TEXT("Is Empty") ) != true)
         return;
+    if (ensureMsgf(TLG_Widget_Button_Action_Class, TEXT("Is Empty") ) != true)
+        return;
     if (ensureMsgf(TLG_Widget_Button_Navigation_Class, TEXT("Is Empty") ) != true)
         return;
     
@@ -78,18 +80,18 @@ void UTLG_Widget_HUD::Update_Buttons_Navigation(const TArray<FTLG_Location_Exit>
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_location_action)
 {
-    UTLG_Widget_Button_Navigation* tlg_widget_button_navigation;
+    UTLG_Widget_Button_Action *tlg_widget_button_action;
 
     VB_Button_Actions->ClearChildren();
 
     for (const FTLG_Location_Action &location_action : tlg_location_action)
     {
-        tlg_widget_button_navigation = CreateWidget<UTLG_Widget_Button_Navigation>(this, TLG_Widget_Button_Navigation_Class);
-        if (tlg_widget_button_navigation != 0)
+        tlg_widget_button_action = CreateWidget<UTLG_Widget_Button_Action>(this, TLG_Widget_Button_Action_Class);
+        if (tlg_widget_button_action != 0)
         {
-            tlg_widget_button_navigation->Init(location_action);
+            tlg_widget_button_action->Init(location_action);
 
-            VB_Button_Actions->AddChild(tlg_widget_button_navigation);
+            VB_Button_Actions->AddChild(tlg_widget_button_action);
         }
     }
 }
