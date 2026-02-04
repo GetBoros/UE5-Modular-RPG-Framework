@@ -18,8 +18,8 @@ class TLGAME_API ITLG_Interaction_Interface
     GENERATED_BODY()
 
 public:
-    virtual void Execute_Move_To_Location(UTLG_Data_Location *tlg_data_location) = 0;
-    virtual void Execute_Action(FGameplayTag gameplay_tag_action, int32 time_cost) = 0;
+    virtual void Location_Enter(UTLG_Data_Location *tlg_data_location) = 0;
+    virtual void Location_Action(FGameplayTag gameplay_tag_action, int32 time_cost) = 0;  // !!! TEMP
 
 };
 //------------------------------------------------------------------------------------------------------------

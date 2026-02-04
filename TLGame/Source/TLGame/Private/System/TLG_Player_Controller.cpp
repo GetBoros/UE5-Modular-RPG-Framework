@@ -22,6 +22,8 @@ void ATLG_Player_Controller::BeginPlay()
     TLG_Player_State = GetPlayerState<ATLG_Player_State>();
     if (TLG_Player_State != 0)
         Ability_System_Component = TLG_Player_State->GetAbilitySystemComponent();
+    
+    TLG_Game_State = GetWorld()->GetGameState<ATLG_Game_State>();
 
     if (Audio_Component_Ambient == 0)
     {
@@ -39,17 +41,20 @@ void ATLG_Player_Controller::BeginPlay()
     if (ensureMsgf(Ability_System_Component, TEXT("Not Implemented interface") ) != true)
         return;
 
-    if (ensureMsgf(Dialogue_Data_Table, TEXT("Skip Dialogue_Start or can be crit error") ) != true)
+    if (ensureMsgf(Dialogue_Data_Table, TEXT("Skip Location_Enter or can be crit error") ) != true)
         return;
 
-    if (ensureMsgf(TLG_Data_Enemy_Current, TEXT("Skip Dialogue_Start or can be crit error") ) != true)
+    if (ensureMsgf(TLG_Data_Enemy_Current, TEXT("Skip Location_Enter or can be crit error") ) != true)
         return;
 
-    if (ensureMsgf(TLG_Data_Location_Start, TEXT("Skip Move_To_Location or can be crit error") ) != true)
+    if (ensureMsgf(TLG_Data_Location_Start, TEXT("Skip Location_Enter or can be crit error") ) != true)
+        return;
+
+    if (ensureMsgf(TLG_Game_State, TEXT("Something whent wrong") ) != true)
         return;
 
     // 3.0. Actions
-    Execute_Move_To_Location(TLG_Data_Location_Start);
+    Location_Enter(TLG_Data_Location_Start);
 
     // 3.1. Set input mode
     bShowMouseCursor = true;
@@ -132,15 +137,16 @@ void ATLG_Player_Controller::Play_Ambient_Sound(USoundBase *sound_base_to_play)
     Audio_Component_Ambient->Play();
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Execute_Move_To_Location(UTLG_Data_Location *tlg_data_location)
+void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_location)
 {
     float roll;
     float enemy_encounter_chance;
+    int location_enter_time_cost;
     USoundBase *sound_base;
     UTexture2D *texture2d_background;
-    ATLG_Game_State *tlg_game_state;
 
     TLG_Data_Location_Current = tlg_data_location;
+    location_enter_time_cost = 5;
     enemy_encounter_chance = tlg_data_location->Enemy_Encounter_Chance;
     texture2d_background = tlg_data_location->Texture2D_Background_Image;
     sound_base = tlg_data_location->SoundBase_Ambient;
@@ -164,15 +170,13 @@ void ATLG_Player_Controller::Execute_Move_To_Location(UTLG_Data_Location *tlg_da
     TLG_HUD->Update_Buttons_Navigation(tlg_data_location->TLG_Location_Exits);
     TLG_HUD->Update_Buttons_Actions(tlg_data_location->TLG_Location_Action);
 
-    // 5.0.
-    tlg_game_state = GetWorld()->GetGameState<ATLG_Game_State>();
-    if (tlg_game_state != 0)
-        tlg_game_state->Advance_Time(5); 
+    // 5.0. Spend time when move to location
+    TLG_Game_State->Advance_Time(location_enter_time_cost);
 
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Execute_Action(FGameplayTag gameplay_tag_action, int32 time_cost)
+void ATLG_Player_Controller::Location_Action(FGameplayTag gameplay_tag_action, int32 time_cost)
 {
-    int yy = 0;  // !!! TEMP
+    TLG_Game_State->Advance_Time(time_cost);  // Spend time for interact with room action
 }
 //------------------------------------------------------------------------------------------------------------

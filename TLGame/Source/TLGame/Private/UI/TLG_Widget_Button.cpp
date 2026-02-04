@@ -42,6 +42,7 @@ void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_ac
     const FText text_final = FText::Format(text_format_pattern, text_button, text_time);
 
     Gameplay_Tag_Action = tlg_location_action.Gameplay_Tag_Action;
+    Time_Cost_Minutes = tlg_location_action.Time_Cost_Minutes;
 
     if (text_button.IsEmpty() == true)
         TB_Location_Name->SetText(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA")));
@@ -60,7 +61,7 @@ void UTLG_Widget_Button_Action::Handle_Click()
 
     interaction_interface = Cast<ITLG_Interaction_Interface>(player_controller);
     if (interaction_interface != 0)
-        interaction_interface->Execute_Action(Gameplay_Tag_Action, Time_Cost_Minutes);
+        interaction_interface->Location_Action(Gameplay_Tag_Action, Time_Cost_Minutes);
 }
 //------------------------------------------------------------------------------------------------------------
 FText UTLG_Widget_Button_Action::Format_Time_From_Minutes(int32 minutes_cost) const
@@ -111,6 +112,6 @@ void UTLG_Widget_Button_Navigation::Handle_Click()
 
     interaction_interface = Cast<ITLG_Interaction_Interface>(player_controller);
     if (interaction_interface != 0)
-        interaction_interface->Execute_Move_To_Location(Target_Location);
+        interaction_interface->Location_Enter(Target_Location);
 }
 //------------------------------------------------------------------------------------------------------------

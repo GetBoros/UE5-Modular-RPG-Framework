@@ -10,6 +10,7 @@
 #include <TLG_Player_Controller.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class ATLG_HUD;
+class ATLG_Game_State;
 class ATLG_Player_State;
 class UTLG_Data_Enemy;
 class UAbilitySystemComponent;
@@ -20,8 +21,8 @@ UCLASS() class TLGAME_API ATLG_Player_Controller : public APlayerController, pub
 
 public:
     virtual void BeginPlay();
-    virtual void Execute_Move_To_Location(UTLG_Data_Location *tlg_data_location);
-    virtual void Execute_Action(FGameplayTag gameplay_tag_action, int32 time_cost);
+    virtual void Location_Enter(UTLG_Data_Location *tlg_data_location);
+    virtual void Location_Action(FGameplayTag gameplay_tag_action, int32 time_cost);
 
     void Handle_Player_Decision(const FPlayer_Response &player_response);  // Call UI when player press button
 
@@ -43,6 +44,8 @@ private:
 
     UPROPERTY(VisibleAnywhere) TObjectPtr<UTLG_Data_Location> TLG_Data_Location_Current;
     UPROPERTY(VisibleAnywhere) TObjectPtr<UAudioComponent> Audio_Component_Ambient;
+    
+    UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true") ) TObjectPtr<ATLG_Game_State> TLG_Game_State;
 
 };
 //------------------------------------------------------------------------------------------------------------
