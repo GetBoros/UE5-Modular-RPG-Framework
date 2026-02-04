@@ -6,25 +6,27 @@
 struct FTLG_Data_Gameplay_Tags
 {
 public:
+    static void Initialize_Native_Tags();
+    
     static const FTLG_Data_Gameplay_Tags &Get();
 
-    static void Initialize_Native_Tags();
-
     // Portrait Tags
-     FGameplayTag Portrait_Happy;
+    FGameplayTag Portrait_Happy;
+    FGameplayTag Portrait_Neutral;
+    FGameplayTag Portrait_Aggressive;
 
-    // FGameplayTag Portrait_Aggressive;
-    // FGameplayTag Portrait_Neutral;
-    // FGameplayTag Portrait_Submissive;
-    // FGameplayTag Portrait_Logical;
-    // FGameplayTag Portrait_Silent;
+    FGameplayTag Portrait_Submissive;
+    FGameplayTag Portrait_Logical;
+    FGameplayTag Portrait_Silent;
 
-    // Action Tags (для нашей новой системы действий)
+	// Location Action Gameplay Tags
+    FGameplayTag Action_System_Computer;
     FGameplayTag Action_System_Sleep;
     FGameplayTag Action_System_Save;
 
 private:
-    static FTLG_Data_Gameplay_Tags Gameplay_Tags;
+    static FTLG_Data_Gameplay_Tags TLG_Data_Gameplay_Tags;
+
 };
 //------------------------------------------------------------------------------------------------------------
 
