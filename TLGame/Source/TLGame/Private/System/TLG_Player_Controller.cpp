@@ -64,6 +64,77 @@ void ATLG_Player_Controller::BeginPlay()
     Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_location)
+{
+    float roll;
+    float enemy_encounter_chance;
+    int location_enter_time_cost;
+    USoundBase *sound_base;
+    UTexture2D *texture2d_background;
+
+    TLG_Data_Location_Current = tlg_data_location;
+    location_enter_time_cost = 5;
+    enemy_encounter_chance = tlg_data_location->Enemy_Encounter_Chance;
+    texture2d_background = tlg_data_location->Texture2D_Background_Image;
+    sound_base = tlg_data_location->SoundBase_Ambient;
+    roll = FMath::FRand();  // 2. Generate value from 0.0 to 1.0
+
+    // 1.0. Background
+    if (texture2d_background != 0)  // Update Background if have in tlg_data_location
+        TLG_HUD->Set_Image_Texture_Background(texture2d_background);
+
+    // 2.0. Music
+    if (sound_base != 0)  // Play music
+        Play_Ambient_Sound(sound_base);
+
+    // 3.0. Dialogue
+    if (roll <= enemy_encounter_chance)  // Begin dialugue if rolled
+        Dialogue_Start(FName("Intro") );
+    else
+        TLG_HUD->Dialogue_Hide();
+
+    // 4.0. Buttons Location and Actions
+    TLG_HUD->Update_Buttons_Navigation(tlg_data_location->TLG_Location_Exits);
+    TLG_HUD->Update_Buttons_Actions(tlg_data_location->TLG_Location_Action);
+
+    // 5.0. Spend time when move to location
+    TLG_Game_State->Advance_Time(location_enter_time_cost);
+
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Location_Action(const FTLG_Location_Action &tlg_location_action)
+{
+    FGameplayTag gameplay_tag_sleep;
+    FGameplayTag gameplay_tag_save;
+    FGameplayEffectContextHandle effect_handle_context;
+    FGameplayEffectSpecHandle effect_handle_spec;
+
+    gameplay_tag_sleep = FGameplayTag::RequestGameplayTag("Action.System.Sleep");  // !!! TEMP HARDCODED
+    gameplay_tag_save = FGameplayTag::RequestGameplayTag("Action.System.Save");
+    TLG_Game_State->Advance_Time(tlg_location_action.Time_Cost_Minutes);  // Spend time for interact with room action
+
+    // 1.0. Apply GE to player if have class
+	if (tlg_location_action.Gameplay_Effect_Class != 0 && Ability_System_Component != 0)
+    {
+        effect_handle_context = Ability_System_Component->MakeEffectContext();
+        effect_handle_context.AddSourceObject(this);
+        effect_handle_spec = Ability_System_Component->MakeOutgoingSpec(tlg_location_action.Gameplay_Effect_Class, 1.0f, effect_handle_context);
+        
+        if (effect_handle_spec.IsValid() )
+            Ability_System_Component->ApplyGameplayEffectSpecToSelf(*effect_handle_spec.Data.Get() );
+    }
+
+	// 2.0. Special Logic for actions by tags
+    if (tlg_location_action.Gameplay_Tag_Action.IsValid() != true)
+        return;
+
+    if (tlg_location_action.Gameplay_Tag_Action.MatchesTag(gameplay_tag_sleep) )
+        UE_LOG(LogTemp, Warning, TEXT("Special Logic: End of Day Triggered") );
+    
+    if (tlg_location_action.Gameplay_Tag_Action.MatchesTag(gameplay_tag_save) )
+        UE_LOG(LogTemp, Warning, TEXT("Special Logic: Save Game if can") );
+}
+//------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &player_response)
 {
 	const float response_cost = player_response.Response_Cost;
@@ -135,76 +206,5 @@ void ATLG_Player_Controller::Play_Ambient_Sound(USoundBase *sound_base_to_play)
     Audio_Component_Ambient->Stop();
     Audio_Component_Ambient->SetSound(sound_base_to_play);
     Audio_Component_Ambient->Play();
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_location)
-{
-    float roll;
-    float enemy_encounter_chance;
-    int location_enter_time_cost;
-    USoundBase *sound_base;
-    UTexture2D *texture2d_background;
-
-    TLG_Data_Location_Current = tlg_data_location;
-    location_enter_time_cost = 5;
-    enemy_encounter_chance = tlg_data_location->Enemy_Encounter_Chance;
-    texture2d_background = tlg_data_location->Texture2D_Background_Image;
-    sound_base = tlg_data_location->SoundBase_Ambient;
-    roll = FMath::FRand();  // 2. Generate value from 0.0 to 1.0
-
-    // 1.0. Background
-    if (texture2d_background != 0)  // Update Background if have in tlg_data_location
-        TLG_HUD->Set_Image_Texture_Background(texture2d_background);
-
-    // 2.0. Music
-    if (sound_base != 0)  // Play music
-        Play_Ambient_Sound(sound_base);
-
-    // 3.0. Dialogue
-    if (roll <= enemy_encounter_chance)  // Begin dialugue if rolled
-        Dialogue_Start(FName("Intro") );
-    else
-        TLG_HUD->Dialogue_Hide();
-
-    // 4.0. Buttons Location and Actions
-    TLG_HUD->Update_Buttons_Navigation(tlg_data_location->TLG_Location_Exits);
-    TLG_HUD->Update_Buttons_Actions(tlg_data_location->TLG_Location_Action);
-
-    // 5.0. Spend time when move to location
-    TLG_Game_State->Advance_Time(location_enter_time_cost);
-
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Location_Action(const FTLG_Location_Action &tlg_location_action)
-{
-    FGameplayTag gameplay_tag_sleep;
-    FGameplayTag gameplay_tag_save;
-    FGameplayEffectContextHandle effect_handle_context;
-    FGameplayEffectSpecHandle effect_handle_spec;
-
-    gameplay_tag_sleep = FGameplayTag::RequestGameplayTag("Action.System.Sleep");  // !!! TEMP HARDCODED
-    gameplay_tag_save = FGameplayTag::RequestGameplayTag("Action.System.Save");
-    TLG_Game_State->Advance_Time(tlg_location_action.Time_Cost_Minutes);  // Spend time for interact with room action
-
-    // 1.0. Apply GE to player if have class
-	if (tlg_location_action.Gameplay_Effect_Class != 0 && Ability_System_Component != 0)
-    {
-        effect_handle_context = Ability_System_Component->MakeEffectContext();
-        effect_handle_context.AddSourceObject(this);
-        effect_handle_spec = Ability_System_Component->MakeOutgoingSpec(tlg_location_action.Gameplay_Effect_Class, 1.0f, effect_handle_context);
-        
-        if (effect_handle_spec.IsValid() )
-            Ability_System_Component->ApplyGameplayEffectSpecToSelf(*effect_handle_spec.Data.Get() );
-    }
-
-	// 2.0. Special Logic for actions by tags
-    if (tlg_location_action.Gameplay_Tag_Action.IsValid() != true)
-        return;
-
-    if (tlg_location_action.Gameplay_Tag_Action.MatchesTag(gameplay_tag_sleep) )
-        UE_LOG(LogTemp, Warning, TEXT("Special Logic: End of Day Triggered") );
-    
-    if (tlg_location_action.Gameplay_Tag_Action.MatchesTag(gameplay_tag_save) )
-        UE_LOG(LogTemp, Warning, TEXT("Special Logic: Save Game if can") );
 }
 //------------------------------------------------------------------------------------------------------------

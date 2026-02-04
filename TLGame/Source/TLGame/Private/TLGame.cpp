@@ -1,5 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
-#include "TLGame.h"
+#include <TLGame.h>
+#include <Data/TLG_Data_Gameplay_Tags.h>
 //------------------------------------------------------------------------------------------------------------
 #define LOCTEXT_NAMESPACE "FTLGameModule"
 //------------------------------------------------------------------------------------------------------------
@@ -10,6 +11,7 @@
 // FTLGameModule
 void FTLGameModule::StartupModule()
 {
+	FTLG_Data_Gameplay_Tags::Initialize_Native_Tags();
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
 }
 //------------------------------------------------------------------------------------------------------------
