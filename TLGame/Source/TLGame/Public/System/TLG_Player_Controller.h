@@ -22,7 +22,7 @@ UCLASS() class TLGAME_API ATLG_Player_Controller : public APlayerController, pub
 public:
     virtual void BeginPlay();
     virtual void Location_Enter(UTLG_Data_Location *tlg_data_location);
-    virtual void Location_Action(FGameplayTag gameplay_tag_action, int32 time_cost);
+    virtual void Location_Action(const FTLG_Location_Action &tlg_location_action);
 
     void Handle_Player_Decision(const FPlayer_Response &player_response);  // Call UI when player press button
 

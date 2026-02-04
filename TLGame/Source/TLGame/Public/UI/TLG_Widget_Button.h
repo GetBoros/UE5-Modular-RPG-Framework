@@ -37,8 +37,7 @@ public:
 private:
     FText Format_Time_From_Minutes(int32 minutes_cost) const;  // !!! TEMP || Can be helpful
 
-    int32 Time_Cost_Minutes = 0;
-    FGameplayTag Gameplay_Tag_Action;
+    FTLG_Location_Action TLG_Location_Action;
 };
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API UTLG_Widget_Button_Navigation : public UTLG_Widget_Button

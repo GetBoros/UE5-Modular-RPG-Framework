@@ -9,6 +9,7 @@
 class UTexture2D;
 class USoundBase;
 class UDataTable;
+class UGameplayEffect;
 //------------------------------------------------------------------------------------------------------------
 USTRUCT(BlueprintType) struct FTLG_Location_Exit
 {
@@ -27,6 +28,7 @@ USTRUCT(BlueprintType) struct FTLG_Location_Action
     UPROPERTY(EditAnywhere, BlueprintReadOnly) int32 Time_Cost_Minutes = 15;
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTag Gameplay_Tag_Action;
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTagContainer Gameplay_Tag_Action_Required;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly) TSubclassOf<UGameplayEffect> Gameplay_Effect_Class;
 
 };
 //------------------------------------------------------------------------------------------------------------
