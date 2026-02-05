@@ -34,5 +34,10 @@ public:
     UPROPERTY(BlueprintReadOnly, Category = "Attributes") FGameplayAttributeData Empathy;  // EMPATHY (Corruption)
     ATTRIBUTE_ACCESSORS(UTLG_Attribute_Set, Empathy);
 
+    UPROPERTY(BlueprintReadOnly, Category = "Attributes") FGameplayAttributeData Fatigue; // 0 - good, 100 - dead
+    ATTRIBUTE_ACCESSORS(UTLG_Attribute_Set, Fatigue);
+
+    UPROPERTY(BlueprintReadOnly, Category = "Attributes") FGameplayAttributeData Fatigue_Max;
+    ATTRIBUTE_ACCESSORS(UTLG_Attribute_Set, Fatigue_Max);
 };
 //------------------------------------------------------------------------------------------------------------

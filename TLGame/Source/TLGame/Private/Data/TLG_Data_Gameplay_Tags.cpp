@@ -26,5 +26,6 @@ void FTLG_Data_Gameplay_Tags::Initialize_Native_Tags()
     TLG_Data_Gameplay_Tags.Action_System_Save = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Action.System.Save"), FString("Trigger for end of day logic") );
     TLG_Data_Gameplay_Tags.Action_System_Sleep = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Action.System.Sleep"), FString("Trigger for end of day logic") );
     TLG_Data_Gameplay_Tags.Action_System_Computer = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Action.System.Computer"), FString("Trigger for end of day logic") );
+
 }
 //------------------------------------------------------------------------------------------------------------
