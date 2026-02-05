@@ -7,6 +7,7 @@
 #include <TLG_Player_State.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class UTLG_Attribute_Set;
+class UGameplayEffect;
 class UAbilitySystemComponent;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API ATLG_Player_State : public APlayerState, public IAbilitySystemInterface
@@ -16,13 +17,17 @@ UCLASS() class TLGAME_API ATLG_Player_State : public APlayerState, public IAbili
 public:
     ATLG_Player_State();
 
+    virtual void BeginPlay();
     virtual UAbilitySystemComponent *GetAbilitySystemComponent() const;
 
     UTLG_Attribute_Set *Get_Attribute_Set() const;
 
+    UFUNCTION() void Handle_Time_Advanced(int32 hours, int32 minutess);
 private:
+
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Attribute_Set> Attribute_Set;
 
+    UPROPERTY(EditDefaultsOnly, Category = "TLG|Attributes") TSubclassOf<UGameplayEffect> GE_Fatigue_Class;
 };
 //------------------------------------------------------------------------------------------------------------
