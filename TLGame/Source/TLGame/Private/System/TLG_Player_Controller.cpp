@@ -4,6 +4,7 @@
 #include <System/TLG_HUD.h>
 #include <System/TLG_Game_State.h>
 
+#include <Data/TLG_Data_Gameplay_Tags.h>
 #include <Data/TLG_Data_Enemy.h>
 #include <Abilities/TLG_Attribute_Set.h>
 
@@ -104,35 +105,20 @@ void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_locatio
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Location_Action(const FTLG_Location_Action &tlg_location_action)
 {
-    FGameplayTag gameplay_tag_sleep;
-    FGameplayTag gameplay_tag_save;
     FGameplayEffectContextHandle effect_handle_context;
     FGameplayEffectSpecHandle effect_handle_spec;
 
-    gameplay_tag_sleep = FGameplayTag::RequestGameplayTag("Action.System.Sleep");  // !!! TEMP HARDCODED
-    gameplay_tag_save = FGameplayTag::RequestGameplayTag("Action.System.Save");
+    Ability_System_Component->AddLooseGameplayTag(tlg_location_action.Gameplay_Tag_Action);
     TLG_Game_State->Advance_Time(tlg_location_action.Time_Cost_Minutes);  // Spend time for interact with room action
-
-    // 1.0. Apply GE to player if have class
-	if (tlg_location_action.Gameplay_Effect_Class != 0 && Ability_System_Component != 0)
-    {
-        effect_handle_context = Ability_System_Component->MakeEffectContext();
-        effect_handle_context.AddSourceObject(this);
-        effect_handle_spec = Ability_System_Component->MakeOutgoingSpec(tlg_location_action.Gameplay_Effect_Class, 1.0f, effect_handle_context);
-        
-        if (effect_handle_spec.IsValid() )
-            Ability_System_Component->ApplyGameplayEffectSpecToSelf(*effect_handle_spec.Data.Get() );
-    }
-
-	// 2.0. Special Logic for actions by tags
-    if (tlg_location_action.Gameplay_Tag_Action.IsValid() != true)
-        return;
-
-    if (tlg_location_action.Gameplay_Tag_Action.MatchesTag(gameplay_tag_sleep) )
-        UE_LOG(LogTemp, Warning, TEXT("Special Logic: End of Day Triggered") );
     
-    if (tlg_location_action.Gameplay_Tag_Action.MatchesTag(gameplay_tag_save) )
-        UE_LOG(LogTemp, Warning, TEXT("Special Logic: Save Game if can") );
+    effect_handle_context = Ability_System_Component->MakeEffectContext();
+    effect_handle_context.AddSourceObject(this);
+
+    effect_handle_spec = Ability_System_Component->MakeOutgoingSpec(tlg_location_action.Gameplay_Effect_Class, 1.0f, effect_handle_context);
+    if (effect_handle_spec.IsValid() == true)
+        Ability_System_Component->ApplyGameplayEffectSpecToSelf(*effect_handle_spec.Data.Get() );
+        
+    Ability_System_Component->RemoveLooseGameplayTag(tlg_location_action.Gameplay_Tag_Action);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &player_response)

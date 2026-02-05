@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <System/TLG_Player_State.h>
 #include <System/TLG_Game_State.h>
+#include <Data/TLG_Data_Gameplay_Tags.h>
 #include <Abilities/TLG_Attribute_Set.h>
 
 #include <AbilitySystemComponent.h>
@@ -42,22 +43,32 @@ UTLG_Attribute_Set *ATLG_Player_State::Get_Attribute_Set() const
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_State::Handle_Time_Advanced(int32 hours, int32 minutes, int32 minutes_delta)
 {
+    /*
+        24 часа (Киборг)	0.069
+        16 часов (Норма)	0.104
+        12 часов (Слабый)	0.138
+        8 часов (Больной)	0.208
+    */
     constexpr float fatigue_accumulation_rate = 0.105f;  // 0.1f 16h 960min 96 Fatigue || 0.2f 8h 480min 96 fatigue
     const float fatigue_to_apply = static_cast<float>(minutes_delta) * fatigue_accumulation_rate;
     FGameplayEffectContextHandle gameplay_effect_context_handle;
     FGameplayEffectSpecHandle gameplay_effect_spec_handle;
 
-    if (Ability_System_Component == 0 || Gameplay_Effect_Fatigue_Class == 0 || minutes_delta <= 0)
+    if (Gameplay_Effect_Fatigue_Class == 0 || minutes_delta <= 0)
         return;
 
     gameplay_effect_context_handle = Ability_System_Component->MakeEffectContext();
     gameplay_effect_context_handle.AddSourceObject(this);
-    gameplay_effect_spec_handle = Ability_System_Component->MakeOutgoingSpec(Gameplay_Effect_Fatigue_Class, 1.0f, gameplay_effect_context_handle);
 
+    gameplay_effect_spec_handle = Ability_System_Component->MakeOutgoingSpec(Gameplay_Effect_Fatigue_Class, 1.0f, gameplay_effect_context_handle);
     if (gameplay_effect_spec_handle.IsValid() != true)
         return;
 
-    gameplay_effect_spec_handle.Data.Get()->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag("State.Fatigued"), fatigue_to_apply);
+    if (Ability_System_Component->HasMatchingGameplayTag(FTLG_Data_Gameplay_Tags::Get().Action_System_Sleep) == true)
+        gameplay_effect_spec_handle.Data.Get()->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag("State.Fatigued"), -fatigue_to_apply);
+    else
+        gameplay_effect_spec_handle.Data.Get()->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag("State.Fatigued"), fatigue_to_apply);
+
     Ability_System_Component->ApplyGameplayEffectSpecToSelf(*gameplay_effect_spec_handle.Data.Get() );
 }
 //------------------------------------------------------------------------------------------------------------
