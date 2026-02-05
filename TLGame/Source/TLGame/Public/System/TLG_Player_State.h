@@ -22,7 +22,7 @@ public:
 
     UTLG_Attribute_Set *Get_Attribute_Set() const;
 
-    UFUNCTION() void Handle_Time_Advanced(int32 hours, int32 minutess);
+    UFUNCTION() void Handle_Time_Advanced(int32 hours, int32 minutes, int32 minutes_delta);
 private:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UAbilitySystemComponent> Ability_System_Component;

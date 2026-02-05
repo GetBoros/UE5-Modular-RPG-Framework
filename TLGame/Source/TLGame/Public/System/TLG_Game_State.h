@@ -5,7 +5,7 @@
 
 #include <TLG_Game_State.generated.h>
 //------------------------------------------------------------------------------------------------------------
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOn_Time_Updated, int32, hours, int32, minutes);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOn_Time_Updated, int32, hours, int32, minutes, int32, minutes_delta);
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API ATLG_Game_State : public AGameStateBase
 {

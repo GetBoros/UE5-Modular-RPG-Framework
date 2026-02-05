@@ -22,7 +22,7 @@ void ATLG_Game_State::Advance_Time(int32 minutes_to_add)
 
     Get_Current_Time(hours, minutes);
 
-    On_Time_Updated.Broadcast(hours, minutes);
+    On_Time_Updated.Broadcast(hours, minutes, minutes_to_add);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Game_State::Get_Current_Time(int32 &hours, int32 &minutes) const

@@ -40,7 +40,7 @@ UTLG_Attribute_Set *ATLG_Player_State::Get_Attribute_Set() const
     return Attribute_Set;
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Player_State::Handle_Time_Advanced(int32 hours, int32 minutess)
+void ATLG_Player_State::Handle_Time_Advanced(int32 hours, int32 minutes, int32 minutes_delta)
 {
     FGameplayEffectContextHandle gameplay_effect_context_handle;
     FGameplayEffectSpecHandle gameplay_effect_spec_handle;
@@ -48,13 +48,17 @@ void ATLG_Player_State::Handle_Time_Advanced(int32 hours, int32 minutess)
     if (Ability_System_Component == 0 || GE_Fatigue_Class == 0)
         return;
 
+    if (minutes_delta <= 0)
+        return;
+
     gameplay_effect_context_handle = Ability_System_Component->MakeEffectContext();
+    gameplay_effect_context_handle.AddSourceObject(this);
     gameplay_effect_spec_handle = Ability_System_Component->MakeOutgoingSpec(GE_Fatigue_Class, 1.0f, gameplay_effect_context_handle);
 
     if (gameplay_effect_spec_handle.IsValid() != true)
         return;
 
-    gameplay_effect_spec_handle.Data.Get()->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag("Data.TimeDelta"), (float)minutess);
+    gameplay_effect_spec_handle.Data.Get()->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag("Data.TimeDelta"), (float)minutes_delta);
     Ability_System_Component->ApplyGameplayEffectSpecToSelf(*gameplay_effect_spec_handle.Data.Get() );
 }
 //------------------------------------------------------------------------------------------------------------

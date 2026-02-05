@@ -70,7 +70,7 @@ void UTLG_Widget_Controller::Handle_Changed_Dominance(const FOnAttributeChangeDa
     On_Changed_Dominance.Broadcast(current, delta);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Controller::Handle_Changed_Time_Game(int32 hours, int32 minutes)
+void UTLG_Widget_Controller::Handle_Changed_Time_Game(int32 hours, int32 minutes, int32 minutes_delta)
 {
     On_Changed_Time_Game.Broadcast(hours, minutes);
 }

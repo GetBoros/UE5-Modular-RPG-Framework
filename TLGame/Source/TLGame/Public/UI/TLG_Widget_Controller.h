@@ -31,7 +31,7 @@ private:
     float Prev_Sanity = -1.0f;
     float Prev_Dominance = -1.0f;
 
-    UFUNCTION() void Handle_Changed_Time_Game(int32 hours, int32 minutes);
+    UFUNCTION() void Handle_Changed_Time_Game(int32 hours, int32 minutes, int32 minutes_delta);
 
 };
 //------------------------------------------------------------------------------------------------------------
