@@ -22,12 +22,12 @@ public:
 
     UTLG_Attribute_Set *Get_Attribute_Set() const;
 
-    UFUNCTION() void Handle_Time_Advanced(int32 hours, int32 minutes, int32 minutes_delta);
 private:
+    UFUNCTION() void Handle_Time_Advanced(int32 hours, int32 minutes, int32 minutes_delta);
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Attribute_Set> Attribute_Set;
 
-    UPROPERTY(EditDefaultsOnly, Category = "TLG|Attributes") TSubclassOf<UGameplayEffect> GE_Fatigue_Class;
+    UPROPERTY(EditDefaultsOnly) TSubclassOf<UGameplayEffect> Gameplay_Effect_Fatigue_Class;
 };
 //------------------------------------------------------------------------------------------------------------

@@ -9,11 +9,15 @@
 // UTLG_Attribute_Set
 UTLG_Attribute_Set::UTLG_Attribute_Set()
 {
-    // Default values can re-init in Data table later
     InitSanity(100.0f);
     InitSanity_Max(100.0f);
+
     InitDominance(0.0f);
+
     InitEmpathy(0.0f);
+
+    InitFatigue(0.0f);
+    InitFatigue_Max(100.0f);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Attribute_Set::PreAttributeChange(const FGameplayAttribute &attribute, float &new_value)
@@ -28,6 +32,9 @@ void UTLG_Attribute_Set::PreAttributeChange(const FGameplayAttribute &attribute,
 
     if (attribute == GetEmpathyAttribute() )
         new_value = FMath::Clamp(new_value, 0.0f, 100.0f);
+
+    if (attribute == GetFatigueAttribute() )
+        new_value = FMath::Clamp(new_value, 0.0f, GetFatigue_Max() );
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Attribute_Set::PostGameplayEffectExecute(const FGameplayEffectModCallbackData &data)

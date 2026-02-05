@@ -37,7 +37,7 @@ void UTLG_Widget_Controller::Bind_Callbacks_To_Dependencies()
     Ability_System_Component->GetGameplayAttributeValueChangeDelegate(tlg_attribute_set->GetDominanceAttribute() ).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Dominance);
 
     if (Attribute_Info != 0)
-        FGBC_Attribute_Info_Item SanityInfo = Attribute_Info->Find_Attribute_Info_By_Tag(FGameplayTag::RequestGameplayTag("Attribute.Player.Sanity") );
+        FGBC_Attribute_Info_Item gbc_attribute_info_item_sanity = Attribute_Info->Find_Attribute_Info_By_Tag(FGameplayTag::RequestGameplayTag("Attribute.Player.Sanity") );
 
     tlg_game_state = Cast<ATLG_Game_State>(Game_State_Base);
     if (tlg_game_state != 0)
