@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------------------------------------
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOn_Attribute_Changed_Signature, float, new_value, float, delta);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOn_Time_Updated_Signature, int32, hours, int32, minutes);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_Day_Updated_Signature, int32, current_day);
 //------------------------------------------------------------------------------------------------------------
 class UTLG_Attribute_Set;
 //------------------------------------------------------------------------------------------------------------
@@ -21,6 +22,7 @@ public:
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Sanity;
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Dominance;
     UPROPERTY(BlueprintAssignable) FOn_Time_Updated_Signature On_Changed_Time_Game;
+    UPROPERTY(BlueprintAssignable) FOn_Day_Updated_Signature On_Changed_Day;
 
 private:
     void Handle_Changed_Sanity(const FOnAttributeChangeData &attribute_change_data);
@@ -32,6 +34,7 @@ private:
     float Prev_Dominance = -1.0f;
 
     UFUNCTION() void Handle_Changed_Time_Game(int32 hours, int32 minutes, int32 minutes_delta);
+    UFUNCTION() void Handle_Changed_Day_Time(int32 current_day);
 
 };
 //------------------------------------------------------------------------------------------------------------

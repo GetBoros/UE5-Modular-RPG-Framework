@@ -140,6 +140,7 @@ void UTLG_Widget_HUD::Init_Widget_Controller()
     TLG_Widget_Controller->On_Changed_Sanity.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Sanity);
     TLG_Widget_Controller->On_Changed_Dominance.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Dominance);
     TLG_Widget_Controller->On_Changed_Time_Game.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Time_Game);
+    TLG_Widget_Controller->On_Changed_Day.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Day);
 
     TLG_Widget_Controller->Bind_Callbacks_To_Dependencies();
     TLG_Widget_Controller->Broadcast_Initial_Values();
@@ -176,6 +177,13 @@ void UTLG_Widget_HUD::On_Changed_Callback_Dominance(float new_value, float delta
 
     if (FMath::IsNearlyZero(delta) != true)
         Spawn_Text_Floating(delta, FText::FromString("Dominance") );
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::On_Changed_Callback_Day(int32 current_day)
+{
+    FString day_str = FString::Printf(TEXT("Day %d"), current_day);
+
+    Text_Day_Counter->SetText(FText::FromString(day_str) );
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Changed_Callback_Time_Game(int32 hours, int32 minutes)

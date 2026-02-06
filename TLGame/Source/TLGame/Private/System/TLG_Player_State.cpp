@@ -28,7 +28,7 @@ void ATLG_Player_State::BeginPlay()
     Super::BeginPlay();
 
     if (ATLG_Game_State *tlg_game_state = GetWorld()->GetGameState<ATLG_Game_State>() )
-        tlg_game_state->On_Time_Updated.AddDynamic(this, &ATLG_Player_State::Handle_Time_Advanced);
+        tlg_game_state->On_Updated_Time.AddDynamic(this, &ATLG_Player_State::Handle_Time_Advanced);
 }
 //------------------------------------------------------------------------------------------------------------
 UAbilitySystemComponent *ATLG_Player_State::GetAbilitySystemComponent() const

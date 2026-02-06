@@ -44,6 +44,7 @@ private:
 
     UFUNCTION() void On_Changed_Callback_Sanity(float new_value, float delta);
     UFUNCTION() void On_Changed_Callback_Dominance(float new_value, float delta);
+    UFUNCTION() void On_Changed_Callback_Day(int32 current_day);
     UFUNCTION() void On_Changed_Callback_Time_Game(int32 hours, int32 minutes);
 
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UImage> Image_Background;
@@ -54,6 +55,7 @@ private:
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Portrait> TLG_Widget_Portrait_Hero;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Portrait> TLG_Widget_Portrait_Enemy;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_Clock;
+    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_Day_Counter;
 
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Controller> TLG_Widget_Controller_Class;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Text_Floating> TLG_Widget_Text_Floating;

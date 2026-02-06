@@ -27,8 +27,9 @@ void UTLG_Widget_Controller::Broadcast_Initial_Values()
 void UTLG_Widget_Controller::Bind_Callbacks_To_Dependencies()
 {
     ATLG_Game_State *tlg_game_state;
-    UTLG_Attribute_Set* tlg_attribute_set;
+    UTLG_Attribute_Set *tlg_attribute_set;
     
+	// 1.0. Bind Attribute Callbacks
     tlg_attribute_set = Get_TLG_Attribute_Set();
     if (Ability_System_Component == 0 || tlg_attribute_set == 0)
         return;
@@ -39,9 +40,15 @@ void UTLG_Widget_Controller::Bind_Callbacks_To_Dependencies()
     if (Attribute_Info != 0)
         FGBC_Attribute_Info_Item gbc_attribute_info_item_sanity = Attribute_Info->Find_Attribute_Info_By_Tag(FGameplayTag::RequestGameplayTag("Attribute.Player.Sanity") );
 
+	// 1.1. Bind Game State Callbacks
     tlg_game_state = Cast<ATLG_Game_State>(Game_State_Base);
-    if (tlg_game_state != 0)
-        tlg_game_state->On_Time_Updated.AddDynamic(this, &UTLG_Widget_Controller::Handle_Changed_Time_Game);
+    if (tlg_game_state == 0)
+        return;
+
+    tlg_game_state->On_Updated_Time.AddDynamic(this, &UTLG_Widget_Controller::Handle_Changed_Time_Game);
+    tlg_game_state->On_Updated_Day.AddDynamic(this, &UTLG_Widget_Controller::Handle_Changed_Day_Time);
+
+    On_Changed_Day.Broadcast(tlg_game_state->Get_Current_Day() );  // Broadcast current day at start
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Handle_Changed_Sanity(const FOnAttributeChangeData &attribute_change_data)
@@ -73,6 +80,11 @@ void UTLG_Widget_Controller::Handle_Changed_Dominance(const FOnAttributeChangeDa
 void UTLG_Widget_Controller::Handle_Changed_Time_Game(int32 hours, int32 minutes, int32 minutes_delta)
 {
     On_Changed_Time_Game.Broadcast(hours, minutes);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Controller::Handle_Changed_Day_Time(int32 current_day)
+{
+    On_Changed_Day.Broadcast(current_day);
 }
 //------------------------------------------------------------------------------------------------------------
 UTLG_Attribute_Set *UTLG_Widget_Controller::Get_TLG_Attribute_Set() const
