@@ -24,6 +24,9 @@ public:
     FGameplayTag Action_System_Sleep;
     FGameplayTag Action_System_Save;
 
+    // States
+    FGameplayTag State_Fatigued;
+
 private:
     static FTLG_Data_Gameplay_Tags TLG_Data_Gameplay_Tags;
 
