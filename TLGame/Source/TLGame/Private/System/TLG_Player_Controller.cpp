@@ -18,22 +18,12 @@
 // ATLG_Player_Controller
 void ATLG_Player_Controller::BeginPlay()
 {
+    UTLG_Attribute_Set *tlg_uattribute_set;
+
     // 1.0. Init
     TLG_HUD = GetHUD<ATLG_HUD>();
-    TLG_Player_State = GetPlayerState<ATLG_Player_State>();
-    if (TLG_Player_State != 0)
-    {
-        Ability_System_Component = TLG_Player_State->GetAbilitySystemComponent();
-		TLG_Player_State->Get_Attribute_Set()->On_Sanity_Zero.AddUObject(this, &ATLG_Player_Controller::Handle_Game_Over);
-    }
-    
     TLG_Game_State = GetWorld()->GetGameState<ATLG_Game_State>();
-
-    if (Audio_Component_Ambient == 0)
-    {
-        Audio_Component_Ambient = NewObject<UAudioComponent>(this);
-        Audio_Component_Ambient->RegisterComponent();  // Important for work
-    }
+    TLG_Player_State = GetPlayerState<ATLG_Player_State>();
 
     // 2.0. Check
     if (ensureMsgf(TLG_HUD, TEXT("Need HUD implemented from ATLG_HUD") ) != true)
@@ -57,14 +47,29 @@ void ATLG_Player_Controller::BeginPlay()
     if (ensureMsgf(TLG_Game_State, TEXT("Something whent wrong") ) != true)
         return;
 
-    // 3.0. Actions
+	// 3.0. Get components ASC and bind delegates on attribute Sanity if zero
+    if (TLG_Player_State != 0)
+    {
+        Ability_System_Component = TLG_Player_State->GetAbilitySystemComponent();
+        tlg_uattribute_set = TLG_Player_State->Get_Attribute_Set();
+        tlg_uattribute_set->On_Sanity_Zero.AddUObject(this, &ATLG_Player_Controller::Handle_Game_Over);
+    }
+
+	// 3.1. Create audio component for ambient music
+    if (Audio_Component_Ambient == 0)
+    {
+        Audio_Component_Ambient = NewObject<UAudioComponent>(this);
+        Audio_Component_Ambient->RegisterComponent();  // Important for work
+    }
+
+    // 4.0. Actions
     Location_Enter(TLG_Data_Location_Start);
 
-    // 3.1. Set input mode
+    // 4.1. Set input mode
     bShowMouseCursor = true;
     SetInputMode(FInputModeUIOnly() );
 
-    // 4.0. Blueprint logic
+    // 5.0. Blueprint logic
     Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
