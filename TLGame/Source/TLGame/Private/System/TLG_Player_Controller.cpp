@@ -22,7 +22,10 @@ void ATLG_Player_Controller::BeginPlay()
     TLG_HUD = GetHUD<ATLG_HUD>();
     TLG_Player_State = GetPlayerState<ATLG_Player_State>();
     if (TLG_Player_State != 0)
+    {
         Ability_System_Component = TLG_Player_State->GetAbilitySystemComponent();
+		TLG_Player_State->Get_Attribute_Set()->On_Sanity_Zero.AddUObject(this, &ATLG_Player_Controller::Handle_Game_Over);
+    }
     
     TLG_Game_State = GetWorld()->GetGameState<ATLG_Game_State>();
 
@@ -177,6 +180,13 @@ void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
 void ATLG_Player_Controller::Dialogue_End()
 {
     TLG_HUD->Dialogue_Hide();
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Handle_Game_Over()
+{
+    int yy = 0;
+    
+	yy++;  // !!! TEMP Make Game Over screen
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Apply_Response_Effects(const FGameplayTagContainer &gameplay_tag_container)

@@ -30,6 +30,8 @@ private:
     void Dialogue_Start(const FName &row_id);
     void Dialogue_End();
 
+	void Handle_Game_Over();
+
     void Apply_Response_Effects(const FGameplayTagContainer &gameplay_tag_container);
     void Play_Ambient_Sound(USoundBase *sound_base_to_play);
 

@@ -25,7 +25,12 @@ void UTLG_Attribute_Set::PreAttributeChange(const FGameplayAttribute &attribute,
     Super::PreAttributeChange(attribute, new_value);
 
     if (attribute == GetSanityAttribute() )
+    {
         new_value = FMath::Clamp(new_value, 0.0f, GetSanity_Max() );
+
+        if (On_Sanity_Zero.IsBound() && new_value <= 0.0f)
+            On_Sanity_Zero.Broadcast();
+    }
 
     if (attribute == GetDominanceAttribute() )
         new_value = FMath::Clamp(new_value, 0.0f, 100.0f);
@@ -47,9 +52,8 @@ void UTLG_Attribute_Set::PostGameplayEffectExecute(const FGameplayEffectModCallb
 
         if (current_sanity <= 0.0f)
         {
-            int yy = 0;
-
-            yy++;  // TODO: Send Gameplay Event: Game Over (Psych Ward)
+            if (On_Sanity_Zero.IsBound() )
+                On_Sanity_Zero.Broadcast();
         }
     }
 }

@@ -6,6 +6,8 @@
 
 #include <TLG_Attribute_Set.generated.h>
 //------------------------------------------------------------------------------------------------------------
+DECLARE_MULTICAST_DELEGATE(FOn_Attribute_Empty_Signature);
+//------------------------------------------------------------------------------------------------------------
 #define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
     GAMEPLAYATTRIBUTE_PROPERTY_GETTER(ClassName, PropertyName) \
     GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
@@ -21,6 +23,8 @@ public:
 
     virtual void PreAttributeChange(const FGameplayAttribute &attribute, float &new_value) override;  // for clamping
     virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData &data) override;
+
+    mutable FOn_Attribute_Empty_Signature On_Sanity_Zero;
 
     UPROPERTY(BlueprintReadOnly, Category = "Attributes") FGameplayAttributeData Sanity;  // SANITY (HP)
     ATTRIBUTE_ACCESSORS(UTLG_Attribute_Set, Sanity);
