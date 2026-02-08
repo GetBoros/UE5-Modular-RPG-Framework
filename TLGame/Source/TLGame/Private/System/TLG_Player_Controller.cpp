@@ -190,9 +190,9 @@ void ATLG_Player_Controller::Dialogue_End()
 void ATLG_Player_Controller::Handle_Game_Over()
 {
     TLG_HUD->Handle_Game_Over();
-    int yy = 0;
-    
-	yy++;  // !!! TEMP Make Game Over screen
+
+    bShowMouseCursor = false;
+    SetInputMode(FInputModeGameOnly() );
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Apply_Response_Effects(const FGameplayTagContainer &gameplay_tag_container)
