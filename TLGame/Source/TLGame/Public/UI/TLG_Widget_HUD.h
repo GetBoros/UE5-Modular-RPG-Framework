@@ -52,6 +52,7 @@ private:
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UVerticalBox> VB_Text_Floating_Events;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UVerticalBox> VB_Button_Navigation;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UVerticalBox> VB_Button_Actions;
+    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UVerticalBox> VB_Button_Game_Over;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Dialogue> TLG_Widget_Dialogue;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Portrait> TLG_Widget_Portrait_Hero;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Portrait> TLG_Widget_Portrait_Enemy;
@@ -61,6 +62,7 @@ private:
 
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Controller> TLG_Widget_Controller_Class;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Text_Floating> TLG_Widget_Text_Floating;
+    UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Button> TLG_Widget_Button;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Button> TLG_Widget_Button_Action_Class;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Button> TLG_Widget_Button_Navigation_Class;
 

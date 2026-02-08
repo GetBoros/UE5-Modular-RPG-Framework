@@ -18,11 +18,12 @@ public:
     virtual void NativeConstruct();
     virtual void Handle_Click();
 
+    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> TB_Location_Name;
+
 protected:
     UFUNCTION() void Handle_Click_Internal();
 
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UButton> Button_Click;
-    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> TB_Location_Name;
 };
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API UTLG_Widget_Button_Action : public UTLG_Widget_Button
