@@ -46,6 +46,11 @@ void ATLG_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_lo
      Get_TLG_Widget_HUD()->Update_Buttons_Actions(tlg_location_action);
 }
 //------------------------------------------------------------------------------------------------------------
+void ATLG_HUD::Handle_Game_Over()
+{
+    Get_TLG_Widget_HUD()->Handle_Game_Over();
+}
+//------------------------------------------------------------------------------------------------------------
 UTLG_Widget_HUD *ATLG_HUD::Get_TLG_Widget_HUD()
 {
     if (HUD_Widget != 0)

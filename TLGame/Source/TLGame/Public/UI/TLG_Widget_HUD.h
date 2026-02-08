@@ -32,6 +32,7 @@ public:
     void Set_Image_Texture_Portrait(UTexture2D *image_portrait_texture);
 	void Update_Buttons_Navigation(const TArray<FTLG_Location_Exit> &tlg_location_exits);
 	void Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_location_action);
+    void Handle_Game_Over();
 
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Sanity(float sanity_curr, float sanity_max);
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Dominance(float dominance_curr);
@@ -56,6 +57,7 @@ private:
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Portrait> TLG_Widget_Portrait_Enemy;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_Clock;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_Day_Counter;
+    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_Game_Over;
 
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Controller> TLG_Widget_Controller_Class;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Text_Floating> TLG_Widget_Text_Floating;

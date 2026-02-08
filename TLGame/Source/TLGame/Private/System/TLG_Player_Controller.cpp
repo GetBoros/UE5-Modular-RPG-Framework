@@ -25,6 +25,14 @@ void ATLG_Player_Controller::BeginPlay()
     TLG_Game_State = GetWorld()->GetGameState<ATLG_Game_State>();
     TLG_Player_State = GetPlayerState<ATLG_Player_State>();
 
+    // 1.1. Get components ASC and bind delegates on attribute Sanity if zero
+    if (TLG_Player_State != 0)
+    {
+        Ability_System_Component = TLG_Player_State->GetAbilitySystemComponent();
+        tlg_uattribute_set = TLG_Player_State->Get_Attribute_Set();
+        tlg_uattribute_set->On_Sanity_Zero.AddUObject(this, &ATLG_Player_Controller::Handle_Game_Over);
+    }
+
     // 2.0. Check
     if (ensureMsgf(TLG_HUD, TEXT("Need HUD implemented from ATLG_HUD") ) != true)
         return;
@@ -47,15 +55,7 @@ void ATLG_Player_Controller::BeginPlay()
     if (ensureMsgf(TLG_Game_State, TEXT("Something whent wrong") ) != true)
         return;
 
-	// 3.0. Get components ASC and bind delegates on attribute Sanity if zero
-    if (TLG_Player_State != 0)
-    {
-        Ability_System_Component = TLG_Player_State->GetAbilitySystemComponent();
-        tlg_uattribute_set = TLG_Player_State->Get_Attribute_Set();
-        tlg_uattribute_set->On_Sanity_Zero.AddUObject(this, &ATLG_Player_Controller::Handle_Game_Over);
-    }
-
-	// 3.1. Create audio component for ambient music
+	// 3.0. Create audio component for ambient music
     if (Audio_Component_Ambient == 0)
     {
         Audio_Component_Ambient = NewObject<UAudioComponent>(this);
@@ -189,6 +189,7 @@ void ATLG_Player_Controller::Dialogue_End()
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Game_Over()
 {
+    TLG_HUD->Handle_Game_Over();
     int yy = 0;
     
 	yy++;  // !!! TEMP Make Game Over screen

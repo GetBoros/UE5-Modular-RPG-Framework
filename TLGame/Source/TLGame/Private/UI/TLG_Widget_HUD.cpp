@@ -96,6 +96,11 @@ void UTLG_Widget_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> 
     }
 }
 //------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::Handle_Game_Over()
+{
+    Text_Game_Over->SetVisibility(ESlateVisibility::Visible);
+}
+//------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Updated_Temp_Implementation(float sanity_curr, float sanity_max)
 {
     // !!! TEMP
