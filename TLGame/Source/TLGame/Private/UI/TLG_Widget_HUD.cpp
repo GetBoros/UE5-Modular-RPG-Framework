@@ -27,7 +27,7 @@ void UTLG_Widget_HUD::NativeConstruct()
         return;
     if (ensureMsgf(TLG_Widget_Controller_Class, TEXT("Is Empty") ) != true)
         return;
-    if (ensureMsgf(TLG_Widget_Button, TEXT("Is Empty") ) != true)
+    if (ensureMsgf(TLG_Widget_Button_Game_Over, TEXT("Is Empty") ) != true)
         return;
     if (ensureMsgf(TLG_Widget_Button_Action_Class, TEXT("Is Empty") ) != true)
         return;
@@ -100,33 +100,34 @@ void UTLG_Widget_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> 
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Handle_Game_Over()
 {
-    Text_Game_Over->SetVisibility(ESlateVisibility::Visible);
+    UTLG_Widget_Button_Game_Over *tlg_widget_button;
 
+	// 1.0. Update visuals
+    Text_Game_Over->SetVisibility(ESlateVisibility::Visible);
     VB_Button_Navigation->SetVisibility(ESlateVisibility::Collapsed);
     VB_Button_Actions->SetVisibility(ESlateVisibility::Collapsed);
-
     VB_Button_Game_Over->SetVisibility(ESlateVisibility::Visible);
-
-    // !!! TEMP
-    UTLG_Widget_Button *tlg_widget_button;
-
     VB_Button_Game_Over->ClearChildren();
-
-    tlg_widget_button = CreateWidget<UTLG_Widget_Button>(this, TLG_Widget_Button_Action_Class);
-    if (tlg_widget_button == 0)
-        return;
-
-    tlg_widget_button->TB_Location_Name->SetText(FText::FromString(FString(L"Restart Game") ) );
-    VB_Button_Game_Over->AddChild(tlg_widget_button);
-
-    tlg_widget_button = CreateWidget<UTLG_Widget_Button>(this, TLG_Widget_Button_Action_Class);
-    if (tlg_widget_button == 0)
-        return;
-    
-    tlg_widget_button->TB_Location_Name->SetText(FText::FromString(FString(L"Exit Game") ) );
-    VB_Button_Game_Over->AddChild(tlg_widget_button);
-
     TLG_Widget_Dialogue->RemoveFromParent();
+
+    // 2.0. Add button restart game
+    tlg_widget_button = CreateWidget<UTLG_Widget_Button_Game_Over>(this, TLG_Widget_Button_Game_Over);
+    if (tlg_widget_button == 0)
+        return;
+    tlg_widget_button->Init(false);
+    tlg_widget_button->TB_Location_Name->SetText(FText::FromString(TEXT("Restart Game") ) );
+    
+    VB_Button_Game_Over->AddChild(tlg_widget_button);
+
+	// 2.1. Add button exit game
+    tlg_widget_button = CreateWidget<UTLG_Widget_Button_Game_Over>(this, TLG_Widget_Button_Game_Over);
+    if (tlg_widget_button == 0)
+        return;
+    tlg_widget_button->Init(true);
+    tlg_widget_button->TB_Location_Name->SetText(FText::FromString(TEXT("Exit Game") ) );
+    
+    VB_Button_Game_Over->AddChild(tlg_widget_button);
+
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Updated_Temp_Implementation(float sanity_curr, float sanity_max)

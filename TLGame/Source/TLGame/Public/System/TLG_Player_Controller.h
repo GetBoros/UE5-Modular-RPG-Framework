@@ -23,6 +23,7 @@ public:
     virtual void BeginPlay();
     virtual void Location_Enter(UTLG_Data_Location *tlg_data_location);
     virtual void Location_Action(const FTLG_Location_Action &tlg_location_action);
+    virtual void Handle_Game_Over_Exit(const bool is_game_over);
 
     void Handle_Player_Decision(const FPlayer_Response &player_response);  // Call UI when player press button
 

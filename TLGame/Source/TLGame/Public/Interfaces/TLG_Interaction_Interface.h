@@ -21,5 +21,6 @@ class TLGAME_API ITLG_Interaction_Interface
 public:
     virtual void Location_Enter(UTLG_Data_Location *tlg_data_location) = 0;
     virtual void Location_Action(const FTLG_Location_Action &tlg_location_action) = 0;
+    virtual void Handle_Game_Over_Exit(const bool is_restart) = 0;
 };
 //------------------------------------------------------------------------------------------------------------

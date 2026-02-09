@@ -55,3 +55,16 @@ private:
     
 };
 //------------------------------------------------------------------------------------------------------------
+UCLASS() class TLGAME_API UTLG_Widget_Button_Game_Over: public UTLG_Widget_Button
+{
+	GENERATED_BODY()
+	
+public:
+    virtual void Handle_Click();
+
+    void Init(const bool is_game_over);
+
+private:
+    bool Is_Game_Over = false;
+};
+//------------------------------------------------------------------------------------------------------------

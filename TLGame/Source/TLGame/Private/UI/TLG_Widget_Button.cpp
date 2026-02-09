@@ -33,6 +33,20 @@ void UTLG_Widget_Button::Handle_Click_Internal()
 
 
 // UTLG_Widget_Button_Action
+void UTLG_Widget_Button_Action::Handle_Click()
+{
+    APlayerController *player_controller;
+    ITLG_Interaction_Interface *interaction_interface;
+
+    player_controller = GetOwningPlayer();
+    if (player_controller == 0)
+        return;
+
+    interaction_interface = Cast<ITLG_Interaction_Interface>(player_controller);
+    if (interaction_interface != 0)
+        interaction_interface->Location_Action(TLG_Location_Action);
+}
+//------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_action)
 {
     const int time_cost_minutes = tlg_location_action.Time_Cost_Minutes;
@@ -47,20 +61,6 @@ void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_ac
         TB_Location_Name->SetText(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA")));
     else
         TB_Location_Name->SetText(text_final);
-}
-//------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Button_Action::Handle_Click()
-{
-    APlayerController *player_controller;
-    ITLG_Interaction_Interface *interaction_interface;
-
-    player_controller = GetOwningPlayer();
-    if (player_controller == 0)
-        return;
-
-    interaction_interface = Cast<ITLG_Interaction_Interface>(player_controller);
-    if (interaction_interface != 0)
-        interaction_interface->Location_Action(TLG_Location_Action);
 }
 //------------------------------------------------------------------------------------------------------------
 FText UTLG_Widget_Button_Action::Format_Time_From_Minutes(int32 minutes_cost) const
@@ -86,17 +86,6 @@ FText UTLG_Widget_Button_Action::Format_Time_From_Minutes(int32 minutes_cost) co
 
 
 // UTLG_Widget_Button_Navigation
-void UTLG_Widget_Button_Navigation::Init(const FTLG_Location_Exit &exit_data)
-{
-    const FText text_button = exit_data.Text_Button;
-    Target_Location = exit_data.TLG_Data_Location_Target;
-
-    if (text_button.IsEmpty() == true)
-        TB_Location_Name->SetText(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA") ) );
-    else
-        TB_Location_Name->SetText(text_button);
-}
-//------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button_Navigation::Handle_Click()
 {
     APlayerController *player_controller;
@@ -114,3 +103,40 @@ void UTLG_Widget_Button_Navigation::Handle_Click()
         interaction_interface->Location_Enter(Target_Location);
 }
 //------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Button_Navigation::Init(const FTLG_Location_Exit &exit_data)
+{
+    const FText text_button = exit_data.Text_Button;
+    Target_Location = exit_data.TLG_Data_Location_Target;
+
+    if (text_button.IsEmpty() == true)
+        TB_Location_Name->SetText(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA") ) );
+    else
+        TB_Location_Name->SetText(text_button);
+}
+//------------------------------------------------------------------------------------------------------------
+
+
+
+
+// UTLG_Widget_Button_Game_Over
+void UTLG_Widget_Button_Game_Over::Handle_Click()
+{
+    APlayerController *player_controller;
+    ITLG_Interaction_Interface *interaction_interface;
+
+    player_controller = GetOwningPlayer();
+    if (player_controller == 0)
+        return;
+
+    interaction_interface = Cast<ITLG_Interaction_Interface>(player_controller);
+    if (interaction_interface != 0)
+        interaction_interface->Handle_Game_Over_Exit(Is_Game_Over);
+
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Button_Game_Over::Init(const bool is_game_over)
+{
+    Is_Game_Over = is_game_over;
+}
+//------------------------------------------------------------------------------------------------------------
+
