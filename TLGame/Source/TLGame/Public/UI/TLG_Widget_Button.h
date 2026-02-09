@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <Blueprint/UserWidget.h>
 #include <Data/TLG_Data_Location.h>
+#include <Interfaces/TLG_Interaction_Interface.h>
 
 #include <TLG_Widget_Button.generated.h>
 //------------------------------------------------------------------------------------------------------------
@@ -18,11 +19,12 @@ public:
     virtual void NativeConstruct();
     virtual void Handle_Click();
 
-    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> TB_Location_Name;
+    void Set_Button_Text(const FText &text_button) const;
 
 protected:
     UFUNCTION() void Handle_Click_Internal();
 
+    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> TB_Button;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UButton> Button_Click;
 };
 //------------------------------------------------------------------------------------------------------------
@@ -55,16 +57,17 @@ private:
     
 };
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class TLGAME_API UTLG_Widget_Button_Game_Over: public UTLG_Widget_Button
+UCLASS() class TLGAME_API UTLG_Widget_Button_Flow : public UTLG_Widget_Button
 {
 	GENERATED_BODY()
 	
 public:
     virtual void Handle_Click();
 
-    void Init(const bool is_game_over);
+    void Init(const ETLG_Game_Flow_Option tlg_game_flow_option, const FText &text_button);
 
 private:
-    bool Is_Game_Over = false;
+    ETLG_Game_Flow_Option TLG_Game_Flow_Option;
+
 };
 //------------------------------------------------------------------------------------------------------------

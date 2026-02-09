@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------------------------------------------
 #include <UI/TLG_Widget_Button.h>
-#include <Interfaces/TLG_Interaction_Interface.h>
 
 #include <Components/Button.h>
 #include <Components/TextBlock.h>
@@ -21,6 +20,14 @@ void UTLG_Widget_Button::NativeConstruct()
 void UTLG_Widget_Button::Handle_Click()
 {
 
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Button::Set_Button_Text(const FText &text_button) const
+{
+    if (text_button.IsEmpty() == true)
+        TB_Button->SetText(FText::FromString(TEXT("Empty No Name in UTLG_Data_Location DA") ) );
+    else
+        TB_Button->SetText(text_button);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button::Handle_Click_Internal()
@@ -58,9 +65,9 @@ void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_ac
     TLG_Location_Action = tlg_location_action;
 
     if (text_button.IsEmpty() == true)
-        TB_Location_Name->SetText(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA")));
+        Set_Button_Text(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA")));
     else
-        TB_Location_Name->SetText(text_final);
+        Set_Button_Text(text_final);
 }
 //------------------------------------------------------------------------------------------------------------
 FText UTLG_Widget_Button_Action::Format_Time_From_Minutes(int32 minutes_cost) const
@@ -109,17 +116,17 @@ void UTLG_Widget_Button_Navigation::Init(const FTLG_Location_Exit &exit_data)
     Target_Location = exit_data.TLG_Data_Location_Target;
 
     if (text_button.IsEmpty() == true)
-        TB_Location_Name->SetText(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA") ) );
+        Set_Button_Text(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA") ) );
     else
-        TB_Location_Name->SetText(text_button);
+        Set_Button_Text(text_button);
 }
 //------------------------------------------------------------------------------------------------------------
 
 
 
 
-// UTLG_Widget_Button_Game_Over
-void UTLG_Widget_Button_Game_Over::Handle_Click()
+// UTLG_Widget_Button_Flow
+void UTLG_Widget_Button_Flow::Handle_Click()
 {
     APlayerController *player_controller;
     ITLG_Interaction_Interface *interaction_interface;
@@ -130,13 +137,14 @@ void UTLG_Widget_Button_Game_Over::Handle_Click()
 
     interaction_interface = Cast<ITLG_Interaction_Interface>(player_controller);
     if (interaction_interface != 0)
-        interaction_interface->Handle_Game_Over_Exit(Is_Game_Over);
+        interaction_interface->Request_Game_Over_Flow(TLG_Game_Flow_Option);
 
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Button_Game_Over::Init(const bool is_game_over)
+void UTLG_Widget_Button_Flow::Init(const ETLG_Game_Flow_Option tlg_game_flow_option, const FText &text_button)
 {
-    Is_Game_Over = is_game_over;
+    TLG_Game_Flow_Option = tlg_game_flow_option;
+    Set_Button_Text(text_button);
 }
 //------------------------------------------------------------------------------------------------------------
 

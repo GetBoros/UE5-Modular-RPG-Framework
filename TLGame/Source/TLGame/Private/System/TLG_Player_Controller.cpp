@@ -131,15 +131,23 @@ void ATLG_Player_Controller::Location_Action(const FTLG_Location_Action &tlg_loc
     Ability_System_Component->RemoveLooseGameplayTag(tlg_location_action.Gameplay_Tag_Action);
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Handle_Game_Over_Exit(const bool is_game_over)
+void ATLG_Player_Controller::Request_Game_Over_Flow(const ETLG_Game_Flow_Option tlg_game_flow_option)
 {
-    FName current_level_name = FName(*UGameplayStatics::GetCurrentLevelName(GetWorld() ) );
-    
-    if (is_game_over == true)
-        UKismetSystemLibrary::QuitGame(GetWorld(), this, EQuitPreference::Quit, false);
-    else
-        UGameplayStatics::OpenLevel(GetWorld(), current_level_name);
+    const FName current_level = FName(*UGameplayStatics::GetCurrentLevelName(GetWorld() ) );
 
+    switch (tlg_game_flow_option)
+    {
+    case ETLG_Game_Flow_Option::Restart_Level:
+        UGameplayStatics::OpenLevel(GetWorld(), current_level);
+        break;
+
+    case ETLG_Game_Flow_Option::Quit_Game:
+        UKismetSystemLibrary::QuitGame(GetWorld(), this, EQuitPreference::Quit, false);
+        break;
+
+    case ETLG_Game_Flow_Option::MainMenu:
+        break;
+    }
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &player_response)
