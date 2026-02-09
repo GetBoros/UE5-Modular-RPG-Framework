@@ -11,6 +11,7 @@
 #include <AbilitySystemComponent.h>
 #include <Components/AudioComponent.h>
 #include <Kismet/KismetSystemLibrary.h>
+#include <Kismet/GameplayStatics.h>
 //------------------------------------------------------------------------------------------------------------
 
 
@@ -132,14 +133,13 @@ void ATLG_Player_Controller::Location_Action(const FTLG_Location_Action &tlg_loc
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Game_Over_Exit(const bool is_game_over)
 {
-    int start_new_game;
-
-    start_new_game = 0;
+    FName current_level_name = FName(*UGameplayStatics::GetCurrentLevelName(GetWorld() ) );
     
     if (is_game_over == true)
         UKismetSystemLibrary::QuitGame(GetWorld(), this, EQuitPreference::Quit, false);
     else
-        start_new_game++;
+        UGameplayStatics::OpenLevel(GetWorld(), current_level_name);
+
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &player_response)
