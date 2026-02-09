@@ -98,7 +98,7 @@ void UTLG_Widget_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> 
     }
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Handle_Game_Over()
+void UTLG_Widget_HUD::Handle_Game_Over()  // !!! TEMP Need refactoring DRY
 {
     UTLG_Widget_Button_Flow *tlg_widget_button;
 
@@ -116,13 +116,13 @@ void UTLG_Widget_HUD::Handle_Game_Over()
     // 2.0. Add button restart game
     tlg_widget_button = CreateWidget<UTLG_Widget_Button_Flow>(this, TLG_Widget_Button_Game_Over);
     if (tlg_widget_button != 0)
-        tlg_widget_button->Init(ETLG_Game_Flow_Option::Restart_Level, text_game_exit);
+        tlg_widget_button->Init(ETLG_Game_Flow_Option::Restart_Level, text_game_restart);
     VB_Button_Game_Over->AddChild(tlg_widget_button);
 
 	// 2.1. Add button exit game
     tlg_widget_button = CreateWidget<UTLG_Widget_Button_Flow>(this, TLG_Widget_Button_Game_Over);
     if (tlg_widget_button != 0)
-        tlg_widget_button->Init(ETLG_Game_Flow_Option::Quit_Game, );
+        tlg_widget_button->Init(ETLG_Game_Flow_Option::Quit_Game, text_game_exit);
     VB_Button_Game_Over->AddChild(tlg_widget_button);
 
 }
