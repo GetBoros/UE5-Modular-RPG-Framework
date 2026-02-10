@@ -115,22 +115,9 @@ void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_locatio
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Location_Action(const FTLG_Location_Action &tlg_location_action)
 {
-    float minutes_to_add = tlg_location_action.Time_Cost_Minutes;
-    FGameplayTag gameplay_tag_action = tlg_location_action.Gameplay_Tag_Action;
-    TSubclassOf<UGameplayEffect> gameplay_effect_class = tlg_location_action.Gameplay_Effect_Class;
-    FGameplayEffectContextHandle effect_handle_context;
-    FGameplayEffectSpecHandle effect_handle_spec;
-
-    Ability_System_Component->AddLooseGameplayTag(gameplay_tag_action);
-    TLG_Game_State->Advance_Time(minutes_to_add);  // Spend time for interact with room action
+    TLG_Game_State->Advance_Time(tlg_location_action.Time_Cost_Minutes);  // Spend time for interact with room action
     
-    effect_handle_context = Ability_System_Component->MakeEffectContext();
-    effect_handle_context.AddSourceObject(this);
-    effect_handle_spec = Ability_System_Component->MakeOutgoingSpec(gameplay_effect_class, 1.0f, effect_handle_context);
-    if (effect_handle_spec.IsValid() == true)
-        Ability_System_Component->ApplyGameplayEffectSpecToSelf(*effect_handle_spec.Data.Get() );
-        
-    Ability_System_Component->RemoveLooseGameplayTag(gameplay_tag_action);
+    TLG_Player_State->Apply_Gameplay_Effect(tlg_location_action.Time_Cost_Minutes, tlg_location_action.Gameplay_Tag_Action, tlg_location_action.Gameplay_Effect_Class);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Request_Game_Over_Flow(const ETLG_Game_Flow_Option tlg_game_flow_option)
@@ -177,9 +164,6 @@ void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &play
         break;
     }
 
-    if (player_response.Tags_Apply.IsValid() )
-        Apply_Response_Effects(player_response.Tags_Apply);  // Apply tag (Effects)
-
     // 1.1. Show next dialugue if next row exists
     if (player_response.Row_ID_Next.IsNone() != true)
         Dialogue_Start(player_response.Row_ID_Next);
@@ -212,11 +196,6 @@ void ATLG_Player_Controller::Dialogue_End()
 void ATLG_Player_Controller::Handle_Game_Over()
 {
     TLG_HUD->Handle_Game_Over();
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Apply_Response_Effects(const FGameplayTagContainer &gameplay_tag_container)
-{
-    Ability_System_Component->AddLooseGameplayTags(gameplay_tag_container);  // !!! TEMP Add tags to player, in future split logic and for enemies
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Play_Ambient_Sound(USoundBase *sound_base_to_play)

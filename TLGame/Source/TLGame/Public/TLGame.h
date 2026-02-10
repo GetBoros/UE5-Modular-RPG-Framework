@@ -30,8 +30,8 @@ public:
 //------------------------------------------------------------------------------------------------------------
 #pragma region BUGS
 /*
-	- After pressing button not decreased sanity
-	- 
+V	- After pressing button not decreased sanity
+X	- After sleep, not increased fatigue
 */
 #pragma endregion
 //------------------------------------------------------------------------------------------------------------
