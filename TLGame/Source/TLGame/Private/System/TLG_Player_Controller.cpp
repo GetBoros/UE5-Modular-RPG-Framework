@@ -84,7 +84,7 @@ void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_locatio
     UTexture2D *texture2d_background;
 
     TLG_Data_Location_Current = tlg_data_location;
-    location_enter_time_cost = 5;
+    location_enter_time_cost = 5;  // !!! TEMP Need add to data location
     enemy_encounter_chance = tlg_data_location->Enemy_Encounter_Chance;
     texture2d_background = tlg_data_location->Texture2D_Background_Image;
     sound_base = tlg_data_location->SoundBase_Ambient;
@@ -115,20 +115,22 @@ void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_locatio
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Location_Action(const FTLG_Location_Action &tlg_location_action)
 {
+    float minutes_to_add = tlg_location_action.Time_Cost_Minutes;
+    FGameplayTag gameplay_tag_action = tlg_location_action.Gameplay_Tag_Action;
+    TSubclassOf<UGameplayEffect> gameplay_effect_class = tlg_location_action.Gameplay_Effect_Class;
     FGameplayEffectContextHandle effect_handle_context;
     FGameplayEffectSpecHandle effect_handle_spec;
 
-    Ability_System_Component->AddLooseGameplayTag(tlg_location_action.Gameplay_Tag_Action);
-    TLG_Game_State->Advance_Time(tlg_location_action.Time_Cost_Minutes);  // Spend time for interact with room action
+    Ability_System_Component->AddLooseGameplayTag(gameplay_tag_action);
+    TLG_Game_State->Advance_Time(minutes_to_add);  // Spend time for interact with room action
     
     effect_handle_context = Ability_System_Component->MakeEffectContext();
     effect_handle_context.AddSourceObject(this);
-
-    effect_handle_spec = Ability_System_Component->MakeOutgoingSpec(tlg_location_action.Gameplay_Effect_Class, 1.0f, effect_handle_context);
+    effect_handle_spec = Ability_System_Component->MakeOutgoingSpec(gameplay_effect_class, 1.0f, effect_handle_context);
     if (effect_handle_spec.IsValid() == true)
         Ability_System_Component->ApplyGameplayEffectSpecToSelf(*effect_handle_spec.Data.Get() );
         
-    Ability_System_Component->RemoveLooseGameplayTag(tlg_location_action.Gameplay_Tag_Action);
+    Ability_System_Component->RemoveLooseGameplayTag(gameplay_tag_action);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Request_Game_Over_Flow(const ETLG_Game_Flow_Option tlg_game_flow_option)
