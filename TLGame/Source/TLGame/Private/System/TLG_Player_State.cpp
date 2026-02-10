@@ -36,6 +36,28 @@ UAbilitySystemComponent *ATLG_Player_State::GetAbilitySystemComponent() const
     return Ability_System_Component;
 }
 //------------------------------------------------------------------------------------------------------------
+void ATLG_Player_State::Handle_Attribute_Sanity(float value) const
+{
+    const float sanity_to_apply = value;
+    FGameplayEffectContextHandle gameplay_effect_handle_context;
+    FGameplayEffectSpecHandle gameplay_effect_handle_spec;
+    const FGameplayTag &gameplay_tag_state_sanity = FTLG_Data_Gameplay_Tags::Get().Attribut_Player_Sanity;
+
+    // 1.0. Init
+    if (Gameplay_Effect_Sanity_Class == 0)
+        return;
+
+    gameplay_effect_handle_context = Ability_System_Component->MakeEffectContext();
+    gameplay_effect_handle_context.AddSourceObject(this);
+    gameplay_effect_handle_spec= Ability_System_Component->MakeOutgoingSpec(Gameplay_Effect_Sanity_Class, 1.0f, gameplay_effect_handle_context);
+    if (gameplay_effect_handle_spec.IsValid() != true)
+        return;
+    gameplay_effect_handle_spec.Data.Get()->SetSetByCallerMagnitude(gameplay_tag_state_sanity, sanity_to_apply);
+
+	// 2.1. Apply the effect to self
+    Ability_System_Component->ApplyGameplayEffectSpecToSelf(*gameplay_effect_handle_spec.Data.Get() );
+}
+//------------------------------------------------------------------------------------------------------------
 UTLG_Attribute_Set *ATLG_Player_State::Get_Attribute_Set() const
 {
     return Attribute_Set;
@@ -43,7 +65,6 @@ UTLG_Attribute_Set *ATLG_Player_State::Get_Attribute_Set() const
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_State::Handle_Time_Advanced(int32 hours, int32 minutes, int32 minutes_delta)
 {
-    
     const float fatigue_to_apply = static_cast<float>(minutes_delta) * Fatigue_Accumulation_Rate;
     FGameplayEffectContextHandle gameplay_effect_handle_context;
     FGameplayEffectSpecHandle gameplay_effect_handle_spec;

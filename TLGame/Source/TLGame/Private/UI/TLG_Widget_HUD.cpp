@@ -43,6 +43,7 @@ void UTLG_Widget_HUD::Dialogue_Node_Show(const FDialogue_Node &node_data)
     TLG_Widget_Dialogue->Setup_Dialogue_Node(node_data);
     TLG_Widget_Portrait_Enemy->Set_Image_Portrait_Visibility(true);
     VB_Button_Navigation->SetVisibility(ESlateVisibility::Collapsed);
+    VB_Button_Actions->SetVisibility(ESlateVisibility::Collapsed);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Dialogue_Hide() const
@@ -50,6 +51,7 @@ void UTLG_Widget_HUD::Dialogue_Hide() const
     TLG_Widget_Dialogue->SetVisibility(ESlateVisibility::Hidden);
     TLG_Widget_Portrait_Enemy->Set_Image_Portrait_Visibility(false);
     VB_Button_Navigation->SetVisibility(ESlateVisibility::Visible);
+    VB_Button_Actions->SetVisibility(ESlateVisibility::Visible);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Set_Image_Texture_Background(UTexture2D *image_background_texture) const

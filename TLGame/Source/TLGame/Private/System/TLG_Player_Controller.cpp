@@ -162,14 +162,13 @@ void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &play
 
     case EDialogue_Response_Category::Logical:
         Ability_System_Component->ApplyModToAttribute(TLG_Player_State->Get_Attribute_Set()->GetEmpathyAttribute(), EGameplayModOp::Additive, response_cost);
-
         break;
 
     case EDialogue_Response_Category::Silent:
         break;
 
     case EDialogue_Response_Category::Submissive:
-        Ability_System_Component->ApplyModToAttribute(TLG_Player_State->Get_Attribute_Set()->GetSanityAttribute(), EGameplayModOp::Additive, response_cost);
+        TLG_Player_State->Handle_Attribute_Sanity(response_cost);
         break;
 
     default:

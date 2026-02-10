@@ -17,6 +17,20 @@ public:
 #pragma region TASKS
 /*
 	- In Controller work with Enemy, not just DT or other data
+	- Press ESC to open Exit from game or Restart
+	- Tooltips
+	- Fatigue logic: Block some answers or else
+	- UI Sound press buttons or something else
+	- Tutorial, Intro Dialog: If Sanity < 0 hospital, if Emphaty >= 100 im slave without will
+	- Demo ending 3 Day, 10 minits
+	- 
+
+*/
+#pragma endregion
+//------------------------------------------------------------------------------------------------------------
+#pragma region BUGS
+/*
+	- After pressing button not decreased sanity
 	- 
 */
 #pragma endregion
@@ -27,7 +41,6 @@ public:
 		- UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_PORTRAIT_AGGRESSIVE)  // .h
 		- UE_DEFINE_GAMEPLAY_TAG(TAG_PORTRAIT_AGGRESSIVE, TEXT("Visual.Portrait.Aggressive"))  // .cpp
 
-	
-
 */
 #pragma endregion
+//------------------------------------------------------------------------------------------------------------

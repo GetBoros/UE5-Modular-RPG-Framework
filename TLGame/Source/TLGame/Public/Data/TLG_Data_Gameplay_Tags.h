@@ -27,6 +27,8 @@ public:
     // States
     FGameplayTag State_Fatigued;
 
+    FGameplayTag Attribut_Player_Sanity;
+
 private:
     static FTLG_Data_Gameplay_Tags TLG_Data_Gameplay_Tags;
 
