@@ -60,6 +60,11 @@ void ATLG_Player_State::Apply_Dynamic_Change(float value, FGameplayTag attribute
         magnitude = value * Fatigue_Accumulation_Rate;
         gameplay_tag = FTLG_Data_Gameplay_Tags::Get().Attribut_Player_Fatigued;
     }
+    else if (gameplay_tag.MatchesTag(FTLG_Data_Gameplay_Tags::Get().Action_System_Sleep) )
+    {
+        magnitude = -value;
+        gameplay_tag = FTLG_Data_Gameplay_Tags::Get().Attribut_Player_Fatigued;
+    }
 
     gameplay_effect_handle_spec.Data->SetSetByCallerMagnitude(gameplay_tag, magnitude);
     Ability_System_Component->ApplyGameplayEffectSpecToSelf(*gameplay_effect_handle_spec.Data.Get() );
