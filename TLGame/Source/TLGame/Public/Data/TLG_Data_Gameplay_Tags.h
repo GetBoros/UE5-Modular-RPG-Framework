@@ -28,6 +28,9 @@ public:
     FGameplayTag State_Fatigued;
 
     FGameplayTag Attribut_Player_Sanity;
+    FGameplayTag Attribut_Player_Empathy;
+    FGameplayTag Attribut_Player_Dominance;
+    FGameplayTag Attribut_Player_Fatigued;
 
 private:
     static FTLG_Data_Gameplay_Tags TLG_Data_Gameplay_Tags;

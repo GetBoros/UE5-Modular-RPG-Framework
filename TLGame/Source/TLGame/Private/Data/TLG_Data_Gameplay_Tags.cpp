@@ -30,6 +30,9 @@ void FTLG_Data_Gameplay_Tags::Initialize_Native_Tags()
     TLG_Data_Gameplay_Tags.State_Fatigued = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("State.Fatigued"), FString("Trigger for end of day logic") );
 
     TLG_Data_Gameplay_Tags.Attribut_Player_Sanity = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attribute.Player.Sanity"), FString("Trigger for end of day logic") );
+    TLG_Data_Gameplay_Tags.Attribut_Player_Empathy = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attribute.Player.Empathy"), FString("Trigger for end of day logic") );
+    TLG_Data_Gameplay_Tags.Attribut_Player_Dominance = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attribute.Player.Dominance"), FString("Trigger for end of day logic") );
+    TLG_Data_Gameplay_Tags.Attribut_Player_Fatigued = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attribute.Player.Fatigued"), FString("Trigger for end of day logic") );
 
 }
 //------------------------------------------------------------------------------------------------------------

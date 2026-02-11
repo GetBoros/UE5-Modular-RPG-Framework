@@ -37,7 +37,6 @@ private:
 
     UPROPERTY(meta = (AllowPrivateAccess = "true") ) ATLG_HUD *TLG_HUD;
     UPROPERTY(meta = (AllowPrivateAccess = "true") ) ATLG_Player_State *TLG_Player_State;
-    UPROPERTY(meta = (AllowPrivateAccess = "true") ) UAbilitySystemComponent *Ability_System_Component;
     
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UDataTable> Dialogue_Data_Table;  // !!! TEMP Need take from enemy
 

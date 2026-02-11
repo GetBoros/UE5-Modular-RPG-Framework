@@ -27,10 +27,9 @@ void ATLG_Player_Controller::BeginPlay()
     TLG_Game_State = GetWorld()->GetGameState<ATLG_Game_State>();
     TLG_Player_State = GetPlayerState<ATLG_Player_State>();
 
-    // 1.1. Get components ASC and bind delegates on attribute Sanity if zero
+    // 1.1. Bind delegates on attribute Sanity if zero
     if (TLG_Player_State != 0)
     {
-        Ability_System_Component = TLG_Player_State->GetAbilitySystemComponent();
         tlg_uattribute_set = TLG_Player_State->Get_Attribute_Set();
         tlg_uattribute_set->On_Sanity_Zero.AddUObject(this, &ATLG_Player_Controller::Handle_Game_Over);
     }
@@ -40,9 +39,6 @@ void ATLG_Player_Controller::BeginPlay()
         return;
 
     if (ensureMsgf(TLG_Player_State, TEXT("Need Player State implemented from ATLG_Player_State") ) != true)
-        return;
-
-    if (ensureMsgf(Ability_System_Component, TEXT("Not Implemented interface") ) != true)
         return;
 
     if (ensureMsgf(Dialogue_Data_Table, TEXT("Skip Location_Enter or can be crit error") ) != true)
@@ -116,8 +112,7 @@ void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_locatio
 void ATLG_Player_Controller::Location_Action(const FTLG_Location_Action &tlg_location_action)
 {
     TLG_Game_State->Advance_Time(tlg_location_action.Time_Cost_Minutes);  // Spend time for interact with room action
-    
-    TLG_Player_State->Apply_Gameplay_Effect(tlg_location_action.Time_Cost_Minutes, tlg_location_action.Gameplay_Tag_Action, tlg_location_action.Gameplay_Effect_Class);
+    TLG_Player_State->Apply_Dynamic_Change(tlg_location_action.Time_Cost_Minutes, tlg_location_action.Gameplay_Tag_Action);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Request_Game_Over_Flow(const ETLG_Game_Flow_Option tlg_game_flow_option)
@@ -142,27 +137,30 @@ void ATLG_Player_Controller::Request_Game_Over_Flow(const ETLG_Game_Flow_Option 
 void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &player_response)
 {
 	const float response_cost = player_response.Response_Cost;
+    FGameplayTag gameplay_tag;
 
 	switch (player_response.Category)  // Apply response cost
     {
     case EDialogue_Response_Category::Aggressive:
-        Ability_System_Component->ApplyModToAttribute(TLG_Player_State->Get_Attribute_Set()->GetDominanceAttribute(), EGameplayModOp::Additive, response_cost);
+        gameplay_tag = FTLG_Data_Gameplay_Tags::Get().Attribut_Player_Dominance;
         break;
 
     case EDialogue_Response_Category::Logical:
-        Ability_System_Component->ApplyModToAttribute(TLG_Player_State->Get_Attribute_Set()->GetEmpathyAttribute(), EGameplayModOp::Additive, response_cost);
+        gameplay_tag = FTLG_Data_Gameplay_Tags::Get().Attribut_Player_Empathy;
         break;
 
     case EDialogue_Response_Category::Silent:
         break;
 
     case EDialogue_Response_Category::Submissive:
-        TLG_Player_State->Handle_Attribute_Sanity(response_cost);
+        gameplay_tag = FTLG_Data_Gameplay_Tags::Get().Attribut_Player_Sanity;
         break;
 
     default:
         break;
     }
+
+    TLG_Player_State->Apply_Dynamic_Change(response_cost, gameplay_tag);
 
     // 1.1. Show next dialugue if next row exists
     if (player_response.Row_ID_Next.IsNone() != true)
