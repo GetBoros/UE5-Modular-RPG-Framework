@@ -2,6 +2,7 @@
 #include <System/TLG_Player_State.h>
 #include <System/TLG_Game_State.h>
 #include <Data/TLG_Data_Gameplay_Tags.h>
+#include <Data/TLG_Data_Location.h>
 #include <Abilities/TLG_Attribute_Set.h>
 
 #include <GameplayTagContainer.h>
@@ -37,41 +38,75 @@ UAbilitySystemComponent *ATLG_Player_State::GetAbilitySystemComponent() const
     return Ability_System_Component;
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Player_State::Apply_Dynamic_Change(float value, FGameplayTag attribute_tag)
+void ATLG_Player_State::Temp(const FTLG_Location_Action &tlg_location_action)
 {
-    float magnitude;
-    FGameplayTag gameplay_tag;
+    float magnitude = 0.0f;
+    int32 time_cost_minutes = tlg_location_action.Time_Cost_Minutes;
+    FGameplayTag gameplay_tag_action = tlg_location_action.Gameplay_Tag_Action;
+    FGameplayTagContainer gameplay_tag_container = tlg_location_action.Gameplay_Tag_Action_Required;
+
+    if (gameplay_tag_action.MatchesTag(FTLG_Data_Gameplay_Tags::Get().Action_System_Computer) )
+    {
+        magnitude = time_cost_minutes * Fatigue_Accumulation_Rate;
+        gameplay_tag_action = FTLG_Data_Gameplay_Tags::Get().Attribut_Player_Fatigued;
+    }
+    else if (gameplay_tag_action.MatchesTag(FTLG_Data_Gameplay_Tags::Get().Action_System_Sleep) )
+    {
+        magnitude = -time_cost_minutes;
+        gameplay_tag_action = FTLG_Data_Gameplay_Tags::Get().Attribut_Player_Fatigued;
+    }
+
+    if (gameplay_tag_container.Num() > 0)
+        Apply_Multy_Dynamic_Change(magnitude, gameplay_tag_container);
+    else
+        Apply_Dynamic_Change(magnitude, gameplay_tag_action);
+
+}
+//------------------------------------------------------------------------------------------------------------
+UTLG_Attribute_Set *ATLG_Player_State::Get_Attribute_Set() const
+{
+    return Attribute_Set;
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_State::Apply_Dynamic_Change(float magnitude, FGameplayTag gameplay_tag)
+{
     FGameplayEffectContextHandle gameplay_effect_handle_context;
     FGameplayEffectSpecHandle gameplay_effect_handle_spec;
 
     if (Gameplay_Effect_Class_Attributes == 0)
         return;
 
-    gameplay_tag = attribute_tag;
-    magnitude = value;
     gameplay_effect_handle_context = Ability_System_Component->MakeEffectContext();
     gameplay_effect_handle_context.AddSourceObject(this);
     gameplay_effect_handle_spec = Ability_System_Component->MakeOutgoingSpec(Gameplay_Effect_Class_Attributes, 1.0f, gameplay_effect_handle_context);
     if (gameplay_effect_handle_spec.IsValid() != true)
         return;
 
-    if (gameplay_tag.MatchesTag(FTLG_Data_Gameplay_Tags::Get().Action_System_Computer) )
-    {
-        magnitude = value * Fatigue_Accumulation_Rate;
-        gameplay_tag = FTLG_Data_Gameplay_Tags::Get().Attribut_Player_Fatigued;
-    }
-    else if (gameplay_tag.MatchesTag(FTLG_Data_Gameplay_Tags::Get().Action_System_Sleep) )
-    {
-        magnitude = -value;
-        gameplay_tag = FTLG_Data_Gameplay_Tags::Get().Attribut_Player_Fatigued;
-    }
-
     gameplay_effect_handle_spec.Data->SetSetByCallerMagnitude(gameplay_tag, magnitude);
     Ability_System_Component->ApplyGameplayEffectSpecToSelf(*gameplay_effect_handle_spec.Data.Get() );
 }
 //------------------------------------------------------------------------------------------------------------
-UTLG_Attribute_Set *ATLG_Player_State::Get_Attribute_Set() const
+void ATLG_Player_State::Apply_Multy_Dynamic_Change(const float magnitude, const FGameplayTagContainer &gameplay_tag_action_required)
 {
-    return Attribute_Set;
+    FGameplayEffectContextHandle gameplay_effect_handle_context;
+    FGameplayEffectSpecHandle gameplay_effect_handle_spec;
+
+    if (Gameplay_Effect_Class_Attributes == 0)
+        return;
+
+    gameplay_effect_handle_context = Ability_System_Component->MakeEffectContext();
+    gameplay_effect_handle_context.AddSourceObject(this);
+    gameplay_effect_handle_spec = Ability_System_Component->MakeOutgoingSpec(Gameplay_Effect_Class_Attributes, 1.0f, gameplay_effect_handle_context);
+    if (gameplay_effect_handle_spec.IsValid() != true)
+        return;
+
+    for (const FGameplayTag &gameplay_tag_attribute : gameplay_tag_action_required)
+    {
+        if (gameplay_tag_attribute.IsValid() == true)
+            gameplay_effect_handle_spec.Data->SetSetByCallerMagnitude(gameplay_tag_attribute, magnitude);
+    }
+
+    Ability_System_Component->ApplyGameplayEffectSpecToSelf(*gameplay_effect_handle_spec.Data.Get() );
+
 }
 //------------------------------------------------------------------------------------------------------------

@@ -20,6 +20,14 @@ USTRUCT(BlueprintType) struct FTLG_Location_Exit
 
 };
 //------------------------------------------------------------------------------------------------------------
+USTRUCT(BlueprintType) struct FTLG_Magnitude_Tag_Pair
+{
+    GENERATED_BODY()
+
+    UPROPERTY(EditAnywhere) float Magnitude = 0.f;
+    UPROPERTY(EditAnywhere) FGameplayTag DataTag;
+};
+//------------------------------------------------------------------------------------------------------------
 USTRUCT(BlueprintType) struct FTLG_Location_Action
 {
     GENERATED_BODY()
@@ -28,7 +36,8 @@ USTRUCT(BlueprintType) struct FTLG_Location_Action
     UPROPERTY(EditAnywhere, BlueprintReadOnly) int32 Time_Cost_Minutes = 15;
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTag Gameplay_Tag_Action;
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTagContainer Gameplay_Tag_Action_Required;
-    UPROPERTY(EditAnywhere, BlueprintReadOnly) TSubclassOf<UGameplayEffect> Gameplay_Effect_Class;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Magnitude_Tag_Pair> ActionTagValues;
+    // UPROPERTY(EditAnywhere, BlueprintReadOnly) TSubclassOf<UGameplayEffect> Gameplay_Effect_Class;
 
 };
 //------------------------------------------------------------------------------------------------------------
