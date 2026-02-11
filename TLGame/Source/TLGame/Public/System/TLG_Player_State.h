@@ -31,8 +31,6 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Attribute_Set> Attribute_Set;
 
 	UPROPERTY(EditDefaultsOnly) TSubclassOf<UGameplayEffect> Gameplay_Effect_Class_Attributes;
-	UPROPERTY(EditDefaultsOnly) TSubclassOf<UGameplayEffect> Gameplay_Effect_Sanity_Class;
-	UPROPERTY(EditDefaultsOnly) TSubclassOf<UGameplayEffect> Gameplay_Effect_Fatigue_Class;
 	/*  0.069 (Ciborg 24h) | 0.104 (Norm 16h) | 0.138 (Weak 12h) | 0.208 (Sick 8h) || 0.1f - 16h - 960min - 96 Fatigue */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true", ClampMin = "0.0", ClampMax = "1.0") ) float Fatigue_Accumulation_Rate = 0.105f;
 };

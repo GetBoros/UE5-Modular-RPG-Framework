@@ -39,39 +39,30 @@ UAbilitySystemComponent *ATLG_Player_State::GetAbilitySystemComponent() const
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_State::Apply_Dynamic_Change(float value, FGameplayTag attribute_tag)
 {
-    float result;
+    float magnitude;
     FGameplayTag gameplay_tag;
+    FGameplayEffectContextHandle gameplay_effect_handle_context;
+    FGameplayEffectSpecHandle gameplay_effect_handle_spec;
+
+    if (Gameplay_Effect_Class_Attributes == 0)
+        return;
 
     gameplay_tag = attribute_tag;
-    if (Gameplay_Effect_Class_Attributes == 0)
-    {
-        UE_LOG(LogTemp, Error, TEXT("TLG_Player_State: ASC or Default GE is missing!"));
+    magnitude = value;
+    gameplay_effect_handle_context = Ability_System_Component->MakeEffectContext();
+    gameplay_effect_handle_context.AddSourceObject(this);
+    gameplay_effect_handle_spec = Ability_System_Component->MakeOutgoingSpec(Gameplay_Effect_Class_Attributes, 1.0f, gameplay_effect_handle_context);
+    if (gameplay_effect_handle_spec.IsValid() != true)
         return;
-    }
 
     if (gameplay_tag.MatchesTag(FTLG_Data_Gameplay_Tags::Get().Action_System_Computer) )
     {
-        result = static_cast<float>(value) * Fatigue_Accumulation_Rate;
+        magnitude = value * Fatigue_Accumulation_Rate;
         gameplay_tag = FTLG_Data_Gameplay_Tags::Get().Attribut_Player_Fatigued;
     }
-    else
-        result = value;
 
-    // 1. Создаем контекст эффекта
-    FGameplayEffectContextHandle context_handle = Ability_System_Component->MakeEffectContext();
-    context_handle.AddSourceObject(this);
-
-    // 2. Создаем Spec (экземпляр эффекта, готовый к применению)
-    const FGameplayEffectSpecHandle spec_handle = Ability_System_Component->MakeOutgoingSpec(Gameplay_Effect_Class_Attributes, 1.0f, context_handle);
-
-    if (spec_handle.IsValid() )
-    {
-        // 3. --- SET BY CALLER MAGIC --- Назначаем значение (result) для конкретного тега (gameplay_tag)
-        spec_handle.Data->SetSetByCallerMagnitude(gameplay_tag, result);
-
-        // 4. Применяем
-        Ability_System_Component->ApplyGameplayEffectSpecToSelf(*spec_handle.Data.Get() );
-    }
+    gameplay_effect_handle_spec.Data->SetSetByCallerMagnitude(gameplay_tag, magnitude);
+    Ability_System_Component->ApplyGameplayEffectSpecToSelf(*gameplay_effect_handle_spec.Data.Get() );
 }
 //------------------------------------------------------------------------------------------------------------
 UTLG_Attribute_Set *ATLG_Player_State::Get_Attribute_Set() const
