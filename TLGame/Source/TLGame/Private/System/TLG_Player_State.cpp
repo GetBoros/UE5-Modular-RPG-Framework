@@ -27,10 +27,10 @@ ATLG_Player_State::ATLG_Player_State()
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_State::BeginPlay()
 {
-    Super::BeginPlay();
+    if (ensureMsgf(Gameplay_Effect_Class_Attributes, TEXT("Need HUD implemented from ATLG_HUD") ) != true)
+        return;
 
-    // if (ATLG_Game_State *tlg_game_state = GetWorld()->GetGameState<ATLG_Game_State>() )
-    //     tlg_game_state->On_Updated_Time.AddDynamic(this, &ATLG_Player_State::Handle_Time_Advanced);
+    Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
 UAbilitySystemComponent *ATLG_Player_State::GetAbilitySystemComponent() const
@@ -38,23 +38,42 @@ UAbilitySystemComponent *ATLG_Player_State::GetAbilitySystemComponent() const
     return Ability_System_Component;
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Player_State::Temp(const FTLG_Location_Action &tlg_location_action)
+UTLG_Attribute_Set *ATLG_Player_State::Get_Attribute_Set() const
+{
+    return Attribute_Set;
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_State::Apply_Multy_Dynamic_Change(const FTLG_Location_Action &tlg_location_action)
 {
     float magnitude = 0.0f;
     int32 time_cost_minutes = tlg_location_action.Time_Cost_Minutes;
     FGameplayTag gameplay_tag_action = tlg_location_action.Gameplay_Tag_Action;
     const TArray<FTLG_Magnitude_Tag_Pair> &tlg_magnitude_tag_pair_array = tlg_location_action.TLG_Magnitude_Tag_Pair_Array;
+    FGameplayEffectContextHandle gameplay_effect_handle_context;
+    FGameplayEffectSpecHandle gameplay_effect_handle_spec;
+
+    if (Gameplay_Effect_Class_Attributes == 0)
+        return;
+
+    gameplay_effect_handle_context = Ability_System_Component->MakeEffectContext();
+    gameplay_effect_handle_context.AddSourceObject(this);
+    gameplay_effect_handle_spec = Ability_System_Component->MakeOutgoingSpec(Gameplay_Effect_Class_Attributes, 1.0f, gameplay_effect_handle_context);
+    if (gameplay_effect_handle_spec.IsValid() != true)
+        return;
 
     if (tlg_magnitude_tag_pair_array.Num() > 0)
-        Apply_Multy_Dynamic_Change(tlg_magnitude_tag_pair_array);
+    {
+        for (const FTLG_Magnitude_Tag_Pair &tlg_magnitude_tag_pair : tlg_magnitude_tag_pair_array)
+        {
+            if (tlg_magnitude_tag_pair.Gameplay_Tag.IsValid() == true)
+                gameplay_effect_handle_spec.Data->SetSetByCallerMagnitude(tlg_magnitude_tag_pair.Gameplay_Tag, tlg_magnitude_tag_pair.Magnitude);
+        }
+    }
     else
-        Apply_Dynamic_Change(magnitude, gameplay_tag_action);
+        gameplay_effect_handle_spec.Data->SetSetByCallerMagnitude(gameplay_tag_action, magnitude);
 
-}
-//------------------------------------------------------------------------------------------------------------
-UTLG_Attribute_Set *ATLG_Player_State::Get_Attribute_Set() const
-{
-    return Attribute_Set;
+    Ability_System_Component->ApplyGameplayEffectSpecToSelf(*gameplay_effect_handle_spec.Data.Get() );
+
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_State::Apply_Dynamic_Change(float magnitude, FGameplayTag gameplay_tag)
@@ -73,29 +92,5 @@ void ATLG_Player_State::Apply_Dynamic_Change(float magnitude, FGameplayTag gamep
 
     gameplay_effect_handle_spec.Data->SetSetByCallerMagnitude(gameplay_tag, magnitude);
     Ability_System_Component->ApplyGameplayEffectSpecToSelf(*gameplay_effect_handle_spec.Data.Get() );
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_State::Apply_Multy_Dynamic_Change(const TArray<FTLG_Magnitude_Tag_Pair> &TLG_Magnitude_Tag_Pair_array)
-{
-    FGameplayEffectContextHandle gameplay_effect_handle_context;
-    FGameplayEffectSpecHandle gameplay_effect_handle_spec;
-
-    if (Gameplay_Effect_Class_Attributes == 0)
-        return;
-
-    gameplay_effect_handle_context = Ability_System_Component->MakeEffectContext();
-    gameplay_effect_handle_context.AddSourceObject(this);
-    gameplay_effect_handle_spec = Ability_System_Component->MakeOutgoingSpec(Gameplay_Effect_Class_Attributes, 1.0f, gameplay_effect_handle_context);
-    if (gameplay_effect_handle_spec.IsValid() != true)
-        return;
-
-    for (const FTLG_Magnitude_Tag_Pair &tlg_magnitude_tag_pair : TLG_Magnitude_Tag_Pair_array)
-    {
-        if (tlg_magnitude_tag_pair.Gameplay_Tag.IsValid() == true)
-            gameplay_effect_handle_spec.Data->SetSetByCallerMagnitude(tlg_magnitude_tag_pair.Gameplay_Tag, tlg_magnitude_tag_pair.Magnitude);
-    }
-
-    Ability_System_Component->ApplyGameplayEffectSpecToSelf(*gameplay_effect_handle_spec.Data.Get() );
-
 }
 //------------------------------------------------------------------------------------------------------------

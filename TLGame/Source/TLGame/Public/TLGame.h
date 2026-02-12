@@ -16,14 +16,15 @@ public:
 //------------------------------------------------------------------------------------------------------------
 #pragma region TASKS
 /*
-	- In Controller work with Enemy, not just DT or other data
-	- Press ESC to open Exit from game or Restart
-	- Tooltips
-	- Fatigue logic: Block some answers or else
-	- UI Sound press buttons or something else
-	- Tutorial, Intro Dialog: If Sanity < 0 hospital, if Emphaty >= 100 im slave without will
-	- Demo ending 3 Day, 10 minits
-	- 
+V	- In Controller work with Enemy, not just DT or other data
+V	- Tooltips
+X		- Need visual
+X	- Press ESC to open Exit from game or Restart
+X	- Fatigue logic: Block some answers or else
+X	- UI Sound press buttons or something else
+X	- Tutorial, Intro Dialog: If Sanity < 0 hospital, if Emphaty >= 100 im slave without will
+X	- Demo ending 3 Day, 10 minits
+
 
 */
 #pragma endregion
@@ -31,7 +32,7 @@ public:
 #pragma region BUGS
 /*
 V	- After pressing button not decreased sanity
-X	- After sleep, not increased fatigue
+V	- After sleep, not increased fatigue
 */
 #pragma endregion
 //------------------------------------------------------------------------------------------------------------
