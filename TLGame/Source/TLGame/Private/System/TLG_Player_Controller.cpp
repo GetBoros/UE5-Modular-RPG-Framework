@@ -121,6 +121,10 @@ void ATLG_Player_Controller::Request_Game_Over_Flow(const ETLG_Game_Flow_Option 
 
     switch (tlg_game_flow_option)
     {
+    case ETLG_Game_Flow_Option::Continue:
+		TLG_HUD->Hide_Game_Over();
+        break;
+
     case ETLG_Game_Flow_Option::Restart_Level:
         UGameplayStatics::OpenLevel(GetWorld(), current_level);
         break;

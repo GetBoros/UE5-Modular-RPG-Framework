@@ -51,6 +51,11 @@ void ATLG_HUD::Handle_Game_Over()
     Get_TLG_Widget_HUD()->Handle_Game_Over();
 }
 //------------------------------------------------------------------------------------------------------------
+void ATLG_HUD::Hide_Game_Over()
+{
+    Get_TLG_Widget_HUD()->Hide_Game_Over();
+}
+//------------------------------------------------------------------------------------------------------------
 UTLG_Widget_HUD *ATLG_HUD::Get_TLG_Widget_HUD()
 {
     if (HUD_Widget != 0)

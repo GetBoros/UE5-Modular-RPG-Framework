@@ -26,6 +26,7 @@ public:
 	void Update_Buttons_Navigation(const TArray<FTLG_Location_Exit> &tlg_location_exits);
 	void Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_location_action);
 	void Handle_Game_Over();
+	void Hide_Game_Over();
 
 private:
 	UTLG_Widget_HUD *Get_TLG_Widget_HUD();
