@@ -18,7 +18,7 @@ public:
 /*
 V	- In Controller work with Enemy, not just DT or other data
 V	- Tooltips
-X		- Need visual
+V		- Need visual simple
 X	- Press ESC to open Exit from game or Restart
 X	- Fatigue logic: Block some answers or else
 X	- UI Sound press buttons or something else

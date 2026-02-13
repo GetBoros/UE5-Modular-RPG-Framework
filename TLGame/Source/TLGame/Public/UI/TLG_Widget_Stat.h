@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------------------------------------
 class UImage;
 class UTextBlock;
+class UTLG_Widget_Stat_Tooltip;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API UTLG_Widget_Stat : public UUserWidget
 {
@@ -20,12 +21,13 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTexture2D> Icon_Texture;
-	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UUserWidget> Tooltip_Class;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true", MultiLine = true) ) FText Text_Tooltip_Description;  // !!! TEMP Make multy line
+	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Stat_Tooltip> TLG_Widget_Stat_Tooltip_Class;
 
 	UPROPERTY(meta = (BindWidget) ) TObjectPtr<UImage> Image_Icon;
 	UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> TB_Description;
 
-	UPROPERTY() TObjectPtr<UUserWidget> Cached_Tooltip;
+	UPROPERTY() TObjectPtr<UTLG_Widget_Stat_Tooltip> TLG_Widget_Stat_Tooltip;
 
 };
 //------------------------------------------------------------------------------------------------------------
