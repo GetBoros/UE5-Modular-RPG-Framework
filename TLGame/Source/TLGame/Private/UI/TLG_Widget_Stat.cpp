@@ -22,19 +22,19 @@ void UTLG_Widget_Stat::NativePreConstruct()
     
     if (Cached_Tooltip == 0)
         Cached_Tooltip = CreateWidget<UUserWidget>(GetOwningPlayer(), Tooltip_Class);
-    else
-        SetToolTip(Cached_Tooltip);
 
-    Update_Value(0.0f);
+    SetToolTip(Cached_Tooltip);
+
+    Update_Stat(0.0f);
 
     Super::NativePreConstruct();
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Stat::Update_Value(float new_value)
+void UTLG_Widget_Stat::Update_Stat(const float value)
 {
-    if (Image_Icon == 0  && Icon_Texture == 0)
+    if (Image_Icon != 0  && Icon_Texture != 0)
         Image_Icon->SetBrushFromTexture(Icon_Texture);
 
-    TB_Description->SetText(FText::AsNumber(new_value) );
+    TB_Description->SetText(FText::AsNumber(value) );
 }
 //------------------------------------------------------------------------------------------------------------

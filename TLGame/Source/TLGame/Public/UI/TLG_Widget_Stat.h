@@ -16,10 +16,10 @@ public:
 	virtual void NativeConstruct();
 	virtual void NativePreConstruct();
 
-	UFUNCTION(BlueprintCallable) void Update_Value(float new_value);
+	UFUNCTION(BlueprintCallable) void Update_Stat(const float value);
 
 private:
-	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTexture2D> Icon_Texture;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTexture2D> Icon_Texture;
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UUserWidget> Tooltip_Class;
 
 	UPROPERTY(meta = (BindWidget) ) TObjectPtr<UImage> Image_Icon;
