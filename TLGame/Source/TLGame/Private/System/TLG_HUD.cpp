@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------------------------------------
 #include <System/TLG_HUD.h>
-
-#include <Data/TLG_Data_Location.h>
 #include <UI/TLG_Widget_HUD.h>
+#include <UI/TLG_Widget_Menu_Pause.h>
+#include <Data/TLG_Data_Location.h>
 //------------------------------------------------------------------------------------------------------------
 
 
@@ -11,6 +11,12 @@
 // ATLG_HUD
 void ATLG_HUD::BeginPlay()
 {
+    if (ensureMsgf(TLG_Widget_HUD_Class, TEXT("Need HUD implemented from ATLG_HUD")) != true)
+        return;
+
+    if (ensureMsgf(TLG_Widget_Menu_Pause_Class, TEXT("Need Player State implemented from ATLG_Player_State")) != true)
+        return;
+
     Get_TLG_Widget_HUD();
     
     Super::BeginPlay();
@@ -23,7 +29,7 @@ void ATLG_HUD::Dialogue_Node_Show(const FDialogue_Node &node)
 //------------------------------------------------------------------------------------------------------------
 void ATLG_HUD::Dialogue_Hide() const
 {
-    HUD_Widget->Dialogue_Hide();
+    TLG_Widget_HUD->Dialogue_Hide();
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_HUD::Set_Image_Texture_Portrait(UTexture2D *texture)
@@ -56,18 +62,34 @@ void ATLG_HUD::Hide_Game_Over()
     Get_TLG_Widget_HUD()->Hide_Game_Over();
 }
 //------------------------------------------------------------------------------------------------------------
+void ATLG_HUD::Menu_Pause_Show()
+{
+    Get_TLG_Widget_HUD()->SetVisibility(ESlateVisibility::Collapsed);
+
+    Get_TLG_Widget_Menu_Pause();
+}
+//------------------------------------------------------------------------------------------------------------
 UTLG_Widget_HUD *ATLG_HUD::Get_TLG_Widget_HUD()
 {
-    if (HUD_Widget != 0)
-        return HUD_Widget;
+    if (TLG_Widget_HUD != 0)
+        return TLG_Widget_HUD;
 
-    if (HUD_Widget_Class == 0)
-        return 0;
+    TLG_Widget_HUD = CreateWidget<UTLG_Widget_HUD>(GetOwningPlayerController(), TLG_Widget_HUD_Class);
+    if (TLG_Widget_HUD != 0)
+        TLG_Widget_HUD->AddToViewport();
 
-    HUD_Widget = CreateWidget<UTLG_Widget_HUD>(GetOwningPlayerController(), HUD_Widget_Class);
-    if (HUD_Widget != 0)
-        HUD_Widget->AddToViewport();
+    return TLG_Widget_HUD;
+}
+//------------------------------------------------------------------------------------------------------------
+UTLG_Widget_Menu_Pause *ATLG_HUD::Get_TLG_Widget_Menu_Pause()
+{
+    if (TLG_Widget_Menu_Pause != 0)
+        return TLG_Widget_Menu_Pause;
 
-    return HUD_Widget;
+    TLG_Widget_Menu_Pause = CreateWidget<UTLG_Widget_Menu_Pause>(GetOwningPlayerController(), TLG_Widget_Menu_Pause_Class);
+    if (TLG_Widget_Menu_Pause != 0)
+        TLG_Widget_Menu_Pause->AddToViewport();
+
+    return TLG_Widget_Menu_Pause;
 }
 //------------------------------------------------------------------------------------------------------------

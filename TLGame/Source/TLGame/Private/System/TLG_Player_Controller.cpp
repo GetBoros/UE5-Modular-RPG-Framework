@@ -122,7 +122,7 @@ void ATLG_Player_Controller::Request_Game_Over_Flow(const ETLG_Game_Flow_Option 
     switch (tlg_game_flow_option)
     {
     case ETLG_Game_Flow_Option::Continue:
-		TLG_HUD->Hide_Game_Over();
+        TLG_HUD->Hide_Game_Over();
         break;
 
     case ETLG_Game_Flow_Option::Restart_Level:
@@ -145,12 +145,7 @@ void ATLG_Player_Controller::SetupInputComponent()
     if (InputComponent == 0)
         return;
 
-    // ЖЕСТКАЯ ПРИВЯЗКА КЛАВИШИ (Hardcoded)
-    // EKeys::Escape - сама клавиша
-    // IE_Pressed - событие нажатия
-    // this - кто вызывает
-    // &ATLG_Player_Controller::On_Input_Escape - какой метод вызвать
-    InputComponent->BindKey(EKeys::BackSpace, IE_Pressed, this, &ATLG_Player_Controller::On_Pressed_ESC);  // !!! TEMP Change on Escape
+    InputComponent->BindKey(EKeys::BackSpace, IE_Pressed, this, &ATLG_Player_Controller::On_Pressed_ESC);  // !!! TEMP Change on EKeys::Escape
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &player_response)
@@ -212,7 +207,7 @@ void ATLG_Player_Controller::Dialogue_End()
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::On_Pressed_ESC()
 {
-    Handle_Game_Over();
+    TLG_HUD->Menu_Pause_Show();
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Game_Over()

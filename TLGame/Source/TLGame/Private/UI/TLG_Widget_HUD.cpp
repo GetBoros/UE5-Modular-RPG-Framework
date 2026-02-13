@@ -114,7 +114,8 @@ void UTLG_Widget_HUD::Handle_Game_Over()  // !!! TEMP Need refactoring DRY
     VB_Button_Actions->SetVisibility(ESlateVisibility::Collapsed);
     VB_Button_Game_Over->SetVisibility(ESlateVisibility::Visible);
     VB_Button_Game_Over->ClearChildren();
-    TLG_Widget_Dialogue->RemoveFromParent();
+	TLG_Widget_Dialogue->SetVisibility(ESlateVisibility::Collapsed);
+    //TLG_Widget_Dialogue->RemoveFromParent();
 
     // 2.0. Add button Continue game
     tlg_widget_button = CreateWidget<UTLG_Widget_Button_Flow>(this, TLG_Widget_Button_Game_Over);
@@ -138,11 +139,14 @@ void UTLG_Widget_HUD::Handle_Game_Over()  // !!! TEMP Need refactoring DRY
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Hide_Game_Over()  // !!! TEMP Need new plugin with menu main
 {
+    TLG_Widget_Dialogue->SetVisibility(ESlateVisibility::Visible);
+
     Text_Game_Over->SetVisibility(ESlateVisibility::Collapsed);
     VB_Button_Navigation->SetVisibility(ESlateVisibility::Visible);
     VB_Button_Actions->SetVisibility(ESlateVisibility::Visible);
     VB_Button_Game_Over->SetVisibility(ESlateVisibility::Collapsed);
     VB_Button_Game_Over->ClearChildren();
+
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Updated_Temp_Implementation(float sanity_curr, float sanity_max)

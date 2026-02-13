@@ -33,6 +33,7 @@ X	- Demo ending 3 Day, 10 minits
 /*
 V	- After pressing button not decreased sanity
 V	- After sleep, not increased fatigue
+X	- If Sanity 0 Button Continued don`t need or cannot continue
 */
 #pragma endregion
 //------------------------------------------------------------------------------------------------------------

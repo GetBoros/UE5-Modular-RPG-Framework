@@ -8,6 +8,7 @@
 #include <TLG_HUD.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class UTLG_Widget_HUD;
+class UTLG_Widget_Menu_Pause;
 struct FTLG_Location_Exit;
 struct FTLG_Location_Action;
 //------------------------------------------------------------------------------------------------------------
@@ -28,10 +29,15 @@ public:
 	void Handle_Game_Over();
 	void Hide_Game_Over();
 
+	void Menu_Pause_Show();
+
 private:
 	UTLG_Widget_HUD *Get_TLG_Widget_HUD();
+	UTLG_Widget_Menu_Pause *Get_TLG_Widget_Menu_Pause();
 
-	UPROPERTY(EditDefaultsOnly, meta=(AllowPrivateAccess = "true") ) TSubclassOf<UUserWidget> HUD_Widget_Class;
-	UPROPERTY() TObjectPtr<UTLG_Widget_HUD> HUD_Widget;
+	UPROPERTY(EditDefaultsOnly, meta=(AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_HUD> TLG_Widget_HUD_Class;
+	UPROPERTY(EditDefaultsOnly, meta=(AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Menu_Pause> TLG_Widget_Menu_Pause_Class;
+	UPROPERTY() TObjectPtr<UTLG_Widget_HUD> TLG_Widget_HUD;
+	UPROPERTY() TObjectPtr<UTLG_Widget_Menu_Pause> TLG_Widget_Menu_Pause;
 };
 //------------------------------------------------------------------------------------------------------------
