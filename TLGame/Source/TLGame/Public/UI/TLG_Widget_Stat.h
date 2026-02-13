@@ -21,7 +21,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTexture2D> Icon_Texture;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true", MultiLine = true) ) FText Text_Tooltip_Description;  // !!! TEMP Make multy line
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true", MultiLine = true) ) FText Text_Tooltip_Description;
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Stat_Tooltip> TLG_Widget_Stat_Tooltip_Class;
 
 	UPROPERTY(meta = (BindWidget) ) TObjectPtr<UImage> Image_Icon;

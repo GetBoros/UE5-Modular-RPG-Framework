@@ -24,12 +24,15 @@ public:
     virtual void Location_Enter(UTLG_Data_Location *tlg_data_location);
     virtual void Location_Action(const FTLG_Location_Action &tlg_location_action);
     virtual void Request_Game_Over_Flow(const ETLG_Game_Flow_Option tlg_game_flow_option);
+    virtual void SetupInputComponent();
 
     void Handle_Player_Decision(const FPlayer_Response &player_response);  // Call UI when player press button
 
 private:
     void Dialogue_Start(const FName &row_id);
     void Dialogue_End();
+
+    void On_Pressed_ESC();
 
 	void Handle_Game_Over();
 

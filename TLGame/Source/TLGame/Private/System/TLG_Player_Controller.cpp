@@ -65,7 +65,7 @@ void ATLG_Player_Controller::BeginPlay()
 
     // 4.1. Set input mode
     bShowMouseCursor = true;
-    SetInputMode(FInputModeUIOnly() );
+    SetInputMode(FInputModeGameAndUI() );
 
     // 5.0. Blueprint logic
     Super::BeginPlay();
@@ -134,6 +134,21 @@ void ATLG_Player_Controller::Request_Game_Over_Flow(const ETLG_Game_Flow_Option 
     }
 }
 //------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::SetupInputComponent()
+{
+    Super::SetupInputComponent();
+
+    if (InputComponent == 0)
+        return;
+
+    // ЖЕСТКАЯ ПРИВЯЗКА КЛАВИШИ (Hardcoded)
+    // EKeys::Escape - сама клавиша
+    // IE_Pressed - событие нажатия
+    // this - кто вызывает
+    // &ATLG_Player_Controller::On_Input_Escape - какой метод вызвать
+    InputComponent->BindKey(EKeys::BackSpace, IE_Pressed, this, &ATLG_Player_Controller::On_Pressed_ESC);  // !!! TEMP Change on Escape
+}
+//------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &player_response)
 {
 	const float response_cost = player_response.Response_Cost;
@@ -189,6 +204,11 @@ void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
 void ATLG_Player_Controller::Dialogue_End()
 {
     TLG_HUD->Dialogue_Hide();
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::On_Pressed_ESC()
+{
+    Handle_Game_Over();
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Game_Over()

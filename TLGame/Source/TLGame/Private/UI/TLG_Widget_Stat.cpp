@@ -14,24 +14,25 @@ void UTLG_Widget_Stat::NativeConstruct()
 {
     Super::NativeConstruct();
 
-}
-//------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Stat::NativePreConstruct()
-{
-    if (ensureMsgf(TLG_Widget_Stat_Tooltip_Class, TEXT("TLG_Widget_Stat_Tooltip_Class not setting up") ) != true)
-        return;
-    
     if (TLG_Widget_Stat_Tooltip == 0)
     {
         TLG_Widget_Stat_Tooltip = CreateWidget<UTLG_Widget_Stat_Tooltip>(GetOwningPlayer(), TLG_Widget_Stat_Tooltip_Class);
-
         TLG_Widget_Stat_Tooltip->Update_TB_Description(Text_Tooltip_Description);
     }
 
     SetToolTip(TLG_Widget_Stat_Tooltip);
+
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Stat::NativePreConstruct()
+{
+    Super::NativePreConstruct();
+
+    if (ensureMsgf(TLG_Widget_Stat_Tooltip_Class, TEXT("TLG_Widget_Stat_Tooltip_Class not setting up") ) != true)
+        return;
+    
     Update_Stat(0.0f);
 
-    Super::NativePreConstruct();
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Stat::Update_Stat(const float value)
