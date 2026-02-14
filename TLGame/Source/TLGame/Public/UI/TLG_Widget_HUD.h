@@ -32,8 +32,6 @@ public:
     void Set_Image_Texture_Portrait(UTexture2D *image_portrait_texture);
 	void Update_Buttons_Navigation(const TArray<FTLG_Location_Exit> &tlg_location_exits);
 	void Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_location_action);
-    void Handle_Game_Over();
-    void Hide_Game_Over();
 
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Sanity(float sanity_curr, float sanity_max);
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Dominance(float dominance_curr);

@@ -31,7 +31,7 @@ void ATLG_Player_Controller::BeginPlay()
     if (TLG_Player_State != 0)
     {
         tlg_uattribute_set = TLG_Player_State->Get_Attribute_Set();
-        tlg_uattribute_set->On_Sanity_Zero.AddUObject(this, &ATLG_Player_Controller::Handle_Game_Over);
+        // !!! TEMP tlg_uattribute_set->On_Sanity_Zero.AddUObject(this, &ATLG_Player_Controller::Menu_);
     }
 
     // 2.0. Check
@@ -122,7 +122,7 @@ void ATLG_Player_Controller::Request_Game_Over_Flow(const ETLG_Game_Flow_Option 
     switch (tlg_game_flow_option)
     {
     case ETLG_Game_Flow_Option::Continue:
-        TLG_HUD->Hide_Game_Over();
+        TLG_HUD->Menu_Pause_Show();
         break;
 
     case ETLG_Game_Flow_Option::Restart_Level:
@@ -208,11 +208,6 @@ void ATLG_Player_Controller::Dialogue_End()
 void ATLG_Player_Controller::On_Pressed_ESC()
 {
     TLG_HUD->Menu_Pause_Show();
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Handle_Game_Over()
-{
-    TLG_HUD->Handle_Game_Over();
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Play_Ambient_Sound(USoundBase *sound_base_to_play)

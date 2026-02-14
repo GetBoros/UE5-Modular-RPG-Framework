@@ -52,21 +52,18 @@ void ATLG_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_lo
      Get_TLG_Widget_HUD()->Update_Buttons_Actions(tlg_location_action);
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_HUD::Handle_Game_Over()
-{
-    Get_TLG_Widget_HUD()->Handle_Game_Over();
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_HUD::Hide_Game_Over()
-{
-    Get_TLG_Widget_HUD()->Hide_Game_Over();
-}
-//------------------------------------------------------------------------------------------------------------
 void ATLG_HUD::Menu_Pause_Show()
 {
-    Get_TLG_Widget_HUD()->SetVisibility(ESlateVisibility::Collapsed);
-
-    Get_TLG_Widget_Menu_Pause();
+    if (Get_TLG_Widget_HUD()->IsVisible() == true)
+    {
+        Get_TLG_Widget_HUD()->SetVisibility(ESlateVisibility::Collapsed);
+        Get_TLG_Widget_Menu_Pause()->SetVisibility(ESlateVisibility::Visible);
+    }
+    else
+    {
+        Get_TLG_Widget_HUD()->SetVisibility(ESlateVisibility::Visible);
+        Get_TLG_Widget_Menu_Pause()->SetVisibility(ESlateVisibility::Collapsed);
+    }
 }
 //------------------------------------------------------------------------------------------------------------
 UTLG_Widget_HUD *ATLG_HUD::Get_TLG_Widget_HUD()
@@ -88,7 +85,7 @@ UTLG_Widget_Menu_Pause *ATLG_HUD::Get_TLG_Widget_Menu_Pause()
 
     TLG_Widget_Menu_Pause = CreateWidget<UTLG_Widget_Menu_Pause>(GetOwningPlayerController(), TLG_Widget_Menu_Pause_Class);
     if (TLG_Widget_Menu_Pause != 0)
-        TLG_Widget_Menu_Pause->AddToViewport();
+        TLG_Widget_Menu_Pause->AddToViewport(-1);
 
     return TLG_Widget_Menu_Pause;
 }

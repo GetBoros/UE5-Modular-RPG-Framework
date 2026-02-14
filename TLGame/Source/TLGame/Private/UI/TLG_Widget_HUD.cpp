@@ -100,55 +100,6 @@ void UTLG_Widget_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> 
     }
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Handle_Game_Over()  // !!! TEMP Need refactoring DRY
-{
-    UTLG_Widget_Button_Flow *tlg_widget_button;
-
-    const FText text_game_exit = FText::FromString(TEXT("Exit Game") ) ;
-    const FText text_game_restart = FText::FromString(TEXT("Restart Game") );
-    const FText text_game_Continue = FText::FromString(TEXT("Continue Game") );
-
-	// 1.0. Update visuals
-    Text_Game_Over->SetVisibility(ESlateVisibility::Visible);
-    VB_Button_Navigation->SetVisibility(ESlateVisibility::Collapsed);
-    VB_Button_Actions->SetVisibility(ESlateVisibility::Collapsed);
-    VB_Button_Game_Over->SetVisibility(ESlateVisibility::Visible);
-    VB_Button_Game_Over->ClearChildren();
-	TLG_Widget_Dialogue->SetVisibility(ESlateVisibility::Collapsed);
-    //TLG_Widget_Dialogue->RemoveFromParent();
-
-    // 2.0. Add button Continue game
-    tlg_widget_button = CreateWidget<UTLG_Widget_Button_Flow>(this, TLG_Widget_Button_Game_Over);
-    if (tlg_widget_button != 0)
-        tlg_widget_button->Init(ETLG_Game_Flow_Option::Continue, text_game_Continue);
-    VB_Button_Game_Over->AddChild(tlg_widget_button);
-
-    // 2.1. Add button restart game
-    tlg_widget_button = CreateWidget<UTLG_Widget_Button_Flow>(this, TLG_Widget_Button_Game_Over);
-    if (tlg_widget_button != 0)
-        tlg_widget_button->Init(ETLG_Game_Flow_Option::Restart_Level, text_game_restart);
-    VB_Button_Game_Over->AddChild(tlg_widget_button);
-
-	// 2.2. Add button exit game
-    tlg_widget_button = CreateWidget<UTLG_Widget_Button_Flow>(this, TLG_Widget_Button_Game_Over);
-    if (tlg_widget_button != 0)
-        tlg_widget_button->Init(ETLG_Game_Flow_Option::Quit_Game, text_game_exit);
-    VB_Button_Game_Over->AddChild(tlg_widget_button);
-
-}
-//------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Hide_Game_Over()  // !!! TEMP Need new plugin with menu main
-{
-    TLG_Widget_Dialogue->SetVisibility(ESlateVisibility::Visible);
-
-    Text_Game_Over->SetVisibility(ESlateVisibility::Collapsed);
-    VB_Button_Navigation->SetVisibility(ESlateVisibility::Visible);
-    VB_Button_Actions->SetVisibility(ESlateVisibility::Visible);
-    VB_Button_Game_Over->SetVisibility(ESlateVisibility::Collapsed);
-    VB_Button_Game_Over->ClearChildren();
-
-}
-//------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Updated_Temp_Implementation(float sanity_curr, float sanity_max)
 {
     // !!! TEMP

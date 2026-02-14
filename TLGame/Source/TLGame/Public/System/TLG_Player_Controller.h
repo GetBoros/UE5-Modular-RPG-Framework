@@ -34,8 +34,6 @@ private:
 
     void On_Pressed_ESC();
 
-	void Handle_Game_Over();
-
     void Play_Ambient_Sound(USoundBase *sound_base_to_play);
 
     UPROPERTY(meta = (AllowPrivateAccess = "true") ) ATLG_HUD *TLG_HUD;
