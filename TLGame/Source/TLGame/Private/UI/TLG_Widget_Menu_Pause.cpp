@@ -3,6 +3,7 @@
 #include <UI/TLG_Widget_Button.h>
 
 #include <Components/VerticalBox.h>
+#include <Components/TextBlock.h>
 //------------------------------------------------------------------------------------------------------------
 
 
@@ -13,14 +14,14 @@ void UTLG_Widget_Menu_Pause::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-    if (ensureMsgf(TLG_Widget_Button_Flow_Class, TEXT("Floating Text Class not setting up") ) != true)
+    if (ensureMsgf(TLG_Widget_Button_Flow_Class, TEXT("No setting in BP") ) != true)
         return;
 
-    Init();
-
+    VB_Button_Menu_Pause->ClearChildren();  // Clear designer stuff
+    Text_Game_Over->SetVisibility(ESlateVisibility::Collapsed);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Menu_Pause::Init()
+void UTLG_Widget_Menu_Pause::Init(ESlateVisibility visibility, const bool is_game_over)
 {
     UTLG_Widget_Button_Flow *tlg_widget_button;
 
@@ -28,7 +29,12 @@ void UTLG_Widget_Menu_Pause::Init()
     const FText text_game_restart = FText::FromString(TEXT("Restart Game") );
     const FText text_game_Continue = FText::FromString(TEXT("Continue Game") );
 
-    VB_Button_Menu_Pause->ClearChildren();
+    SetVisibility(visibility);
+    if (is_game_over == true)
+        Text_Game_Over->SetVisibility(ESlateVisibility::Visible);
+
+    if (VB_Button_Menu_Pause->HasAnyChildren() == true)
+        return;
 
     // 2.0. Add button Continue game
     tlg_widget_button = CreateWidget<UTLG_Widget_Button_Flow>(this, TLG_Widget_Button_Flow_Class);

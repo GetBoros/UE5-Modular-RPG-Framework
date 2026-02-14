@@ -33,6 +33,7 @@ private:
     void Dialogue_End();
 
     void On_Pressed_ESC();
+    void Handle_Game_Over();
 
     void Play_Ambient_Sound(USoundBase *sound_base_to_play);
 

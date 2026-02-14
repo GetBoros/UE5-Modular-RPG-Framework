@@ -57,11 +57,9 @@ private:
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Portrait> TLG_Widget_Portrait_Enemy;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_Clock;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_Day_Counter;
-    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_Game_Over;
 
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Controller> TLG_Widget_Controller_Class;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Text_Floating> TLG_Widget_Text_Floating;
-    UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Button> TLG_Widget_Button_Game_Over;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Button> TLG_Widget_Button_Action_Class;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Button> TLG_Widget_Button_Navigation_Class;
 

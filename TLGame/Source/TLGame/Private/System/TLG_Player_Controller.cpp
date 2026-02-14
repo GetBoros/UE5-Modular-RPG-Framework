@@ -31,7 +31,7 @@ void ATLG_Player_Controller::BeginPlay()
     if (TLG_Player_State != 0)
     {
         tlg_uattribute_set = TLG_Player_State->Get_Attribute_Set();
-        tlg_uattribute_set->On_Sanity_Zero.AddUObject(this, &ATLG_Player_Controller::On_Pressed_ESC);
+        tlg_uattribute_set->On_Sanity_Zero.AddUObject(this, &ATLG_Player_Controller::Handle_Game_Over);
     }
 
     // 2.0. Check
@@ -123,13 +123,17 @@ void ATLG_Player_Controller::Request_Menu_Main_Pause(const ETLG_Game_Flow_Option
     {
     case ETLG_Game_Flow_Option::Continue:
         if(TLG_Player_State->Get_Attribute_Set()->GetSanity() != 0.0f)  // !!! TEMP
-            TLG_HUD->Menu_Pause_Show();
+        {
+            if (TLG_Game_State->Is_Game_Over != true)  // !!! TEMP
+                TLG_HUD->Menu_Pause_Show(TLG_Game_State->Is_Game_Over);
+        }
         break;
 
 
     case ETLG_Game_Flow_Option::Restart_Level:
         UGameplayStatics::OpenLevel(GetWorld(), current_level);
         break;
+
 
     case ETLG_Game_Flow_Option::Quit_Game:
         UKismetSystemLibrary::QuitGame(GetWorld(), this, EQuitPreference::Quit, false);
@@ -211,7 +215,14 @@ void ATLG_Player_Controller::Dialogue_End()
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::On_Pressed_ESC()
 {
-    TLG_HUD->Menu_Pause_Show();
+    TLG_HUD->Menu_Pause_Show(TLG_Game_State->Is_Game_Over);
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Handle_Game_Over()
+{
+    const bool is_game_over = TLG_Game_State->Is_Game_Over = true;
+
+    TLG_HUD->Menu_Pause_Show(is_game_over);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Play_Ambient_Sound(USoundBase *sound_base_to_play)

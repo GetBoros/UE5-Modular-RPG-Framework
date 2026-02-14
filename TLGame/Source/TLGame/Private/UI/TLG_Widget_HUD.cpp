@@ -27,8 +27,6 @@ void UTLG_Widget_HUD::NativeConstruct()
         return;
     if (ensureMsgf(TLG_Widget_Controller_Class, TEXT("Is Empty") ) != true)
         return;
-    if (ensureMsgf(TLG_Widget_Button_Game_Over, TEXT("Is Empty") ) != true)
-        return;
     if (ensureMsgf(TLG_Widget_Button_Action_Class, TEXT("Is Empty") ) != true)
         return;
     if (ensureMsgf(TLG_Widget_Button_Navigation_Class, TEXT("Is Empty") ) != true)

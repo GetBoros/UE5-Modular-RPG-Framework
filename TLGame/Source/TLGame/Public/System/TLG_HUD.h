@@ -27,7 +27,7 @@ public:
 	void Update_Buttons_Navigation(const TArray<FTLG_Location_Exit> &tlg_location_exits);
 	void Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_location_action);
 
-	void Menu_Pause_Show();
+	void Menu_Pause_Show(const bool is_game_over);
 
 private:
 	UTLG_Widget_HUD *Get_TLG_Widget_HUD();
