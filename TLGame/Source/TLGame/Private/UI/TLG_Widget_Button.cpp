@@ -137,7 +137,7 @@ void UTLG_Widget_Button_Flow::Handle_Click()
 
     interaction_interface = Cast<ITLG_Interaction_Interface>(player_controller);
     if (interaction_interface != 0)
-        interaction_interface->Request_Game_Over_Flow(TLG_Game_Flow_Option);
+        interaction_interface->Request_Menu_Main_Pause(TLG_Game_Flow_Option);
 
 }
 //------------------------------------------------------------------------------------------------------------

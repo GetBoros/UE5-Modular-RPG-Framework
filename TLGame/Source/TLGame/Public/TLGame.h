@@ -20,7 +20,7 @@ V	- In Controller work with Enemy, not just DT or other data
 V	- Tooltips
 V		- Need visual simple
 V	- Press ESC to open Exit from game or Restart
-X		- Menu with 3 options: Exit, Restart, Continue
+V		- Menu with 3 options: Exit, Restart, Continue
 X	- Fatigue logic: Block some answers or else
 X	- UI Sound press buttons or something else
 X	- Tutorial, Intro Dialog: If Sanity < 0 hospital, if Emphaty >= 100 im slave without will

@@ -25,12 +25,7 @@ void UTLG_Attribute_Set::PreAttributeChange(const FGameplayAttribute &attribute,
     Super::PreAttributeChange(attribute, new_value);
 
     if (attribute == GetSanityAttribute() )
-    {
         new_value = FMath::Clamp(new_value, 0.0f, GetSanity_Max() );
-
-        if (On_Sanity_Zero.IsBound() && new_value <= 0.0f)
-            On_Sanity_Zero.Broadcast();
-    }
 
     if (attribute == GetDominanceAttribute() )
         new_value = FMath::Clamp(new_value, 0.0f, 100.0f);

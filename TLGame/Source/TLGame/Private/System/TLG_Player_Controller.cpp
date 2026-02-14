@@ -31,7 +31,7 @@ void ATLG_Player_Controller::BeginPlay()
     if (TLG_Player_State != 0)
     {
         tlg_uattribute_set = TLG_Player_State->Get_Attribute_Set();
-        // !!! TEMP tlg_uattribute_set->On_Sanity_Zero.AddUObject(this, &ATLG_Player_Controller::Menu_);
+        tlg_uattribute_set->On_Sanity_Zero.AddUObject(this, &ATLG_Player_Controller::On_Pressed_ESC);
     }
 
     // 2.0. Check
@@ -115,15 +115,17 @@ void ATLG_Player_Controller::Location_Action(const FTLG_Location_Action &tlg_loc
     TLG_Player_State->Apply_Multy_Dynamic_Change(tlg_location_action);
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Request_Game_Over_Flow(const ETLG_Game_Flow_Option tlg_game_flow_option)
+void ATLG_Player_Controller::Request_Menu_Main_Pause(const ETLG_Game_Flow_Option tlg_game_flow_option)
 {
     const FName current_level = FName(*UGameplayStatics::GetCurrentLevelName(GetWorld() ) );
 
     switch (tlg_game_flow_option)
     {
     case ETLG_Game_Flow_Option::Continue:
-        TLG_HUD->Menu_Pause_Show();
+        if(TLG_Player_State->Get_Attribute_Set()->GetSanity() != 0.0f)  // !!! TEMP
+            TLG_HUD->Menu_Pause_Show();
         break;
+
 
     case ETLG_Game_Flow_Option::Restart_Level:
         UGameplayStatics::OpenLevel(GetWorld(), current_level);
@@ -133,8 +135,10 @@ void ATLG_Player_Controller::Request_Game_Over_Flow(const ETLG_Game_Flow_Option 
         UKismetSystemLibrary::QuitGame(GetWorld(), this, EQuitPreference::Quit, false);
         break;
 
+
     case ETLG_Game_Flow_Option::MainMenu:
         break;
+
     }
 }
 //------------------------------------------------------------------------------------------------------------
