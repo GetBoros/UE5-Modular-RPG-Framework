@@ -22,7 +22,7 @@ V		- Need visual simple
 V	- Press ESC to open Exit from game or Restart
 V		- Menu with 3 options: Exit, Restart, Continue
 X	- Fatigue logic: Block some answers or else
-X	- UI Sound press buttons or something else
+V	- UI Sound press buttons or something else
 X	- Tutorial, Intro Dialog: If Sanity < 0 hospital, if Emphaty >= 100 im slave without will
 X	- Demo ending 3 Day, 10 minits
 

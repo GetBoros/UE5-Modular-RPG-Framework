@@ -48,6 +48,5 @@ void UTLG_Widget_Menu_Pause::Init()
         tlg_widget_button->Init(ETLG_Game_Flow_Option::Quit_Game, text_game_exit);
     VB_Button_Menu_Pause->AddChild(tlg_widget_button);
 
-
 }
 //------------------------------------------------------------------------------------------------------------

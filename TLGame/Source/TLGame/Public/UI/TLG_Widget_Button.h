@@ -23,9 +23,13 @@ public:
 
 protected:
     UFUNCTION() void Handle_Click_Internal();
+    UFUNCTION() void Handle_Hover_Internal();
 
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> TB_Button;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UButton> Button_Click;
+
+    UPROPERTY(EditDefaultsOnly) TObjectPtr<USoundBase> Sound_Click;
+    UPROPERTY(EditDefaultsOnly) TObjectPtr<USoundBase> Sound_Hover;
 };
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API UTLG_Widget_Button_Action : public UTLG_Widget_Button

@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <UI/TLG_Widget_Button.h>
 
+#include <Kismet/GameplayStatics.h>
 #include <Components/Button.h>
 #include <Components/TextBlock.h>
 //------------------------------------------------------------------------------------------------------------
@@ -15,6 +16,9 @@ void UTLG_Widget_Button::NativeConstruct()
 
     Button_Click->OnClicked.RemoveDynamic(this, &UTLG_Widget_Button::Handle_Click_Internal);
     Button_Click->OnClicked.AddDynamic(this, &UTLG_Widget_Button::Handle_Click_Internal);
+
+    Button_Click->OnHovered.RemoveDynamic(this, &UTLG_Widget_Button::Handle_Hover_Internal);
+    Button_Click->OnHovered.AddDynamic(this, &UTLG_Widget_Button::Handle_Hover_Internal);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button::Handle_Click()
@@ -32,7 +36,16 @@ void UTLG_Widget_Button::Set_Button_Text(const FText &text_button) const
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button::Handle_Click_Internal()
 {
+    if (Sound_Click != 0)
+        UGameplayStatics::PlaySound2D(this, Sound_Click);
+
     Handle_Click();
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Button::Handle_Hover_Internal()
+{
+    if (Sound_Hover != 0)
+        UGameplayStatics::PlaySound2D(this, Sound_Hover);
 }
 //------------------------------------------------------------------------------------------------------------
 
