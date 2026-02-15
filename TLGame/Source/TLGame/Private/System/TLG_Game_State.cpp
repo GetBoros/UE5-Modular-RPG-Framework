@@ -42,6 +42,13 @@ void ATLG_Game_State::Game_Over()
 	On_Game_Over.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
+void ATLG_Game_State::Game_Demo_Completed()
+{
+    TLG_Game_State = ETLG_Game_State::Game_Demo_Completed;
+
+    On_Game_Demo_Completed.Broadcast();
+}
+//------------------------------------------------------------------------------------------------------------
 void ATLG_Game_State::Advance_Time(int32 minutes_to_add)
 {
     int32 hours, minutes, days_passed;
@@ -57,6 +64,13 @@ void ATLG_Game_State::Advance_Time(int32 minutes_to_add)
         Current_Time_Minutes = Current_Time_Minutes % Max_Time_Minutes;
 
         On_Updated_Day.Broadcast(Current_Time_Day);
+
+        if (Current_Time_Day > Max_Demo_Days)
+        {
+            Game_Demo_Completed();  // !!! TEMP Change on Congratulation or Demo Completed
+
+            return; // Выходим, не обновляем время дальше
+        }
     }
 
     // 1.2.  Update Game Time
