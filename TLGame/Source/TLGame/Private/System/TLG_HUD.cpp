@@ -25,10 +25,11 @@ void ATLG_HUD::BeginPlay()
 
     Init_Widget_Controller();
 
-	Get_TLG_Widget_HUD()->Set_Widget_Controller(TLG_Widget_Controller);
+	Get_TLG_Widget_HUD()->Set_Widget_Controller(TLG_Widget_Controller);  // !!! TEMP Need refactoring
     Get_TLG_Widget_HUD()->Handle_Widget_Controller();
-
-    // !!! TEMP Set the same for Get_TLG_Widget_Menu_Pause
+    
+    Get_TLG_Widget_Menu_Pause()->Set_Widget_Controller(TLG_Widget_Controller);
+    Get_TLG_Widget_Menu_Pause()->Handle_Widget_Controller();
 
     Super::BeginPlay();
 }
@@ -63,17 +64,17 @@ void ATLG_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_lo
      Get_TLG_Widget_HUD()->Update_Buttons_Actions(tlg_location_action);
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_HUD::Menu_Pause_Show(const bool is_game_over)
+void ATLG_HUD::Menu_Pause_Show()
 {
     if (Get_TLG_Widget_HUD()->IsVisible() == true)
     {
         Get_TLG_Widget_HUD()->SetVisibility(ESlateVisibility::Collapsed);
-        Get_TLG_Widget_Menu_Pause()->Init(ESlateVisibility::Visible, is_game_over);
+        Get_TLG_Widget_Menu_Pause()->Init(ESlateVisibility::Visible);
     }
     else
     {
         Get_TLG_Widget_HUD()->SetVisibility(ESlateVisibility::Visible);
-        Get_TLG_Widget_Menu_Pause()->Init(ESlateVisibility::Collapsed, is_game_over);
+        Get_TLG_Widget_Menu_Pause()->Init(ESlateVisibility::Collapsed);
     }
 }
 //------------------------------------------------------------------------------------------------------------

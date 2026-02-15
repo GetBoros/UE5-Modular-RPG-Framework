@@ -123,10 +123,7 @@ void ATLG_Player_Controller::Request_Menu_Main_Pause(const ETLG_Game_Flow_Option
     {
     case ETLG_Game_Flow_Option::Continue:
         if(TLG_Player_State->Get_Attribute_Set()->GetSanity() != 0.0f)  // !!! TEMP
-        {
-            if (TLG_Game_State->Is_Game_Over != true)  // !!! TEMP
-                TLG_HUD->Menu_Pause_Show(TLG_Game_State->Is_Game_Over);
-        }
+            TLG_HUD->Menu_Pause_Show();
         break;
 
 
@@ -215,14 +212,13 @@ void ATLG_Player_Controller::Dialogue_End()
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::On_Pressed_ESC()
 {
-    TLG_HUD->Menu_Pause_Show(TLG_Game_State->Is_Game_Over);
+    TLG_HUD->Menu_Pause_Show();
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Game_Over()
 {
-    const bool is_game_over = TLG_Game_State->Is_Game_Over = true;
-
-    TLG_HUD->Menu_Pause_Show(is_game_over);
+	TLG_Game_State->On_Game_Over.Broadcast();
+	TLG_Game_State->On_Game_State_Changed.Broadcast(ETLG_Game_State::Game_Over);  // !!! TEMP 
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Play_Ambient_Sound(USoundBase *sound_base_to_play)

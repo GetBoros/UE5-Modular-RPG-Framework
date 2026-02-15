@@ -107,6 +107,7 @@ void UTLG_Widget_HUD::Handle_Widget_Controller()
     tlg_widget_controller->On_Changed_Dominance.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Dominance);
     tlg_widget_controller->On_Changed_Time_Game.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Time_Game);
     tlg_widget_controller->On_Changed_Day.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Day);
+    tlg_widget_controller->On_Game_Over.AddUObject(this, &UTLG_Widget_HUD::On_Changed_Game_State);
 
     tlg_widget_controller->Bind_Callbacks_To_Dependencies();
     tlg_widget_controller->Broadcast_Initial_Values();
@@ -132,6 +133,11 @@ void UTLG_Widget_HUD::Spawn_Text_Floating(float delta, const FText &name_text)
     tlg_widget_text_floating->Setup_Visuals(text_final, linear_color);
     
     VB_Text_Floating_Events->AddChild(tlg_widget_text_floating);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::On_Changed_Game_State()
+{
+    SetVisibility(ESlateVisibility::Collapsed);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Changed_Callback_Sanity(float new_value, float delta)

@@ -40,6 +40,7 @@ public:
 
 private:
     void Spawn_Text_Floating(const float delta, const FText &name_text);  // Spawn in VB_Text_Floating_Events container
+    void On_Changed_Game_State();
 
     UFUNCTION() void On_Changed_Callback_Sanity(float new_value, float delta);
     UFUNCTION() void On_Changed_Callback_Dominance(float new_value, float delta);
