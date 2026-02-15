@@ -64,20 +64,6 @@ void ATLG_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_lo
      Get_TLG_Widget_HUD()->Update_Buttons_Actions(tlg_location_action);
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_HUD::Menu_Pause_Show()
-{
-    if (Get_TLG_Widget_HUD()->IsVisible() == true)
-    {
-        Get_TLG_Widget_HUD()->SetVisibility(ESlateVisibility::Collapsed);
-        Get_TLG_Widget_Menu_Pause()->Init(ESlateVisibility::Visible);
-    }
-    else
-    {
-        Get_TLG_Widget_HUD()->SetVisibility(ESlateVisibility::Visible);
-        Get_TLG_Widget_Menu_Pause()->Init(ESlateVisibility::Collapsed);
-    }
-}
-//------------------------------------------------------------------------------------------------------------
 void ATLG_HUD::Init_Widget_Controller()
 {
     APlayerController *player_controller;

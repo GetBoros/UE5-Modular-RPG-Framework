@@ -19,34 +19,19 @@ void UTLG_Widget_Menu_Pause::NativeConstruct()
         return;
 
     VB_Button_Menu_Pause->ClearChildren();  // Clear designer stuff
-    Text_Game_Over->SetVisibility(ESlateVisibility::Collapsed);
-}
-//------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Menu_Pause::Init(ESlateVisibility visibility)
-{
-    SetVisibility(visibility);
-
-    if (VB_Button_Menu_Pause->HasAnyChildren() == true)
-        return;
-
-    Add_Menu_Pause_Buttons(VB_Button_Menu_Pause);
+    TB_Game_Over->SetVisibility(ESlateVisibility::Collapsed);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Menu_Pause::Handle_Widget_Controller()
 {
-     if (UTLG_Widget_Controller *tlg_widget_controller = Cast<UTLG_Widget_Controller>(GBUIC_Widget_Controller) )
-         tlg_widget_controller->On_Game_Over.AddUObject(this, &UTLG_Widget_Menu_Pause::Handle_Changed_Game_State);
-}
-//------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Menu_Pause::Handle_Changed_Game_State()
-{
-    SetVisibility(ESlateVisibility::Visible);
-    Text_Game_Over->SetVisibility(ESlateVisibility::Visible);
-
-    if (VB_Button_Menu_Pause->HasAnyChildren() == true)
+    UTLG_Widget_Controller *tlg_widget_controller;
+    
+    tlg_widget_controller = Cast<UTLG_Widget_Controller>(GBUIC_Widget_Controller);
+    if (tlg_widget_controller == 0)
         return;
-
-    Add_Menu_Pause_Buttons(VB_Button_Menu_Pause);
+    
+    tlg_widget_controller->On_Game_Over.AddUObject(this, &UTLG_Widget_Menu_Pause::Handle_Game_Over);
+    tlg_widget_controller->On_Game_Menu_Paused.AddUObject(this, &UTLG_Widget_Menu_Pause::Handle_Menu_Paused);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Menu_Pause::Add_Menu_Pause_Buttons(UVerticalBox *vertical_box)
@@ -74,5 +59,26 @@ void UTLG_Widget_Menu_Pause::Add_Menu_Pause_Buttons(UVerticalBox *vertical_box)
         tlg_widget_button->Init(ETLG_Game_Flow_Option::Quit_Game, text_game_exit);
     vertical_box->AddChild(tlg_widget_button);
 
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Menu_Pause::Handle_Game_Over()
+{
+    SetVisibility(ESlateVisibility::Visible);
+    TB_Game_Over->SetVisibility(ESlateVisibility::Visible);
+
+    if (VB_Button_Menu_Pause->HasAnyChildren() == true)
+        return;
+
+    Add_Menu_Pause_Buttons(VB_Button_Menu_Pause);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Menu_Pause::Handle_Menu_Paused()
+{
+    SetVisibility(ESlateVisibility::Visible);
+
+    if (VB_Button_Menu_Pause->HasAnyChildren() == true)
+        return;
+
+    Add_Menu_Pause_Buttons(VB_Button_Menu_Pause);
 }
 //------------------------------------------------------------------------------------------------------------

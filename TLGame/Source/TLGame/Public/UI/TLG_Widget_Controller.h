@@ -9,6 +9,8 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOn_Attribute_Changed_Signature, fl
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOn_Time_Updated_Signature, int32, hours, int32, minutes);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_Day_Updated_Signature, int32, current_day);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Over);
+DECLARE_MULTICAST_DELEGATE(FOn_Game_Resumed);
+DECLARE_MULTICAST_DELEGATE(FOn_Game_Menu_Paused);
 //------------------------------------------------------------------------------------------------------------
 class UTLG_Attribute_Set;
 //------------------------------------------------------------------------------------------------------------
@@ -26,11 +28,15 @@ public:
     UPROPERTY(BlueprintAssignable) FOn_Day_Updated_Signature On_Changed_Day;
 
     mutable FOn_Game_Over On_Game_Over;
+    mutable FOn_Game_Resumed On_Game_Resumed;
+    mutable FOn_Game_Menu_Paused On_Game_Menu_Paused;
 
 private:
     void Handle_Changed_Sanity(const FOnAttributeChangeData &attribute_change_data);
     void Handle_Changed_Dominance(const FOnAttributeChangeData &attribute_change_data);
     void Handle_Changed_Game_Over();
+    void Handle_Changed_Game_Resumed();
+    void Handle_Changed_Game_Menu_Paused();
 
     UTLG_Attribute_Set *Get_TLG_Attribute_Set() const;
 

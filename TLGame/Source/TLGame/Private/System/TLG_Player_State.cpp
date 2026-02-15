@@ -1,7 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
 #include <System/TLG_Player_State.h>
 #include <System/TLG_Game_State.h>
-#include <Data/TLG_Data_Gameplay_Tags.h>
 #include <Data/TLG_Data_Location.h>
 #include <Abilities/TLG_Attribute_Set.h>
 
@@ -27,10 +26,12 @@ ATLG_Player_State::ATLG_Player_State()
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_State::BeginPlay()
 {
-    if (ensureMsgf(Gameplay_Effect_Class_Attributes, TEXT("Need HUD implemented from ATLG_HUD") ) != true)
+    if (ensureMsgf(Gameplay_Effect_Class_Attributes, TEXT("Is empty") ) != true)
         return;
 
     Super::BeginPlay();
+
+    Get_Attribute_Set()->On_Sanity_Zero.AddUObject(this, &ATLG_Player_State::Handle_Sanity_Zero);
 }
 //------------------------------------------------------------------------------------------------------------
 UAbilitySystemComponent *ATLG_Player_State::GetAbilitySystemComponent() const
@@ -92,5 +93,11 @@ void ATLG_Player_State::Apply_Dynamic_Change(float magnitude, FGameplayTag gamep
 
     gameplay_effect_handle_spec.Data->SetSetByCallerMagnitude(gameplay_tag, magnitude);
     Ability_System_Component->ApplyGameplayEffectSpecToSelf(*gameplay_effect_handle_spec.Data.Get() );
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_State::Handle_Sanity_Zero()
+{
+    if (ATLG_Game_State *tlg_game_state = GetWorld()->GetGameState<ATLG_Game_State>() )
+        tlg_game_state->Game_Over();
 }
 //------------------------------------------------------------------------------------------------------------

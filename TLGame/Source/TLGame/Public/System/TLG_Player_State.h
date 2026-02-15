@@ -28,6 +28,8 @@ public:
 	void Apply_Dynamic_Change(float magnitude, FGameplayTag attribute_tag);
 
 private:
+	void Handle_Sanity_Zero();
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Attribute_Set> Attribute_Set;
 

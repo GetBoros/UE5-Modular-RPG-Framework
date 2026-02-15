@@ -29,8 +29,6 @@ public:
 	void Update_Buttons_Navigation(const TArray<FTLG_Location_Exit> &tlg_location_exits);
 	void Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_location_action);
 
-	void Menu_Pause_Show();
-
 private:
 	void Init_Widget_Controller();
 	UTLG_Widget_HUD *Get_TLG_Widget_HUD();

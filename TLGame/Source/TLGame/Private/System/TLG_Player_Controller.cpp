@@ -6,9 +6,7 @@
 
 #include <Data/TLG_Data_Gameplay_Tags.h>
 #include <Data/TLG_Data_Enemy.h>
-#include <Abilities/TLG_Attribute_Set.h>
 
-#include <AbilitySystemComponent.h>
 #include <Components/AudioComponent.h>
 #include <Kismet/KismetSystemLibrary.h>
 #include <Kismet/GameplayStatics.h>
@@ -20,19 +18,10 @@
 // ATLG_Player_Controller
 void ATLG_Player_Controller::BeginPlay()
 {
-    UTLG_Attribute_Set *tlg_uattribute_set;
-
     // 1.0. Init
     TLG_HUD = GetHUD<ATLG_HUD>();
     TLG_Game_State = GetWorld()->GetGameState<ATLG_Game_State>();
     TLG_Player_State = GetPlayerState<ATLG_Player_State>();
-
-    // 1.1. Bind delegates on attribute Sanity if zero
-    if (TLG_Player_State != 0)
-    {
-        tlg_uattribute_set = TLG_Player_State->Get_Attribute_Set();
-        tlg_uattribute_set->On_Sanity_Zero.AddUObject(this, &ATLG_Player_Controller::Handle_Game_Over);
-    }
 
     // 2.0. Check
     if (ensureMsgf(TLG_HUD, TEXT("Need HUD implemented from ATLG_HUD") ) != true)
@@ -69,6 +58,16 @@ void ATLG_Player_Controller::BeginPlay()
 
     // 5.0. Blueprint logic
     Super::BeginPlay();
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::SetupInputComponent()
+{
+    Super::SetupInputComponent();
+
+    if (InputComponent == 0)
+        return;
+
+    InputComponent->BindKey(EKeys::BackSpace, IE_Pressed, this, &ATLG_Player_Controller::On_Pressed_ESC);  // !!! TEMP Change on EKeys::Escape
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_location)
@@ -122,8 +121,7 @@ void ATLG_Player_Controller::Request_Menu_Main_Pause(const ETLG_Game_Flow_Option
     switch (tlg_game_flow_option)
     {
     case ETLG_Game_Flow_Option::Continue:
-        if(TLG_Player_State->Get_Attribute_Set()->GetSanity() != 0.0f)  // !!! TEMP
-            TLG_HUD->Menu_Pause_Show();
+        TLG_Game_State->Game_Resume();
         break;
 
 
@@ -135,22 +133,7 @@ void ATLG_Player_Controller::Request_Menu_Main_Pause(const ETLG_Game_Flow_Option
     case ETLG_Game_Flow_Option::Quit_Game:
         UKismetSystemLibrary::QuitGame(GetWorld(), this, EQuitPreference::Quit, false);
         break;
-
-
-    case ETLG_Game_Flow_Option::MainMenu:
-        break;
-
     }
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::SetupInputComponent()
-{
-    Super::SetupInputComponent();
-
-    if (InputComponent == 0)
-        return;
-
-    InputComponent->BindKey(EKeys::BackSpace, IE_Pressed, this, &ATLG_Player_Controller::On_Pressed_ESC);  // !!! TEMP Change on EKeys::Escape
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &player_response)
@@ -212,13 +195,7 @@ void ATLG_Player_Controller::Dialogue_End()
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::On_Pressed_ESC()
 {
-    TLG_HUD->Menu_Pause_Show();
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Handle_Game_Over()
-{
-	TLG_Game_State->On_Game_Over.Broadcast();
-	TLG_Game_State->On_Game_State_Changed.Broadcast(ETLG_Game_State::Game_Over);  // !!! TEMP 
+    TLG_Game_State->Game_Menu_Paused();
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Play_Ambient_Sound(USoundBase *sound_base_to_play)

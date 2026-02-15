@@ -9,6 +9,37 @@
 ATLG_Game_State::ATLG_Game_State()
 {
 	Current_Time_Minutes = 8 * 60;  // Start at 8:00 AM
+	TLG_Game_State = ETLG_Game_State::Game;
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Game_State::Game_Menu_Paused()
+{
+    if (TLG_Game_State != ETLG_Game_State::Menu_Pause)  // Set menu pause game state if already not in pause menu
+    {
+        TLG_Game_State = ETLG_Game_State::Menu_Pause;
+
+        On_Game_Menu_Paused.Broadcast();
+    }
+    else
+        Game_Resume();  // if already in Menu Pause resume game
+
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Game_State::Game_Resume()
+{
+    if (TLG_Game_State == ETLG_Game_State::Game_Over)
+        return;
+
+    TLG_Game_State = ETLG_Game_State::Game;
+
+    On_Game_Resumed.Broadcast();
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Game_State::Game_Over()
+{
+	TLG_Game_State = ETLG_Game_State::Game_Over;
+
+	On_Game_Over.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Game_State::Advance_Time(int32 minutes_to_add)

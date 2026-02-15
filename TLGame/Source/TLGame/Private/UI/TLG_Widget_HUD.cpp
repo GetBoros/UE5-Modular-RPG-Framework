@@ -107,7 +107,9 @@ void UTLG_Widget_HUD::Handle_Widget_Controller()
     tlg_widget_controller->On_Changed_Dominance.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Dominance);
     tlg_widget_controller->On_Changed_Time_Game.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Time_Game);
     tlg_widget_controller->On_Changed_Day.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Day);
-    tlg_widget_controller->On_Game_Over.AddUObject(this, &UTLG_Widget_HUD::On_Changed_Game_State);
+    tlg_widget_controller->On_Game_Over.AddUObject(this, &UTLG_Widget_HUD::On_Game_Over);
+    tlg_widget_controller->On_Game_Resumed.AddUObject(this, &UTLG_Widget_HUD::On_Game_Resumed);
+    tlg_widget_controller->On_Game_Menu_Paused.AddUObject(this, &UTLG_Widget_HUD::On_Game_Menu_Paused);
 
     tlg_widget_controller->Bind_Callbacks_To_Dependencies();
     tlg_widget_controller->Broadcast_Initial_Values();
@@ -135,9 +137,19 @@ void UTLG_Widget_HUD::Spawn_Text_Floating(float delta, const FText &name_text)
     VB_Text_Floating_Events->AddChild(tlg_widget_text_floating);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::On_Changed_Game_State()
+void UTLG_Widget_HUD::On_Game_Over()
 {
     SetVisibility(ESlateVisibility::Collapsed);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::On_Game_Resumed()
+{
+    SetVisibility(ESlateVisibility::Visible);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::On_Game_Menu_Paused()
+{
+    SetVisibility(ESlateVisibility::Hidden);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Changed_Callback_Sanity(float new_value, float delta)

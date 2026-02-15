@@ -48,6 +48,8 @@ void UTLG_Widget_Controller::Bind_Callbacks_To_Dependencies()
     tlg_game_state->On_Updated_Time.AddDynamic(this, &UTLG_Widget_Controller::Handle_Changed_Time_Game);
     tlg_game_state->On_Updated_Day.AddDynamic(this, &UTLG_Widget_Controller::Handle_Changed_Day_Time);
 	tlg_game_state->On_Game_Over.AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Game_Over);
+	tlg_game_state->On_Game_Resumed.AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Game_Resumed);
+	tlg_game_state->On_Game_Menu_Paused.AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Game_Menu_Paused);
 
     On_Changed_Day.Broadcast(tlg_game_state->Get_Current_Day() );  // Broadcast current day at start
 }
@@ -81,6 +83,16 @@ void UTLG_Widget_Controller::Handle_Changed_Dominance(const FOnAttributeChangeDa
 void UTLG_Widget_Controller::Handle_Changed_Game_Over()
 {
     On_Game_Over.Broadcast();
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Controller::Handle_Changed_Game_Resumed()
+{
+    On_Game_Resumed.Broadcast();
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Controller::Handle_Changed_Game_Menu_Paused()
+{
+    On_Game_Menu_Paused.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Handle_Changed_Time_Game(int32 hours, int32 minutes, int32 minutes_delta)
