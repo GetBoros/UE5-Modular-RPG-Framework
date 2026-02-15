@@ -39,7 +39,7 @@ void UGBUI_Main_Menu::NativeConstruct()
 //------------------------------------------------------------------------------------------------------------
 UGBUIC_Widget_Controller_Menu* UGBUI_Main_Menu::Get_Menu_Controller()
 {
-	return Cast<UGBUIC_Widget_Controller_Menu>(Widget_Controller);
+	return Cast<UGBUIC_Widget_Controller_Menu>(GBUIC_Widget_Controller);
 }
 //------------------------------------------------------------------------------------------------------------
 void UGBUI_Main_Menu::Init()

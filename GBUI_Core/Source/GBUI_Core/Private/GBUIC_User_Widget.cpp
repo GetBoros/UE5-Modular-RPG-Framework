@@ -7,9 +7,9 @@
 
 
 // UGBUIC_User_Widget
-void UGBUIC_User_Widget::Set_Widget_Controller(UGBUIC_Widget_Controller *widget_controller)
+void UGBUIC_User_Widget::Set_Widget_Controller(UGBUIC_Widget_Controller *gbuic_widget_controller)
 {
-    Widget_Controller = widget_controller;
+    GBUIC_Widget_Controller = gbuic_widget_controller;
 
     On_Widget_Controller_Set();
 }

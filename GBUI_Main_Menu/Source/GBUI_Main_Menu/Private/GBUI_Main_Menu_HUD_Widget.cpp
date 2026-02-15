@@ -17,6 +17,6 @@ void UGBUI_Main_Menu_HUD_Widget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	Menu_Main->Set_Widget_Controller(Widget_Controller);
+	Menu_Main->Set_Widget_Controller(GBUIC_Widget_Controller);
 }
 //------------------------------------------------------------------------------------------------------------
