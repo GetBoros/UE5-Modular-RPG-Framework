@@ -25,8 +25,8 @@ V		- If lose game need show text Game Over
 V	- UI Sound press buttons or something else
 V	- Demo ending 3 Day
 
-X	- Tutorial, Intro Dialog: If Sanity < 0 hospital, if Emphaty >= 100 im slave without will
 X	- Fatigue logic: Block some answers or else
+X	- Tutorial, Intro Dialog: If Sanity < 0 hospital, if Emphaty >= 100 im slave without will
 
 */
 #pragma endregion
@@ -34,7 +34,10 @@ X	- Fatigue logic: Block some answers or else
 #pragma region BUGS
 /*
 
-	- 
+X	- Fix: Can sleep 4 day to win game
+X	- Fix: Need empty portrait, now show portrait main hero
+X	- Fix: Tool tip without info about stat
+X	- 
 
 */
 #pragma endregion
