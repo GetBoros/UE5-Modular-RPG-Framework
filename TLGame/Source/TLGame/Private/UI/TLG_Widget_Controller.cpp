@@ -52,7 +52,7 @@ void UTLG_Widget_Controller::Bind_Callbacks_To_Dependencies()
 	tlg_game_state->On_Game_Menu_Paused.AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Game_Menu_Paused);
 	tlg_game_state->On_Game_Demo_Completed.AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Game_Demo_Completed);
 
-    On_Changed_Day.Broadcast(tlg_game_state->Get_Current_Day() );  // Broadcast current day at start
+    tlg_game_state->Broadcast_Game_Time_Current();
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Handle_Changed_Sanity(const FOnAttributeChangeData &attribute_change_data)

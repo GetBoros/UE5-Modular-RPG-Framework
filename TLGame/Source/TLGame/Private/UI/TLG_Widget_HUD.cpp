@@ -107,6 +107,7 @@ void UTLG_Widget_HUD::Handle_Widget_Controller()
     tlg_widget_controller->On_Changed_Dominance.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Dominance);
     tlg_widget_controller->On_Changed_Time_Game.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Time_Game);
     tlg_widget_controller->On_Changed_Day.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Day);
+
     tlg_widget_controller->On_Game_Over.AddUObject(this, &UTLG_Widget_HUD::On_Game_Over);
     tlg_widget_controller->On_Game_Resumed.AddUObject(this, &UTLG_Widget_HUD::On_Game_Resumed);
     tlg_widget_controller->On_Game_Menu_Paused.AddUObject(this, &UTLG_Widget_HUD::On_Game_Menu_Paused);

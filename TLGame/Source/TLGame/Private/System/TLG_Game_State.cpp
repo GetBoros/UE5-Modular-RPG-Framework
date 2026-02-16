@@ -12,6 +12,15 @@ ATLG_Game_State::ATLG_Game_State()
 	TLG_Game_State = ETLG_Game_State::Game;
 }
 //------------------------------------------------------------------------------------------------------------
+void ATLG_Game_State::Broadcast_Game_Time_Current()
+{
+    constexpr int32 minutes_to_add = 0;
+
+    Advance_Time(minutes_to_add);
+    
+    On_Updated_Day.Broadcast(Get_Current_Day() );
+}
+//------------------------------------------------------------------------------------------------------------
 void ATLG_Game_State::Game_Menu_Paused()
 {
     if (TLG_Game_State != ETLG_Game_State::Menu_Pause)  // Set menu pause game state if already not in pause menu

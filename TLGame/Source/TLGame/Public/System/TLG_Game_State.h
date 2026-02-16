@@ -30,6 +30,7 @@ UCLASS() class TLGAME_API ATLG_Game_State : public AGameStateBase
 public:
     ATLG_Game_State();
 
+    void Broadcast_Game_Time_Current();
     void Game_Menu_Paused();
     void Game_Resume();
     void Game_Over();
