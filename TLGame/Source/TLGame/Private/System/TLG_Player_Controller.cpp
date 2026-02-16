@@ -112,6 +112,7 @@ void ATLG_Player_Controller::Location_Action(const FTLG_Location_Action &tlg_loc
 {
     if (TLG_Player_State->Check_Requirement(tlg_location_action) != true)
         return;
+
     TLG_Player_State->Apply_Multy_Dynamic_Change(tlg_location_action);
     TLG_Game_State->Advance_Time(tlg_location_action.Time_Cost_Minutes);  // Spend time for interact with room action
 }

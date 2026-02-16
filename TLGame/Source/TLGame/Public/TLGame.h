@@ -37,7 +37,7 @@ X	- Fatigue logic: Block some answers or else
 
 V	- Fix: Tool tip without info about stat
 V	- Game time when start don`t show
-X	- Fix: Can sleep 4 day to win game
+V	- Fix: Can sleep 4 day to win game
 X	- Fix: Need empty portrait, now show portrait main hero
 
 */

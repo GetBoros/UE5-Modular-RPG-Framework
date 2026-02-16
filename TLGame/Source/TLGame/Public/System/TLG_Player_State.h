@@ -26,7 +26,7 @@ public:
 	virtual UAbilitySystemComponent *GetAbilitySystemComponent() const;
 
 	UTLG_Attribute_Set *Get_Attribute_Set() const;
-	FGameplayAttribute Get_Attribute_By_Tag(const FGameplayTag &attribute_tag) const;
+	FGameplayAttribute Get_Attribute_By_Tag(const FGameplayTag &gameplay_tag_attribute) const;
 
 	bool Check_Requirement(const FTLG_Location_Action &tlg_location_action);  // !!! TEMP
 	void Apply_Multy_Dynamic_Change(const FTLG_Location_Action &tlg_location_action);  // !!! TEMP

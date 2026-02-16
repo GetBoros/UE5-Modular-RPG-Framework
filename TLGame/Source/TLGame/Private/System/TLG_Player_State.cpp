@@ -46,45 +46,45 @@ UTLG_Attribute_Set *ATLG_Player_State::Get_Attribute_Set() const
     return Attribute_Set;
 }
 //------------------------------------------------------------------------------------------------------------
-FGameplayAttribute ATLG_Player_State::Get_Attribute_By_Tag(const FGameplayTag& attribute_tag) const
+FGameplayAttribute ATLG_Player_State::Get_Attribute_By_Tag(const FGameplayTag &gameplay_tag_attribute) const
 {
     if (GBC_Attribute_Info == 0)
         return FGameplayAttribute();
 
-    const FGBC_Attribute_Info_Item &info_item = GBC_Attribute_Info->Find_Attribute_Info_By_Tag(attribute_tag, true);
+    const FGBC_Attribute_Info_Item &gbc_attribute_info_item = GBC_Attribute_Info->Find_Attribute_Info_By_Tag(gameplay_tag_attribute, true);
 
-    if (info_item.Attribute_To_Bind.IsValid())
-        return info_item.Attribute_To_Bind;
+    if (gbc_attribute_info_item.Attribute_To_Bind.IsValid() )
+        return gbc_attribute_info_item.Attribute_To_Bind;
 
     return FGameplayAttribute();
 }
 //------------------------------------------------------------------------------------------------------------
-bool ATLG_Player_State::Check_Requirement(const FTLG_Location_Action& tlg_location_action)
+bool ATLG_Player_State::Check_Requirement(const FTLG_Location_Action &tlg_location_action)
 {
     float attribute_value = 0.0f;
     FGameplayAttribute gameplay_attribute;
-    const TArray<FTLG_Location_Action_Requirement> &requirenments = tlg_location_action.TLG_Location_Action_Requirement;
+    const TArray<FTLG_Requirement> &requirenments = tlg_location_action.TLG_Location_Action_Requirement;
 
-    for (const FTLG_Location_Action_Requirement &requirenment : requirenments)
+	for (const FTLG_Requirement &requirenment : requirenments)  // for each requirement of the action
     {
-        if (requirenment.Gameplay_Tag.IsValid() == true)
+		if (requirenment.Gameplay_Tag.IsValid() == true)  // if the requirement have a gameplay tag, check it
         {
             gameplay_attribute = Get_Attribute_By_Tag(requirenment.Gameplay_Tag);
             attribute_value = Ability_System_Component->GetNumericAttribute(gameplay_attribute);
 
-            if (attribute_value >= requirenment.Value)
+			if (attribute_value >= requirenment.Value)  // if the attribute value is higher than the requirement value, return true, otherwise return false
             {
                 if (requirenment.Is_Higher == true)
-                    return true;
+                    return true;  // if the requirement is higher, can apply the action
                 else
-                    return false;
+					return false;  // if the requirement is not higher, can't apply the action
             }
             else
-                return false;
+				return false;  // if the attribute value is lower than the requirement value can't apply the action
         }
     }
 
-    return true;
+	return true;  // if don't have any requirement, return true
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_State::Apply_Multy_Dynamic_Change(const FTLG_Location_Action &tlg_location_action)

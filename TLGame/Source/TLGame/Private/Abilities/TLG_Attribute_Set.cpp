@@ -42,18 +42,19 @@ void UTLG_Attribute_Set::PostGameplayEffectExecute(const FGameplayEffectModCallb
 {
     Super::PostGameplayEffectExecute(data);
 
+    if (data.EvaluatedData.Attribute == GetSanityAttribute() )
+        if (GetSanity() <= 0.0f)
+            if (On_Sanity_Zero.IsBound() )
+                On_Sanity_Zero.Broadcast();
+
+    if (data.EvaluatedData.Attribute == GetDominanceAttribute() )
+        SetDominance(FMath::Clamp(GetDominance(), 0.0f, 100.0f) );
+
+    if (data.EvaluatedData.Attribute == GetEmpathyAttribute() )
+        SetEmpathy(FMath::Clamp(GetEmpathy(), 0.0f, 100.0f) );
+
     if (data.EvaluatedData.Attribute == GetFatigueAttribute())
         SetFatigue(FMath::Clamp(GetFatigue(), 0.0f, GetFatigue_Max() ) );
 
-    if (data.EvaluatedData.Attribute == GetSanityAttribute() )
-    {
-        const float current_sanity = GetSanity();
-
-        if (current_sanity <= 0.0f)
-        {
-            if (On_Sanity_Zero.IsBound() )
-                On_Sanity_Zero.Broadcast();
-        }
-    }
 }
 //------------------------------------------------------------------------------------------------------------

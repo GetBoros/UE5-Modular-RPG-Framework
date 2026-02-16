@@ -29,7 +29,7 @@ USTRUCT(BlueprintType) struct FTLG_Magnitude_Tag_Pair
 
 };
 //------------------------------------------------------------------------------------------------------------
-USTRUCT(BlueprintType) struct FTLG_Location_Action_Requirement
+USTRUCT(BlueprintType) struct FTLG_Requirement
 {
     GENERATED_BODY()
 
@@ -46,7 +46,7 @@ USTRUCT(BlueprintType) struct FTLG_Location_Action
     UPROPERTY(EditAnywhere, BlueprintReadOnly) int32 Time_Cost_Minutes = 15;
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTag Gameplay_Tag_Action;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Magnitude_Tag_Pair> TLG_Magnitude_Tag_Pair_Array;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Location_Action_Requirement> TLG_Location_Action_Requirement;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Requirement> TLG_Location_Action_Requirement;
 
 };
 //------------------------------------------------------------------------------------------------------------
