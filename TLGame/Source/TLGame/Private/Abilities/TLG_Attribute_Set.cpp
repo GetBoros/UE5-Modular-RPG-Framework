@@ -35,11 +35,15 @@ void UTLG_Attribute_Set::PreAttributeChange(const FGameplayAttribute &attribute,
 
     if (attribute == GetFatigueAttribute() )
         new_value = FMath::Clamp(new_value, 0.0f, GetFatigue_Max() );
+
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Attribute_Set::PostGameplayEffectExecute(const FGameplayEffectModCallbackData &data)
 {
     Super::PostGameplayEffectExecute(data);
+
+    if (data.EvaluatedData.Attribute == GetFatigueAttribute())
+        SetFatigue(FMath::Clamp(GetFatigue(), 0.0f, GetFatigue_Max() ) );
 
     if (data.EvaluatedData.Attribute == GetSanityAttribute() )
     {

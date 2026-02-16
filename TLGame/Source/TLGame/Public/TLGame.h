@@ -25,6 +25,7 @@ V		- If lose game need show text Game Over
 V	- UI Sound press buttons or something else
 V	- Demo ending 3 Day
 V	- Tutorial, Intro Dialog: If Sanity < 0 hospital, if Emphaty >= 100 im slave without will
+V	- Can sleep only if fatigue more then 50+?
 
 X	- Fatigue logic: Block some answers or else
 
@@ -58,3 +59,13 @@ X	- Fix: Need empty portrait, now show portrait main hero
 
 */
 #pragma endregion
+//------------------------------------------------------------------------------------------------------------
+#pragma region FEATURES
+/*
+
+X	- If player have fatigue 50+, location can show option sleep
+X	- 
+
+*/
+#pragma endregion
+//------------------------------------------------------------------------------------------------------------

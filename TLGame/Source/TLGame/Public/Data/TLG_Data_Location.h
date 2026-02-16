@@ -29,6 +29,15 @@ USTRUCT(BlueprintType) struct FTLG_Magnitude_Tag_Pair
 
 };
 //------------------------------------------------------------------------------------------------------------
+USTRUCT(BlueprintType) struct FTLG_Location_Action_Requirement
+{
+    GENERATED_BODY()
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) bool Is_Higher = true;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) float Value = 0.0f;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) FGameplayTag Gameplay_Tag;
+};
+//------------------------------------------------------------------------------------------------------------
 USTRUCT(BlueprintType) struct FTLG_Location_Action
 {
     GENERATED_BODY()
@@ -36,8 +45,8 @@ USTRUCT(BlueprintType) struct FTLG_Location_Action
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FText Text_Button;
     UPROPERTY(EditAnywhere, BlueprintReadOnly) int32 Time_Cost_Minutes = 15;
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTag Gameplay_Tag_Action;
-    UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTagContainer Gameplay_Tag_Action_Required;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Magnitude_Tag_Pair> TLG_Magnitude_Tag_Pair_Array;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Location_Action_Requirement> TLG_Location_Action_Requirement;
 
 };
 //------------------------------------------------------------------------------------------------------------
