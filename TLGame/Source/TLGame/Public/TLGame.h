@@ -23,19 +23,18 @@ V	- Press ESC to open Exit from game or Restart
 V		- Menu with 3 options: Exit, Restart, Continue
 V		- If lose game need show text Game Over
 V	- UI Sound press buttons or something else
+V	- Demo ending 3 Day
 
 X	- Tutorial, Intro Dialog: If Sanity < 0 hospital, if Emphaty >= 100 im slave without will
 X	- Fatigue logic: Block some answers or else
-X	- Demo ending 3 Day
 
 */
 #pragma endregion
 //------------------------------------------------------------------------------------------------------------
 #pragma region BUGS
 /*
-V	- After pressing button not decreased sanity
-V	- After sleep, not increased fatigue
-V	- If Sanity 0 Button Continued don`t need or cannot continue
+
+	- 
 
 */
 #pragma endregion
@@ -52,7 +51,7 @@ V	- If Sanity 0 Button Continued don`t need or cannot continue
 #pragma region UPDATES
 /*
 
-V	- Send Widget Controller to Menu Pause, to update text Game Over and other stuff
+	- 
 
 */
 #pragma endregion

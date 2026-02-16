@@ -19,7 +19,7 @@ void UTLG_Widget_Menu_Pause::NativeConstruct()
         return;
 
     VB_Button_Menu_Pause->ClearChildren();  // Clear designer stuff
-    TB_Game_Over->SetVisibility(ESlateVisibility::Collapsed);
+    TB_Game_State->SetVisibility(ESlateVisibility::Collapsed);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Menu_Pause::Handle_Widget_Controller()
@@ -32,6 +32,7 @@ void UTLG_Widget_Menu_Pause::Handle_Widget_Controller()
     
     tlg_widget_controller->On_Game_Over.AddUObject(this, &UTLG_Widget_Menu_Pause::Handle_Game_Over);
     tlg_widget_controller->On_Game_Menu_Paused.AddUObject(this, &UTLG_Widget_Menu_Pause::Handle_Menu_Paused);
+    tlg_widget_controller->On_Game_Demo_Completed.AddUObject(this, &UTLG_Widget_Menu_Pause::Handle_Game_Demo_Completed);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Menu_Pause::Add_Menu_Pause_Buttons(UVerticalBox *vertical_box)
@@ -64,7 +65,7 @@ void UTLG_Widget_Menu_Pause::Add_Menu_Pause_Buttons(UVerticalBox *vertical_box)
 void UTLG_Widget_Menu_Pause::Handle_Game_Over()
 {
     SetVisibility(ESlateVisibility::Visible);
-    TB_Game_Over->SetVisibility(ESlateVisibility::Visible);
+    TB_Game_State->SetVisibility(ESlateVisibility::Visible);
 
     if (VB_Button_Menu_Pause->HasAnyChildren() == true)
         return;
@@ -75,6 +76,21 @@ void UTLG_Widget_Menu_Pause::Handle_Game_Over()
 void UTLG_Widget_Menu_Pause::Handle_Menu_Paused()
 {
     SetVisibility(ESlateVisibility::Visible);
+
+    if (VB_Button_Menu_Pause->HasAnyChildren() == true)
+        return;
+
+    Add_Menu_Pause_Buttons(VB_Button_Menu_Pause);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Menu_Pause::Handle_Game_Demo_Completed()
+{
+    const FText text_game_demo_completed = FText::FromString(TEXT("Game Completed") );
+
+    SetVisibility(ESlateVisibility::Visible);
+
+    TB_Game_State->SetVisibility(ESlateVisibility::Visible);
+    TB_Game_State->SetText(text_game_demo_completed);
 
     if (VB_Button_Menu_Pause->HasAnyChildren() == true)
         return;

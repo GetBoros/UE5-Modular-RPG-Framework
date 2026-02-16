@@ -11,6 +11,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_Day_Updated_Signature, int32, cu
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Over);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Resumed);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Menu_Paused);
+DECLARE_MULTICAST_DELEGATE(FOn_Game_Demo_Completed);
 //------------------------------------------------------------------------------------------------------------
 class UTLG_Attribute_Set;
 //------------------------------------------------------------------------------------------------------------
@@ -30,6 +31,7 @@ public:
     mutable FOn_Game_Over On_Game_Over;
     mutable FOn_Game_Resumed On_Game_Resumed;
     mutable FOn_Game_Menu_Paused On_Game_Menu_Paused;
+    mutable FOn_Game_Demo_Completed On_Game_Demo_Completed;
 
 private:
     void Handle_Changed_Sanity(const FOnAttributeChangeData &attribute_change_data);
@@ -37,6 +39,7 @@ private:
     void Handle_Changed_Game_Over();
     void Handle_Changed_Game_Resumed();
     void Handle_Changed_Game_Menu_Paused();
+    void Handle_Changed_Game_Demo_Completed();
 
     UTLG_Attribute_Set *Get_TLG_Attribute_Set() const;
 

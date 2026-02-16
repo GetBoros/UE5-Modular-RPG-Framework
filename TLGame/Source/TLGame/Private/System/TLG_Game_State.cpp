@@ -27,8 +27,8 @@ void ATLG_Game_State::Game_Menu_Paused()
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Game_State::Game_Resume()
 {
-    if (TLG_Game_State == ETLG_Game_State::Game_Over)
-        return;
+    if (TLG_Game_State == ETLG_Game_State::Game_Over || TLG_Game_State == ETLG_Game_State::Game_Demo_Completed)
+        return;  // return if game over or game completed
 
     TLG_Game_State = ETLG_Game_State::Game;
 
