@@ -43,7 +43,6 @@ private:
 
     UPROPERTY(EditDefaultsOnly) TObjectPtr<UTLG_Data_Enemy> TLG_Data_Enemy_Current;
     UPROPERTY(EditDefaultsOnly) TObjectPtr<UTLG_Data_Location> TLG_Data_Location_Start;
-
     UPROPERTY(VisibleAnywhere) TObjectPtr<UTLG_Data_Location> TLG_Data_Location_Current;
     UPROPERTY(VisibleAnywhere) TObjectPtr<UAudioComponent> Audio_Component_Ambient;
     

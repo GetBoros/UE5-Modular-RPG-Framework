@@ -180,7 +180,7 @@ void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
 
     UDataTable *data_table = TLG_Data_Enemy_Current->Get_Dialogue_Table_By_Tag(FTLG_Data_Gameplay_Tags::Get().Dialogue_Marina_Intro);
 
-    if (data_table == 0)
+    if (data_table == 0)  // 
         return;
 
     if (const FDialogue_Node *dialogue_node_next = data_table->FindRow<FDialogue_Node>(row_id, context, true) )  // Find node by row id
