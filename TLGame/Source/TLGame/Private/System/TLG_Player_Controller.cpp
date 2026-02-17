@@ -30,10 +30,10 @@ void ATLG_Player_Controller::BeginPlay()
     if (ensureMsgf(TLG_Player_State, TEXT("Need Player State implemented from ATLG_Player_State") ) != true)
         return;
 
-    if (ensureMsgf(DT_Current_Dialogue, TEXT("Skip Location_Enter or can be crit error") ) != true)
+    if (ensureMsgf(TLG_Data_Enemy_Current, TEXT("Skip Location_Enter or can be crit error") ) != true)
         return;
 
-    if (ensureMsgf(TLG_Data_Enemy_Current, TEXT("Skip Location_Enter or can be crit error") ) != true)
+    if (ensureMsgf(TLG_Data_Location_Current, TEXT("Is Empty, init from Game Mode or else") ) != true)
         return;
 
     if (ensureMsgf(TLG_Game_State, TEXT("Something whent wrong") ) != true)
@@ -76,8 +76,9 @@ void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_locatio
     UTexture2D *texture2d_background;
 
     TLG_Data_Location_Current = tlg_data_location;
+    TLG_Data_Enemy_Current = tlg_data_location->TLG_Location_Enemies[0].TLG_Data_Enemy;
+    enemy_encounter_chance = tlg_data_location->TLG_Location_Enemies[0].Encounter_Chance;
     location_enter_time_cost = 5;  // !!! TEMP Need add to data location
-    enemy_encounter_chance = tlg_data_location->Enemy_Encounter_Chance;
     texture2d_background = tlg_data_location->Texture2D_Background_Image;
     sound_base = tlg_data_location->SoundBase_Ambient;
     roll = FMath::FRand();  // 2. Generate value from 0.0 to 1.0
@@ -171,21 +172,26 @@ void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &play
         Dialogue_End();
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Set_TLG_Data_Location_Current(UTLG_Data_Location* tlg_data_location)
+void ATLG_Player_Controller::Set_TLG_Data_Location_Current(UTLG_Data_Location *tlg_data_location)
 {
     TLG_Data_Location_Current = tlg_data_location;
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
 {
+    UDataTable* data_table;
+    FDialogue_Node* dialogue_node_next;
+
     static const FString context(TEXT("Dialogue Context") );
 
-    UDataTable *data_table = TLG_Data_Enemy_Current->Get_Dialogue_Table_By_Tag(FTLG_Data_Gameplay_Tags::Get().Dialogue_Marina_Intro);
+    data_table = TLG_Data_Enemy_Current->Get_Dialogue_Table_By_Tag(FTLG_Data_Gameplay_Tags::Get().Dialogue_Marina_Intro);
 
-    if (data_table == 0)  // 
+    if (data_table == 0)
         return;
 
-    if (const FDialogue_Node *dialogue_node_next = data_table->FindRow<FDialogue_Node>(row_id, context, true) )  // Find node by row id
+    dialogue_node_next = data_table->FindRow<FDialogue_Node>(row_id, context, true);  // Find node by row id
+
+    if (FDialogue_Node *dialogue_node_next = data_table->FindRow<FDialogue_Node>(row_id, context, true) )  // Find node by row id
     {
         TLG_HUD->Dialogue_Node_Show(*dialogue_node_next);  // Send data to Dialogue UI
 

@@ -19,5 +19,6 @@ public:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TMap<FGameplayTag, TObjectPtr<UDataTable>> Dialogue_Tables;  // Choose DataTable by GameplayTags (Stage.Intro)
 
     UTexture2D *Get_Portrait_By_Tag(const FGameplayTag &tag) const;
-    UDataTable *Get_Dialogue_Table_By_Tag(const FGameplayTag &tag) const;};
+    UDataTable *Get_Dialogue_Table_By_Tag(const FGameplayTag &tag) const;
+};
 //------------------------------------------------------------------------------------------------------------

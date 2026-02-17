@@ -66,6 +66,9 @@ X	-
 /*
 
 X	- If player have fatigue 50+, location can show option sleep
+X	- More than one enemies in room
+X	- If player enter to the room he can choose talk or not, if enemies doesn`t talk to him firstly
+X	- 
 X	- 
 
 */
