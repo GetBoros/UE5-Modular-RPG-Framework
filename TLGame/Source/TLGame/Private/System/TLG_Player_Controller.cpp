@@ -30,13 +30,10 @@ void ATLG_Player_Controller::BeginPlay()
     if (ensureMsgf(TLG_Player_State, TEXT("Need Player State implemented from ATLG_Player_State") ) != true)
         return;
 
-    if (ensureMsgf(Dialogue_Data_Table, TEXT("Skip Location_Enter or can be crit error") ) != true)
+    if (ensureMsgf(DT_Current_Dialogue, TEXT("Skip Location_Enter or can be crit error") ) != true)
         return;
 
     if (ensureMsgf(TLG_Data_Enemy_Current, TEXT("Skip Location_Enter or can be crit error") ) != true)
-        return;
-
-    if (ensureMsgf(TLG_Data_Location_Start, TEXT("Skip Location_Enter or can be crit error") ) != true)
         return;
 
     if (ensureMsgf(TLG_Game_State, TEXT("Something whent wrong") ) != true)
@@ -49,14 +46,14 @@ void ATLG_Player_Controller::BeginPlay()
         Audio_Component_Ambient->RegisterComponent();  // Important for work
     }
 
-    // 4.0. Actions
-    Location_Enter(TLG_Data_Location_Start);
+    // 4.0.
+    Location_Enter(TLG_Data_Location_Current);
 
     // 4.1. Set input mode
     bShowMouseCursor = true;
     SetInputMode(FInputModeGameAndUI() );
 
-    // 5.0. Blueprint logic
+    // 5.0
     Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
@@ -172,6 +169,11 @@ void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &play
         Dialogue_Start(player_response.Row_ID_Next);
     else
         Dialogue_End();
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Set_TLG_Data_Location_Current(UTLG_Data_Location* tlg_data_location)
+{
+    TLG_Data_Location_Current = tlg_data_location;
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
