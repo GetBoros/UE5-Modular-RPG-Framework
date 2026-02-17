@@ -32,6 +32,10 @@ public:
     FGameplayTag Attribut_Player_Dominance;
     FGameplayTag Attribut_Player_Fatigued;
 
+    // Enemies
+    FGameplayTag Dialogue_Tutorial_Intro;
+    FGameplayTag Dialogue_Marina_Intro;
+
 private:
     static FTLG_Data_Gameplay_Tags TLG_Data_Gameplay_Tags;
 
