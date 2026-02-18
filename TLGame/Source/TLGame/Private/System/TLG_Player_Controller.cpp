@@ -179,29 +179,26 @@ void ATLG_Player_Controller::Set_TLG_Data_Location_Current(UTLG_Data_Location *t
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
 {
-    UDataTable* data_table;
-    FDialogue_Node* dialogue_node_next;
+    UDataTable *data_table;
+    UTexture2D *texture_portrait;
+    FDialogue_Node *dialogue_node_next;
 
     static const FString context(TEXT("Dialogue Context") );
 
     data_table = TLG_Data_Enemy_Current->Get_Dialogue_Table_By_Tag(FTLG_Data_Gameplay_Tags::Get().Dialogue_Marina_Intro);
-
     if (data_table == 0)
         return;
 
     dialogue_node_next = data_table->FindRow<FDialogue_Node>(row_id, context, true);  // Find node by row id
-
-    if (FDialogue_Node *dialogue_node_next = data_table->FindRow<FDialogue_Node>(row_id, context, true) )  // Find node by row id
+    if (dialogue_node_next != 0)
     {
+        texture_portrait = TLG_Data_Enemy_Current->Get_Portrait_By_Tag(dialogue_node_next->Tag_Portrait);
         TLG_HUD->Dialogue_Node_Show(*dialogue_node_next);  // Send data to Dialogue UI
-
-        if (UTexture2D *texture_portrait = TLG_Data_Enemy_Current->Get_Portrait_By_Tag(dialogue_node_next->Tag_Portrait) )  // Set enemy portrait if have  in data
-            TLG_HUD->Set_Image_Texture_Portrait(texture_portrait);
+        TLG_HUD->Set_Image_Texture_Portrait(texture_portrait);
     }
     else
-    {
         Dialogue_End();
-    }
+
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_End()
