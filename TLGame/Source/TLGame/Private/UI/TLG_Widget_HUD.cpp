@@ -84,7 +84,7 @@ void UTLG_Widget_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> 
         tlg_widget_button_action = CreateWidget<UTLG_Widget_Button_Action>(this, TLG_Widget_Button_Action_Class);
         if (tlg_widget_button_action != 0)
         {
-            tlg_widget_button_action->Set_Widget_Controller(GBUIC_Widget_Controller);
+            tlg_widget_button_action->Set_Widget_Controller(GBUIC_Widget_Controller);  // !!! TEMP for now don`t work
             tlg_widget_button_action->Init(location_action);
             
             VB_Button_Actions->AddChild(tlg_widget_button_action);

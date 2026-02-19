@@ -77,7 +77,8 @@ X	-
 #pragma region REFACTORINGS
 /*
 
-X	- Need ATLG_Player_Controller refactoring
+V	- Need ATLG_Player_Controller refactoring
+X	- UTLG_Widget_HUD must have params TArray<FTLG_Location_Action> for current location and current navigation, and in controller just send it?
 X	- 
 
 */
