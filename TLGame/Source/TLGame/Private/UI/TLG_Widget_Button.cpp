@@ -34,6 +34,11 @@ void UTLG_Widget_Button::Set_Button_Text(const FText &text_button) const
         TB_Button->SetText(text_button);
 }
 //------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Button::Set_Button_Enabled(const bool is_enabled)
+{
+    Button_Click->SetIsEnabled(is_enabled);
+}
+//------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button::Handle_Click_Internal()
 {
     if (Sound_Click != 0)
@@ -44,6 +49,8 @@ void UTLG_Widget_Button::Handle_Click_Internal()
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button::Handle_Hover_Internal()
 {
+    // !!! TEMP Add tooltips? show descriptions
+
     if (Sound_Hover != 0)
         UGameplayStatics::PlaySound2D(this, Sound_Hover);
 }
@@ -76,6 +83,7 @@ void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_ac
     const FText text_final = FText::Format(text_format_pattern, text_button, text_time);
 
     TLG_Location_Action = tlg_location_action;
+    Set_Button_Enabled(tlg_location_action.Is_Active);
 
     if (text_button.IsEmpty() == true)
         Set_Button_Text(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA")));

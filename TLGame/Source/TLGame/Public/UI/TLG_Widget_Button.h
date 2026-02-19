@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include <Blueprint/UserWidget.h>
+#include <GBUIC_User_Widget.h>
 #include <Data/TLG_Data_Location.h>
 #include <Interfaces/TLG_Interaction_Interface.h>
 
@@ -11,7 +11,7 @@ class UButton;
 class UTextBlock;
 class UTLG_Data_Location;
 //------------------------------------------------------------------------------------------------------------
-UCLASS() class TLGAME_API UTLG_Widget_Button : public UUserWidget
+UCLASS() class TLGAME_API UTLG_Widget_Button : public UGBUIC_User_Widget
 {
     GENERATED_BODY()
 
@@ -20,6 +20,7 @@ public:
     virtual void Handle_Click();
 
     void Set_Button_Text(const FText &text_button) const;
+    void Set_Button_Enabled(const bool is_enabled);
 
 protected:
     UFUNCTION() void Handle_Click_Internal();

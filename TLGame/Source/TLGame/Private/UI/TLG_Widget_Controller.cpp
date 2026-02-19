@@ -35,6 +35,7 @@ void UTLG_Widget_Controller::Bind_Callbacks_To_Dependencies()
         return;
 
     Ability_System_Component->GetGameplayAttributeValueChangeDelegate(tlg_attribute_set->GetSanityAttribute() ).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Sanity);
+    Ability_System_Component->GetGameplayAttributeValueChangeDelegate(tlg_attribute_set->GetFatigueAttribute() ).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Fatigue);
     Ability_System_Component->GetGameplayAttributeValueChangeDelegate(tlg_attribute_set->GetDominanceAttribute() ).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Dominance);
 
     if (Attribute_Info != 0)
@@ -66,6 +67,19 @@ void UTLG_Widget_Controller::Handle_Changed_Sanity(const FOnAttributeChangeData 
     Prev_Sanity = current;
 
     On_Changed_Sanity.Broadcast(current, delta);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Controller::Handle_Changed_Fatigue(const FOnAttributeChangeData &attribute_change_data)
+{
+    const float current = attribute_change_data.NewValue;
+	float delta = 0.0f;
+    
+     if (Prev_Fatigued >= 0.0f)
+         delta = current - Prev_Fatigued;
+
+     Prev_Fatigued = current;
+
+    On_Changed_Fatigued.Broadcast(current, delta);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Handle_Changed_Dominance(const FOnAttributeChangeData &attribute_change_data)

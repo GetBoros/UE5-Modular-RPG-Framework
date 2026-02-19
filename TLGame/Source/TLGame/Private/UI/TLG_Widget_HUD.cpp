@@ -5,11 +5,8 @@
 #include <UI/TLG_Widget_Button.h>
 #include <UI/TLG_Widget_Portrait.h>
 #include <UI/TLG_Widget_Controller.h>
-#include <System/TLG_Player_State.h>
-#include <Abilities/TLG_Attribute_Set.h>
 #include <Data/TLG_Data_Location.h>
 
-#include <AbilitySystemComponent.h>
 #include <Components/Image.h>
 #include <Components/TextBlock.h>
 #include <Components/VerticalBox.h>
@@ -87,8 +84,9 @@ void UTLG_Widget_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> 
         tlg_widget_button_action = CreateWidget<UTLG_Widget_Button_Action>(this, TLG_Widget_Button_Action_Class);
         if (tlg_widget_button_action != 0)
         {
+            tlg_widget_button_action->Set_Widget_Controller(GBUIC_Widget_Controller);
             tlg_widget_button_action->Init(location_action);
-
+            
             VB_Button_Actions->AddChild(tlg_widget_button_action);
         }
     }
@@ -112,6 +110,7 @@ void UTLG_Widget_HUD::Handle_Widget_Controller()
     tlg_widget_controller->On_Game_Resumed.AddUObject(this, &UTLG_Widget_HUD::On_Game_Resumed);
     tlg_widget_controller->On_Game_Menu_Paused.AddUObject(this, &UTLG_Widget_HUD::On_Game_Menu_Paused);
     tlg_widget_controller->On_Game_Demo_Completed.AddUObject(this, &UTLG_Widget_HUD::On_Game_Menu_Paused);
+
 
     tlg_widget_controller->Bind_Callbacks_To_Dependencies();
     tlg_widget_controller->Broadcast_Initial_Values();

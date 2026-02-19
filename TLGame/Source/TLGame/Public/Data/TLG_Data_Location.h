@@ -43,6 +43,7 @@ USTRUCT(BlueprintType) struct FTLG_Location_Action
 {
     GENERATED_BODY()
 
+    UPROPERTY(EditAnywhere, BlueprintReadOnly) bool Is_Active = true;
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FText Text_Button;
     UPROPERTY(EditAnywhere, BlueprintReadOnly) int32 Time_Cost_Minutes = 15;
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTag Gameplay_Tag_Action;

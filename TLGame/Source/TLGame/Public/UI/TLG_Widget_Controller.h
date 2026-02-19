@@ -24,6 +24,7 @@ public:
     virtual void Bind_Callbacks_To_Dependencies();
 
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Sanity;
+    UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Fatigued;
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Dominance;
     UPROPERTY(BlueprintAssignable) FOn_Time_Updated_Signature On_Changed_Time_Game;
     UPROPERTY(BlueprintAssignable) FOn_Day_Updated_Signature On_Changed_Day;
@@ -35,6 +36,7 @@ public:
 
 private:
     void Handle_Changed_Sanity(const FOnAttributeChangeData &attribute_change_data);
+    void Handle_Changed_Fatigue(const FOnAttributeChangeData &attribute_change_data);
     void Handle_Changed_Dominance(const FOnAttributeChangeData &attribute_change_data);
     void Handle_Changed_Game_Over();
     void Handle_Changed_Game_Resumed();
@@ -44,6 +46,7 @@ private:
     UTLG_Attribute_Set *Get_TLG_Attribute_Set() const;
 
     float Prev_Sanity = -1.0f;
+    float Prev_Fatigued = -1.0f;
     float Prev_Dominance = -1.0f;
 
     UFUNCTION() void Handle_Changed_Time_Game(int32 hours, int32 minutes, int32 minutes_delta);
