@@ -39,7 +39,6 @@ public:
 	// Achievements
     FGameplayTag Achievement_Tutorial_Intro;
 
-
 private:
     static FTLG_Data_Gameplay_Tags TLG_Data_Gameplay_Tags;
 

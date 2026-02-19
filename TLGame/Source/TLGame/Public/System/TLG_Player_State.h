@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <GameFramework/PlayerState.h>
 #include <AbilitySystemInterface.h>
+#include <GameplayTagContainer.h>
 
 #include <TLG_Player_State.generated.h>
 //------------------------------------------------------------------------------------------------------------
@@ -11,6 +12,7 @@ class UTLG_Attribute_Set;
 class UGameplayEffect;
 class UAbilitySystemComponent;
 
+struct FGameplayTagContainer;
 struct FGameplayAttribute;
 struct FGameplayTag;
 struct FTLG_Location_Action;
@@ -28,6 +30,9 @@ public:
 	UTLG_Attribute_Set *Get_Attribute_Set() const;
 	FGameplayAttribute Get_Attribute_By_Tag(const FGameplayTag &gameplay_tag_attribute) const;
 
+	bool Has_Gameplay_Tag_Story_Progresses(FGameplayTag new_tag);
+	void Add_Gameplay_Tag_Story_Progresses(FGameplayTag new_tag);
+
 	bool Check_Requirement(const FTLG_Location_Action &tlg_location_action);  // !!! TEMP
 	void Apply_Multy_Dynamic_Change(const FTLG_Location_Action &tlg_location_action);  // !!! TEMP
 	void Apply_Dynamic_Change(float magnitude, FGameplayTag attribute_tag);
@@ -35,6 +40,7 @@ public:
 private:
 	void Handle_Sanity_Zero();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) FGameplayTagContainer Gameplay_Tag_Story_Progresses;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Attribute_Set> Attribute_Set;
 

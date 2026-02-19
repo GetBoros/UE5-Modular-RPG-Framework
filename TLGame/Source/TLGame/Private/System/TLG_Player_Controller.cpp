@@ -69,14 +69,14 @@ void ATLG_Player_Controller::SetupInputComponent()
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_location)
 {
+    int location_enter_time_cost;
     float roll;
     float enemy_encounter_chance;
-    int location_enter_time_cost;
     USoundBase *sound_base;
     UTexture2D *texture2d_background;
 
     TLG_Data_Location_Current = tlg_data_location;
-    TLG_Data_Enemy_Current = tlg_data_location->TLG_Location_Enemies[0].TLG_Data_Enemy;
+    TLG_Data_Enemy_Current = tlg_data_location->TLG_Location_Enemies[0].TLG_Data_Enemy;  // !!! TEMP
     enemy_encounter_chance = tlg_data_location->TLG_Location_Enemies[0].Encounter_Chance;
     location_enter_time_cost = 5;  // !!! TEMP Need add to data location
     texture2d_background = tlg_data_location->Texture2D_Background_Image;
@@ -179,31 +179,29 @@ void ATLG_Player_Controller::Set_TLG_Data_Location_Current(UTLG_Data_Location *t
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
 {
-    UDataTable *data_table;
-    UTexture2D *texture_portrait;
-    FDialogue_Node *dialogue_node_next;
-
     static const FString context(TEXT("Dialogue Context") );
 
-    data_table = TLG_Data_Enemy_Current->Get_Dialogue_Table_By_Tag(FTLG_Data_Gameplay_Tags::Get().Dialogue_Marina_Intro);
-    if (data_table == 0)
+    if (TLG_Player_State->Has_Gameplay_Tag_Story_Progresses(TLG_Data_Enemy_Current->Mood) )
         return;
 
-    dialogue_node_next = data_table->FindRow<FDialogue_Node>(row_id, context, true);  // Find node by row id
-    if (dialogue_node_next != 0)
+    if (UDataTable *data_table = TLG_Data_Enemy_Current->Get_Dialogue_Table_By_Tag(TLG_Data_Enemy_Current->Mood) )
     {
-        texture_portrait = TLG_Data_Enemy_Current->Get_Portrait_By_Tag(dialogue_node_next->Tag_Portrait);
-        TLG_HUD->Dialogue_Node_Show(*dialogue_node_next);  // Send data to Dialogue UI
-        TLG_HUD->Set_Image_Texture_Portrait(texture_portrait);
+        TLG_Player_State->Add_Gameplay_Tag_Story_Progresses(FTLG_Data_Gameplay_Tags::Get().Achievement_Tutorial_Intro);
+        if (FDialogue_Node *dialogue_node_next = data_table->FindRow<FDialogue_Node>(row_id, context, true) )  // Find node by row id
+        {
+            if (UTexture2D *texture_portrait = TLG_Data_Enemy_Current->Get_Portrait_By_Tag(dialogue_node_next->Tag_Portrait) )
+                TLG_HUD->Set_Image_Texture_Portrait(texture_portrait);
+            TLG_HUD->Dialogue_Node_Show(*dialogue_node_next);  // Send data to Dialogue UI
+        }
     }
     else
         Dialogue_End();
-
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_End()
 {
     TLG_HUD->Dialogue_Hide();
+    TLG_Player_State->Add_Gameplay_Tag_Story_Progresses(TLG_Data_Enemy_Current->Mood);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::On_Pressed_ESC()

@@ -2,11 +2,11 @@
 #include <System/TLG_Player_State.h>
 #include <System/TLG_Game_State.h>
 #include <Data/TLG_Data_Location.h>
+#include <Data/TLG_Data_Gameplay_Tags.h>
 #include <Abilities/TLG_Attribute_Set.h>
 
 #include <Types/GBC_Attribute_Info.h>
 
-#include <GameplayTagContainer.h>
 #include <AbilitySystemComponent.h>
 //------------------------------------------------------------------------------------------------------------
 
@@ -34,6 +34,7 @@ void ATLG_Player_State::BeginPlay()
     Super::BeginPlay();
 
     Get_Attribute_Set()->On_Sanity_Zero.AddUObject(this, &ATLG_Player_State::Handle_Sanity_Zero);
+    Add_Gameplay_Tag_Story_Progresses(FTLG_Data_Gameplay_Tags::Get().Achievement_Tutorial_Intro);
 }
 //------------------------------------------------------------------------------------------------------------
 UAbilitySystemComponent *ATLG_Player_State::GetAbilitySystemComponent() const
@@ -57,6 +58,19 @@ FGameplayAttribute ATLG_Player_State::Get_Attribute_By_Tag(const FGameplayTag &g
         return gbc_attribute_info_item.Attribute_To_Bind;
 
     return FGameplayAttribute();
+}
+//------------------------------------------------------------------------------------------------------------
+bool ATLG_Player_State::Has_Gameplay_Tag_Story_Progresses(FGameplayTag new_tag)
+{
+    if (Gameplay_Tag_Story_Progresses.HasTag(new_tag) )
+        return true;
+    else
+        return false;
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_State::Add_Gameplay_Tag_Story_Progresses(FGameplayTag new_tag)
+{
+    Gameplay_Tag_Story_Progresses.AddTag(new_tag);
 }
 //------------------------------------------------------------------------------------------------------------
 bool ATLG_Player_State::Check_Requirement(const FTLG_Location_Action &tlg_location_action)
