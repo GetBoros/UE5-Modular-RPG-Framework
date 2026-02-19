@@ -76,12 +76,16 @@ void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_locatio
     UTexture2D *texture2d_background;
 
     TLG_Data_Location_Current = tlg_data_location;
-    TLG_Data_Enemy_Current = tlg_data_location->TLG_Location_Enemies[0].TLG_Data_Enemy;  // !!! TEMP
-    enemy_encounter_chance = tlg_data_location->TLG_Location_Enemies[0].Encounter_Chance;
+    enemy_encounter_chance = tlg_data_location->Enemy_Encounter_Chance;
     location_enter_time_cost = 5;  // !!! TEMP Need add to data location
     texture2d_background = tlg_data_location->Texture2D_Background_Image;
     sound_base = tlg_data_location->SoundBase_Ambient;
     roll = FMath::FRand();  // 2. Generate value from 0.0 to 1.0
+    if (tlg_data_location->TLG_Location_Enemies.IsEmpty() != true)
+    {
+        TLG_Data_Enemy_Current = tlg_data_location->TLG_Location_Enemies[0].TLG_Data_Enemy;  // !!! TEMP
+        enemy_encounter_chance = tlg_data_location->TLG_Location_Enemies[0].Encounter_Chance;
+    }
 
     // 1.0. Background
     if (texture2d_background != 0)  // Update Background if have in tlg_data_location
