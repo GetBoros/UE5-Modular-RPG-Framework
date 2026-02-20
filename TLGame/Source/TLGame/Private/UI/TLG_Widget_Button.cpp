@@ -1,5 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
 #include <UI/TLG_Widget_Button.h>
+#include <UI/TLG_Widget_Controller.h>
 
 #include <Kismet/GameplayStatics.h>
 #include <Components/Button.h>
@@ -76,19 +77,26 @@ void UTLG_Widget_Button_Action::Handle_Click()
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_action)
 {
+    UTLG_Widget_Controller *tlg_widget_controller;
     const int time_cost_minutes = tlg_location_action.Time_Cost_Minutes;
     const FText text_button = tlg_location_action.Text_Button;
     const FText text_format_pattern = FText::FromString("{0} ({1})");
     const FText text_time = Format_Time_From_Minutes(time_cost_minutes);
     const FText text_final = FText::Format(text_format_pattern, text_button, text_time);
 
+    // 1.0. Init
+	tlg_widget_controller = Cast<UTLG_Widget_Controller>(GBUIC_Widget_Controller);
     TLG_Location_Action = tlg_location_action;
-    Set_Button_Enabled(tlg_location_action.Is_Active);
 
+	// 1.1. Set Text in Button
     if (text_button.IsEmpty() == true)
         Set_Button_Text(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA")));
     else
         Set_Button_Text(text_final);
+
+    // 1.2.
+    
+    // bool result = tlg_widget_controller->Check_Action_Requirements(TLG_Location_Action.TLG_Location_Action_Requirements);
 }
 //------------------------------------------------------------------------------------------------------------
 FText UTLG_Widget_Button_Action::Format_Time_From_Minutes(int32 minutes_cost) const

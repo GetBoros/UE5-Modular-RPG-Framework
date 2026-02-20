@@ -33,11 +33,11 @@ private:
 	UTLG_Widget_HUD *Get_TLG_Widget_HUD();
 	UTLG_Widget_Menu_Pause *Get_TLG_Widget_Menu_Pause();
 
-	void Update_Buttons_Navigation(const TArray<FTLG_Location_Exit> &tlg_location_exits);
-	void Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_location_action);
+	void Update_Buttons_Navigation();
+	void Update_Buttons_Actions();
 
-	TArray<FTLG_Location_Exit> Cached_Exits;
-	TArray<FTLG_Location_Action> Cached_Actions;
+	TArray<FTLG_Location_Exit> TLG_Location_Exit_Array;
+	TArray<FTLG_Location_Action> TLG_Location_Action_Array;
 
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_HUD> TLG_Widget_HUD_Class;
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Menu_Pause> TLG_Widget_Menu_Pause_Class;

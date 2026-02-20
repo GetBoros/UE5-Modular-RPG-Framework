@@ -107,6 +107,7 @@ void UTLG_Widget_HUD::Handle_Widget_Controller()
     tlg_widget_controller = Cast<UTLG_Widget_Controller>(GBUIC_Widget_Controller);
     
     tlg_widget_controller->On_Changed_Sanity.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Sanity);
+    tlg_widget_controller->On_Changed_Fatigued.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Fatigued);
     tlg_widget_controller->On_Changed_Dominance.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Dominance);
     tlg_widget_controller->On_Changed_Time_Game.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Time_Game);
     tlg_widget_controller->On_Changed_Day.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Day);
@@ -164,6 +165,14 @@ void UTLG_Widget_HUD::On_Changed_Callback_Sanity(float new_value, float delta)
 
     if (FMath::IsNearlyZero(delta) != true)
         Spawn_Text_Floating(delta, FText::FromString("Sanity") );
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::On_Changed_Callback_Fatigued(float new_value, float delta)
+{
+    for (UTLG_Widget_Button_Action *temp : TLG_Widget_Button_Action_Array)
+    {
+        // !!! TEMP
+    }
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Changed_Callback_Dominance(float new_value, float delta)
