@@ -60,15 +60,18 @@ void UTLG_Widget_HUD::Update_Buttons_Navigation(const TArray<FTLG_Location_Exit>
     UTLG_Widget_Button_Navigation *tlg_widget_button_navigation;
     
     VB_Button_Navigation->ClearChildren();
+    TLG_Widget_Button_Navigation_Array.Empty();
 
     for (const FTLG_Location_Exit &location_exit: tlg_location_exits)
     {
         tlg_widget_button_navigation = CreateWidget<UTLG_Widget_Button_Navigation>(this, TLG_Widget_Button_Navigation_Class);
         if (tlg_widget_button_navigation != 0)
         {
+            tlg_widget_button_navigation->Set_Widget_Controller(GBUIC_Widget_Controller);
             tlg_widget_button_navigation->Init(location_exit);
 
             VB_Button_Navigation->AddChild(tlg_widget_button_navigation);
+            TLG_Widget_Button_Navigation_Array.Add(tlg_widget_button_navigation);
         }
     }
 }
@@ -78,16 +81,18 @@ void UTLG_Widget_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> 
     UTLG_Widget_Button_Action *tlg_widget_button_action;
 
     VB_Button_Actions->ClearChildren();
+    TLG_Widget_Button_Action_Array.Empty();
 
     for (const FTLG_Location_Action &location_action : tlg_location_action)
     {
         tlg_widget_button_action = CreateWidget<UTLG_Widget_Button_Action>(this, TLG_Widget_Button_Action_Class);
         if (tlg_widget_button_action != 0)
         {
-            tlg_widget_button_action->Set_Widget_Controller(GBUIC_Widget_Controller);  // !!! TEMP for now don`t work
+            tlg_widget_button_action->Set_Widget_Controller(GBUIC_Widget_Controller);
             tlg_widget_button_action->Init(location_action);
-            
+
             VB_Button_Actions->AddChild(tlg_widget_button_action);
+            TLG_Widget_Button_Action_Array.Add(tlg_widget_button_action);
         }
     }
 }

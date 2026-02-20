@@ -10,6 +10,8 @@ class UTLG_Widget_Dialogue;
 class UTLG_Widget_Portrait;
 class UTLG_Widget_Button;
 class UTLG_Widget_Text_Floating;
+class UTLG_Widget_Button_Action;
+class UTLG_Widget_Button_Navigation;
 class UTextBlock;
 class UImage;
 class UVerticalBox;
@@ -59,6 +61,9 @@ private:
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Portrait> TLG_Widget_Portrait_Enemy;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_Clock;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_Day_Counter;
+
+    UPROPERTY() TArray<TObjectPtr<UTLG_Widget_Button_Action> > TLG_Widget_Button_Action_Array;
+    UPROPERTY() TArray<TObjectPtr<UTLG_Widget_Button_Navigation> > TLG_Widget_Button_Navigation_Array;
 
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Button> TLG_Widget_Button_Action_Class;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Button> TLG_Widget_Button_Navigation_Class;

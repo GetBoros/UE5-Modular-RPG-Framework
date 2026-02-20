@@ -31,6 +31,9 @@ void ATLG_HUD::BeginPlay()
     Get_TLG_Widget_Menu_Pause()->Set_Widget_Controller(TLG_Widget_Controller);
     Get_TLG_Widget_Menu_Pause()->Handle_Widget_Controller();
 
+    Update_Buttons_Navigation(Cached_Exits);
+    Update_Buttons_Actions(Cached_Actions);
+
     Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
@@ -54,14 +57,16 @@ void ATLG_HUD::Set_Image_Texture_Background(UTexture2D *texture2d)
     Get_TLG_Widget_HUD()->Set_Image_Texture_Background(texture2d);
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_HUD::Update_Buttons_Navigation(const TArray<FTLG_Location_Exit> &tlg_location_exits)
+void ATLG_HUD::Set_Location_Buttons(const TArray<FTLG_Location_Exit> &tlg_location_exits, const TArray<FTLG_Location_Action> &tlg_location_action)
 {
-    Get_TLG_Widget_HUD()->Update_Buttons_Navigation(tlg_location_exits);
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_location_action)
-{
-     Get_TLG_Widget_HUD()->Update_Buttons_Actions(tlg_location_action);
+    Cached_Exits = tlg_location_exits;
+    Cached_Actions = tlg_location_action;
+
+    if (TLG_Widget_Controller == 0)
+        return;
+
+    Update_Buttons_Navigation(Cached_Exits);
+    Update_Buttons_Actions(Cached_Actions);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_HUD::Init_Widget_Controller()
@@ -124,5 +129,15 @@ UTLG_Widget_Menu_Pause *ATLG_HUD::Get_TLG_Widget_Menu_Pause()
         TLG_Widget_Menu_Pause->AddToViewport(-1);
 
     return TLG_Widget_Menu_Pause;
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_HUD::Update_Buttons_Navigation(const TArray<FTLG_Location_Exit> &tlg_location_exits)
+{
+    Get_TLG_Widget_HUD()->Update_Buttons_Navigation(tlg_location_exits);
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_location_action)
+{
+    Get_TLG_Widget_HUD()->Update_Buttons_Actions(tlg_location_action);
 }
 //------------------------------------------------------------------------------------------------------------
