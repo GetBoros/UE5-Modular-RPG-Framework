@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <UI/TLG_Widget_Controller.h>
 #include <System/TLG_Game_State.h>
+#include <Data/TLG_Data_Location.h>
 
 #include <Abilities/TLG_Attribute_Set.h>
 #include <AbilitySystemComponent.h>
@@ -37,6 +38,7 @@ void UTLG_Widget_Controller::Bind_Callbacks_To_Dependencies()
     Ability_System_Component->GetGameplayAttributeValueChangeDelegate(tlg_attribute_set->GetSanityAttribute() ).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Sanity);
     Ability_System_Component->GetGameplayAttributeValueChangeDelegate(tlg_attribute_set->GetFatigueAttribute() ).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Fatigue);
     Ability_System_Component->GetGameplayAttributeValueChangeDelegate(tlg_attribute_set->GetDominanceAttribute() ).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Dominance);
+    Ability_System_Component->RegisterGenericGameplayTagEvent().AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Gameplay_Tag);
 
     if (Attribute_Info != 0)
         FGBC_Attribute_Info_Item gbc_attribute_info_item_sanity = Attribute_Info->Find_Attribute_Info_By_Tag(FGameplayTag::RequestGameplayTag("Attribute.Player.Sanity") );
@@ -54,6 +56,61 @@ void UTLG_Widget_Controller::Bind_Callbacks_To_Dependencies()
 	tlg_game_state->On_Game_Demo_Completed.AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Game_Demo_Completed);
 
     tlg_game_state->Broadcast_Game_Time_Current();
+    On_Player_State_Changed.Broadcast();
+}
+//------------------------------------------------------------------------------------------------------------
+bool UTLG_Widget_Controller::Check_Action_Requirements(const TArray<FTLG_Button_Settings> &tlg_button_settings_array) const
+{
+    if (tlg_button_settings_array.IsEmpty() )
+        return true;  // if no requirements action possible
+
+    for (const FTLG_Button_Settings &tlg_button_settings : tlg_button_settings_array)
+    {
+        switch (tlg_button_settings.Requirement)
+        {
+        case ETLG_Requirement_Type::Attribute_Greater_Equal:
+        {
+            const float current_value = Ability_System_Component->GetNumericAttribute(tlg_button_settings.Attribute);
+            if (current_value < tlg_button_settings.Value)
+                return false;
+            break;
+        }
+
+
+        case ETLG_Requirement_Type::Attribute_Less_Equal:
+        {
+            const float current_value = Ability_System_Component->GetNumericAttribute(tlg_button_settings.Attribute);
+            if (current_value > tlg_button_settings.Value)
+                return false;
+            break;
+        }
+
+
+        case ETLG_Requirement_Type::Has_Gameplay_Tag:
+        {
+            if (!Ability_System_Component->HasMatchingGameplayTag(tlg_button_settings.Gameplay_Tag) )
+                return false;
+            break;
+        }
+
+
+        case ETLG_Requirement_Type::Missing_Gameplay_Tag:
+        {
+            if (Ability_System_Component->HasMatchingGameplayTag(tlg_button_settings.Gameplay_Tag) )
+                return false;
+            break;
+        }
+
+
+        }
+    }
+
+    return true;
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Controller::Handle_Changed_Gameplay_Tag(const FGameplayTag gameplay_tag, int32 new_count)
+{
+    On_Player_State_Changed.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Handle_Changed_Sanity(const FOnAttributeChangeData &attribute_change_data)
@@ -67,6 +124,7 @@ void UTLG_Widget_Controller::Handle_Changed_Sanity(const FOnAttributeChangeData 
     Prev_Sanity = current;
 
     On_Changed_Sanity.Broadcast(current, delta);
+    On_Player_State_Changed.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Handle_Changed_Fatigue(const FOnAttributeChangeData &attribute_change_data)
@@ -80,6 +138,7 @@ void UTLG_Widget_Controller::Handle_Changed_Fatigue(const FOnAttributeChangeData
      Prev_Fatigued = current;
 
     On_Changed_Fatigued.Broadcast(current, delta);
+    On_Player_State_Changed.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Handle_Changed_Dominance(const FOnAttributeChangeData &attribute_change_data)
@@ -93,6 +152,7 @@ void UTLG_Widget_Controller::Handle_Changed_Dominance(const FOnAttributeChangeDa
     Prev_Dominance = current;
 
     On_Changed_Dominance.Broadcast(current, delta);
+    On_Player_State_Changed.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Handle_Changed_Game_Over()

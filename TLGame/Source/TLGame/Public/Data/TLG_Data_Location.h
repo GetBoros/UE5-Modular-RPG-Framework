@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <Engine/DataAsset.h>
 #include <GameplayTagContainer.h>
+#include <AttributeSet.h>
 
 #include <TLG_Data_Location.generated.h>
 //------------------------------------------------------------------------------------------------------------
@@ -11,6 +12,23 @@ class USoundBase;
 class UDataTable;
 class UGameplayEffect;
 class UTLG_Data_Enemy;
+//------------------------------------------------------------------------------------------------------------
+UENUM(BlueprintType) enum class ETLG_Requirement_Type : uint8
+{
+    Attribute_Greater_Equal,
+    Attribute_Less_Equal,
+    Has_Gameplay_Tag,
+    Missing_Gameplay_Tag
+};
+//------------------------------------------------------------------------------------------------------------
+USTRUCT(BlueprintType) struct FTLG_Requirement
+{
+    GENERATED_BODY()
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) bool Is_Higher = true;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) float Value = 0.0f;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) FGameplayTag Gameplay_Tag;
+};
 //------------------------------------------------------------------------------------------------------------
 USTRUCT(BlueprintType) struct FTLG_Magnitude_Tag_Pair
 {
@@ -21,13 +39,17 @@ USTRUCT(BlueprintType) struct FTLG_Magnitude_Tag_Pair
 
 };
 //------------------------------------------------------------------------------------------------------------
-USTRUCT(BlueprintType) struct FTLG_Requirement
+USTRUCT(BlueprintType) struct FTLG_Button_Settings
 {
     GENERATED_BODY()
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) bool Is_Higher = true;
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) float Value = 0.0f;
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) FGameplayTag Gameplay_Tag;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly) ETLG_Requirement_Type Requirement = ETLG_Requirement_Type::Attribute_Greater_Equal;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "Requirement == ETLG_Requirement_Type::Attribute_Greater_Equal || Requirement == ETLG_Requirement_Type::Attribute_Less_Equal") )
+    FGameplayAttribute Attribute;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "Requirement == ETLG_Requirement_Type::Attribute_Greater_Equal || Requirement == ETLG_Requirement_Type::Attribute_Less_Equal") )
+    float Value = 0.0f;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "Requirement == ETLG_Requirement_Type::Has_Gameplay_Tag || Requirement == ETLG_Requirement_Type::Missing_Gameplay_Tag") )
+    FGameplayTag Gameplay_Tag;
 };
 //------------------------------------------------------------------------------------------------------------
 USTRUCT(BlueprintType) struct FTLG_Location_Exit
@@ -46,6 +68,7 @@ USTRUCT(BlueprintType) struct FTLG_Location_Action
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FText Text_Button;
     UPROPERTY(EditAnywhere, BlueprintReadOnly) int32 Time_Cost_Minutes = 15;
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTag Gameplay_Tag_Action;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Button_Settings> TLG_Button_Settings;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Magnitude_Tag_Pair> TLG_Magnitude_Tag_Pair_Array;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Requirement> TLG_Location_Action_Requirement;
 

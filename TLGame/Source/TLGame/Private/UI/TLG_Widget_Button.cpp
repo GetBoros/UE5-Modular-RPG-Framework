@@ -77,6 +77,7 @@ void UTLG_Widget_Button_Action::Handle_Click()
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_action)
 {
+    bool result;
     UTLG_Widget_Controller *tlg_widget_controller;
     const int time_cost_minutes = tlg_location_action.Time_Cost_Minutes;
     const FText text_button = tlg_location_action.Text_Button;
@@ -85,7 +86,9 @@ void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_ac
     const FText text_final = FText::Format(text_format_pattern, text_button, text_time);
 
     // 1.0. Init
+	result = true;
 	tlg_widget_controller = Cast<UTLG_Widget_Controller>(GBUIC_Widget_Controller);
+    tlg_widget_controller->On_Player_State_Changed.AddUniqueDynamic(this, &UTLG_Widget_Button_Action::Refresh_Button_State);
     TLG_Location_Action = tlg_location_action;
 
 	// 1.1. Set Text in Button
@@ -95,8 +98,20 @@ void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_ac
         Set_Button_Text(text_final);
 
     // 1.2.
-    
-    // bool result = tlg_widget_controller->Check_Action_Requirements(TLG_Location_Action.TLG_Location_Action_Requirements);
+    result = tlg_widget_controller->Check_Action_Requirements(TLG_Location_Action.TLG_Button_Settings);
+	Set_Button_Enabled(result);
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Button_Action::Refresh_Button_State()
+{
+    UTLG_Widget_Controller* tlg_controller = Cast<UTLG_Widget_Controller>(GBUIC_Widget_Controller);
+    if (tlg_controller == 0) return;
+
+    // Запрашиваем у контроллера проверку требований
+    const bool b_is_available = tlg_controller->Check_Action_Requirements(TLG_Location_Action.TLG_Button_Settings);
+
+    // Включаем или выключаем кнопку
+    SetIsEnabled(b_is_available);
 }
 //------------------------------------------------------------------------------------------------------------
 FText UTLG_Widget_Button_Action::Format_Time_From_Minutes(int32 minutes_cost) const

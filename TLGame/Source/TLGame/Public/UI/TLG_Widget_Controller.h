@@ -8,12 +8,14 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOn_Attribute_Changed_Signature, float, new_value, float, delta);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOn_Time_Updated_Signature, int32, hours, int32, minutes);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_Day_Updated_Signature, int32, current_day);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOn_Player_State_Changed_Signature);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Over);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Resumed);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Menu_Paused);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Demo_Completed);
 //------------------------------------------------------------------------------------------------------------
 class UTLG_Attribute_Set;
+struct FTLG_Button_Settings;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API UTLG_Widget_Controller : public UGBUIC_Widget_Controller
 {
@@ -23,18 +25,22 @@ public:
     virtual void Broadcast_Initial_Values();
     virtual void Bind_Callbacks_To_Dependencies();
 
+    FOn_Game_Over On_Game_Over;
+    FOn_Game_Resumed On_Game_Resumed;
+    FOn_Game_Menu_Paused On_Game_Menu_Paused;
+    FOn_Game_Demo_Completed On_Game_Demo_Completed;
+
+    UFUNCTION(BlueprintCallable) bool Check_Action_Requirements(const TArray<FTLG_Button_Settings> &tlg_button_settings_array) const;
+
+    UPROPERTY(BlueprintAssignable) FOn_Player_State_Changed_Signature On_Player_State_Changed;
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Sanity;
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Fatigued;
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Dominance;
     UPROPERTY(BlueprintAssignable) FOn_Time_Updated_Signature On_Changed_Time_Game;
     UPROPERTY(BlueprintAssignable) FOn_Day_Updated_Signature On_Changed_Day;
 
-    mutable FOn_Game_Over On_Game_Over;
-    mutable FOn_Game_Resumed On_Game_Resumed;
-    mutable FOn_Game_Menu_Paused On_Game_Menu_Paused;
-    mutable FOn_Game_Demo_Completed On_Game_Demo_Completed;
-
 private:
+    void Handle_Changed_Gameplay_Tag(const FGameplayTag gameplay_tag, int32 new_count);
     void Handle_Changed_Sanity(const FOnAttributeChangeData &attribute_change_data);
     void Handle_Changed_Fatigue(const FOnAttributeChangeData &attribute_change_data);
     void Handle_Changed_Dominance(const FOnAttributeChangeData &attribute_change_data);
