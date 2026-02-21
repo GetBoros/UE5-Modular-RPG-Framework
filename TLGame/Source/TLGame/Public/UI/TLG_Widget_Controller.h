@@ -8,7 +8,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOn_Attribute_Changed_Signature, float, new_value, float, delta);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOn_Time_Updated_Signature, int32, hours, int32, minutes);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_Day_Updated_Signature, int32, current_day);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOn_Player_State_Changed_Signature);
+DECLARE_MULTICAST_DELEGATE(FOn_Player_Attribute_Changed);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Over);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Resumed);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Menu_Paused);
@@ -29,10 +29,10 @@ public:
     FOn_Game_Resumed On_Game_Resumed;
     FOn_Game_Menu_Paused On_Game_Menu_Paused;
     FOn_Game_Demo_Completed On_Game_Demo_Completed;
+    FOn_Player_Attribute_Changed On_Player_Attribute_Changed;
 
     UFUNCTION(BlueprintCallable) bool Check_Action_Requirements(const TArray<FTLG_Button_Settings> &tlg_button_settings_array) const;
 
-    UPROPERTY(BlueprintAssignable) FOn_Player_State_Changed_Signature On_Player_State_Changed;
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Sanity;
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Fatigued;
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Dominance;

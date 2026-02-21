@@ -67,7 +67,8 @@ USTRUCT(BlueprintType) struct FTLG_Location_Action
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FText Text_Button;
     UPROPERTY(EditAnywhere, BlueprintReadOnly) int32 Time_Cost_Minutes = 15;
-    UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTag Gameplay_Tag_Action;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly) float Attribute_Data_Magnitude = 0;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTag Gameplay_Tag_Attribute_Data;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Button_Settings> TLG_Button_Settings;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Magnitude_Tag_Pair> TLG_Magnitude_Tag_Pair_Array;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Requirement> TLG_Location_Action_Requirement;

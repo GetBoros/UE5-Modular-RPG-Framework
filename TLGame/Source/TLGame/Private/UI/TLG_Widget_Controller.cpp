@@ -56,7 +56,7 @@ void UTLG_Widget_Controller::Bind_Callbacks_To_Dependencies()
 	tlg_game_state->On_Game_Demo_Completed.AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Game_Demo_Completed);
 
     tlg_game_state->Broadcast_Game_Time_Current();
-    On_Player_State_Changed.Broadcast();
+    On_Player_Attribute_Changed.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
 bool UTLG_Widget_Controller::Check_Action_Requirements(const TArray<FTLG_Button_Settings> &tlg_button_settings_array) const
@@ -110,7 +110,7 @@ bool UTLG_Widget_Controller::Check_Action_Requirements(const TArray<FTLG_Button_
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Handle_Changed_Gameplay_Tag(const FGameplayTag gameplay_tag, int32 new_count)
 {
-    On_Player_State_Changed.Broadcast();
+    On_Player_Attribute_Changed.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Handle_Changed_Sanity(const FOnAttributeChangeData &attribute_change_data)
@@ -124,7 +124,7 @@ void UTLG_Widget_Controller::Handle_Changed_Sanity(const FOnAttributeChangeData 
     Prev_Sanity = current;
 
     On_Changed_Sanity.Broadcast(current, delta);
-    On_Player_State_Changed.Broadcast();
+    On_Player_Attribute_Changed.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Handle_Changed_Fatigue(const FOnAttributeChangeData &attribute_change_data)
@@ -138,7 +138,7 @@ void UTLG_Widget_Controller::Handle_Changed_Fatigue(const FOnAttributeChangeData
      Prev_Fatigued = current;
 
     On_Changed_Fatigued.Broadcast(current, delta);
-    On_Player_State_Changed.Broadcast();
+    On_Player_Attribute_Changed.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Handle_Changed_Dominance(const FOnAttributeChangeData &attribute_change_data)
@@ -152,7 +152,7 @@ void UTLG_Widget_Controller::Handle_Changed_Dominance(const FOnAttributeChangeDa
     Prev_Dominance = current;
 
     On_Changed_Dominance.Broadcast(current, delta);
-    On_Player_State_Changed.Broadcast();
+    On_Player_Attribute_Changed.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Handle_Changed_Game_Over()

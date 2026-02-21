@@ -19,8 +19,8 @@ UCLASS() class TLGAME_API UTLG_Widget_Button : public UGBUIC_User_Widget
 public:
     virtual void NativeDestruct();
     virtual void NativeConstruct();
-    virtual void Handle_Click();
     virtual void On_Widget_Controller_Set_Implementation();
+    virtual void Handle_Click();
 
     void Set_Button_Text(const FText &text_button) const;
     void Set_Button_Enabled(const bool is_enabled);
@@ -44,14 +44,13 @@ UCLASS() class TLGAME_API UTLG_Widget_Button_Action : public UTLG_Widget_Button
 
 public:
     virtual void NativeDestruct();
-    virtual void Handle_Click();
     virtual void On_Widget_Controller_Set_Implementation();
+    virtual void Handle_Click();
 
     void Init(const FTLG_Location_Action &action_data);
 
 private:
-    UFUNCTION() void Refresh_Button_State();
-
+    void Refresh_Button_State();
     FText Format_Time_From_Minutes(int32 minutes_cost) const;  // !!! TEMP || Can be helpful
 
     FTLG_Location_Action TLG_Location_Action;

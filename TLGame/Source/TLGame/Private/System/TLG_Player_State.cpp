@@ -103,9 +103,9 @@ bool ATLG_Player_State::Check_Requirement(const FTLG_Location_Action &tlg_locati
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_State::Apply_Multy_Dynamic_Change(const FTLG_Location_Action &tlg_location_action)
 {
-    float magnitude = 0.0f;
+    float magnitude = tlg_location_action.Attribute_Data_Magnitude;
     int32 time_cost_minutes = tlg_location_action.Time_Cost_Minutes;
-    FGameplayTag gameplay_tag_action = tlg_location_action.Gameplay_Tag_Action;
+    FGameplayTag gameplay_tag_attribute_data = tlg_location_action.Gameplay_Tag_Attribute_Data;
     FGameplayEffectContextHandle gameplay_effect_handle_context;
     FGameplayEffectSpecHandle gameplay_effect_handle_spec;
     const TArray<FTLG_Magnitude_Tag_Pair> &tlg_magnitude_tag_pair_array = tlg_location_action.TLG_Magnitude_Tag_Pair_Array;
@@ -128,10 +128,9 @@ void ATLG_Player_State::Apply_Multy_Dynamic_Change(const FTLG_Location_Action &t
         }
     }
     else
-        gameplay_effect_handle_spec.Data->SetSetByCallerMagnitude(gameplay_tag_action, magnitude);
+        gameplay_effect_handle_spec.Data->SetSetByCallerMagnitude(gameplay_tag_attribute_data, magnitude);
 
     Ability_System_Component->ApplyGameplayEffectSpecToSelf(*gameplay_effect_handle_spec.Data.Get() );
-
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_State::Apply_Dynamic_Change(float magnitude, FGameplayTag gameplay_tag)
