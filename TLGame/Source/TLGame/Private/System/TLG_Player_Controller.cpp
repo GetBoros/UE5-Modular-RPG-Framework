@@ -111,9 +111,6 @@ void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_locatio
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Location_Action(const FTLG_Location_Action &tlg_location_action)
 {
-    if (TLG_Player_State->Check_Requirement(tlg_location_action) != true)
-        return;
-
     TLG_Player_State->Apply_Multy_Dynamic_Change(tlg_location_action);
     TLG_Game_State->Advance_Time(tlg_location_action.Time_Cost_Minutes);  // Spend time for interact with room action
 }
@@ -184,16 +181,15 @@ void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
 {
     static const FString context(TEXT("Dialogue Context") );
 
-    if (TLG_Player_State->Has_Gameplay_Tag_Story_Progresses(TLG_Data_Enemy_Current->Mood) )
+    if (TLG_Player_State->Is_Scenario_Completed(TLG_Data_Enemy_Current->Active_Scenario_Tag) )
         return;
 
-    if (UDataTable *data_table = TLG_Data_Enemy_Current->Get_Dialogue_Table_By_Tag(TLG_Data_Enemy_Current->Mood) )
+    if (UDataTable *dialogue_table_for_scenario = TLG_Data_Enemy_Current->Get_Dialogue_Table_For_Scenario(TLG_Data_Enemy_Current->Active_Scenario_Tag) )
     {
-        TLG_Player_State->Add_Gameplay_Tag_Story_Progresses(FTLG_Data_Gameplay_Tags::Get().Achievement_Tutorial_Intro);
-        if (FDialogue_Node *dialogue_node_next = data_table->FindRow<FDialogue_Node>(row_id, context, true) )  // Find node by row id
+        if (FDialogue_Node *dialogue_node_next = dialogue_table_for_scenario->FindRow<FDialogue_Node>(row_id, context, true) )  // Find node by row id
         {
-            if (UTexture2D *texture_portrait = TLG_Data_Enemy_Current->Get_Portrait_By_Tag(dialogue_node_next->Tag_Portrait) )
-                TLG_HUD->Set_Image_Texture_Portrait(texture_portrait);
+            if (UTexture2D *texture_portrait_for_mood = TLG_Data_Enemy_Current->Get_Portrait_For_Mood(dialogue_node_next->Tag_Portrait) )
+                TLG_HUD->Set_Image_Texture_Portrait(texture_portrait_for_mood);
             TLG_HUD->Dialogue_Node_Show(*dialogue_node_next);  // Send data to Dialogue UI
         }
     }
@@ -204,7 +200,7 @@ void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
 void ATLG_Player_Controller::Dialogue_End()
 {
     TLG_HUD->Dialogue_Hide();
-    TLG_Player_State->Add_Gameplay_Tag_Story_Progresses(TLG_Data_Enemy_Current->Mood);
+    TLG_Player_State->Mark_Scenario_Completed(TLG_Data_Enemy_Current->Active_Scenario_Tag);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::On_Pressed_ESC()

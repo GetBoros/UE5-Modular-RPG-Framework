@@ -15,7 +15,7 @@ DECLARE_MULTICAST_DELEGATE(FOn_Game_Menu_Paused);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Demo_Completed);
 //------------------------------------------------------------------------------------------------------------
 class UTLG_Attribute_Set;
-struct FTLG_Button_Settings;
+struct FTLG_Action_Requirement;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API UTLG_Widget_Controller : public UGBUIC_Widget_Controller
 {
@@ -31,7 +31,7 @@ public:
     FOn_Game_Demo_Completed On_Game_Demo_Completed;
     FOn_Player_Attribute_Changed On_Player_Attribute_Changed;
 
-    UFUNCTION(BlueprintCallable) bool Check_Action_Requirements(const TArray<FTLG_Button_Settings> &tlg_button_settings_array) const;
+    UFUNCTION(BlueprintCallable) bool Check_Action_Requirements(const TArray<FTLG_Action_Requirement> &tlg_action_requirement_array) const;
 
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Sanity;
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Fatigued;

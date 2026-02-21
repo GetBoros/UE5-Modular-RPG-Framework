@@ -116,7 +116,7 @@ void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_ac
 
     // 1.0. Init
     TLG_Location_Action = tlg_location_action;
-    is_button_enabled = TLG_Widget_Controller->Check_Action_Requirements(TLG_Location_Action.TLG_Button_Settings);
+    is_button_enabled = TLG_Widget_Controller->Check_Action_Requirements(TLG_Location_Action.Action_Requirement);
 
 	// 1.1. Set Text in Button
     if (text_button.IsEmpty() == true)
@@ -130,7 +130,7 @@ void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_ac
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button_Action::Refresh_Button_State()
 {
-    const bool is_button_available = TLG_Widget_Controller->Check_Action_Requirements(TLG_Location_Action.TLG_Button_Settings);
+    const bool is_button_available = TLG_Widget_Controller->Check_Action_Requirements(TLG_Location_Action.Action_Requirement);
 
     Set_Button_Enabled(is_button_available);
 }

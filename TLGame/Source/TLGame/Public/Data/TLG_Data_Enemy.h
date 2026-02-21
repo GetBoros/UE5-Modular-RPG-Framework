@@ -14,12 +14,12 @@ UCLASS(BlueprintType) class TLGAME_API UTLG_Data_Enemy : public UPrimaryDataAsse
     GENERATED_BODY()
 
 public:
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) FText Name;
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TMap<FGameplayTag, TObjectPtr<UTexture2D>> Portraits;  // !!! TEMP Portrets can be choosen by Gameplay tags
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TMap<FGameplayTag, TObjectPtr<UDataTable>> Dialogue_Tables;  // Choose DataTable by GameplayTags (Stage.Intro)
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) FGameplayTag Mood;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) FText Enemy_Name;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) FGameplayTag Active_Scenario_Tag;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TMap<FGameplayTag, TObjectPtr<UTexture2D> > Portraits_By_Scenario;  // !!! TEMP Portrets can be choosen by Gameplay tags
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TMap<FGameplayTag, TObjectPtr<UDataTable> > Dialogues_By_Scenario;  // Choose DataTable by GameplayTags (Stage.Intro)
 
-    UTexture2D *Get_Portrait_By_Tag(const FGameplayTag &tag) const;
-    UDataTable *Get_Dialogue_Table_By_Tag(const FGameplayTag &tag) const;
+    UTexture2D *Get_Portrait_For_Mood(const FGameplayTag &gameplay_tag_mood) const;
+    UDataTable *Get_Dialogue_Table_For_Scenario(const FGameplayTag &gameplay_tag_scenario) const;
 };
 //------------------------------------------------------------------------------------------------------------

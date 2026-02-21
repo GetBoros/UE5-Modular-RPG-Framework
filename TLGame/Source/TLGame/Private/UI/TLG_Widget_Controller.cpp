@@ -59,19 +59,19 @@ void UTLG_Widget_Controller::Bind_Callbacks_To_Dependencies()
     On_Player_Attribute_Changed.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
-bool UTLG_Widget_Controller::Check_Action_Requirements(const TArray<FTLG_Button_Settings> &tlg_button_settings_array) const
+bool UTLG_Widget_Controller::Check_Action_Requirements(const TArray<FTLG_Action_Requirement> &tlg_action_requirement_array) const
 {
-    if (tlg_button_settings_array.IsEmpty() )
+    if (tlg_action_requirement_array.IsEmpty() )
         return true;  // if no requirements action possible
 
-    for (const FTLG_Button_Settings &tlg_button_settings : tlg_button_settings_array)
+    for (const FTLG_Action_Requirement &tlg_action_requirement: tlg_action_requirement_array)
     {
-        switch (tlg_button_settings.Requirement)
+        switch (tlg_action_requirement.Requirement_Type)
         {
         case ETLG_Requirement_Type::Attribute_Greater_Equal:
         {
-            const float current_value = Ability_System_Component->GetNumericAttribute(tlg_button_settings.Attribute);
-            if (current_value < tlg_button_settings.Value)
+            const float current_value = Ability_System_Component->GetNumericAttribute(tlg_action_requirement.Attribute);
+            if (current_value < tlg_action_requirement.Value)
                 return false;
             break;
         }
@@ -79,8 +79,8 @@ bool UTLG_Widget_Controller::Check_Action_Requirements(const TArray<FTLG_Button_
 
         case ETLG_Requirement_Type::Attribute_Less_Equal:
         {
-            const float current_value = Ability_System_Component->GetNumericAttribute(tlg_button_settings.Attribute);
-            if (current_value > tlg_button_settings.Value)
+            const float current_value = Ability_System_Component->GetNumericAttribute(tlg_action_requirement.Attribute);
+            if (current_value > tlg_action_requirement.Value)
                 return false;
             break;
         }
@@ -88,7 +88,7 @@ bool UTLG_Widget_Controller::Check_Action_Requirements(const TArray<FTLG_Button_
 
         case ETLG_Requirement_Type::Has_Gameplay_Tag:
         {
-            if (!Ability_System_Component->HasMatchingGameplayTag(tlg_button_settings.Gameplay_Tag) )
+            if (!Ability_System_Component->HasMatchingGameplayTag(tlg_action_requirement.Attribute_Tag) )
                 return false;
             break;
         }
@@ -96,7 +96,7 @@ bool UTLG_Widget_Controller::Check_Action_Requirements(const TArray<FTLG_Button_
 
         case ETLG_Requirement_Type::Missing_Gameplay_Tag:
         {
-            if (Ability_System_Component->HasMatchingGameplayTag(tlg_button_settings.Gameplay_Tag) )
+            if (Ability_System_Component->HasMatchingGameplayTag(tlg_action_requirement.Attribute_Tag) )
                 return false;
             break;
         }

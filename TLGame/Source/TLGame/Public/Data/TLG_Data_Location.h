@@ -21,35 +21,30 @@ UENUM(BlueprintType) enum class ETLG_Requirement_Type : uint8
     Missing_Gameplay_Tag
 };
 //------------------------------------------------------------------------------------------------------------
-USTRUCT(BlueprintType) struct FTLG_Requirement
+USTRUCT(BlueprintType) struct FTLG_Set_By_Caller_Magnitude
 {
     GENERATED_BODY()
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) bool Is_Higher = true;
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) float Value = 0.0f;
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) FGameplayTag Gameplay_Tag;
-};
-//------------------------------------------------------------------------------------------------------------
-USTRUCT(BlueprintType) struct FTLG_Magnitude_Tag_Pair
-{
-    GENERATED_BODY()
-
-    UPROPERTY(EditAnywhere) float Magnitude = 0.f;
-    UPROPERTY(EditAnywhere) FGameplayTag Gameplay_Tag;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) FGameplayTag Attribute_Tag;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) float Attribute_Magnitude = 0.0f;
 
 };
 //------------------------------------------------------------------------------------------------------------
-USTRUCT(BlueprintType) struct FTLG_Button_Settings
+USTRUCT(BlueprintType) struct FTLG_Action_Requirement
 {
     GENERATED_BODY()
 
-    UPROPERTY(EditAnywhere, BlueprintReadOnly) ETLG_Requirement_Type Requirement = ETLG_Requirement_Type::Attribute_Greater_Equal;
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "Requirement == ETLG_Requirement_Type::Attribute_Greater_Equal || Requirement == ETLG_Requirement_Type::Attribute_Less_Equal") )
+    UPROPERTY(EditAnywhere, BlueprintReadOnly)
+    ETLG_Requirement_Type Requirement_Type = ETLG_Requirement_Type::Attribute_Greater_Equal;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "Requirement_Type == ETLG_Requirement_Type::Attribute_Greater_Equal || Requirement_Type == ETLG_Requirement_Type::Attribute_Less_Equal") )
     FGameplayAttribute Attribute;
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "Requirement == ETLG_Requirement_Type::Attribute_Greater_Equal || Requirement == ETLG_Requirement_Type::Attribute_Less_Equal") )
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "Requirement_Type == ETLG_Requirement_Type::Attribute_Greater_Equal || Requirement_Type == ETLG_Requirement_Type::Attribute_Less_Equal") )
     float Value = 0.0f;
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "Requirement == ETLG_Requirement_Type::Has_Gameplay_Tag || Requirement == ETLG_Requirement_Type::Missing_Gameplay_Tag") )
-    FGameplayTag Gameplay_Tag;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "Requirement_Type == ETLG_Requirement_Type::Has_Gameplay_Tag || Requirement_Type == ETLG_Requirement_Type::Missing_Gameplay_Tag") )
+    FGameplayTag Attribute_Tag;
 };
 //------------------------------------------------------------------------------------------------------------
 USTRUCT(BlueprintType) struct FTLG_Location_Exit
@@ -67,12 +62,8 @@ USTRUCT(BlueprintType) struct FTLG_Location_Action
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FText Text_Button;
     UPROPERTY(EditAnywhere, BlueprintReadOnly) int32 Time_Cost_Minutes = 15;
-    UPROPERTY(EditAnywhere, BlueprintReadOnly) float Attribute_Data_Magnitude = 0;
-    UPROPERTY(EditAnywhere, BlueprintReadOnly) FGameplayTag Gameplay_Tag_Attribute_Data;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Button_Settings> TLG_Button_Settings;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Magnitude_Tag_Pair> TLG_Magnitude_Tag_Pair_Array;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Requirement> TLG_Location_Action_Requirement;
-
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Action_Requirement> Action_Requirement;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Set_By_Caller_Magnitude> Set_By_Caller_Magnitude;
 };
 //------------------------------------------------------------------------------------------------------------
 USTRUCT(BlueprintType) struct FTLG_Location_Enemy

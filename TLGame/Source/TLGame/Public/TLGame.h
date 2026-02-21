@@ -29,7 +29,7 @@ V	- Can sleep only if fatigue more then 50+?
 
 X	- Add tooltip to buttons action and locations
 X	- Show buttons as invalid or don`t show if can`t use them?
-X	- Fatigue logic: Block some answers or else
+V	- Fatigue logic: Block some answers or else
 
 */
 #pragma endregion
@@ -78,7 +78,7 @@ X	-
 /*
 
 V	- Need ATLG_Player_Controller refactoring
-X	- UTLG_Widget_HUD must have params TArray<FTLG_Location_Action> for current location and current navigation, and in controller just send it?
+V	- UTLG_Widget_HUD must have params TArray<FTLG_Location_Action> for current location and current navigation, and in controller just send it?
 X	- 
 
 */
