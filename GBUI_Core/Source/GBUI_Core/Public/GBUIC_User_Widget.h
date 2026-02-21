@@ -12,7 +12,8 @@ UCLASS() class GBUI_CORE_API UGBUIC_User_Widget : public UUserWidget
     GENERATED_BODY()
 
 public:
-    UFUNCTION(BlueprintImplementableEvent) void On_Widget_Controller_Set();  // BP Event called when controller_widget setup
+    UFUNCTION(BlueprintNativeEvent) void On_Widget_Controller_Set();
+    virtual void On_Widget_Controller_Set_Implementation();
     
     UFUNCTION(BlueprintCallable) void Set_Widget_Controller(UGBUIC_Widget_Controller *gbuic_widget_controller);  // hud can send controller here
 

@@ -10,19 +10,24 @@
 class UButton;
 class UTextBlock;
 class UTLG_Data_Location;
+class UTLG_Widget_Controller;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API UTLG_Widget_Button : public UGBUIC_User_Widget
 {
     GENERATED_BODY()
 
 public:
+    virtual void NativeDestruct();
     virtual void NativeConstruct();
     virtual void Handle_Click();
+    virtual void On_Widget_Controller_Set_Implementation();
 
     void Set_Button_Text(const FText &text_button) const;
     void Set_Button_Enabled(const bool is_enabled);
 
 protected:
+    UTLG_Widget_Controller *TLG_Widget_Controller;
+
     UFUNCTION() void Handle_Click_Internal();
     UFUNCTION() void Handle_Hover_Internal();
 
@@ -38,12 +43,15 @@ UCLASS() class TLGAME_API UTLG_Widget_Button_Action : public UTLG_Widget_Button
     GENERATED_BODY()
 
 public:
+    virtual void NativeDestruct();
     virtual void Handle_Click();
-    
+    virtual void On_Widget_Controller_Set_Implementation();
+
     void Init(const FTLG_Location_Action &action_data);
 
 private:
     UFUNCTION() void Refresh_Button_State();
+
     FText Format_Time_From_Minutes(int32 minutes_cost) const;  // !!! TEMP || Can be helpful
 
     FTLG_Location_Action TLG_Location_Action;

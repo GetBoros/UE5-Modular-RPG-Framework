@@ -102,7 +102,7 @@ void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_locatio
         TLG_HUD->Dialogue_Hide();
 
     // 4.0. Buttons Location and Actions
-    TLG_HUD->Set_Location_Buttons(tlg_data_location->TLG_Location_Exits, tlg_data_location->TLG_Location_Action);
+    TLG_HUD->Set_Location_Buttons(tlg_data_location->TLG_Location_Exits, tlg_data_location->TLG_Location_Actions);
 
     // 5.0. Spend time when move to location
     TLG_Game_State->Advance_Time(location_enter_time_cost);

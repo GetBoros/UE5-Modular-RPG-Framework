@@ -11,6 +11,14 @@
 
 
 // UTLG_Widget_Button
+void UTLG_Widget_Button::NativeDestruct()
+{
+    Button_Click->OnClicked.RemoveDynamic(this, &UTLG_Widget_Button::Handle_Click_Internal);
+    Button_Click->OnHovered.RemoveDynamic(this, &UTLG_Widget_Button::Handle_Hover_Internal);
+
+    Super::NativeDestruct();
+}
+//------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button::NativeConstruct()
 {
     Super::NativeConstruct();
@@ -25,6 +33,13 @@ void UTLG_Widget_Button::NativeConstruct()
 void UTLG_Widget_Button::Handle_Click()
 {
 
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Button::On_Widget_Controller_Set_Implementation()
+{
+	TLG_Widget_Controller = Cast<UTLG_Widget_Controller>(GBUIC_Widget_Controller);  // Cast GBUI to TLG Controller must be first after use say child class from parent class
+
+    Super::On_Widget_Controller_Set_Implementation();
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button::Set_Button_Text(const FText &text_button) const
@@ -60,7 +75,15 @@ void UTLG_Widget_Button::Handle_Hover_Internal()
 
 
 
+
 // UTLG_Widget_Button_Action
+void UTLG_Widget_Button_Action::NativeDestruct()
+{
+    Super::NativeDestruct();
+
+    TLG_Widget_Controller->On_Player_State_Changed.RemoveDynamic(this, &UTLG_Widget_Button_Action::Refresh_Button_State);
+}
+//------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button_Action::Handle_Click()
 {
     APlayerController *player_controller;
@@ -75,10 +98,16 @@ void UTLG_Widget_Button_Action::Handle_Click()
         interaction_interface->Location_Action(TLG_Location_Action);
 }
 //------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Button_Action::On_Widget_Controller_Set_Implementation()
+{
+    Super::On_Widget_Controller_Set_Implementation();  // Cast GBUI to TLG Controller must be first after use TLG
+
+    TLG_Widget_Controller->On_Player_State_Changed.AddUniqueDynamic(this, &UTLG_Widget_Button_Action::Refresh_Button_State);  // !!! TEMP change to not dynamic
+}
+//------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_action)
 {
     bool result;
-    UTLG_Widget_Controller *tlg_widget_controller;
     const int time_cost_minutes = tlg_location_action.Time_Cost_Minutes;
     const FText text_button = tlg_location_action.Text_Button;
     const FText text_format_pattern = FText::FromString("{0} ({1})");
@@ -87,18 +116,16 @@ void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_ac
 
     // 1.0. Init
 	result = true;
-	tlg_widget_controller = Cast<UTLG_Widget_Controller>(GBUIC_Widget_Controller);
-    tlg_widget_controller->On_Player_State_Changed.AddUniqueDynamic(this, &UTLG_Widget_Button_Action::Refresh_Button_State);
     TLG_Location_Action = tlg_location_action;
 
 	// 1.1. Set Text in Button
     if (text_button.IsEmpty() == true)
-        Set_Button_Text(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA")));
+        Set_Button_Text(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA") ) );
     else
         Set_Button_Text(text_final);
 
     // 1.2.
-    result = tlg_widget_controller->Check_Action_Requirements(TLG_Location_Action.TLG_Button_Settings);
+    result = TLG_Widget_Controller->Check_Action_Requirements(TLG_Location_Action.TLG_Button_Settings);
 	Set_Button_Enabled(result);
 }
 //------------------------------------------------------------------------------------------------------------
