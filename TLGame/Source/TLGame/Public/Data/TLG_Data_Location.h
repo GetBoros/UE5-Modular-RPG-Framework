@@ -72,7 +72,7 @@ USTRUCT(BlueprintType) struct FTLG_Location_Enemy
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (ClampMin = "0.0", ClampMax = "1.0") ) float Encounter_Chance = 0.5f;
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TObjectPtr<UTLG_Data_Enemy> TLG_Data_Enemy;
-
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TSubclassOf<AActor> Enemy_Class;
 };
 //------------------------------------------------------------------------------------------------------------
 UCLASS(BlueprintType) class TLGAME_API UTLG_Data_Location : public UPrimaryDataAsset

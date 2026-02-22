@@ -74,17 +74,25 @@ void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_locatio
     float enemy_encounter_chance;
     USoundBase *sound_base;
     UTexture2D *texture2d_background;
+    AActor *spawned_actor;
+    TSubclassOf<AActor> enemy_class;
 
+    enemy_class = 0;
+    spawned_actor = 0;
     TLG_Data_Location_Current = tlg_data_location;
     enemy_encounter_chance = tlg_data_location->Enemy_Encounter_Chance;
     location_enter_time_cost = 5;  // !!! TEMP Need add to data location
     texture2d_background = tlg_data_location->Texture2D_Background_Image;
     sound_base = tlg_data_location->SoundBase_Ambient;
     roll = FMath::FRand();  // 2. Generate value from 0.0 to 1.0
+
     if (tlg_data_location->TLG_Location_Enemies.IsEmpty() != true)
     {
         TLG_Data_Enemy_Current = tlg_data_location->TLG_Location_Enemies[0].TLG_Data_Enemy;  // !!! TEMP
         enemy_encounter_chance = tlg_data_location->TLG_Location_Enemies[0].Encounter_Chance;
+        enemy_class = tlg_data_location->TLG_Location_Enemies[0].Enemy_Class;
+
+        spawned_actor = GetWorld()->SpawnActor<AActor>(enemy_class, FVector(0.0f, 0.0f, 0.0f), FRotator::ZeroRotator, FActorSpawnParameters() );
     }
 
     // 1.0. Background
@@ -106,6 +114,9 @@ void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_locatio
 
     // 5.0. Spend time when move to location
     TLG_Game_State->Advance_Time(location_enter_time_cost);
+
+    // 6.0. Spawn Enemies
+
 
 }
 //------------------------------------------------------------------------------------------------------------

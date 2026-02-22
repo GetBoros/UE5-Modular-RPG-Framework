@@ -26,10 +26,13 @@ V	- UI Sound press buttons or something else
 V	- Demo ending 3 Day
 V	- Tutorial, Intro Dialog: If Sanity < 0 hospital, if Emphaty >= 100 im slave without will
 V	- Can sleep only if fatigue more then 50+?
+V	- Fatigue logic: Block some answers or else
 
+	Part 2:
 X	- Add tooltip to buttons action and locations
 X	- Show buttons as invalid or don`t show if can`t use them?
-V	- Fatigue logic: Block some answers or else
+X	- Implement State Tree for enemy dialogue
+X	- 
 
 */
 #pragma endregion
