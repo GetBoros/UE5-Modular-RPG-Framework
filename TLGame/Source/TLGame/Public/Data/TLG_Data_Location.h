@@ -70,9 +70,10 @@ USTRUCT(BlueprintType) struct FTLG_Location_Enemy
 {
     GENERATED_BODY()
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TSubclassOf<AActor> Enemy_Class;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) FGameplayTagQuery Spawn_Conditions_Tag_Query;  // ALL(HasTag(Time.Morning), NoTag(Story.Marina.QuestComplete))
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (ClampMin = "0.0", ClampMax = "1.0") ) float Encounter_Chance = 0.5f;
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TObjectPtr<UTLG_Data_Enemy> TLG_Data_Enemy;
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TSubclassOf<AActor> Enemy_Class;
 };
 //------------------------------------------------------------------------------------------------------------
 UCLASS(BlueprintType) class TLGAME_API UTLG_Data_Location : public UPrimaryDataAsset
