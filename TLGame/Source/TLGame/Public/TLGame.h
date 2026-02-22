@@ -29,11 +29,11 @@ V	- Can sleep only if fatigue more then 50+?
 V	- Fatigue logic: Block some answers or else
 
 	Part 2:
+V	- Implement State Tree for enemy dialogue
+X	- Add tutorial enemy with simple state tree to show how it work
 X	- Add tooltip to buttons action and locations
 X	- Show buttons as invalid or don`t show if can`t use them?
-X	- Implement State Tree for enemy dialogue
 X	- Add more than one enemy in location
-X	- Add tutorial enemy with simple state tree to show how it work
 X	- 
 
 */
