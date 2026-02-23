@@ -12,45 +12,17 @@
 // UTLG_STT_Set_Dialogue
 EStateTreeRunStatus UTLG_STT_Set_Dialogue::EnterState(FStateTreeExecutionContext &context, const FStateTreeTransitionResult &transition)
 {
-	ATLG_Player_Controller *test;
-
-	test = Cast<ATLG_Player_Controller>(context.GetOwner() );
-
-	if (test != 0)
-	{
-		int yy = 0;
-
-		yy++;
-	}
-
-	if (TLG_Player_Controller != 0)
-	{
-		int yy = 0;
-
-		yy++;
-	}
+	AActor *test;
 
 	TLG_Player_Controller = Cast<ATLG_Player_Controller>(UGameplayStatics::GetPlayerController(GetWorld(), 0) );
-	
-	if (TLG_Player_Controller != 0)
-	{
-		int yy = 0;
+	if (TLG_Player_Controller == 0)
+		return EStateTreeRunStatus::Failed;
 
-		yy++;
-		// 2. Подписываемся на делегат завершения диалога
-		// TLG_Player_Controller->On_Dialogue_Ended.AddDynamic(this, &UTLG_STT_Set_Dialogue::Handle_Dialogue_Ended);
+	test = Cast<AActor>(context.GetOwner());
 
-		// 3. Запускаем UI и передаем таблицу
-		// TLG_Player_Controller->Start_Encounter(Dialogue_Table);
+	// TODO TLG_Player_Controller Set DT And bind on delegate
 
-		// 4. Говорим дереву: "Я работаю, жди"
-		return EStateTreeRunStatus::Running;
-	}
-
-	return EStateTreeRunStatus::Failed;
-	
-	// return EStateTreeRunStatus::Running;  // I`m still working, wait
-	// return EStateTreeRunStatus::Succeeded;  // I`m done working
+	return EStateTreeRunStatus::Running;  // I`m still working, wait
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_STT_Set_Dialogue::Handle_Dialogue_Ended()
