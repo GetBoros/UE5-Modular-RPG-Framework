@@ -1,26 +1,19 @@
 //------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include <StateTreeEvaluatorBase.h>
+#include <Blueprint/StateTreeEvaluatorBlueprintBase.h>
 
 #include <TLG_STE_Core_Enemy.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class ATLG_Player_Controller;
 //------------------------------------------------------------------------------------------------------------
-USTRUCT() struct TLGAME_API FSTE_TLG_GetPlayerController_InstanceData
+UCLASS() class TLGAME_API UTLG_STE_Core_Enemy : public UStateTreeEvaluatorBlueprintBase
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, Category = "Output") TObjectPtr<ATLG_Player_Controller> TLG_Player_Controller = 0;  // Binded in editor
-};
-//------------------------------------------------------------------------------------------------------------
-USTRUCT() struct  TLGAME_API FTLG_STE_Core_Enemy : public FStateTreeEvaluatorBase
-{
-	GENERATED_BODY()
+public:
+	virtual void TreeStart(FStateTreeExecutionContext &context);
 
-	using FInstanceDataType = FSTE_TLG_GetPlayerController_InstanceData;  // Override FInstanceDataType in parant
-	virtual void TreeStart(FStateTreeExecutionContext &context) const;
-	
-	virtual const UStruct *GetInstanceDataType() const;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Output") TObjectPtr<ATLG_Player_Controller> TLG_Player_Controller = 0;
 };
 //------------------------------------------------------------------------------------------------------------
