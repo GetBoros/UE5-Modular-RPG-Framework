@@ -10,14 +10,10 @@ UCLASS() class TLGAME_API UTLG_STT_Set_Dialogue : public UStateTreeTaskBlueprint
 	GENERATED_BODY()
 	
 public:
-	virtual EStateTreeRunStatus EnterState(FStateTreeExecutionContext& Context, const FStateTreeTransitionResult& Transition) override;
+	virtual EStateTreeRunStatus EnterState(FStateTreeExecutionContext &context, const FStateTreeTransitionResult &transition);
 	
-	UPROPERTY(EditAnywhere) TObjectPtr<UDataTable> Dialogue_Table;
-
-
 	UFUNCTION() void Handle_Dialogue_Ended();
 
-private:
-
+	UPROPERTY(EditAnywhere) TObjectPtr<UDataTable> Dialogue_Table;
 };
 //------------------------------------------------------------------------------------------------------------
