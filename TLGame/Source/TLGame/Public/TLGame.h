@@ -56,6 +56,11 @@ X	- Fix: Need empty portrait, now show portrait main hero
 		- UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_PORTRAIT_AGGRESSIVE)  // .h
 		- UE_DEFINE_GAMEPLAY_TAG(TAG_PORTRAIT_AGGRESSIVE, TEXT("Visual.Portrait.Aggressive"))  // .cpp
 
+	StateTree:
+	- Evaluators:
+		- Tick before statetree || Evaluators only need to read data
+	- Global Tasks:
+		- Tasks work always, if state tree is alive || Watch Sanity params or else || 
 */
 #pragma endregion
 //------------------------------------------------------------------------------------------------------------
