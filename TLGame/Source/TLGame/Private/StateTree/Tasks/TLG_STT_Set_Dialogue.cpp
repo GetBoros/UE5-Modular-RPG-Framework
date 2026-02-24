@@ -14,21 +14,21 @@ EStateTreeRunStatus UTLG_STT_Set_Dialogue::EnterState(FStateTreeExecutionContext
 {
 	AActor *test;
 
-	TLG_Player_Controller = Cast<ATLG_Player_Controller>(UGameplayStatics::GetPlayerController(GetWorld(), 0) );
+	TLG_Player_Controller = Cast<ATLG_Player_Controller>(UGameplayStatics::GetPlayerController(GetWorld(), 0) );  // !!! TEMP EXAMPLE
 	if (TLG_Player_Controller == 0)
 		return EStateTreeRunStatus::Failed;
 
-	test = Cast<AActor>(context.GetOwner());
+	test = Cast<AActor>(context.GetOwner() );  // !!! TEMP EXAMPLE
 
-	// TODO TLG_Player_Controller Set DT And bind on delegate
+	TLG_Player_Controller->Set_Dialogue_Current(Dialogue_Table);
+	TLG_Player_Controller->On_Dialogue_Ended.AddUObject(this, &UTLG_STT_Set_Dialogue::Handle_Dialogue_Ended);
 
 	return EStateTreeRunStatus::Running;  // I`m still working, wait
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_STT_Set_Dialogue::Handle_Dialogue_Ended()
 {
-	//if (TLG_Player_Controller)
-	//	TLG_Player_Controller->On_Dialogue_Ended.RemoveDynamic(this, &UTLG_STT_Set_Dialogue::Handle_Dialogue_Ended);
+	TLG_Player_Controller->On_Dialogue_Ended.RemoveAll(this);
 
 	FinishTask();
 }

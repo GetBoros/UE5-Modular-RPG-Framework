@@ -9,6 +9,8 @@
 
 #include <TLG_Player_Controller.generated.h>
 //------------------------------------------------------------------------------------------------------------
+DECLARE_MULTICAST_DELEGATE(FOn_Dialogue_Ended);
+//------------------------------------------------------------------------------------------------------------
 class ATLG_HUD;
 class ATLG_Player_State;
 class ATLG_Game_State;
@@ -28,8 +30,12 @@ public:
 
     void Handle_Player_Decision(const FPlayer_Response &player_response);  // Call UI when player press button
     void Set_TLG_Data_Location_Current(UTLG_Data_Location *tlg_data_location);
+    void Set_Dialogue_Current(UDataTable *data_table);
+
+    FOn_Dialogue_Ended On_Dialogue_Ended;
 
 private:
+    void Dialogue_Start_Temp(const FName &row_id);
     void Dialogue_Start(const FName &row_id);
     void Dialogue_End();
 
@@ -43,6 +49,8 @@ private:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Data_Enemy> TLG_Data_Enemy_Current;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Data_Location> TLG_Data_Location_Current;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UAudioComponent> Audio_Component_Ambient;
+
+    UPROPERTY(EditAnywhere) TObjectPtr<UDataTable> DT_Dialogue_Current;
 
 };
 //------------------------------------------------------------------------------------------------------------

@@ -188,7 +188,33 @@ void ATLG_Player_Controller::Set_TLG_Data_Location_Current(UTLG_Data_Location *t
     TLG_Data_Location_Current = tlg_data_location;
 }
 //------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Set_Dialogue_Current(UDataTable *data_table)
+{
+    DT_Dialogue_Current = data_table;
+}
+//------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
+{
+    static const FString context(TEXT("Dialogue Context") );
+
+    if (TLG_Player_State->Is_Scenario_Completed(TLG_Data_Enemy_Current->Active_Scenario_Tag) )
+        return;
+
+    if (DT_Dialogue_Current != 0)
+    {
+        if (FDialogue_Node *dialogue_node_next = DT_Dialogue_Current->FindRow<FDialogue_Node>(row_id, context, true) )  // Find node by row id
+        {
+            if (UTexture2D *texture_portrait_for_mood = TLG_Data_Enemy_Current->Get_Portrait_For_Mood(dialogue_node_next->Tag_Portrait) )
+                TLG_HUD->Set_Image_Texture_Portrait(texture_portrait_for_mood);
+            TLG_HUD->Dialogue_Node_Show(*dialogue_node_next);  // Send data to Dialogue UI
+        }
+    }
+    else
+        Dialogue_End();
+
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Dialogue_Start_Temp(const FName &row_id)
 {
     static const FString context(TEXT("Dialogue Context") );
 
@@ -212,6 +238,7 @@ void ATLG_Player_Controller::Dialogue_End()
 {
     TLG_HUD->Dialogue_Hide();
     TLG_Player_State->Mark_Scenario_Completed(TLG_Data_Enemy_Current->Active_Scenario_Tag);
+    On_Dialogue_Ended.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::On_Pressed_ESC()
