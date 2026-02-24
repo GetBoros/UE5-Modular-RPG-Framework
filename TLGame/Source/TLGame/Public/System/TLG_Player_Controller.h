@@ -35,7 +35,8 @@ public:
     FOn_Dialogue_Ended On_Dialogue_Ended;
 
 private:
-    void Dialogue_Start_Temp(const FName &row_id);
+    void Spawn_Location_Enemies(TArray<FTLG_Location_Enemy> tlg_location_enemies);
+
     void Dialogue_Start(const FName &row_id);
     void Dialogue_End();
 

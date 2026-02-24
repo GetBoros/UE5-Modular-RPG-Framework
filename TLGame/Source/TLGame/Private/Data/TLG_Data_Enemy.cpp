@@ -14,11 +14,3 @@ UTexture2D *UTLG_Data_Enemy::Get_Portrait_For_Mood(const FGameplayTag &gameplay_
     return 0;
 }
 //------------------------------------------------------------------------------------------------------------
-UDataTable *UTLG_Data_Enemy::Get_Dialogue_Table_For_Scenario(const FGameplayTag &gameplay_tag_scenario) const
-{
-    if (Dialogues_By_Scenario.Contains(gameplay_tag_scenario) )
-        return Dialogues_By_Scenario[gameplay_tag_scenario];
-
-    return 0;
-}
-//------------------------------------------------------------------------------------------------------------

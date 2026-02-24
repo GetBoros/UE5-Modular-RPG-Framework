@@ -16,6 +16,7 @@ public:
 //------------------------------------------------------------------------------------------------------------
 #pragma region TASKS
 /*
+V	- Part 1:
 V	- In Controller work with Enemy, not just DT or other data
 V	- Tooltips
 V		- Need visual simple
@@ -27,10 +28,10 @@ V	- Demo ending 3 Day
 V	- Tutorial, Intro Dialog: If Sanity < 0 hospital, if Emphaty >= 100 im slave without will
 V	- Can sleep only if fatigue more then 50+?
 V	- Fatigue logic: Block some answers or else
-
-	Part 2:
 V	- Implement State Tree for enemy dialogue
-X	- Add tutorial enemy with simple state tree to show how it work
+V	- Add tutorial enemy with simple state tree to show how it work
+
+X	- Part 2:
 X	- Add tooltip to buttons action and locations
 X	- Show buttons as invalid or don`t show if can`t use them?
 X	- Add more than one enemy in location

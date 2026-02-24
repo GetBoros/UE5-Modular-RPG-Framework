@@ -13,6 +13,7 @@ public:
 	UFUNCTION(BlueprintCallable) bool Add_Story_Flag(FGameplayTag flag);
 	UFUNCTION(BlueprintCallable) bool Has_Story_Flag(FGameplayTag flag);
 	
+private:
 	FGameplayTagContainer Story_Flags;
 };
 //------------------------------------------------------------------------------------------------------------

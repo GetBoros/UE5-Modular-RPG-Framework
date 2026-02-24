@@ -35,6 +35,7 @@ void FTLG_Data_Gameplay_Tags::Initialize_Native_Tags()
     TLG_Data_Gameplay_Tags.Attribut_Player_Fatigued = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attribute.Player.Fatigued"), FString("") );
     
     TLG_Data_Gameplay_Tags.Dialogue_Tutorial_Intro = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Dialogue.Tutorial.Intro"), FString("") );
+    TLG_Data_Gameplay_Tags.Dialogue_Tutorial_Advice = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Dialogue.Tutorial.Advice"), FString("") );
     TLG_Data_Gameplay_Tags.Dialogue_Marina_Intro = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Dialogue.Marina.Intro"), FString("") );
     
     TLG_Data_Gameplay_Tags.Achievement_Tutorial_Intro = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Achievement.Tutorial.Intro"), FString("") );

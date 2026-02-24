@@ -81,7 +81,6 @@ UCLASS(BlueprintType) class TLGAME_API UTLG_Data_Location : public UPrimaryDataA
     GENERATED_BODY()
 
 public:
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (ClampMin = "0.0", ClampMax = "1.0") ) float Enemy_Encounter_Chance = 0.5f;
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) FGameplayTagContainer Gameplay_Tag_Container_Events_Possible;
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) FText Text_Location_Name;
 

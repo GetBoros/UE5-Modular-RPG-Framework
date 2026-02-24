@@ -30,16 +30,12 @@ public:
 	UTLG_Attribute_Set *Get_Attribute_Set() const;
 	FGameplayAttribute Get_Attribute_By_Tag(const FGameplayTag &gameplay_tag_attribute) const;
 
-	bool Is_Scenario_Completed(FGameplayTag scenario_tag);
-	void Mark_Scenario_Completed(FGameplayTag scenario_tag);
-
 	void Apply_Multy_Dynamic_Change(const FTLG_Location_Action &tlg_location_action);  // !!! TEMP
 	void Apply_Dynamic_Change(float magnitude, FGameplayTag attribute_tag);
 
 private:
 	void Handle_Sanity_Zero();
 
-	FGameplayTagContainer Completed_Scenario_Tags;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Attribute_Set> Attribute_Set;
 

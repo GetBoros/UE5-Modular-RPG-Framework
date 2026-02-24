@@ -34,6 +34,8 @@ public:
 
     // Enemies Dialogue
     FGameplayTag Dialogue_Tutorial_Intro;
+    FGameplayTag Dialogue_Tutorial_Advice;
+
     FGameplayTag Dialogue_Marina_Intro;
 
 	// Achievements

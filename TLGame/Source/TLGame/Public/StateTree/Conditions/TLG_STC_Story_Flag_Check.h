@@ -1,26 +1,18 @@
 //------------------------------------------------------------------------------------------------------------
-#include <Subsystems/TLG_Subsystem_Story.h>
+#pragma once
 //------------------------------------------------------------------------------------------------------------
+#include <Blueprint/StateTreeConditionBlueprintBase.h>
 
-
-
-
-// UTLG_Subsystem_Story
-bool UTLG_Subsystem_Story::Add_Story_Flag(FGameplayTag flag)
+#include <TLG_STC_Story_Flag_Check.generated.h>
+//------------------------------------------------------------------------------------------------------------
+UCLASS() class TLGAME_API UTLG_STC_Story_Flag_Check : public UStateTreeConditionBlueprintBase
 {
-	if (flag.IsValid() != true)
-		return false;
-
-	Story_Flags.AddTag(flag);
+	GENERATED_BODY()
 	
-	return true;
-}
-//------------------------------------------------------------------------------------------------------------
-bool UTLG_Subsystem_Story::Has_Story_Flag(FGameplayTag flag)
-{
-	if (flag.MatchesAny(Story_Flags) == true )
-		return true;
+public:
+	virtual bool TestCondition(FStateTreeExecutionContext &context) const;
+	virtual bool ReceiveTestCondition() const;
 
-	return false;
-}
+	UPROPERTY(EditAnywhere, Category = "Condition") FGameplayTag Flag;
+};
 //------------------------------------------------------------------------------------------------------------

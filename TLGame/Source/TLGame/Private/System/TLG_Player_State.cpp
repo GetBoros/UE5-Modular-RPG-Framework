@@ -59,19 +59,6 @@ FGameplayAttribute ATLG_Player_State::Get_Attribute_By_Tag(const FGameplayTag &g
     return FGameplayAttribute();
 }
 //------------------------------------------------------------------------------------------------------------
-bool ATLG_Player_State::Is_Scenario_Completed(FGameplayTag scenario_tag)
-{
-    if (Completed_Scenario_Tags.HasTag(scenario_tag) )
-        return true;
-    else
-        return false;
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_State::Mark_Scenario_Completed(FGameplayTag scenario_tag)
-{
-    Completed_Scenario_Tags.AddTag(scenario_tag);
-}
-//------------------------------------------------------------------------------------------------------------
 void ATLG_Player_State::Apply_Multy_Dynamic_Change(const FTLG_Location_Action &tlg_location_action)
 {
     int32 time_cost_minutes = tlg_location_action.Time_Cost_Minutes;

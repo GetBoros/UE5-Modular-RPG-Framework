@@ -70,30 +70,13 @@ void ATLG_Player_Controller::SetupInputComponent()
 void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_location)
 {
     int location_enter_time_cost;
-    float roll;
-    float enemy_encounter_chance;
     USoundBase *sound_base;
     UTexture2D *texture2d_background;
-    AActor *spawned_actor;
-    TSubclassOf<AActor> enemy_class;
 
-    enemy_class = 0;
-    spawned_actor = 0;
     TLG_Data_Location_Current = tlg_data_location;
-    enemy_encounter_chance = tlg_data_location->Enemy_Encounter_Chance;
     location_enter_time_cost = 5;  // !!! TEMP Need add to data location
     texture2d_background = tlg_data_location->Texture2D_Background_Image;
     sound_base = tlg_data_location->SoundBase_Ambient;
-    roll = FMath::FRand();  // 2. Generate value from 0.0 to 1.0
-
-    if (tlg_data_location->TLG_Location_Enemies.IsEmpty() != true)
-    {
-        TLG_Data_Enemy_Current = tlg_data_location->TLG_Location_Enemies[0].TLG_Data_Enemy;  // !!! TEMP
-        enemy_encounter_chance = tlg_data_location->TLG_Location_Enemies[0].Encounter_Chance;
-        enemy_class = tlg_data_location->TLG_Location_Enemies[0].Enemy_Class;
-
-        spawned_actor = GetWorld()->SpawnActor<AActor>(enemy_class, FVector(0.0f, 0.0f, 0.0f), FRotator::ZeroRotator, FActorSpawnParameters() );
-    }
 
     // 1.0. Background
     if (texture2d_background != 0)  // Update Background if have in tlg_data_location
@@ -104,19 +87,13 @@ void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_locatio
         Play_Ambient_Sound(sound_base);
 
     // 3.0. Dialogue
-    if (roll <= enemy_encounter_chance)  // Begin dialugue if rolled
-        Dialogue_Start(FName("Intro") );
-    else
-        TLG_HUD->Dialogue_Hide();
+    Spawn_Location_Enemies(tlg_data_location->TLG_Location_Enemies);
 
     // 4.0. Buttons Location and Actions
     TLG_HUD->Set_Location_Buttons(tlg_data_location->TLG_Location_Exits, tlg_data_location->TLG_Location_Actions);
 
     // 5.0. Spend time when move to location
     TLG_Game_State->Advance_Time(location_enter_time_cost);
-
-    // 6.0. Spawn Enemies
-
 
 }
 //------------------------------------------------------------------------------------------------------------
@@ -193,12 +170,39 @@ void ATLG_Player_Controller::Set_Dialogue_Current(UDataTable *data_table)
     DT_Dialogue_Current = data_table;
 }
 //------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Spawn_Location_Enemies(TArray<FTLG_Location_Enemy> tlg_location_enemies)
+{
+    float enemy_encounter_chance, roll;
+    AActor *spawned_actor;
+    TSubclassOf<AActor> enemy_class;
+
+    enemy_class = 0;
+    spawned_actor = 0;
+    enemy_encounter_chance = 0.0f;
+    roll = FMath::FRand();  // 2. Generate value from 0.0 to 1.0
+
+    if (tlg_location_enemies.IsEmpty() == true)
+        return;
+
+    for (FTLG_Location_Enemy &tlg_location_enemie : tlg_location_enemies)
+    {
+        TLG_Data_Enemy_Current = tlg_location_enemie.TLG_Data_Enemy;
+        enemy_encounter_chance = tlg_location_enemie.Encounter_Chance;
+        enemy_class = tlg_location_enemie.Enemy_Class;
+
+        spawned_actor = GetWorld()->SpawnActor<AActor>(enemy_class, FVector(0.0f, 0.0f, 0.0f), FRotator::ZeroRotator, FActorSpawnParameters() );
+    }
+
+    if (roll <= enemy_encounter_chance)  // Begin dialugue if rolled
+        Dialogue_Start(FName("Intro") );  // !!! TEMP
+    else
+        TLG_HUD->Dialogue_Hide();
+
+}
+//------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
 {
     static const FString context(TEXT("Dialogue Context") );
-
-    if (TLG_Player_State->Is_Scenario_Completed(TLG_Data_Enemy_Current->Active_Scenario_Tag) )
-        return;
 
     if (DT_Dialogue_Current != 0)
     {
@@ -214,30 +218,9 @@ void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
 
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Dialogue_Start_Temp(const FName &row_id)
-{
-    static const FString context(TEXT("Dialogue Context") );
-
-    if (TLG_Player_State->Is_Scenario_Completed(TLG_Data_Enemy_Current->Active_Scenario_Tag) )
-        return;
-
-    if (UDataTable *dialogue_table_for_scenario = TLG_Data_Enemy_Current->Get_Dialogue_Table_For_Scenario(TLG_Data_Enemy_Current->Active_Scenario_Tag) )
-    {
-        if (FDialogue_Node *dialogue_node_next = dialogue_table_for_scenario->FindRow<FDialogue_Node>(row_id, context, true) )  // Find node by row id
-        {
-            if (UTexture2D *texture_portrait_for_mood = TLG_Data_Enemy_Current->Get_Portrait_For_Mood(dialogue_node_next->Tag_Portrait) )
-                TLG_HUD->Set_Image_Texture_Portrait(texture_portrait_for_mood);
-            TLG_HUD->Dialogue_Node_Show(*dialogue_node_next);  // Send data to Dialogue UI
-        }
-    }
-    else
-        Dialogue_End();
-}
-//------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_End()
 {
     TLG_HUD->Dialogue_Hide();
-    TLG_Player_State->Mark_Scenario_Completed(TLG_Data_Enemy_Current->Active_Scenario_Tag);
     On_Dialogue_Ended.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
