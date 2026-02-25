@@ -1,8 +1,10 @@
 //------------------------------------------------------------------------------------------------------------
 #include <System/TLG_Player_State.h>
 #include <System/TLG_Game_State.h>
-#include <Data/TLG_Data_Location.h>
+
+#include <Data/TLG_Types.h>
 #include <Data/TLG_Data_Gameplay_Tags.h>
+
 #include <Abilities/TLG_Attribute_Set.h>
 
 #include <Types/GBC_Attribute_Info.h>
@@ -59,12 +61,11 @@ FGameplayAttribute ATLG_Player_State::Get_Attribute_By_Tag(const FGameplayTag &g
     return FGameplayAttribute();
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Player_State::Apply_Multy_Dynamic_Change(const FTLG_Location_Action &tlg_location_action)
+void ATLG_Player_State::Apply_Multy_Dynamic_Change(const TArray<FTLG_Set_By_Caller_Magnitude> &set_by_caller_magnitude)
 {
-    int32 time_cost_minutes = tlg_location_action.Time_Cost_Minutes;
     FGameplayEffectContextHandle gameplay_effect_handle_context;
     FGameplayEffectSpecHandle gameplay_effect_handle_spec;
-    const TArray<FTLG_Set_By_Caller_Magnitude> &tlg_set_by_caller_magnitude_array = tlg_location_action.Set_By_Caller_Magnitude;
+    const TArray<FTLG_Set_By_Caller_Magnitude> &tlg_set_by_caller_magnitude_array = set_by_caller_magnitude;
 
     if (Gameplay_Effect_Class_Attributes == 0)
         return;

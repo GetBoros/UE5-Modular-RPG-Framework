@@ -11,8 +11,6 @@ class UGBC_Attribute_Info;
 class UTLG_Widget_HUD;
 class UTLG_Widget_Menu_Pause;
 class UTLG_Widget_Controller;
-struct FTLG_Location_Exit;
-struct FTLG_Location_Action;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API ATLG_HUD : public AHUD
 {

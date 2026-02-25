@@ -2,7 +2,7 @@
 #pragma once
 //------------------------------------------------------------------------------------------------------------
 #include <GBUIC_User_Widget.h>
-#include <Data/TLG_Data_Location.h>
+#include <Data/TLG_Types.h>
 #include <Interfaces/TLG_Interaction_Interface.h>
 
 #include <TLG_Widget_Button.generated.h>

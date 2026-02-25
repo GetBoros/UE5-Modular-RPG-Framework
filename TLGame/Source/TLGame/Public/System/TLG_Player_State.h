@@ -15,7 +15,7 @@ class UAbilitySystemComponent;
 struct FGameplayTagContainer;
 struct FGameplayAttribute;
 struct FGameplayTag;
-struct FTLG_Location_Action;
+struct FTLG_Set_By_Caller_Magnitude;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API ATLG_Player_State : public APlayerState, public IAbilitySystemInterface
 {
@@ -30,7 +30,7 @@ public:
 	UTLG_Attribute_Set *Get_Attribute_Set() const;
 	FGameplayAttribute Get_Attribute_By_Tag(const FGameplayTag &gameplay_tag_attribute) const;
 
-	void Apply_Multy_Dynamic_Change(const FTLG_Location_Action &tlg_location_action);  // !!! TEMP
+	void Apply_Multy_Dynamic_Change(const TArray<FTLG_Set_By_Caller_Magnitude> &set_by_caller_magnitude);  // !!! TEMP
 	void Apply_Dynamic_Change(float magnitude, FGameplayTag attribute_tag);
 
 private:

@@ -6,6 +6,7 @@
 
 #include <Data/TLG_Data_Gameplay_Tags.h>
 #include <Data/TLG_Data_Enemy.h>
+#include <Data/TLG_Data_Location.h>
 
 #include <Components/AudioComponent.h>
 #include <Kismet/KismetSystemLibrary.h>
@@ -94,12 +95,11 @@ void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_locatio
 
     // 5.0. Spend time when move to location
     TLG_Game_State->Advance_Time(location_enter_time_cost);
-
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Location_Action(const FTLG_Location_Action &tlg_location_action)
 {
-    TLG_Player_State->Apply_Multy_Dynamic_Change(tlg_location_action);
+    TLG_Player_State->Apply_Multy_Dynamic_Change(tlg_location_action.Set_By_Caller_Magnitude);
     TLG_Game_State->Advance_Time(tlg_location_action.Time_Cost_Minutes);  // Spend time for interact with room action
 }
 //------------------------------------------------------------------------------------------------------------
@@ -172,14 +172,10 @@ void ATLG_Player_Controller::Set_Dialogue_Current(UDataTable *data_table)
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Spawn_Location_Enemies(TArray<FTLG_Location_Enemy> tlg_location_enemies)
 {
-    float enemy_encounter_chance, roll;
+    float enemy_encounter_chance, roll_random;
     AActor *spawned_actor;
     TSubclassOf<AActor> enemy_class;
-
-    enemy_class = 0;
-    spawned_actor = 0;
-    enemy_encounter_chance = 0.0f;
-    roll = FMath::FRand();  // 2. Generate value from 0.0 to 1.0
+    FGameplayTagQuery enemy_condition_spawn;
 
     if (tlg_location_enemies.IsEmpty() == true)
         return;
@@ -188,16 +184,18 @@ void ATLG_Player_Controller::Spawn_Location_Enemies(TArray<FTLG_Location_Enemy> 
     {
         TLG_Data_Enemy_Current = tlg_location_enemie.TLG_Data_Enemy;
         enemy_encounter_chance = tlg_location_enemie.Encounter_Chance;
+        enemy_condition_spawn = tlg_location_enemie.Spawn_Conditions_Tag_Query;  // !!! TEMP Not used
         enemy_class = tlg_location_enemie.Enemy_Class;
+        roll_random = FMath::FRand();  // 2. Generate value from 0.0 to 1.0
 
         spawned_actor = GetWorld()->SpawnActor<AActor>(enemy_class, FVector(0.0f, 0.0f, 0.0f), FRotator::ZeroRotator, FActorSpawnParameters() );
+
+        // !!! TEMP If many enemies can be probles...
+        if (roll_random <= enemy_encounter_chance)  // Begin dialugue if rolled
+            Dialogue_Start(FName("Intro") );  // !!! TEMP
+        else
+            TLG_HUD->Dialogue_Hide();
     }
-
-    if (roll <= enemy_encounter_chance)  // Begin dialugue if rolled
-        Dialogue_Start(FName("Intro") );  // !!! TEMP
-    else
-        TLG_HUD->Dialogue_Hide();
-
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
@@ -215,7 +213,6 @@ void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
     }
     else
         Dialogue_End();
-
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Dialogue_End()

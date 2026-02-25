@@ -5,7 +5,6 @@
 #include <UI/TLG_Widget_Button.h>
 #include <UI/TLG_Widget_Portrait.h>
 #include <UI/TLG_Widget_Controller.h>
-#include <Data/TLG_Data_Location.h>
 
 #include <Components/Image.h>
 #include <Components/TextBlock.h>

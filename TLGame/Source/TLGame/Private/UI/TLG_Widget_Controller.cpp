@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <UI/TLG_Widget_Controller.h>
 #include <System/TLG_Game_State.h>
-#include <Data/TLG_Data_Location.h>
+#include <Data/TLG_Types.h>
 
 #include <Abilities/TLG_Attribute_Set.h>
 #include <AbilitySystemComponent.h>

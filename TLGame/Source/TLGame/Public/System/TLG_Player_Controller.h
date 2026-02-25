@@ -5,7 +5,6 @@
 
 #include <Interfaces/TLG_Interaction_Interface.h>
 #include <Data/TLG_Types.h>
-#include <Data/TLG_Data_Location.h>
 
 #include <TLG_Player_Controller.generated.h>
 //------------------------------------------------------------------------------------------------------------
@@ -15,6 +14,7 @@ class ATLG_HUD;
 class ATLG_Player_State;
 class ATLG_Game_State;
 class UTLG_Data_Enemy;
+struct FTLG_Location_Enemy;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API ATLG_Player_Controller : public APlayerController, public ITLG_Interaction_Interface
 {

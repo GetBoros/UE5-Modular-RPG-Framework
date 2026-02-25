@@ -7,7 +7,6 @@
 #include <UI/TLG_Widget_Controller.h>
 
 #include <Abilities/TLG_Attribute_Set.h>
-#include <Data/TLG_Data_Location.h>
 //------------------------------------------------------------------------------------------------------------
 
 
