@@ -127,31 +127,7 @@ void ATLG_Player_Controller::Request_Menu_Main_Pause(const ETLG_Game_Flow_Option
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &player_response)
 {
-	const float response_cost = player_response.Response_Cost;
-    FGameplayTag gameplay_tag;
-
-	switch (player_response.Category)  // Apply response cost
-    {
-    case EDialogue_Response_Category::Aggressive:
-        gameplay_tag = FTLG_Data_Gameplay_Tags::Get().Attribut_Player_Dominance;
-        break;
-
-    case EDialogue_Response_Category::Logical:
-        gameplay_tag = FTLG_Data_Gameplay_Tags::Get().Attribut_Player_Empathy;
-        break;
-
-    case EDialogue_Response_Category::Silent:
-        break;
-
-    case EDialogue_Response_Category::Submissive:
-        gameplay_tag = FTLG_Data_Gameplay_Tags::Get().Attribut_Player_Sanity;
-        break;
-
-    default:
-        break;
-    }
-
-    TLG_Player_State->Apply_Dynamic_Change(response_cost, gameplay_tag);
+    TLG_Player_State->Apply_Multy_Dynamic_Change(player_response.Set_By_Caller_Magnitude);
 
     // 1.1. Show next dialugue if next row exists
     if (player_response.Row_ID_Next.IsNone() != true)

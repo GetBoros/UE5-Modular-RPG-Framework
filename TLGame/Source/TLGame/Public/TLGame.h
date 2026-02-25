@@ -47,7 +47,8 @@ V	- Fix: Tool tip without info about stat
 V	- Game time when start don`t show
 V	- Fix: Can sleep 4 day to win game
 X	- Fix: Need empty portrait, now show portrait main hero
-
+X	- Fix: Need empaty to show up when changed
+X	- 
 */
 #pragma endregion
 //------------------------------------------------------------------------------------------------------------
