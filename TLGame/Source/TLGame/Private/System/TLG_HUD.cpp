@@ -24,10 +24,8 @@ void ATLG_HUD::BeginPlay()
 
     Init_Widget_Controller();
 
-	Get_TLG_Widget_HUD()->Set_Widget_Controller(TLG_Widget_Controller);  // !!! TEMP Need refactoring
-    
+	Get_TLG_Widget_HUD()->Set_Widget_Controller(TLG_Widget_Controller);
     Get_TLG_Widget_Menu_Pause()->Set_Widget_Controller(TLG_Widget_Controller);
-    Get_TLG_Widget_Menu_Pause()->Handle_Widget_Controller();  // !!! TEMP
 
     Update_Buttons_Navigation();
     Update_Buttons_Actions();

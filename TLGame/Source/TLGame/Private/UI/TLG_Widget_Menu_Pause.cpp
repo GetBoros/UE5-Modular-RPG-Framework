@@ -22,10 +22,12 @@ void UTLG_Widget_Menu_Pause::NativeConstruct()
     TB_Game_State->SetVisibility(ESlateVisibility::Collapsed);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Menu_Pause::Handle_Widget_Controller()
+void UTLG_Widget_Menu_Pause::On_Widget_Controller_Set_Implementation()
 {
     UTLG_Widget_Controller *tlg_widget_controller;
     
+    Super::On_Widget_Controller_Set_Implementation();
+
     tlg_widget_controller = Cast<UTLG_Widget_Controller>(GBUIC_Widget_Controller);
     if (tlg_widget_controller == 0)
         return;
@@ -33,6 +35,7 @@ void UTLG_Widget_Menu_Pause::Handle_Widget_Controller()
     tlg_widget_controller->On_Game_Over.AddUObject(this, &UTLG_Widget_Menu_Pause::Handle_Game_Over);
     tlg_widget_controller->On_Game_Menu_Paused.AddUObject(this, &UTLG_Widget_Menu_Pause::Handle_Menu_Paused);
     tlg_widget_controller->On_Game_Demo_Completed.AddUObject(this, &UTLG_Widget_Menu_Pause::Handle_Game_Demo_Completed);
+
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Menu_Pause::Add_Menu_Pause_Buttons(UVerticalBox *vertical_box)

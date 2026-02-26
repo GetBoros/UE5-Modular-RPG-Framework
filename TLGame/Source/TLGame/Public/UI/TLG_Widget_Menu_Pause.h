@@ -15,8 +15,7 @@ UCLASS() class TLGAME_API UTLG_Widget_Menu_Pause : public UGBUIC_User_Widget
 	
 public:
 	virtual void NativeConstruct();
-
-	void Handle_Widget_Controller();
+	virtual void On_Widget_Controller_Set_Implementation();
 
 private:
 	void Add_Menu_Pause_Buttons(UVerticalBox *vertical_box);  // !!! TEMP
