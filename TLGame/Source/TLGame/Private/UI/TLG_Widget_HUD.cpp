@@ -5,6 +5,7 @@
 #include <UI/TLG_Widget_Button.h>
 #include <UI/TLG_Widget_Portrait.h>
 #include <UI/TLG_Widget_Controller.h>
+#include <UI/TLG_Widget_Stats_Bar.h>
 
 #include <Components/Image.h>
 #include <Components/TextBlock.h>
@@ -25,6 +26,35 @@ void UTLG_Widget_HUD::NativeConstruct()
         return;
     if (ensureMsgf(TLG_Widget_Text_Floating_Class, TEXT("Floating Text Class not setting up") ) != true)
         return;
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::On_Widget_Controller_Set_Implementation()
+{
+    UTLG_Widget_Controller *tlg_widget_controller;
+
+    Super::On_Widget_Controller_Set_Implementation();
+
+    if (GBUIC_Widget_Controller == 0)
+        return;
+    
+    tlg_widget_controller = Cast<UTLG_Widget_Controller>(GBUIC_Widget_Controller);
+    
+    tlg_widget_controller->On_Changed_Sanity.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Sanity);  // !!! TEMP Remove
+    tlg_widget_controller->On_Changed_Empathy.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Empathy);
+    tlg_widget_controller->On_Changed_Fatigued.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Fatigued);
+    tlg_widget_controller->On_Changed_Dominance.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Dominance);
+    tlg_widget_controller->On_Changed_Time_Game.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Time_Game);
+    tlg_widget_controller->On_Changed_Day.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Day);  // !!! TEMP Remove END
+
+    tlg_widget_controller->On_Game_Over.AddUObject(this, &UTLG_Widget_HUD::On_Game_Over);
+    tlg_widget_controller->On_Game_Resumed.AddUObject(this, &UTLG_Widget_HUD::On_Game_Resumed);
+    tlg_widget_controller->On_Game_Menu_Paused.AddUObject(this, &UTLG_Widget_HUD::On_Game_Menu_Paused);
+    tlg_widget_controller->On_Game_Demo_Completed.AddUObject(this, &UTLG_Widget_HUD::On_Game_Menu_Paused);
+
+    tlg_widget_controller->Bind_Callbacks_To_Dependencies();
+    tlg_widget_controller->Broadcast_Initial_Values();
+
+    TLG_Widget_Stats_Bar->Set_Widget_Controller(GBUIC_Widget_Controller);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Dialogue_Node_Show(const FDialogue_Node &node_data)
@@ -96,37 +126,6 @@ void UTLG_Widget_HUD::Update_Buttons_Actions(const TArray<FTLG_Location_Action> 
     }
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::Handle_Widget_Controller()
-{
-    UTLG_Widget_Controller *tlg_widget_controller;
-
-    if (GBUIC_Widget_Controller == 0)
-        return;
-    
-    tlg_widget_controller = Cast<UTLG_Widget_Controller>(GBUIC_Widget_Controller);
-    
-    tlg_widget_controller->On_Changed_Sanity.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Sanity);
-    tlg_widget_controller->On_Changed_Empathy.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Empathy);
-    tlg_widget_controller->On_Changed_Fatigued.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Fatigued);
-    tlg_widget_controller->On_Changed_Dominance.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Dominance);
-    tlg_widget_controller->On_Changed_Time_Game.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Time_Game);
-    tlg_widget_controller->On_Changed_Day.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Day);
-
-    tlg_widget_controller->On_Game_Over.AddUObject(this, &UTLG_Widget_HUD::On_Game_Over);
-    tlg_widget_controller->On_Game_Resumed.AddUObject(this, &UTLG_Widget_HUD::On_Game_Resumed);
-    tlg_widget_controller->On_Game_Menu_Paused.AddUObject(this, &UTLG_Widget_HUD::On_Game_Menu_Paused);
-    tlg_widget_controller->On_Game_Demo_Completed.AddUObject(this, &UTLG_Widget_HUD::On_Game_Menu_Paused);
-
-
-    tlg_widget_controller->Bind_Callbacks_To_Dependencies();
-    tlg_widget_controller->Broadcast_Initial_Values();
-}
-//------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_HUD::On_Updated_Temp_Implementation(float sanity_curr, float sanity_max)
-{
-    // !!! TEMP
-}
-//------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::Spawn_Text_Floating(float delta, const FText &name_text)
 {
     UTLG_Widget_Text_Floating *tlg_widget_text_floating;
@@ -161,32 +160,24 @@ void UTLG_Widget_HUD::On_Game_Menu_Paused()
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Changed_Callback_Sanity(float new_value, float delta)
 {
-    On_Updated_Sanity(new_value, 100.0f);
-
-    if (FMath::IsNearlyZero(delta) != true)
+    if (FMath::IsNearlyZero(delta) != true)  // Move to Stats bar when update
         Spawn_Text_Floating(delta, FText::FromString("Sanity") );
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Changed_Callback_Empathy(float new_value, float delta)
 {
-	On_Updated_Empathy(new_value, 100.0f);
-
     if (FMath::IsNearlyZero(delta) != true)
-        Spawn_Text_Floating(delta, FText::FromString("Sanity") );
+        Spawn_Text_Floating(delta, FText::FromString("Empathy") );
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Changed_Callback_Fatigued(float new_value, float delta)
 {
-    for (UTLG_Widget_Button_Action *temp : TLG_Widget_Button_Action_Array)
-    {
-        // !!! TEMP
-    }
+    if (FMath::IsNearlyZero(delta) != true)
+        Spawn_Text_Floating(delta, FText::FromString("Fatigued") );
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_HUD::On_Changed_Callback_Dominance(float new_value, float delta)
 {
-    On_Updated_Dominance(new_value);
-
     if (FMath::IsNearlyZero(delta) != true)
         Spawn_Text_Floating(delta, FText::FromString("Dominance") );
 }

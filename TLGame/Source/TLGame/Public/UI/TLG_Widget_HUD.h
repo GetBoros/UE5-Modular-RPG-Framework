@@ -6,9 +6,10 @@
 
 #include <TLG_Widget_HUD.generated.h>
 //------------------------------------------------------------------------------------------------------------
+class UTLG_Widget_Stats_Bar;
+class UTLG_Widget_Button;
 class UTLG_Widget_Dialogue;
 class UTLG_Widget_Portrait;
-class UTLG_Widget_Button;
 class UTLG_Widget_Text_Floating;
 class UTLG_Widget_Button_Action;
 class UTLG_Widget_Button_Navigation;
@@ -24,6 +25,7 @@ UCLASS() class TLGAME_API UTLG_Widget_HUD : public UGBUIC_User_Widget
 
 public:
     virtual void NativeConstruct();
+    virtual void On_Widget_Controller_Set_Implementation();
 
     void Dialogue_Node_Show(const FDialogue_Node &node_data);
     void Dialogue_Hide() const;
@@ -33,16 +35,9 @@ public:
 	void Update_Buttons_Navigation(const TArray<FTLG_Location_Exit> &tlg_location_exits);
 	void Update_Buttons_Actions(const TArray<FTLG_Location_Action> &tlg_location_action);
 
-    void Handle_Widget_Controller();
-
-    UFUNCTION(BlueprintImplementableEvent) void On_Updated_Sanity(float sanity_curr, float sanity_max);
-    UFUNCTION(BlueprintImplementableEvent) void On_Updated_Empathy(float sanity_curr, float sanity_max);
-    UFUNCTION(BlueprintImplementableEvent) void On_Updated_Dominance(float dominance_curr);
-
-    UFUNCTION(BlueprintNativeEvent) void On_Updated_Temp(float sanity_curr, float sanity_max);  // !!! TEMP Example
-
 private:
-    void Spawn_Text_Floating(const float delta, const FText &name_text);  // Spawn in VB_Text_Floating_Events container
+    void Spawn_Text_Floating(const float delta, const FText &name_text);  // Spawn in VB_Text_Floating_Events container || Move to UTLG_Widget_Stats_Bar?
+
     void On_Game_Over();
     void On_Game_Resumed();
     void On_Game_Menu_Paused();
@@ -62,6 +57,7 @@ private:
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Dialogue> TLG_Widget_Dialogue;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Portrait> TLG_Widget_Portrait_Hero;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Portrait> TLG_Widget_Portrait_Enemy;
+    UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTLG_Widget_Stats_Bar> TLG_Widget_Stats_Bar;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_Clock;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> Text_Day_Counter;
 
