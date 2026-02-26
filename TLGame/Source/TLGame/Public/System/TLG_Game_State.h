@@ -15,9 +15,9 @@ UENUM(BlueprintType) enum class ETLG_Game_State: uint8
     Game_Demo_Completed
 };
 //------------------------------------------------------------------------------------------------------------
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOn_Time_Updated, int32, hours, int32, minutes, int32, minutes_delta);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_Updated_Day, int32, day_count);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_Game_State_Changed, ETLG_Game_State, tlg_game_state);
+DECLARE_MULTICAST_DELEGATE_ThreeParams(FOn_Time_Updated, int32, int32, int32);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOn_Updated_Day, int32);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOn_Game_State_Changed, ETLG_Game_State);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Over);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Resumed);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Menu_Paused);
@@ -43,9 +43,9 @@ public:
     FOn_Game_Menu_Paused On_Game_Menu_Paused;
     FOn_Game_Demo_Completed On_Game_Demo_Completed;
 
-    UPROPERTY(BlueprintAssignable) FOn_Time_Updated On_Updated_Time;
-    UPROPERTY(BlueprintAssignable) FOn_Updated_Day On_Updated_Day;
-    UPROPERTY(BlueprintAssignable) FOn_Game_State_Changed On_Game_State_Changed;
+    FOn_Time_Updated On_Updated_Time;
+    FOn_Updated_Day On_Updated_Day;
+    FOn_Game_State_Changed On_Game_State_Changed;
 
 private:
     ETLG_Game_State TLG_Game_State;

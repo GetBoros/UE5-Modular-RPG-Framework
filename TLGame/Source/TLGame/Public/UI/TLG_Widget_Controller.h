@@ -5,14 +5,14 @@
 
 #include <TLG_Widget_Controller.generated.h>
 //------------------------------------------------------------------------------------------------------------
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOn_Attribute_Changed_Signature, float, new_value, float, delta);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOn_Time_Updated_Signature, int32, hours, int32, minutes);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOn_Day_Updated_Signature, int32, current_day);
 DECLARE_MULTICAST_DELEGATE(FOn_Player_Attribute_Changed);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Over);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Resumed);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Menu_Paused);
 DECLARE_MULTICAST_DELEGATE(FOn_Game_Demo_Completed);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOn_Day_Updated_Signature, int32);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOn_Attribute_Changed_Signature, float, float);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOn_Time_Updated_Signature, int32, int32);
 //------------------------------------------------------------------------------------------------------------
 class UTLG_Attribute_Set;
 struct FTLG_Action_Requirement;
@@ -33,12 +33,13 @@ public:
 
     UFUNCTION(BlueprintCallable) bool Check_Action_Requirements(const TArray<FTLG_Action_Requirement> &tlg_action_requirement_array) const;
 
-    UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Sanity;
-    UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Empathy;
-    UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Fatigued;
-    UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Dominance;
-    UPROPERTY(BlueprintAssignable) FOn_Time_Updated_Signature On_Changed_Time_Game;
-    UPROPERTY(BlueprintAssignable) FOn_Day_Updated_Signature On_Changed_Day;
+    FOn_Attribute_Changed_Signature On_Changed_Sanity;
+    FOn_Attribute_Changed_Signature On_Changed_Empathy;
+    FOn_Attribute_Changed_Signature On_Changed_Fatigued;
+    FOn_Attribute_Changed_Signature On_Changed_Dominance;
+
+    FOn_Time_Updated_Signature On_Changed_Time_Game;
+    FOn_Day_Updated_Signature On_Changed_Day;
 
 private:
     void Handle_Changed_Gameplay_Tag(const FGameplayTag gameplay_tag, int32 new_count);
@@ -58,8 +59,8 @@ private:
     float Prev_Fatigued = -1.0f;
     float Prev_Dominance = -1.0f;
 
-    UFUNCTION() void Handle_Changed_Time_Game(int32 hours, int32 minutes, int32 minutes_delta);
-    UFUNCTION() void Handle_Changed_Day_Time(int32 current_day);
+    void Handle_Changed_Time_Game(int32 hours, int32 minutes, int32 minutes_delta);
+    void Handle_Changed_Day_Time(int32 current_day);
 
 };
 //------------------------------------------------------------------------------------------------------------

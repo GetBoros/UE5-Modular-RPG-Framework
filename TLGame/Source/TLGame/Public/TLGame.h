@@ -34,13 +34,14 @@ V	- Add tutorial enemy with simple state tree to show how it work
 X	- Part 2:
 V	- Show buttons as invalid or don`t show if can`t use them?
 V	- Add more than one enemy in location
-X	- Move logic from Widget_HUD to cpp, all good to do this
-X	- Add tooltip to buttons action and locations
-X	- Move Spawn_Text_Floating to UTLG_Widget_Stats_Bar
-X	- Change to correct this Get_TLG_Widget_Menu_Pause()->Handle_Widget_Controller();  // !!! TEMP
+V	- Move logic from Widget_HUD to cpp, all good to do this
+V	- Move Spawn_Text_Floating to UTLG_Widget_Stats_Bar
+V	- Change to correct this Get_TLG_Widget_Menu_Pause()->Handle_Widget_Controller();  // !!! TEMP
 X	- UTLG_Widget_Stats_Bar change dynamic binding to non dynamic
+X	- Add tooltip to buttons action and locations
 X	- Refactoring UTLG_Widget_HUD and UTLG_Widget_Stats_Bar
 X	- Broadcast_Initial_Values add fatigue
+X	- Add Icon to fatigued
 X	- 
 
 X	- Part 3:

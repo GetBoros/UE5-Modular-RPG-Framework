@@ -51,8 +51,9 @@ void UTLG_Widget_Controller::Bind_Callbacks_To_Dependencies()
     if (tlg_game_state == 0)
         return;
 
-    tlg_game_state->On_Updated_Time.AddDynamic(this, &UTLG_Widget_Controller::Handle_Changed_Time_Game);
-    tlg_game_state->On_Updated_Day.AddDynamic(this, &UTLG_Widget_Controller::Handle_Changed_Day_Time);
+    tlg_game_state->On_Updated_Time.AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Time_Game);
+    tlg_game_state->On_Updated_Day.AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Day_Time);
+
 	tlg_game_state->On_Game_Over.AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Game_Over);
 	tlg_game_state->On_Game_Resumed.AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Game_Resumed);
 	tlg_game_state->On_Game_Menu_Paused.AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Game_Menu_Paused);
