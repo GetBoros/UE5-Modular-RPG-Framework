@@ -36,6 +36,7 @@ public:
     void Handle_Widget_Controller();
 
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Sanity(float sanity_curr, float sanity_max);
+    UFUNCTION(BlueprintImplementableEvent) void On_Updated_Empathy(float sanity_curr, float sanity_max);
     UFUNCTION(BlueprintImplementableEvent) void On_Updated_Dominance(float dominance_curr);
 
     UFUNCTION(BlueprintNativeEvent) void On_Updated_Temp(float sanity_curr, float sanity_max);  // !!! TEMP Example
@@ -47,6 +48,7 @@ private:
     void On_Game_Menu_Paused();
 
     UFUNCTION() void On_Changed_Callback_Sanity(float new_value, float delta);
+    UFUNCTION() void On_Changed_Callback_Empathy(float new_value, float delta);
     UFUNCTION() void On_Changed_Callback_Fatigued(float new_value, float delta);
     UFUNCTION() void On_Changed_Callback_Dominance(float new_value, float delta);
     UFUNCTION() void On_Changed_Callback_Day(int32 current_day);

@@ -19,9 +19,11 @@ void UTLG_Widget_Controller::Broadcast_Initial_Values()
         return;
 
     Prev_Sanity = tlg_attribute_set->GetSanity();
+    Prev_Empathy = tlg_attribute_set->GetEmpathy();
     Prev_Dominance = tlg_attribute_set->GetDominance();
 
     On_Changed_Sanity.Broadcast(Prev_Sanity, 0.0f);
+    On_Changed_Empathy.Broadcast(Prev_Empathy, 0.0f);
     On_Changed_Dominance.Broadcast(Prev_Dominance, 0.0f);
 }
 //------------------------------------------------------------------------------------------------------------
@@ -36,6 +38,7 @@ void UTLG_Widget_Controller::Bind_Callbacks_To_Dependencies()
         return;
 
     Ability_System_Component->GetGameplayAttributeValueChangeDelegate(tlg_attribute_set->GetSanityAttribute() ).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Sanity);
+    Ability_System_Component->GetGameplayAttributeValueChangeDelegate(tlg_attribute_set->GetEmpathyAttribute() ).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Empathy);
     Ability_System_Component->GetGameplayAttributeValueChangeDelegate(tlg_attribute_set->GetFatigueAttribute() ).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Fatigue);
     Ability_System_Component->GetGameplayAttributeValueChangeDelegate(tlg_attribute_set->GetDominanceAttribute() ).AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Dominance);
     Ability_System_Component->RegisterGenericGameplayTagEvent().AddUObject(this, &UTLG_Widget_Controller::Handle_Changed_Gameplay_Tag);
@@ -124,6 +127,20 @@ void UTLG_Widget_Controller::Handle_Changed_Sanity(const FOnAttributeChangeData 
     Prev_Sanity = current;
 
     On_Changed_Sanity.Broadcast(current, delta);
+    On_Player_Attribute_Changed.Broadcast();
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Controller::Handle_Changed_Empathy(const FOnAttributeChangeData& attribute_change_data)
+{
+    const float current = attribute_change_data.NewValue;
+	float delta = 0.0f;
+    
+    if (Prev_Empathy >= 0.0f)
+        delta = current - Prev_Empathy;
+
+    Prev_Empathy = current;
+
+    On_Changed_Empathy.Broadcast(current, delta);
     On_Player_Attribute_Changed.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------

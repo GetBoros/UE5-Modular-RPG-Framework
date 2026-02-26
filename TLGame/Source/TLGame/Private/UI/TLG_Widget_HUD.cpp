@@ -106,6 +106,7 @@ void UTLG_Widget_HUD::Handle_Widget_Controller()
     tlg_widget_controller = Cast<UTLG_Widget_Controller>(GBUIC_Widget_Controller);
     
     tlg_widget_controller->On_Changed_Sanity.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Sanity);
+    tlg_widget_controller->On_Changed_Empathy.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Empathy);
     tlg_widget_controller->On_Changed_Fatigued.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Fatigued);
     tlg_widget_controller->On_Changed_Dominance.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Dominance);
     tlg_widget_controller->On_Changed_Time_Game.AddDynamic(this, &UTLG_Widget_HUD::On_Changed_Callback_Time_Game);
@@ -161,6 +162,14 @@ void UTLG_Widget_HUD::On_Game_Menu_Paused()
 void UTLG_Widget_HUD::On_Changed_Callback_Sanity(float new_value, float delta)
 {
     On_Updated_Sanity(new_value, 100.0f);
+
+    if (FMath::IsNearlyZero(delta) != true)
+        Spawn_Text_Floating(delta, FText::FromString("Sanity") );
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_HUD::On_Changed_Callback_Empathy(float new_value, float delta)
+{
+	On_Updated_Empathy(new_value, 100.0f);
 
     if (FMath::IsNearlyZero(delta) != true)
         Spawn_Text_Floating(delta, FText::FromString("Sanity") );

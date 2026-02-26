@@ -34,6 +34,7 @@ public:
     UFUNCTION(BlueprintCallable) bool Check_Action_Requirements(const TArray<FTLG_Action_Requirement> &tlg_action_requirement_array) const;
 
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Sanity;
+    UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Empathy;
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Fatigued;
     UPROPERTY(BlueprintAssignable) FOn_Attribute_Changed_Signature On_Changed_Dominance;
     UPROPERTY(BlueprintAssignable) FOn_Time_Updated_Signature On_Changed_Time_Game;
@@ -42,6 +43,7 @@ public:
 private:
     void Handle_Changed_Gameplay_Tag(const FGameplayTag gameplay_tag, int32 new_count);
     void Handle_Changed_Sanity(const FOnAttributeChangeData &attribute_change_data);
+    void Handle_Changed_Empathy(const FOnAttributeChangeData &attribute_change_data);
     void Handle_Changed_Fatigue(const FOnAttributeChangeData &attribute_change_data);
     void Handle_Changed_Dominance(const FOnAttributeChangeData &attribute_change_data);
     void Handle_Changed_Game_Over();
@@ -52,6 +54,7 @@ private:
     UTLG_Attribute_Set *Get_TLG_Attribute_Set() const;
 
     float Prev_Sanity = -1.0f;
+    float Prev_Empathy = -1.0f;
     float Prev_Fatigued = -1.0f;
     float Prev_Dominance = -1.0f;
 

@@ -40,15 +40,25 @@ X	-
 */
 #pragma endregion
 //------------------------------------------------------------------------------------------------------------
-#pragma region BUGS
+#pragma region BUGS_FIXED
 /*
 
+V	- Fix: Need empaty to show up when changed
 V	- Fix: Tool tip without info about stat
 V	- Game time when start don`t show
 V	- Fix: Can sleep 4 day to win game
+
+*/
+#pragma endregion
+
+//------------------------------------------------------------------------------------------------------------
+#pragma region BUGS
+/*
+
 X	- Fix: Need empty portrait, now show portrait main hero
-X	- Fix: Need empaty to show up when changed
 X	- 
+X	- 
+
 */
 #pragma endregion
 //------------------------------------------------------------------------------------------------------------
@@ -77,7 +87,6 @@ X	-
 #pragma region FEATURES
 /*
 
-X	- If player have fatigue 50+, location can show option sleep
 X	- More than one enemies in room
 X	- If player enter to the room he can choose talk or not, if enemies doesn`t talk to him firstly
 X	- 
@@ -89,8 +98,6 @@ X	-
 #pragma region REFACTORINGS
 /*
 
-V	- Need ATLG_Player_Controller refactoring
-V	- UTLG_Widget_HUD must have params TArray<FTLG_Location_Action> for current location and current navigation, and in controller just send it?
 X	- 
 
 */
