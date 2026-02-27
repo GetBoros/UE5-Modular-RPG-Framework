@@ -1,7 +1,8 @@
 //------------------------------------------------------------------------------------------------------------
 #include <UI/TLG_Widget_Dialogue.h>
 #include <UI/TLG_Widget_Button_Response.h>
-#include <System/TLG_Player_Controller.h>
+
+#include <Components/TLG_Component_Dialogue.h>
 
 #include <Materials/MaterialInstanceDynamic.h>
 #include <Components/GBUIC_Text_Block_Typewriter.h>
@@ -72,7 +73,7 @@ void UTLG_Widget_Dialogue::Handle_Response_Clicked(int32 response_index)
 
     On_Response_Selected(Dialogue_Node_Current.Player_Responses[response_index]);  // Visuals (BP)
 
-    if (ATLG_Player_Controller *tlg_player_controller = Cast<ATLG_Player_Controller>(GetOwningPlayer() ) )
-        tlg_player_controller->Handle_Player_Decision(Dialogue_Node_Current.Player_Responses[response_index]);  // Send data to player controller logic
+    if (UTLG_Component_Dialogue *tlg_component_dialogue = GetOwningPlayer()->FindComponentByClass<UTLG_Component_Dialogue>() )  // !!! TEMP Refactoring find component
+        tlg_component_dialogue->Handle_Player_Decision(Dialogue_Node_Current.Player_Responses[response_index]);  // Send data to player controller logic
 }
 //------------------------------------------------------------------------------------------------------------

@@ -6,7 +6,6 @@
 
 #include <Components/TLG_Component_Dialogue.h>
 
-#include <Data/TLG_Data_Enemy.h>
 #include <Data/TLG_Data_Location.h>
 
 #include <Components/AudioComponent.h>
@@ -31,13 +30,7 @@ void ATLG_Player_Controller::BeginPlay()
     TLG_Player_State = GetPlayerState<ATLG_Player_State>();
 
     // 2.0. Check
-    if (ensureMsgf(TLG_HUD, TEXT("Need HUD implemented from ATLG_HUD") ) != true)
-        return;
-
     if (ensureMsgf(TLG_Player_State, TEXT("Need Player State implemented from ATLG_Player_State") ) != true)
-        return;
-
-    if (ensureMsgf(TLG_Data_Enemy_Current, TEXT("Skip Location_Enter or can be crit error") ) != true)
         return;
 
     if (ensureMsgf(TLG_Data_Location_Current, TEXT("Is Empty, init from Game Mode or else") ) != true)
@@ -45,6 +38,10 @@ void ATLG_Player_Controller::BeginPlay()
 
     if (ensureMsgf(TLG_Game_State, TEXT("Something whent wrong") ) != true)
         return;
+
+    TLG_Component_Dialogue->Init(TLG_HUD, TLG_Player_State);  // !!! TEMP
+
+    Super::BeginPlay();
 
 	// 3.0. Create audio component for ambient music
     if (Audio_Component_Ambient == 0)
@@ -60,8 +57,6 @@ void ATLG_Player_Controller::BeginPlay()
     bShowMouseCursor = true;
     SetInputMode(FInputModeGameAndUI() );
 
-    // 5.0
-    Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::SetupInputComponent()
@@ -131,25 +126,9 @@ void ATLG_Player_Controller::Request_Menu_Main_Pause(const ETLG_Game_Flow_Option
     }
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Handle_Player_Decision(const FPlayer_Response &player_response)
-{
-    TLG_Player_State->Apply_Multy_Dynamic_Change(player_response.Set_By_Caller_Magnitude);
-
-    // 1.1. Show next dialugue if next row exists
-    if (player_response.Row_ID_Next.IsNone() != true)
-        Dialogue_Start(player_response.Row_ID_Next);
-    else
-        Dialogue_End();
-}
-//------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Set_TLG_Data_Location_Current(UTLG_Data_Location *tlg_data_location)
 {
     TLG_Data_Location_Current = tlg_data_location;
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Set_Dialogue_Current(UDataTable *data_table)
-{
-    DT_Dialogue_Current = data_table;
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Spawn_Location_Enemies(TArray<FTLG_Location_Enemy> tlg_location_enemies)
@@ -164,7 +143,7 @@ void ATLG_Player_Controller::Spawn_Location_Enemies(TArray<FTLG_Location_Enemy> 
 
     for (FTLG_Location_Enemy &tlg_location_enemie : tlg_location_enemies)
     {
-        TLG_Data_Enemy_Current = tlg_location_enemie.TLG_Data_Enemy;
+        TLG_Component_Dialogue->TLG_Data_Enemy_Current = tlg_location_enemie.TLG_Data_Enemy;
         enemy_encounter_chance = tlg_location_enemie.Encounter_Chance;
         enemy_condition_spawn = tlg_location_enemie.Spawn_Conditions_Tag_Query;  // !!! TEMP Not used
         enemy_class = tlg_location_enemie.Enemy_Class;
@@ -174,33 +153,10 @@ void ATLG_Player_Controller::Spawn_Location_Enemies(TArray<FTLG_Location_Enemy> 
 
         // !!! TEMP If many enemies can be probles...
         if (roll_random <= enemy_encounter_chance)  // Begin dialugue if rolled
-            Dialogue_Start(FName("Intro") );  // !!! TEMP
+            TLG_Component_Dialogue->Dialogue_Start(FName("Intro") );  // !!! TEMP
         else
-            TLG_HUD->Dialogue_Hide();
+			TLG_Component_Dialogue->Dialogue_End();
     }
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Dialogue_Start(const FName &row_id)
-{
-    static const FString context(TEXT("Dialogue Context") );
-
-    if (DT_Dialogue_Current != 0)
-    {
-        if (FDialogue_Node *dialogue_node_next = DT_Dialogue_Current->FindRow<FDialogue_Node>(row_id, context, true) )  // Find node by row id
-        {
-            if (UTexture2D *texture_portrait_for_mood = TLG_Data_Enemy_Current->Get_Portrait_For_Mood(dialogue_node_next->Tag_Portrait) )
-                TLG_HUD->Set_Image_Texture_Portrait(texture_portrait_for_mood);
-            TLG_HUD->Dialogue_Node_Show(*dialogue_node_next);  // Send data to Dialogue UI
-        }
-    }
-    else
-        Dialogue_End();
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Dialogue_End()
-{
-    TLG_HUD->Dialogue_Hide();
-    On_Dialogue_Ended.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::On_Pressed_ESC()

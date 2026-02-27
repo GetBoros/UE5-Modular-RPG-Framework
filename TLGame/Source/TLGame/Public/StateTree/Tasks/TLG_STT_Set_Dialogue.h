@@ -5,7 +5,7 @@
 
 #include <TLG_STT_Set_Dialogue.generated.h>
 //------------------------------------------------------------------------------------------------------------
-class ATLG_Player_Controller;
+class UTLG_Component_Dialogue;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API UTLG_STT_Set_Dialogue : public UStateTreeTaskBlueprintBase
 {
@@ -17,9 +17,8 @@ public:
 private:
 	void Handle_Dialogue_Ended();
 
+	UPROPERTY(EditAnywhere, Category = "Input") TObjectPtr<UTLG_Component_Dialogue> TLG_Component_Dialogue;
 	UPROPERTY(EditAnywhere, Category = "Condition") FGameplayTag Story_Flag_To_Add;
-	UPROPERTY(EditAnywhere, Category = "Input") TObjectPtr<ATLG_Player_Controller> TLG_Player_Controller;
 	UPROPERTY(EditAnywhere) TObjectPtr<UDataTable> Dialogue_Table;
-
 };
 //------------------------------------------------------------------------------------------------------------
