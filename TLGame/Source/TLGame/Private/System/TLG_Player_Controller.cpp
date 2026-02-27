@@ -4,7 +4,8 @@
 #include <System/TLG_HUD.h>
 #include <System/TLG_Game_State.h>
 
-#include <Data/TLG_Data_Gameplay_Tags.h>
+#include <Components/TLG_Component_Dialogue.h>
+
 #include <Data/TLG_Data_Enemy.h>
 #include <Data/TLG_Data_Location.h>
 
@@ -17,6 +18,11 @@
 
 
 // ATLG_Player_Controller
+ATLG_Player_Controller::ATLG_Player_Controller()
+{
+    TLG_Component_Dialogue = CreateDefaultSubobject<UTLG_Component_Dialogue>(TEXT("TLG_Component_Dialogue") );
+}
+//------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::BeginPlay()
 {
     // 1.0. Init

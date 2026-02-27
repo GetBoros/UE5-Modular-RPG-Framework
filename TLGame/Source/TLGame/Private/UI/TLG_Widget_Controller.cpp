@@ -20,10 +20,12 @@ void UTLG_Widget_Controller::Broadcast_Initial_Values()
 
     Prev_Sanity = tlg_attribute_set->GetSanity();
     Prev_Empathy = tlg_attribute_set->GetEmpathy();
+    Prev_Fatigued = tlg_attribute_set->GetFatigue();
     Prev_Dominance = tlg_attribute_set->GetDominance();
 
     On_Changed_Sanity.Broadcast(Prev_Sanity, 0.0f);
     On_Changed_Empathy.Broadcast(Prev_Empathy, 0.0f);
+    On_Changed_Fatigued.Broadcast(Prev_Fatigued, 0.0f);
     On_Changed_Dominance.Broadcast(Prev_Dominance, 0.0f);
 }
 //------------------------------------------------------------------------------------------------------------
@@ -112,11 +114,6 @@ bool UTLG_Widget_Controller::Check_Action_Requirements(const TArray<FTLG_Action_
     return true;
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Controller::Handle_Changed_Gameplay_Tag(const FGameplayTag gameplay_tag, int32 new_count)
-{
-    On_Player_Attribute_Changed.Broadcast();
-}
-//------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Handle_Changed_Sanity(const FOnAttributeChangeData &attribute_change_data)
 {
     const float current = attribute_change_data.NewValue;
@@ -173,32 +170,37 @@ void UTLG_Widget_Controller::Handle_Changed_Dominance(const FOnAttributeChangeDa
     On_Player_Attribute_Changed.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Controller::Handle_Changed_Game_Over()
+void UTLG_Widget_Controller::Handle_Changed_Game_Over() const
 {
     On_Game_Over.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Controller::Handle_Changed_Game_Resumed()
+void UTLG_Widget_Controller::Handle_Changed_Game_Resumed() const
 {
     On_Game_Resumed.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Controller::Handle_Changed_Game_Menu_Paused()
+void UTLG_Widget_Controller::Handle_Changed_Game_Menu_Paused() const
 {
     On_Game_Menu_Paused.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Controller::Handle_Changed_Game_Demo_Completed()
+void UTLG_Widget_Controller::Handle_Changed_Game_Demo_Completed() const
 {
     On_Game_Demo_Completed.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Controller::Handle_Changed_Time_Game(int32 hours, int32 minutes, int32 minutes_delta)
+void UTLG_Widget_Controller::Handle_Changed_Gameplay_Tag(const FGameplayTag gameplay_tag, const int32 new_count) const
+{
+    On_Player_Attribute_Changed.Broadcast();
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Controller::Handle_Changed_Time_Game(const int32 hours, const int32 minutes, const int32 minutes_delta) const
 {
     On_Changed_Time_Game.Broadcast(hours, minutes);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Widget_Controller::Handle_Changed_Day_Time(int32 current_day)
+void UTLG_Widget_Controller::Handle_Changed_Day_Time(const int32 current_day) const
 {
     On_Changed_Day.Broadcast(current_day);
 }

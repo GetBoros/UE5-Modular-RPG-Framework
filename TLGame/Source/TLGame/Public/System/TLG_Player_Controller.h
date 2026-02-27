@@ -14,6 +14,7 @@ class ATLG_HUD;
 class ATLG_Player_State;
 class ATLG_Game_State;
 class UTLG_Data_Enemy;
+class UTLG_Component_Dialogue;
 struct FTLG_Location_Enemy;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API ATLG_Player_Controller : public APlayerController, public ITLG_Interaction_Interface
@@ -21,6 +22,8 @@ UCLASS() class TLGAME_API ATLG_Player_Controller : public APlayerController, pub
     GENERATED_BODY()
 
 public:
+    ATLG_Player_Controller();
+
     virtual void BeginPlay();
     virtual void SetupInputComponent();
 
@@ -28,7 +31,7 @@ public:
     virtual void Location_Action(const FTLG_Location_Action &tlg_location_action);
     virtual void Request_Menu_Main_Pause(const ETLG_Game_Flow_Option tlg_game_flow_option);
 
-    void Handle_Player_Decision(const FPlayer_Response &player_response);  // Call UI when player press button
+    void Handle_Player_Decision(const FPlayer_Response &player_response);
     void Set_TLG_Data_Location_Current(UTLG_Data_Location *tlg_data_location);
     void Set_Dialogue_Current(UDataTable *data_table);
 
@@ -53,5 +56,7 @@ private:
 
     UPROPERTY(EditAnywhere) TObjectPtr<UDataTable> DT_Dialogue_Current;
 
+    // !!! TEMP
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Component_Dialogue> TLG_Component_Dialogue;
 };
 //------------------------------------------------------------------------------------------------------------

@@ -16,35 +16,14 @@ public:
 //------------------------------------------------------------------------------------------------------------
 #pragma region TASKS
 /*
-V	- Part 1:
-V	- In Controller work with Enemy, not just DT or other data
-V	- Tooltips
-V		- Need visual simple
-V	- Press ESC to open Exit from game or Restart
-V		- Menu with 3 options: Exit, Restart, Continue
-V		- If lose game need show text Game Over
-V	- UI Sound press buttons or something else
-V	- Demo ending 3 Day
-V	- Tutorial, Intro Dialog: If Sanity < 0 hospital, if Emphaty >= 100 im slave without will
-V	- Can sleep only if fatigue more then 50+?
-V	- Fatigue logic: Block some answers or else
-V	- Implement State Tree for enemy dialogue
-V	- Add tutorial enemy with simple state tree to show how it work
-
-X	- Part 2:
-V	- Show buttons as invalid or don`t show if can`t use them?
-V	- Add more than one enemy in location
-V	- Move logic from Widget_HUD to cpp, all good to do this
-V	- Move Spawn_Text_Floating to UTLG_Widget_Stats_Bar
-V	- Change to correct this Get_TLG_Widget_Menu_Pause()->Handle_Widget_Controller();  // !!! TEMP
-X	- UTLG_Widget_Stats_Bar change dynamic binding to non dynamic
+V	- Part 1: Completed
+X	- Part 2: In progress
+V	- Add Icon to fatigued
 X	- Add tooltip to buttons action and locations
-X	- Refactoring UTLG_Widget_HUD and UTLG_Widget_Stats_Bar
-X	- Broadcast_Initial_Values add fatigue
-X	- Add Icon to fatigued
+X		- If player can`t use button, need show tooltip with reason or else, if can use show tooltip with info about action
 X	- 
 
-X	- Part 3:
+X	- Part 3: In progress
 X	- Need a lot of content for 3 day, and make balance
 X	-
 
@@ -100,7 +79,12 @@ X	-
 
 X	- More than one enemies in room
 X	- If player enter to the room he can choose talk or not, if enemies doesn`t talk to him firstly
-X	- 
+X	- NPC must live, move and do something, not just wait for player to talk to them, they can talk to player if he in the room, or else
+X	- Inventory system, player can find some items in the location and use them in the future, or else
+X	- Localization Ru, Eng, Ua other.
+X	- Patchings
+X	- Tool tip on player Image to show stats? Or enemy
+X		- Second Attributes like STR, INT, WIS and other
 X	- 
 
 */
@@ -109,7 +93,7 @@ X	-
 #pragma region REFACTORINGS
 /*
 
-X	- 
+X	- ATLG_Player_Controller add actor components for Audio, dialogue, enemy, location and else, to not use pointers to actors and data in controller
 
 */
 #pragma endregion
