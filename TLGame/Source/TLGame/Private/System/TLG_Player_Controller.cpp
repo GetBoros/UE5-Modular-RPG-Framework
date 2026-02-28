@@ -9,7 +9,6 @@
 
 #include <Data/TLG_Data_Location.h>
 
-#include <Components/AudioComponent.h>
 #include <Kismet/KismetSystemLibrary.h>
 #include <Kismet/GameplayStatics.h>
 //------------------------------------------------------------------------------------------------------------
@@ -49,6 +48,9 @@ void ATLG_Player_Controller::BeginPlay()
 
     Location_Enter(TLG_Data_Location_Current);
 
+    TLG_Component_Navigation->On_Location_Enter.RemoveAll(this);
+    TLG_Component_Navigation->On_Location_Enter.AddUObject(this, &ATLG_Player_Controller::Temp);
+
     Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
@@ -66,7 +68,9 @@ void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_locatio
 {
     TLG_Component_Navigation->Location_Enter(tlg_data_location);
 
-    Spawn_Location_Enemies(tlg_data_location->TLG_Location_Enemies);
+	TLG_Location_Enemies = tlg_data_location->TLG_Location_Enemies;
+
+    // Spawn_Location_Enemies(tlg_data_location->TLG_Location_Enemies);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Location_Action(const FTLG_Location_Action &tlg_location_action)
@@ -97,22 +101,27 @@ void ATLG_Player_Controller::Request_Menu_Main_Pause(const ETLG_Game_Flow_Option
     }
 }
 //------------------------------------------------------------------------------------------------------------
+void ATLG_Player_Controller::Temp()
+{
+    Spawn_Location_Enemies();
+}
+//------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Set_TLG_Data_Location_Current(UTLG_Data_Location *tlg_data_location)
 {
     TLG_Data_Location_Current = tlg_data_location;
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Spawn_Location_Enemies(TArray<FTLG_Location_Enemy> tlg_location_enemies)
+void ATLG_Player_Controller::Spawn_Location_Enemies()
 {
     float enemy_encounter_chance, roll_random;
     AActor *spawned_actor;
     TSubclassOf<AActor> enemy_class;
     FGameplayTagQuery enemy_condition_spawn;
 
-    if (tlg_location_enemies.IsEmpty() == true)
+    if (TLG_Location_Enemies.IsEmpty() == true)
         return;
 
-    for (FTLG_Location_Enemy &tlg_location_enemie : tlg_location_enemies)
+    for (FTLG_Location_Enemy &tlg_location_enemie : TLG_Location_Enemies)
     {
         enemy_encounter_chance = tlg_location_enemie.Encounter_Chance;
         enemy_condition_spawn = tlg_location_enemie.Spawn_Conditions_Tag_Query;  // !!! TEMP Not used
