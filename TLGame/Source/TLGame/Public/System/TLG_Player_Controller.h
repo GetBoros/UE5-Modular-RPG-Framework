@@ -30,8 +30,6 @@ public:
 
     void Set_TLG_Data_Location_Current(UTLG_Data_Location *tlg_data_location);
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true")) TObjectPtr<UTLG_Component_Dialogue> TLG_Component_Dialogue;
-
 private:
     void Spawn_Location_Enemies(TArray<FTLG_Location_Enemy> tlg_location_enemies);
 
@@ -42,8 +40,11 @@ private:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<ATLG_HUD> TLG_HUD;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<ATLG_Game_State> TLG_Game_State;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<ATLG_Player_State> TLG_Player_State;
+
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Data_Location> TLG_Data_Location_Current;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UAudioComponent> Audio_Component_Ambient;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Component_Dialogue> TLG_Component_Dialogue;
 
 };
 //------------------------------------------------------------------------------------------------------------

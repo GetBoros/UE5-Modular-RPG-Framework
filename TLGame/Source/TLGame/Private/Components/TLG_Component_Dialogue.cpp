@@ -30,10 +30,6 @@ void UTLG_Component_Dialogue::BeginPlay()
 
     if (ensureMsgf(TLG_Player_State, TEXT("Need Player State implemented from ATLG_Player_State")) != true)
         return;
-
-     if (ensureMsgf(TLG_Data_Enemy_Current, TEXT("Skip Location_Enter or can be crit error")) != true)
-         return;
-
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Component_Dialogue::Init(ATLG_HUD *tlg_hud, ATLG_Player_State *tlg_player_state)
@@ -42,11 +38,13 @@ void UTLG_Component_Dialogue::Init(ATLG_HUD *tlg_hud, ATLG_Player_State *tlg_pla
     TLG_Player_State = tlg_player_state;
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Component_Dialogue::Dialogue_Start(const FName &row_id)
+void UTLG_Component_Dialogue::Dialogue_Start(const FName &row_id, UTLG_Data_Enemy *tlg_data_enemy)
 {
     static const FString context(TEXT("Dialogue Context") );
+    if (tlg_data_enemy != 0)
+        TLG_Data_Enemy_Current = tlg_data_enemy;
 
-    if (DT_Dialogue_Current != 0)
+    if (DT_Dialogue_Current != 0 && TLG_Data_Enemy_Current != 0)
     {
         if (FDialogue_Node *dialogue_node_next = DT_Dialogue_Current->FindRow<FDialogue_Node>(row_id, context, true) )  // Find node by row id
         {
@@ -72,7 +70,7 @@ void UTLG_Component_Dialogue::Handle_Player_Decision(const FPlayer_Response &pla
 
     // 1.1. Show next dialugue if next row exists
     if (player_response.Row_ID_Next.IsNone() != true)
-        Dialogue_Start(player_response.Row_ID_Next);
+        Dialogue_Start(player_response.Row_ID_Next, 0);
     else
         Dialogue_End();
 }

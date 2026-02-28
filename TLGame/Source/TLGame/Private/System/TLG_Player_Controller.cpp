@@ -143,7 +143,6 @@ void ATLG_Player_Controller::Spawn_Location_Enemies(TArray<FTLG_Location_Enemy> 
 
     for (FTLG_Location_Enemy &tlg_location_enemie : tlg_location_enemies)
     {
-        TLG_Component_Dialogue->TLG_Data_Enemy_Current = tlg_location_enemie.TLG_Data_Enemy;
         enemy_encounter_chance = tlg_location_enemie.Encounter_Chance;
         enemy_condition_spawn = tlg_location_enemie.Spawn_Conditions_Tag_Query;  // !!! TEMP Not used
         enemy_class = tlg_location_enemie.Enemy_Class;
@@ -153,7 +152,7 @@ void ATLG_Player_Controller::Spawn_Location_Enemies(TArray<FTLG_Location_Enemy> 
 
         // !!! TEMP If many enemies can be probles...
         if (roll_random <= enemy_encounter_chance)  // Begin dialugue if rolled
-            TLG_Component_Dialogue->Dialogue_Start(FName("Intro") );  // !!! TEMP
+            TLG_Component_Dialogue->Dialogue_Start(FName("Intro"), tlg_location_enemie.TLG_Data_Enemy);  // !!! TEMP
         else
 			TLG_Component_Dialogue->Dialogue_End();
     }
