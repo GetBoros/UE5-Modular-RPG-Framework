@@ -1,0 +1,79 @@
+//------------------------------------------------------------------------------------------------------------
+#include <Components/TLG_Component_Navigation.h>
+
+#include <System/TLG_HUD.h>
+#include <System/TLG_Game_State.h>
+
+#include <Data/TLG_Data_Location.h>
+
+#include <Components/AudioComponent.h>
+
+//------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+// UTLG_Component_Navigation
+UTLG_Component_Navigation::UTLG_Component_Navigation()
+{
+	PrimaryComponentTick.bCanEverTick = false;
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Component_Navigation::BeginPlay()
+{
+	Super::BeginPlay();
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Component_Navigation::Init(ATLG_HUD *tlg_hud, ATLG_Game_State *tlg_game_state)
+{
+    TLG_HUD = tlg_hud;
+    TLG_Game_State = tlg_game_state;
+
+    // 3.0. Create audio component for ambient music
+    if (Audio_Component_Ambient == 0)
+    {
+        Audio_Component_Ambient = NewObject<UAudioComponent>(this);
+        Audio_Component_Ambient->RegisterComponent();  // Important for work
+    }
+
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Component_Navigation::Location_Enter(UTLG_Data_Location *tlg_data_location)
+{
+    int location_enter_time_cost;
+    USoundBase *sound_base;
+    UTexture2D *texture2d_background;
+
+    TLG_Data_Location_Current = tlg_data_location;
+    location_enter_time_cost = 5;  // !!! TEMP Need add to data location
+    texture2d_background = tlg_data_location->Texture2D_Background_Image;
+    sound_base = tlg_data_location->SoundBase_Ambient;
+
+    // 1.0. Background
+    if (texture2d_background != 0)  // Update Background if have in tlg_data_location
+        TLG_HUD->Set_Image_Texture_Background(texture2d_background);
+
+    // 2.0. Music
+    if (sound_base != 0)  // Play music
+        Play_Ambient_Sound(sound_base);
+
+    // 3.0. Buttons Location and Actions
+    TLG_HUD->Set_Location_Buttons(tlg_data_location->TLG_Location_Exits, tlg_data_location->TLG_Location_Actions);
+
+    // 4.0. Spend time when move to location
+    TLG_Game_State->Advance_Time(location_enter_time_cost);
+
+    On_Location_Enter.Broadcast();
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Component_Navigation::Play_Ambient_Sound(USoundBase *sound_base_to_play)
+{
+    if (Audio_Component_Ambient->Sound == sound_base_to_play && Audio_Component_Ambient->IsPlaying() )  // if already play return
+        return;
+
+    Audio_Component_Ambient->Stop();
+    Audio_Component_Ambient->SetSound(sound_base_to_play);
+    Audio_Component_Ambient->Play();
+}
+//------------------------------------------------------------------------------------------------------------

@@ -5,6 +5,7 @@
 #include <System/TLG_Game_State.h>
 
 #include <Components/TLG_Component_Dialogue.h>
+#include <Components/TLG_Component_Navigation.h>
 
 #include <Data/TLG_Data_Location.h>
 
@@ -20,6 +21,7 @@
 ATLG_Player_Controller::ATLG_Player_Controller()
 {
     TLG_Component_Dialogue = CreateDefaultSubobject<UTLG_Component_Dialogue>(TEXT("TLG_Component_Dialogue") );
+    TLG_Component_Navigation = CreateDefaultSubobject<UTLG_Component_Navigation>(TEXT("TLG_Component_Navigation") );
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::BeginPlay()
@@ -28,6 +30,9 @@ void ATLG_Player_Controller::BeginPlay()
     TLG_HUD = GetHUD<ATLG_HUD>();
     TLG_Game_State = GetWorld()->GetGameState<ATLG_Game_State>();
     TLG_Player_State = GetPlayerState<ATLG_Player_State>();
+
+    bShowMouseCursor = true;
+    SetInputMode(FInputModeGameAndUI() );
 
     // 2.0. Check
     if (ensureMsgf(TLG_Player_State, TEXT("Need Player State implemented from ATLG_Player_State") ) != true)
@@ -39,24 +44,12 @@ void ATLG_Player_Controller::BeginPlay()
     if (ensureMsgf(TLG_Game_State, TEXT("Something whent wrong") ) != true)
         return;
 
-    TLG_Component_Dialogue->Init(TLG_HUD, TLG_Player_State);  // !!! TEMP
+    TLG_Component_Dialogue->Init(TLG_HUD, TLG_Player_State);
+    TLG_Component_Navigation->Init(TLG_HUD, TLG_Game_State);
 
-    Super::BeginPlay();
-
-	// 3.0. Create audio component for ambient music
-    if (Audio_Component_Ambient == 0)
-    {
-        Audio_Component_Ambient = NewObject<UAudioComponent>(this);
-        Audio_Component_Ambient->RegisterComponent();  // Important for work
-    }
-
-    // 4.0.
     Location_Enter(TLG_Data_Location_Current);
 
-    // 4.1. Set input mode
-    bShowMouseCursor = true;
-    SetInputMode(FInputModeGameAndUI() );
-
+    Super::BeginPlay();
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::SetupInputComponent()
@@ -71,31 +64,9 @@ void ATLG_Player_Controller::SetupInputComponent()
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_location)
 {
-    int location_enter_time_cost;
-    USoundBase *sound_base;
-    UTexture2D *texture2d_background;
+    TLG_Component_Navigation->Location_Enter(tlg_data_location);
 
-    TLG_Data_Location_Current = tlg_data_location;
-    location_enter_time_cost = 5;  // !!! TEMP Need add to data location
-    texture2d_background = tlg_data_location->Texture2D_Background_Image;
-    sound_base = tlg_data_location->SoundBase_Ambient;
-
-    // 1.0. Background
-    if (texture2d_background != 0)  // Update Background if have in tlg_data_location
-        TLG_HUD->Set_Image_Texture_Background(texture2d_background);
-
-    // 2.0. Music
-    if (sound_base != 0)  // Play music
-        Play_Ambient_Sound(sound_base);
-
-    // 3.0. Dialogue
     Spawn_Location_Enemies(tlg_data_location->TLG_Location_Enemies);
-
-    // 4.0. Buttons Location and Actions
-    TLG_HUD->Set_Location_Buttons(tlg_data_location->TLG_Location_Exits, tlg_data_location->TLG_Location_Actions);
-
-    // 5.0. Spend time when move to location
-    TLG_Game_State->Advance_Time(location_enter_time_cost);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Location_Action(const FTLG_Location_Action &tlg_location_action)
@@ -161,15 +132,5 @@ void ATLG_Player_Controller::Spawn_Location_Enemies(TArray<FTLG_Location_Enemy> 
 void ATLG_Player_Controller::On_Pressed_ESC()
 {
     TLG_Game_State->Game_Menu_Paused();
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Play_Ambient_Sound(USoundBase *sound_base_to_play)
-{
-    if (Audio_Component_Ambient->Sound == sound_base_to_play && Audio_Component_Ambient->IsPlaying() )  // if already play return
-        return;
-
-    Audio_Component_Ambient->Stop();
-    Audio_Component_Ambient->SetSound(sound_base_to_play);
-    Audio_Component_Ambient->Play();
 }
 //------------------------------------------------------------------------------------------------------------
