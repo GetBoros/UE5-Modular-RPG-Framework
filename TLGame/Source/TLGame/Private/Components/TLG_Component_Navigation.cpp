@@ -67,6 +67,47 @@ void UTLG_Component_Navigation::Location_Enter(UTLG_Data_Location *tlg_data_loca
     On_Location_Enter.Broadcast();
 }
 //------------------------------------------------------------------------------------------------------------
+void UTLG_Component_Navigation::Set_Location_Current(UTLG_Data_Location *tlg_data_location)
+{
+	TLG_Data_Location_Current = tlg_data_location;
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Component_Navigation::Set_Location_Enemies(const TArray<FTLG_Location_Enemy> &tlg_location_enemies)
+{
+    TLG_Location_Enemies = tlg_location_enemies;
+}
+//------------------------------------------------------------------------------------------------------------
+UTLG_Data_Location *UTLG_Component_Navigation::Get_Location_Current()
+{
+    return TLG_Data_Location_Current;
+}
+//------------------------------------------------------------------------------------------------------------
+UTLG_Data_Enemy *UTLG_Component_Navigation::Get_Location_Enemy()
+{
+    float enemy_encounter_chance, roll_random;
+    AActor *spawned_actor;
+    TSubclassOf<AActor> enemy_class;
+    FGameplayTagQuery enemy_condition_spawn;
+
+    if (TLG_Location_Enemies.IsEmpty() == true)
+        return 0;
+
+    for (FTLG_Location_Enemy &tlg_location_enemie : TLG_Location_Enemies)
+    {
+        enemy_encounter_chance = tlg_location_enemie.Encounter_Chance;
+        enemy_condition_spawn = tlg_location_enemie.Spawn_Conditions_Tag_Query;  // !!! TEMP Not used
+        enemy_class = tlg_location_enemie.Enemy_Class;
+        roll_random = FMath::FRand();  // 2. Generate value from 0.0 to 1.0
+
+        spawned_actor = GetWorld()->SpawnActor<AActor>(enemy_class, FVector(0.0f, 0.0f, 0.0f), FRotator::ZeroRotator, FActorSpawnParameters() );
+
+        if (roll_random <= enemy_encounter_chance)  // Begin dialugue if rolled
+            return tlg_location_enemie.TLG_Data_Enemy;
+    }
+
+    return 0;
+}
+//------------------------------------------------------------------------------------------------------------
 void UTLG_Component_Navigation::Play_Ambient_Sound(USoundBase *sound_base_to_play)
 {
     if (Audio_Component_Ambient->Sound == sound_base_to_play && Audio_Component_Ambient->IsPlaying() )  // if already play return

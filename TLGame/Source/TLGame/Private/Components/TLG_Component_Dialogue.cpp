@@ -41,6 +41,7 @@ void UTLG_Component_Dialogue::Init(ATLG_HUD *tlg_hud, ATLG_Player_State *tlg_pla
 void UTLG_Component_Dialogue::Dialogue_Start(const FName &row_id, UTLG_Data_Enemy *tlg_data_enemy)
 {
     static const FString context(TEXT("Dialogue Context") );
+
     if (tlg_data_enemy != 0)
         TLG_Data_Enemy_Current = tlg_data_enemy;
 
@@ -75,7 +76,7 @@ void UTLG_Component_Dialogue::Handle_Player_Decision(const FPlayer_Response &pla
         Dialogue_End();
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Component_Dialogue::Set_Dialogue_Current(UDataTable* data_table)
+void UTLG_Component_Dialogue::Set_Dialogue_Current(UDataTable *data_table)
 {
     DT_Dialogue_Current = data_table;
 }
