@@ -26,7 +26,7 @@ public:
 
 	void Init(ATLG_HUD *tlg_hud, ATLG_Game_State *tlg_game_state);
 
-    void Location_Enter(UTLG_Data_Location *tlg_data_location);
+    void Location_Enter();
 
     void Set_Location_Current(UTLG_Data_Location *tlg_data_location);
     void Set_Location_Enemies(const TArray<FTLG_Location_Enemy> &tlg_location_enemies);
@@ -42,7 +42,7 @@ private:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<ATLG_HUD> TLG_HUD;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<ATLG_Game_State> TLG_Game_State;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Data_Location> TLG_Data_Location_Current;
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TArray<FTLG_Location_Enemy> TLG_Location_Enemies;
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TArray<FTLG_Location_Enemy> TLG_Location_Enemies;  // !!! TEMP Refactoring, just set handle with TLG_Data_Location_Current
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UAudioComponent> Audio_Component_Ambient;
 

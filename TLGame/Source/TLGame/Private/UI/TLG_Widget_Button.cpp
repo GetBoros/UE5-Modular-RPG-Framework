@@ -2,6 +2,8 @@
 #include <UI/TLG_Widget_Button.h>
 #include <UI/TLG_Widget_Controller.h>
 
+#include <Components/TLG_Component_Navigation.h>
+
 #include <Kismet/GameplayStatics.h>
 #include <Components/Button.h>
 #include <Components/TextBlock.h>
@@ -161,7 +163,7 @@ FText UTLG_Widget_Button_Action::Format_Time_From_Minutes(int32 minutes_cost) co
 void UTLG_Widget_Button_Navigation::Handle_Click()
 {
     APlayerController *player_controller;
-    ITLG_Interaction_Interface *interaction_interface;
+    UTLG_Component_Navigation *tlg_component_navigation;
 
     if (Target_Location == 0)
         return;
@@ -170,16 +172,17 @@ void UTLG_Widget_Button_Navigation::Handle_Click()
     if (player_controller == 0)
         return;
 
-    interaction_interface = Cast<ITLG_Interaction_Interface>(player_controller);
-    if (interaction_interface != 0)
-        interaction_interface->Location_Enter(Target_Location);
+    tlg_component_navigation = player_controller->FindComponentByClass<UTLG_Component_Navigation>();
+	tlg_component_navigation->Set_Location_Current(Target_Location);
+    tlg_component_navigation->Location_Enter();
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button_Navigation::Init(const FTLG_Location_Exit &exit_data)
 {
     const FText text_button = exit_data.Text_Button;
-    Target_Location = exit_data.TLG_Data_Location_Target;
 
+    Target_Location = exit_data.TLG_Data_Location_Target;
+    
     if (text_button.IsEmpty() == true)
         Set_Button_Text(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA") ) );
     else

@@ -28,7 +28,6 @@ class TLGAME_API ITLG_Interaction_Interface
     GENERATED_BODY()
 
 public:
-    virtual void Location_Enter(UTLG_Data_Location *tlg_data_location) = 0;
     virtual void Location_Action(const FTLG_Location_Action &tlg_location_action) = 0;
     virtual void Request_Menu_Main_Pause(const ETLG_Game_Flow_Option tlg_game_flow_option) = 0;
 

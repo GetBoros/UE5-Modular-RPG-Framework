@@ -7,10 +7,11 @@
 //------------------------------------------------------------------------------------------------------------
 DECLARE_MULTICAST_DELEGATE(FOn_Dialogue_Ended);
 //------------------------------------------------------------------------------------------------------------
-struct FPlayer_Response;
 class UTLG_Data_Enemy;
 class ATLG_HUD;
 class ATLG_Player_State;
+
+struct FPlayer_Response;
 //------------------------------------------------------------------------------------------------------------
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) ) class TLGAME_API UTLG_Component_Dialogue : public UActorComponent
 {

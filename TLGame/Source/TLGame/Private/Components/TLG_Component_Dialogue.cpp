@@ -3,7 +3,6 @@
 
 #include <System/TLG_HUD.h>
 #include <System/TLG_Player_State.h>
-#include <System/TLG_Game_State.h>
 
 #include <Data/TLG_Data_Enemy.h>
 #include <Data/TLG_Types.h>

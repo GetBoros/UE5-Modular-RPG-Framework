@@ -46,7 +46,7 @@ void ATLG_Player_Controller::BeginPlay()
     TLG_Component_Navigation->On_Location_Enter.RemoveAll(this);
     TLG_Component_Navigation->On_Location_Enter.AddUObject(this, &ATLG_Player_Controller::Handle_Location_Encounter);
 
-    Location_Enter(TLG_Component_Navigation->Get_Location_Current() );
+    TLG_Component_Navigation->Location_Enter();
 
     Super::BeginPlay();
 }
@@ -59,12 +59,6 @@ void ATLG_Player_Controller::SetupInputComponent()
         return;
 
     InputComponent->BindKey(EKeys::BackSpace, IE_Pressed, this, &ATLG_Player_Controller::On_Pressed_ESC);  // !!! TEMP Change on EKeys::Escape
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_Controller::Location_Enter(UTLG_Data_Location *tlg_data_location)
-{
-    TLG_Component_Navigation->Set_Location_Enemies(tlg_data_location->TLG_Location_Enemies);
-    TLG_Component_Navigation->Location_Enter(tlg_data_location);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Location_Action(const FTLG_Location_Action &tlg_location_action)
