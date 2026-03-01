@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
 #include <UI/TLG_Widget_Stat.h>
-#include <UI/TLG_Widget_Stat_Tooltip.h>
+#include <UI/TLG_Widget_Tooltip.h>
 
 #include <Components/Image.h>
 #include <Components/TextBlock.h>
@@ -14,13 +14,13 @@ void UTLG_Widget_Stat::NativeConstruct()
 {
     Super::NativeConstruct();
 
-    if (TLG_Widget_Stat_Tooltip == 0)
+    if (TLG_Widget_Tooltip == 0)
     {
-        TLG_Widget_Stat_Tooltip = CreateWidget<UTLG_Widget_Stat_Tooltip>(GetOwningPlayer(), TLG_Widget_Stat_Tooltip_Class);
-        TLG_Widget_Stat_Tooltip->Update_TB_Description(Text_Tooltip_Description);
+        TLG_Widget_Tooltip = CreateWidget<UTLG_Widget_Tooltip>(GetOwningPlayer(), TLG_Widget_Tooltip_Class);
+        TLG_Widget_Tooltip->Update_TB_Description(Text_Tooltip_Description);
     }
 
-    SetToolTip(TLG_Widget_Stat_Tooltip);
+    SetToolTip(TLG_Widget_Tooltip);
 
 }
 //------------------------------------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ void UTLG_Widget_Stat::NativePreConstruct()
 {
     Super::NativePreConstruct();
 
-    if (ensureMsgf(TLG_Widget_Stat_Tooltip_Class, TEXT("TLG_Widget_Stat_Tooltip_Class not setting up") ) != true)
+    if (ensureMsgf(TLG_Widget_Tooltip_Class, TEXT("TLG_Widget_Tooltip_Class not setting up") ) != true)
         return;
     
     Update_Stat(0.0f);

@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <UI/TLG_Widget_Button.h>
 #include <UI/TLG_Widget_Controller.h>
+#include <UI/TLG_Widget_Tooltip.h>
 
 #include <Components/TLG_Component_Navigation.h>
 
@@ -30,6 +31,18 @@ void UTLG_Widget_Button::NativeConstruct()
 
     Button_Click->OnHovered.RemoveDynamic(this, &UTLG_Widget_Button::Handle_Hover_Internal);
     Button_Click->OnHovered.AddDynamic(this, &UTLG_Widget_Button::Handle_Hover_Internal);
+
+    if (ensureMsgf(TLG_Widget_Tooltip_Class, TEXT("Hello World!") ) != true)
+        return;
+
+    if (TLG_Widget_Tooltip == 0)
+    {
+        TLG_Widget_Tooltip = CreateWidget<UTLG_Widget_Tooltip>(GetOwningPlayer(), TLG_Widget_Tooltip_Class);
+        TLG_Widget_Tooltip->Update_TB_Description(Text_Tooltip_Description);
+    }
+
+    if (TLG_Widget_Tooltip != 0)
+        SetToolTip(TLG_Widget_Tooltip);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button::On_Widget_Controller_Set_Implementation()
@@ -86,6 +99,11 @@ void UTLG_Widget_Button_Action::NativeDestruct()
     TLG_Widget_Controller->On_Player_Attribute_Changed.RemoveAll(this);
 }
 //------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Button_Action::NativeConstruct()
+{
+    Super::NativeConstruct();
+}
+//------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button_Action::On_Widget_Controller_Set_Implementation()
 {
     Super::On_Widget_Controller_Set_Implementation();  // Cast GBUI to TLG Controller must be first after use TLG
@@ -125,6 +143,9 @@ void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_ac
         Set_Button_Text(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA") ) );
     else
         Set_Button_Text(text_final);
+
+    // 1.1.a. Set Text in Button Tooltip Descriptions
+    Text_Tooltip_Description = tlg_location_action.Text_Button_Tooltip_Description;
 
 	// 1.2. Enable or Disable Button
 	Set_Button_Enabled(is_button_enabled);

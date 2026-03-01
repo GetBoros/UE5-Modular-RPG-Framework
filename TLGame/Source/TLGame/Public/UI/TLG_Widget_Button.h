@@ -11,6 +11,7 @@ class UButton;
 class UTextBlock;
 class UTLG_Data_Location;
 class UTLG_Widget_Controller;
+class UTLG_Widget_Tooltip;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API UTLG_Widget_Button : public UGBUIC_User_Widget
 {
@@ -26,7 +27,8 @@ public:
     void Set_Button_Enabled(const bool is_enabled);
 
 protected:
-    UTLG_Widget_Controller *TLG_Widget_Controller;
+    TObjectPtr<UTLG_Widget_Controller> TLG_Widget_Controller;
+    TObjectPtr<UTLG_Widget_Tooltip> TLG_Widget_Tooltip;
 
     UFUNCTION() void Handle_Click_Internal();
     UFUNCTION() void Handle_Hover_Internal();
@@ -36,6 +38,11 @@ protected:
 
     UPROPERTY(EditDefaultsOnly) TObjectPtr<USoundBase> Sound_Click;
     UPROPERTY(EditDefaultsOnly) TObjectPtr<USoundBase> Sound_Hover;
+
+    UPROPERTY(EditDefaultsOnly) TSubclassOf<UTLG_Widget_Tooltip> TLG_Widget_Tooltip_Class;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (MultiLine = true) ) FText Text_Tooltip_Description;
+
 };
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API UTLG_Widget_Button_Action : public UTLG_Widget_Button
@@ -44,6 +51,7 @@ UCLASS() class TLGAME_API UTLG_Widget_Button_Action : public UTLG_Widget_Button
 
 public:
     virtual void NativeDestruct();
+    virtual void NativeConstruct();
     virtual void On_Widget_Controller_Set_Implementation();
     virtual void Handle_Click();
 
@@ -54,6 +62,7 @@ private:
     FText Format_Time_From_Minutes(int32 minutes_cost) const;  // !!! TEMP || Can be helpful
 
     FTLG_Location_Action TLG_Location_Action;
+
 };
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API UTLG_Widget_Button_Navigation : public UTLG_Widget_Button

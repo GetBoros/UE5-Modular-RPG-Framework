@@ -18,8 +18,7 @@ public:
 /*
 V	- Part 1: Completed
 X	- Part 2: In progress
-X	- Add tooltip to buttons action and locations
-X		- If player can`t use button, need show tooltip with reason or else, if can use show tooltip with info about action
+V	- Add tooltip to buttons action and locations
 X	- 
 
 X	- Part 3: In progress
@@ -80,7 +79,9 @@ X	- Localization Ru, Eng, Ua other.
 X	- Patchings
 X	- Tool tip on player Image to show stats? Or enemy
 X		- Second Attributes like STR, INT, WIS and other
-X	- 
+X	- If player can`t use button, need show tooltip with reason or else, if can use show tooltip with info about action
+X		- Example. Some take shower. Toilet is not empty. And other.
+X	-
 
 */
 #pragma endregion
@@ -89,6 +90,8 @@ X	-
 /*
 
 V	- ATLG_Player_Controller add actor components for Audio, dialogue, enemy, location and else, to not use pointers to actors and data in controller
+X	- UTLG_Widget_Stat_Tooltip rename to UTLG_Widget_Tooltip
+X	- 
 
 */
 #pragma endregion

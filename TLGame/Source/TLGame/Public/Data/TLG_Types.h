@@ -55,6 +55,7 @@ USTRUCT(BlueprintType) struct FTLG_Location_Action
     GENERATED_BODY()
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FText Text_Button;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (MultiLine = "true ") ) FText Text_Button_Tooltip_Description;
     UPROPERTY(EditAnywhere, BlueprintReadOnly) int32 Time_Cost_Minutes = 15;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Action_Requirement> Action_Requirement;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<FTLG_Set_By_Caller_Magnitude> Set_By_Caller_Magnitude;

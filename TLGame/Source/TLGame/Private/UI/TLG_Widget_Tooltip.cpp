@@ -1,23 +1,25 @@
 //------------------------------------------------------------------------------------------------------------
-#pragma once
-//------------------------------------------------------------------------------------------------------------
-#include <Blueprint/UserWidget.h>
+#include <UI/TLG_Widget_Tooltip.h>
 
-#include <TLG_Widget_Stat_Tooltip.generated.h>
+#include <Components/TextBlock.h>
 //------------------------------------------------------------------------------------------------------------
-class UTextBlock;
-//------------------------------------------------------------------------------------------------------------
-UCLASS() class TLGAME_API UTLG_Widget_Stat_Tooltip : public UUserWidget
+
+
+
+// UTLG_Widget_Tooltip
+void UTLG_Widget_Tooltip::NativeConstruct()
 {
-	GENERATED_BODY()
-	
-public:
-	virtual void NativeConstruct();
-	virtual void NativePreConstruct();
+	Super::NativeConstruct();
 
-	void Update_TB_Description(const FText &description);
-
-private:
-	UPROPERTY(meta = (BindWidget, AllowPrivateAccess = "true") ) TObjectPtr<UTextBlock> TB_Description;
-};
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Tooltip::NativePreConstruct()
+{
+	Super::NativePreConstruct();
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Tooltip::Update_TB_Description(const FText &description)
+{
+	TB_Description->SetText(description);
+}
 //------------------------------------------------------------------------------------------------------------

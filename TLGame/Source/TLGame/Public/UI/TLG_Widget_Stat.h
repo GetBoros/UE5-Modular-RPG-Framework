@@ -7,7 +7,7 @@
 //------------------------------------------------------------------------------------------------------------
 class UImage;
 class UTextBlock;
-class UTLG_Widget_Stat_Tooltip;
+class UTLG_Widget_Tooltip;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API UTLG_Widget_Stat : public UUserWidget
 {
@@ -20,14 +20,15 @@ public:
 	UFUNCTION(BlueprintCallable) void Update_Stat(const float value);
 
 private:
+	TObjectPtr<UTLG_Widget_Tooltip> TLG_Widget_Tooltip;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTexture2D> Icon_Texture;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true", MultiLine = true) ) FText Text_Tooltip_Description;
-	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Stat_Tooltip> TLG_Widget_Stat_Tooltip_Class;
+	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UTLG_Widget_Tooltip> TLG_Widget_Tooltip_Class;
 
 	UPROPERTY(meta = (BindWidget) ) TObjectPtr<UImage> Image_Icon;
 	UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> TB_Description;
 
-	UPROPERTY() TObjectPtr<UTLG_Widget_Stat_Tooltip> TLG_Widget_Stat_Tooltip;
 
 };
 //------------------------------------------------------------------------------------------------------------
