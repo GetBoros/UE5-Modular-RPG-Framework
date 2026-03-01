@@ -59,10 +59,11 @@ void UTLG_Component_Navigation::Location_Enter()
     // 3.0. Buttons Location and Actions
     TLG_HUD->Set_Location_Buttons(TLG_Data_Location_Current->TLG_Location_Exits, TLG_Data_Location_Current->TLG_Location_Actions);
 
-    // 4.0. Spend time when move to location
-    TLG_Game_State->Advance_Time(location_enter_time_cost);
+    TLG_Game_State->Advance_Time(location_enter_time_cost);  // Change game time
 
-    On_Location_Enter.Broadcast();
+    On_Location_Enter.Broadcast();  // When entered to location
+
+    TLG_Location_Enemies.Empty();  // Clear enemies data after broadcast important
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Component_Navigation::Set_Location_Current(UTLG_Data_Location *tlg_data_location)
@@ -86,7 +87,6 @@ UTLG_Data_Enemy *UTLG_Component_Navigation::Get_Location_Enemy()
     AActor *spawned_actor;
     TSubclassOf<AActor> enemy_class;
     FGameplayTagQuery enemy_condition_spawn;
-
     
     if (TLG_Location_Enemies.IsEmpty() == true)
     {

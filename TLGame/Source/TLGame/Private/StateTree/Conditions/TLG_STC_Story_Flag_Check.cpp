@@ -27,12 +27,6 @@ bool UTLG_STC_Story_Flag_Check::TestCondition(FStateTreeExecutionContext &contex
         return false;  // Flag exists don`t pass condition
     else
         return true;  // Flag not exist pass condition
-
-    // is_flag_added = story_subsystem->Add_Story_Flag(Flag);
-    // if (is_flag_added == true)
-    //     return true;
-    // else
-    //     return false;
 }
 //------------------------------------------------------------------------------------------------------------
 bool UTLG_STC_Story_Flag_Check::ReceiveTestCondition() const

@@ -55,6 +55,7 @@ V	- UTLG_Widget_Stats_Bar change dynamic binding to non dynamic
 V	- Refactoring UTLG_Widget_HUD and UTLG_Widget_Stats_Bar
 V	- Broadcast_Initial_Values add fatigue
 V	- Add Icon to fatigued
+V	- Add tooltip to buttons action and locations
 
 */
 #pragma endregion
