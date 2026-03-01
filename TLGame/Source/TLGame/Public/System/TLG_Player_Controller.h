@@ -27,7 +27,6 @@ public:
     virtual void Location_Action(const FTLG_Location_Action &tlg_location_action);
     virtual void Request_Menu_Main_Pause(const ETLG_Game_Flow_Option tlg_game_flow_option);
 
-
 private:
     void Handle_Location_Encounter();
 
@@ -36,7 +35,6 @@ private:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<ATLG_HUD> TLG_HUD;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<ATLG_Game_State> TLG_Game_State;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<ATLG_Player_State> TLG_Player_State;
-
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Component_Dialogue> TLG_Component_Dialogue;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Component_Navigation> TLG_Component_Navigation;

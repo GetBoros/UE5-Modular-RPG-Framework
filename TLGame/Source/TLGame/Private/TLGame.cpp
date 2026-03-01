@@ -54,6 +54,7 @@ V	- Change to correct this Get_TLG_Widget_Menu_Pause()->Handle_Widget_Controller
 V	- UTLG_Widget_Stats_Bar change dynamic binding to non dynamic
 V	- Refactoring UTLG_Widget_HUD and UTLG_Widget_Stats_Bar
 V	- Broadcast_Initial_Values add fatigue
+V	- Add Icon to fatigued
 
 */
 #pragma endregion

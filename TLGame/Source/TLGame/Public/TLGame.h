@@ -18,7 +18,6 @@ public:
 /*
 V	- Part 1: Completed
 X	- Part 2: In progress
-V	- Add Icon to fatigued
 X	- Add tooltip to buttons action and locations
 X		- If player can`t use button, need show tooltip with reason or else, if can use show tooltip with info about action
 X	- 
@@ -33,14 +32,10 @@ X	-
 #pragma region BUGS_FIXED
 /*
 
-V	- Fix: Need empaty to show up when changed
-V	- Fix: Tool tip without info about stat
-V	- Game time when start don`t show
-V	- Fix: Can sleep 4 day to win game
+X	- 
 
 */
 #pragma endregion
-
 //------------------------------------------------------------------------------------------------------------
 #pragma region BUGS
 /*
@@ -93,7 +88,7 @@ X	-
 #pragma region REFACTORINGS
 /*
 
-X	- ATLG_Player_Controller add actor components for Audio, dialogue, enemy, location and else, to not use pointers to actors and data in controller
+V	- ATLG_Player_Controller add actor components for Audio, dialogue, enemy, location and else, to not use pointers to actors and data in controller
 
 */
 #pragma endregion
