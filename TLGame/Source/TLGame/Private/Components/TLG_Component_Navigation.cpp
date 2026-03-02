@@ -79,37 +79,42 @@ UTLG_Data_Location *UTLG_Component_Navigation::Get_Location_Current()
 //------------------------------------------------------------------------------------------------------------
 UTLG_Data_Enemy *UTLG_Component_Navigation::Get_Location_Data_Enemy()
 {
-    float enemy_encounter_chance, roll_random;
+    UTLG_Subsystem_Story *subsystem_story;
     TArray<FTLG_Location_Enemy> &location_enemies = TLG_Data_Location_Current->TLG_Location_Enemies;
+
+    subsystem_story = GetWorld()->GetGameInstance()->GetSubsystem<UTLG_Subsystem_Story>();
+    if (subsystem_story == 0)
+        return 0;
 
     for (FTLG_Location_Enemy &location_enemy: location_enemies)
     {
-        enemy_encounter_chance = location_enemy.Encounter_Chance;
-        roll_random = FMath::FRand();  // 2. Generate value from 0.0 to 1.0
-
-        if (roll_random <= enemy_encounter_chance)  // Begin dialugue if rolled
+        // 1.0. Spawn condition
+        if (location_enemy.Spawn_Conditions_Tag_Query.IsEmpty() != true)  // if no condition just spawn
         {
-            Temp(location_enemy.Spawn_Conditions_Tag_Query, location_enemy.Enemy_Class);
-            return location_enemy.TLG_Data_Enemy;
+            if (location_enemy.Spawn_Conditions_Tag_Query.Matches(subsystem_story->Get_Story_Flags() ) != true)  // if condition failed skip
+                continue;
         }
+
+        // 2.0. Spawn enemy and return enemy data, portraits and other thing
+        if (IsValid(Spawned_Enemy_Actor) == true)
+            Spawned_Enemy_Actor->Destroy();  // Destroy prev spawned actor
+
+        Spawned_Enemy_Actor = Try_Spawn_Enemy_Actor(location_enemy.Encounter_Chance, location_enemy.Enemy_Class);  // spawn with random chance
+        if (Spawned_Enemy_Actor != 0)
+            return location_enemy.TLG_Data_Enemy;  // !!! TEMP return data
     }
 
     return 0;
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Component_Navigation::Temp(const FGameplayTagQuery &spawn_conditions_tag_query, TSubclassOf<AActor> enemy_class)
+AActor *UTLG_Component_Navigation::Try_Spawn_Enemy_Actor(const float enemy_encounter_chance, const TSubclassOf<AActor> enemy_class) const
 {
-    AActor *spawned_actor;
-    UTLG_Subsystem_Story *subsystem_story;
+    const float random_value = FMath::FRand();
 
-    subsystem_story = GetWorld()->GetGameInstance()->GetSubsystem<UTLG_Subsystem_Story>();
-    if (subsystem_story == 0)
-        return;
-
-    if (spawn_conditions_tag_query.Matches(subsystem_story->Get_Story_Flags()) != true)
-        return;
-
-    spawned_actor = GetWorld()->SpawnActor<AActor>(enemy_class, FVector(0.0f, 0.0f, 0.0f), FRotator::ZeroRotator, FActorSpawnParameters() );
+    if (random_value <= enemy_encounter_chance)  // Begin dialugue if rolled
+        return GetWorld()->SpawnActor<AActor>(enemy_class, FVector(0.0f, 0.0f, 0.0f), FRotator::ZeroRotator, FActorSpawnParameters() );
+    else
+        return 0;
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Component_Navigation::Play_Ambient_Sound(USoundBase *sound_base_to_play)

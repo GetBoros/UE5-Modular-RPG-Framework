@@ -37,7 +37,7 @@ public:
     FOn_Location_Enter On_Location_Enter;
 
 private:
-    void Temp(const FGameplayTagQuery &spawn_conditions_tag_query, TSubclassOf<AActor> enemy_class);
+    AActor *Try_Spawn_Enemy_Actor(const float enemy_encounter_chance, const TSubclassOf<AActor> enemy_class) const;
     void Play_Ambient_Sound(USoundBase *sound_base_to_play);
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<ATLG_HUD> TLG_HUD;
@@ -45,6 +45,8 @@ private:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Data_Location> TLG_Data_Location_Current;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UAudioComponent> Audio_Component_Ambient;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<AActor> Spawned_Enemy_Actor;
 
 };
 //------------------------------------------------------------------------------------------------------------
