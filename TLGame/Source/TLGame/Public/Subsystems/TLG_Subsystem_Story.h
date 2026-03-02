@@ -10,9 +10,11 @@ UCLASS() class TLGAME_API UTLG_Subsystem_Story : public UGBC_Gameplay_Message_Su
     GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable) bool Add_Story_Flag(FGameplayTag flag);
-	UFUNCTION(BlueprintCallable) bool Has_Story_Flag(FGameplayTag flag);
+	bool Add_Story_Flag(FGameplayTag flag);
+	bool Has_Story_Flag(FGameplayTag flag);
 	
+	FGameplayTagContainer Get_Story_Flags() const;
+
 private:
 	FGameplayTagContainer Story_Flags;
 };

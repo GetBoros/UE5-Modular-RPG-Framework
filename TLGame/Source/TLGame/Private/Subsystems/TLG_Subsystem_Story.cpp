@@ -24,3 +24,8 @@ bool UTLG_Subsystem_Story::Has_Story_Flag(FGameplayTag flag)
 	return false;
 }
 //------------------------------------------------------------------------------------------------------------
+FGameplayTagContainer UTLG_Subsystem_Story::Get_Story_Flags() const
+{
+	return Story_Flags;
+}
+//------------------------------------------------------------------------------------------------------------

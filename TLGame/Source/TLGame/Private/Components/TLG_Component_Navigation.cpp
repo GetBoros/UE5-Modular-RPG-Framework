@@ -4,6 +4,7 @@
 #include <System/TLG_HUD.h>
 #include <System/TLG_Game_State.h>
 
+#include <Subsystems/TLG_Subsystem_Story.h>
 #include <Data/TLG_Data_Location.h>
 
 #include <Components/AudioComponent.h>
@@ -71,45 +72,44 @@ void UTLG_Component_Navigation::Set_Location_Current(UTLG_Data_Location *tlg_dat
 	TLG_Data_Location_Current = tlg_data_location;
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Component_Navigation::Set_Location_Enemies(const TArray<FTLG_Location_Enemy> &tlg_location_enemies)
-{
-    TLG_Location_Enemies = tlg_location_enemies;
-}
-//------------------------------------------------------------------------------------------------------------
 UTLG_Data_Location *UTLG_Component_Navigation::Get_Location_Current()
 {
     return TLG_Data_Location_Current;
 }
 //------------------------------------------------------------------------------------------------------------
-UTLG_Data_Enemy *UTLG_Component_Navigation::Get_Location_Enemy()
+UTLG_Data_Enemy *UTLG_Component_Navigation::Get_Location_Data_Enemy()
 {
     float enemy_encounter_chance, roll_random;
-    AActor *spawned_actor;
-    TSubclassOf<AActor> enemy_class;
-    FGameplayTagQuery enemy_condition_spawn;
-    
-    if (TLG_Location_Enemies.IsEmpty() == true)
-    {
-        if (TLG_Data_Location_Current->TLG_Location_Enemies.IsEmpty() == true)
-            return 0;
-        else
-            TLG_Location_Enemies = TLG_Data_Location_Current->TLG_Location_Enemies;
-    }
+    TArray<FTLG_Location_Enemy> &location_enemies = TLG_Data_Location_Current->TLG_Location_Enemies;
 
-    for (FTLG_Location_Enemy &tlg_location_enemie : TLG_Location_Enemies)
+    for (FTLG_Location_Enemy &location_enemy: location_enemies)
     {
-        enemy_encounter_chance = tlg_location_enemie.Encounter_Chance;
-        enemy_condition_spawn = tlg_location_enemie.Spawn_Conditions_Tag_Query;  // !!! TEMP Not used
-        enemy_class = tlg_location_enemie.Enemy_Class;
+        enemy_encounter_chance = location_enemy.Encounter_Chance;
         roll_random = FMath::FRand();  // 2. Generate value from 0.0 to 1.0
 
-        spawned_actor = GetWorld()->SpawnActor<AActor>(enemy_class, FVector(0.0f, 0.0f, 0.0f), FRotator::ZeroRotator, FActorSpawnParameters() );
-
         if (roll_random <= enemy_encounter_chance)  // Begin dialugue if rolled
-            return tlg_location_enemie.TLG_Data_Enemy;
+        {
+            Temp(location_enemy.Spawn_Conditions_Tag_Query, location_enemy.Enemy_Class);
+            return location_enemy.TLG_Data_Enemy;
+        }
     }
 
     return 0;
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Component_Navigation::Temp(const FGameplayTagQuery &spawn_conditions_tag_query, TSubclassOf<AActor> enemy_class)
+{
+    AActor *spawned_actor;
+    UTLG_Subsystem_Story *subsystem_story;
+
+    subsystem_story = GetWorld()->GetGameInstance()->GetSubsystem<UTLG_Subsystem_Story>();
+    if (subsystem_story == 0)
+        return;
+
+    if (spawn_conditions_tag_query.Matches(subsystem_story->Get_Story_Flags()) != true)
+        return;
+
+    spawned_actor = GetWorld()->SpawnActor<AActor>(enemy_class, FVector(0.0f, 0.0f, 0.0f), FRotator::ZeroRotator, FActorSpawnParameters() );
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Component_Navigation::Play_Ambient_Sound(USoundBase *sound_base_to_play)

@@ -91,7 +91,7 @@ void ATLG_Player_Controller::Request_Menu_Main_Pause(const ETLG_Game_Flow_Option
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Location_Encounter()
 {
-    UTLG_Data_Enemy *tlg_data_enemy = TLG_Component_Navigation->Get_Location_Enemy();
+    UTLG_Data_Enemy *tlg_data_enemy = TLG_Component_Navigation->Get_Location_Data_Enemy();
 
     if (tlg_data_enemy != 0)
         TLG_Component_Dialogue->Dialogue_Start(FName("Intro"), tlg_data_enemy);
