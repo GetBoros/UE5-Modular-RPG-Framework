@@ -26,7 +26,8 @@ X	- Patchings
 X	- Need a lot of content for 3 day, and make balance
 X	- Tool tip on player Image to show stats? Or enemy
 X		- Second Attributes like STR, INT, WIS and other
-X	- Fix bug spawn enemie when switch location with out enemie
+V	- Fix bug spawn enemie when switch location with out enemie
+X	- Add condition to spawn if don`t have tags 
 X	- 
 
 */

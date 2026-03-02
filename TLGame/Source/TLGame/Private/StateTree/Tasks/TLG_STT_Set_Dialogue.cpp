@@ -22,6 +22,9 @@ EStateTreeRunStatus UTLG_STT_Set_Dialogue::EnterState(FStateTreeExecutionContext
 	TLG_Component_Dialogue->Set_Dialogue_Current(Dialogue_Table);
 	TLG_Component_Dialogue->On_Dialogue_Ended.AddUObject(this, &UTLG_STT_Set_Dialogue::Handle_Dialogue_Ended);
 
+	if (Story_Flag_To_Add.IsValid() != true)
+		return EStateTreeRunStatus::Running;  // I`m still working, wait
+	
 	game_instance = context.GetWorld()->GetGameInstance();
 	if (game_instance != 0)
 	{

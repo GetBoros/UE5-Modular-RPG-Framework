@@ -24,7 +24,7 @@ public:
     FGameplayTag Action_System_Sleep;
     FGameplayTag Action_System_Save;
 
-    // States
+    // Stats
     FGameplayTag State_Fatigued;
 
     FGameplayTag Attribut_Player_Sanity;
@@ -35,6 +35,7 @@ public:
     // Enemies Dialogue
     FGameplayTag Dialogue_Tutorial_Intro;
     FGameplayTag Dialogue_Tutorial_Advice;
+    FGameplayTag Dialogue_Tutorial_Completed;
 
     FGameplayTag Dialogue_Marina_Intro;
 
