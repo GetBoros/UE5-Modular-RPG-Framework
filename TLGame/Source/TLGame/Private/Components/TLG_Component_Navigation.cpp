@@ -72,11 +72,6 @@ void UTLG_Component_Navigation::Set_Location_Current(UTLG_Data_Location *tlg_dat
 	TLG_Data_Location_Current = tlg_data_location;
 }
 //------------------------------------------------------------------------------------------------------------
-UTLG_Data_Location *UTLG_Component_Navigation::Get_Location_Current()
-{
-    return TLG_Data_Location_Current;
-}
-//------------------------------------------------------------------------------------------------------------
 UTLG_Data_Enemy *UTLG_Component_Navigation::Get_Location_Data_Enemy()
 {
     UTLG_Subsystem_Story *subsystem_story;

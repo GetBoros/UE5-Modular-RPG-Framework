@@ -57,6 +57,13 @@ V	- Broadcast_Initial_Values add fatigue
 V	- Add Icon to fatigued
 V	- Add tooltip to buttons action and locations
 
+X	- Part 3: In progress
+V	- Have problem with Dialogue, and race condition
+V	- Localization Ru, Eng, Ua other.
+V	- Fix bug spawn enemie when switch location with out enemie
+V	- Add condition to spawn if don`t have tags
+
+
 */
 #pragma endregion
 //------------------------------------------------------------------------------------------------------------

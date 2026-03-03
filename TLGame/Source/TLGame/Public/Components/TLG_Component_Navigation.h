@@ -26,12 +26,8 @@ public:
 	virtual void BeginPlay();
 
 	void Init(ATLG_HUD *tlg_hud, ATLG_Game_State *tlg_game_state);
-
     void Location_Enter();
-
     void Set_Location_Current(UTLG_Data_Location *tlg_data_location);
-
-    UTLG_Data_Location *Get_Location_Current();
     UTLG_Data_Enemy *Get_Location_Data_Enemy();
 
     FOn_Location_Enter On_Location_Enter;
