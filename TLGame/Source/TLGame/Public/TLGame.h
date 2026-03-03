@@ -23,11 +23,11 @@ X	- Part 3: In progress
 V	- Have problem with Dialogue, and race condition
 V	- Localization Ru, Eng, Ua other.
 X	- Patchings
-X	- Need a lot of content for 3 day, and make balance
 X	- Tool tip on player Image to show stats? Or enemy
 X		- Second Attributes like STR, INT, WIS and other
 V	- If player can`t use button, need show tooltip with reason or else, if can use show tooltip with info about action
 X		- Example. Some take shower. Toilet is not empty. And other.
+X	- Need a lot of content for 3 day, and make balance
 
 
 */
