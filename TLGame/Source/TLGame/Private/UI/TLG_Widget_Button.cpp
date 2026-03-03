@@ -128,7 +128,7 @@ void UTLG_Widget_Button_Action::Handle_Click()
 void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_action)
 {
     bool is_button_enabled;
-    const int time_cost_minutes = tlg_location_action.Time_Cost_Minutes;
+    const int32 time_cost_minutes = tlg_location_action.Time_Cost_Minutes;
     const FText text_button = tlg_location_action.Text_Button;
     const FText text_format_pattern = FText::FromString("{0} ({1})");
     const FText text_time = Format_Time_From_Minutes(time_cost_minutes);

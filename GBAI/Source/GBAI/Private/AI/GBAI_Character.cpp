@@ -69,7 +69,7 @@ void AGBAI_Character::Tick(float delta_time)
 		const float hunger = Get_Hunger() + final_hunger_rate * delta_time;
 
 		if (AI_Settings->Draw_Debug_Hunger == true)
-			int yy = 0;  // Can add some debug visualisation
+			int32 yy = 0;  // Can add some debug visualisation
 	}
 
 	UE_VLOG(this, LogGBAI, Log, TEXT("Hunger: %.2f | State: %s"), Get_Hunger(), TEXT("Roaming") );  // !!! EXAMPLES Visual Logger

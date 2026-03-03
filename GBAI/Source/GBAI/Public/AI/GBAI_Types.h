@@ -8,7 +8,7 @@ USTRUCT() struct FSGBAI_Payload_Test
 {
 	GENERATED_BODY()
 
-	int STest_Param_Int = 0;
+	int32 STest_Param_Int = 0;
 
 };
 //------------------------------------------------------------------------------------------------------------

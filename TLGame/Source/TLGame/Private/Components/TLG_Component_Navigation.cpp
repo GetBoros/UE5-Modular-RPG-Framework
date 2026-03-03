@@ -41,7 +41,7 @@ void UTLG_Component_Navigation::Init(ATLG_HUD *tlg_hud, ATLG_Game_State *tlg_gam
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Component_Navigation::Location_Enter()
 {
-    int location_enter_time_cost;
+    int32 location_enter_time_cost;
     USoundBase *sound_base;
     UTexture2D *texture2d_background;
 

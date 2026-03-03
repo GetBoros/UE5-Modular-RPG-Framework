@@ -63,7 +63,7 @@ void AGBAI_Controller::EndPlay(const EEndPlayReason::Type EndPlayReason)
 //------------------------------------------------------------------------------------------------------------
 void AGBAI_Controller::Handle_Game_Event(FGameplayTag event_tag, const UObject *payload)
 {
-	int yy = 0;
+	int32 yy = 0;
 
 	if (event_tag.MatchesTag(FGameplayTag::RequestGameplayTag("Food.Sugar") ) )  // Filter
 		if (payload == GetPawn() )
@@ -101,7 +101,7 @@ void AGBAI_Controller ::Send_State_Tree_Event(const FGameplayTag gameplay_tag)
 //------------------------------------------------------------------------------------------------------------
 void AGBAI_Controller::On_Is_Tag_Sugar(FGameplayTag tag, const UObject *payload)
 {
-	int yy = 0;
+	int32 yy = 0;
 	yy++;
 }
 //------------------------------------------------------------------------------------------------------------
