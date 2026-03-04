@@ -80,7 +80,7 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite) FText Text_Response;  // Text on button example "Stop talk"
     UPROPERTY(EditAnywhere, BlueprintReadWrite) FName Row_ID_Next;  // Next response ID if none dialogue end
     
-    UPROPERTY(EditAnywhere, BlueprintReadWrite) EDialogue_Response_Category Category;  // ID for Next data table row
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) EDialogue_Response_Category Category = EDialogue_Response_Category::Aggressive;  // ID for Next data table row
 };
 //------------------------------------------------------------------------------------------------------------
 USTRUCT(BlueprintType) struct FDialogue_Node : public FTableRowBase

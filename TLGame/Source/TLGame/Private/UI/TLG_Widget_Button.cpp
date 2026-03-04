@@ -140,7 +140,7 @@ void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_ac
 
 	// 1.1. Set Text in Button
     if (text_button.IsEmpty() == true)
-        Set_Button_Text(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA") ) );
+        Set_Button_Text(FText::FromString(FString(TEXT("Empty No Name in UTLG_Data_Location DA") ) ) );
     else
         Set_Button_Text(text_final);
 
@@ -205,7 +205,7 @@ void UTLG_Widget_Button_Navigation::Init(const FTLG_Location_Exit &exit_data)
     Target_Location = exit_data.TLG_Data_Location_Target;
     
     if (text_button.IsEmpty() == true)
-        Set_Button_Text(FText::FromString(FString(L"Empty No Name in UTLG_Data_Location DA") ) );
+        Set_Button_Text(FText::FromString(FString(TEXT("Empty No Name in UTLG_Data_Location DA") ) ) );
     else
         Set_Button_Text(text_button);
 }

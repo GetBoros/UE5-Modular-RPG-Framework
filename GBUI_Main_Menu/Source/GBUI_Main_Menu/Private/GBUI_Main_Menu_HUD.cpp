@@ -17,9 +17,9 @@ void AGBUI_Main_Menu_HUD::BeginPlay()
 {
     Super::BeginPlay();
     
-    ensureMsgf(HUD_Widget_Class, L"Don`t forget set");
-    ensureMsgf(Controller_Widget_Class, L"Don`t forget set");
-    ensureMsgf(Attribute_Info_Data, L"Don`t forget set");
+    ensureMsgf(HUD_Widget_Class, TEXT("Don`t forget set") );
+    ensureMsgf(Controller_Widget_Class, TEXT("Don`t forget set") );
+    ensureMsgf(Attribute_Info_Data, TEXT("Don`t forget set") );
 
     Init();
 
