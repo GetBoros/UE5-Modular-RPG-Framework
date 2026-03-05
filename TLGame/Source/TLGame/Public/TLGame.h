@@ -25,7 +25,6 @@ X		- Second Attributes like STR, INT, WIS and other
 V	- If player can`t use button, need show tooltip with reason or else, if can use show tooltip with info about action
 X		- Example. Some take shower. Toilet is not empty. And other.
 X	- Need a lot of content for 3 day, and make balance
-X	- Test Android build, and make it work, or else
 X	- 
 
 
@@ -90,8 +89,6 @@ X	-
 #pragma region REFACTORINGS
 /*
 
-V	- ATLG_Player_Controller add actor components for Audio, dialogue, enemy, location and else, to not use pointers to actors and data in controller
-X	- UTLG_Widget_Stat_Tooltip rename to UTLG_Widget_Tooltip
 X	- 
 
 */

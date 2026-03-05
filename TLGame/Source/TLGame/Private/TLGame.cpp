@@ -58,6 +58,7 @@ V	- Add Icon to fatigued
 V	- Add tooltip to buttons action and locations
 
 X	- Part 3: In progress
+V	- Add Android support, and make it work, or else
 V	- Have problem with Dialogue, and race condition
 V	- Localization Ru, Eng, Ua other.
 V	- Fix bug spawn enemie when switch location with out enemie

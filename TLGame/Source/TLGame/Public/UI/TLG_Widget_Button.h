@@ -59,7 +59,6 @@ public:
 
 private:
     void Refresh_Button_State();
-    FText Format_Time_From_Minutes(int32 minutes_cost) const;  // !!! TEMP || Can be helpful
 
     FTLG_Location_Action TLG_Location_Action;
 

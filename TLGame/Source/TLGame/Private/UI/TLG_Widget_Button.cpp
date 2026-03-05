@@ -4,6 +4,7 @@
 #include <UI/TLG_Widget_Tooltip.h>
 
 #include <Components/TLG_Component_Navigation.h>
+#include <Libraries/GBC_Library.h>
 
 #include <Kismet/GameplayStatics.h>
 #include <Components/Button.h>
@@ -131,7 +132,7 @@ void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_ac
     const int32 time_cost_minutes = tlg_location_action.Time_Cost_Minutes;
     const FText text_button = tlg_location_action.Text_Button;
     const FText text_format_pattern = FText::FromString("{0} ({1})");
-    const FText text_time = Format_Time_From_Minutes(time_cost_minutes);
+    const FText text_time = UGBC_Library::Format_Time_From_Minutes(time_cost_minutes);
     const FText text_final = FText::Format(text_format_pattern, text_button, text_time);
 
     // 1.0. Init
@@ -156,24 +157,6 @@ void UTLG_Widget_Button_Action::Refresh_Button_State()
     const bool is_button_available = TLG_Widget_Controller->Check_Action_Requirements(TLG_Location_Action.Action_Requirement);
 
     Set_Button_Enabled(is_button_available);
-}
-//------------------------------------------------------------------------------------------------------------
-FText UTLG_Widget_Button_Action::Format_Time_From_Minutes(int32 minutes_cost) const
-{
-    const int32 minutes_in_month = 43200;
-    const int32 minutes_in_hour = 60;
-    const int32 minutes_in_day = 1440;
-
-    if (minutes_cost >= minutes_in_month && (minutes_cost % minutes_in_month == 0) )
-        return FText::Format(FText::FromString("{0}mon"), FText::AsNumber(minutes_cost / minutes_in_month) );
-
-    if (minutes_cost >= minutes_in_day && (minutes_cost % minutes_in_day == 0) )
-        return FText::Format(FText::FromString("{0}d"), FText::AsNumber(minutes_cost / minutes_in_day) );
-
-    if (minutes_cost >= minutes_in_hour && (minutes_cost % minutes_in_hour == 0) )
-        return FText::Format(FText::FromString("{0}h"), FText::AsNumber(minutes_cost / minutes_in_hour) );
-
-    return FText::Format(FText::FromString("{0}min"), FText::AsNumber(minutes_cost) );
 }
 //------------------------------------------------------------------------------------------------------------
 
