@@ -25,6 +25,7 @@ X		- Second Attributes like STR, INT, WIS and other
 V	- If player can`t use button, need show tooltip with reason or else, if can use show tooltip with info about action
 X		- Example. Some take shower. Toilet is not empty. And other.
 X	- Need a lot of content for 3 day, and make balance
+X	- Make ST_ for stats and other static FTexts for better localization and balance in future, and use them in code, not hardcode
 X	- 
 
 
