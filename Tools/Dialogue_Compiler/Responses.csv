@@ -1,0 +1,10 @@
+RowName,ParentNode,Text_Response,Next_Row,Dominance,Empathy,Fatigued,Sanity,Category
+Intro_Resp1,Intro,Tutorial.Intro.Resp1,Rules,5,3,1,9,Aggressive
+Intro_Resp2,Intro,Tutorial.Intro.Resp2,Rules,7,4,2,8,Submissive
+Intro_Resp3,Intro,Tutorial.Intro.Resp3,Rules,8,5,3,7,Logical
+Rules_Resp1,Rules,Tutorial.Rules.Resp1,Goal,1,5,9,17,Silent
+Rules_Resp2,Rules,Tutorial.Rules.Resp2,Goal,2,6,11,16,Aggressive
+Rules_Resp3,Rules,Tutorial.Rules.Resp3,Goal,3,7,12,15,Submissive
+Goal_Resp1,Goal,Tutorial.Goal.Resp1,None,11,14,17,21,Logical
+Goal_Resp2,Goal,Tutorial.Goal.Resp2,None,12,15,18,23,Silent
+Goal_Resp2,Goal,Tutorial.Goal.Resp3,None,13,16,19,22,Logical
