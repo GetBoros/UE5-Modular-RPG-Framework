@@ -53,13 +53,13 @@ FText UGBAI_EnvQueryTest_Tag_Data::GetDescriptionTitle() const
     const FName tag_name_required = Tag_Required.IsValid() ? Tag_Required.GetTagName() : FName(TEXT("None") );
     const FName tag_name_data = Tag_Data_To_Query.IsValid() ? Tag_Data_To_Query.GetTagName() : FName(TEXT("None") );
 
-    FString description = FString::Printf(TEXT("Required Tag: %s\nScores by Tag: %s"), *tag_name_required.ToString(), *tag_name_data.ToString() );
+    FString description = FString::Printf(TEXT("GBAI EQS Required Tag: %s\nScores by Tag: %s"), *tag_name_required.ToString(), *tag_name_data.ToString() );
 
     return FText::FromString(description);
 }
 //------------------------------------------------------------------------------------------------------------
 FText UGBAI_EnvQueryTest_Tag_Data::GetDescriptionDetails() const
 {
-	return FText::FromString(TEXT("Filter & Score by Tag Data") );
+	return FText::FromString(TEXT("Filter & Score by Tag Data | More nutrients more score") );
 }
 //------------------------------------------------------------------------------------------------------------
