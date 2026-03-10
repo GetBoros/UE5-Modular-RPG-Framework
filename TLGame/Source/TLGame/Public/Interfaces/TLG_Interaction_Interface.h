@@ -11,6 +11,7 @@ UENUM(BlueprintType) enum class ETLG_Game_Flow_Option : uint8
     None,
     Continue,
     Restart_Level,
+    Language_Change,
     Quit_Game,
     MainMenu
 };

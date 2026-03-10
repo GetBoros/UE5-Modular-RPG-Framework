@@ -7,7 +7,8 @@
 #include <Components/TLG_Component_Dialogue.h>
 #include <Components/TLG_Component_Navigation.h>
 
-#include <Data/TLG_Data_Location.h>
+#include <Internationalization/Internationalization.h>
+#include <Internationalization/Culture.h>
 
 #include <Kismet/KismetSystemLibrary.h>
 #include <Kismet/GameplayStatics.h>
@@ -83,10 +84,19 @@ void ATLG_Player_Controller::Request_Menu_Main_Pause(const ETLG_Game_Flow_Option
         break;
 
 
+    case ETLG_Game_Flow_Option::Language_Change:
+        if (FInternationalization::Get().GetCurrentCulture()->GetName().Contains(TEXT("ru") ) )
+            FInternationalization::Get().SetCurrentCulture(TEXT("eng") );
+        else
+            FInternationalization::Get().SetCurrentCulture(TEXT("ru") );
+        break;
+
+
     case ETLG_Game_Flow_Option::Quit_Game:
         UKismetSystemLibrary::QuitGame(GetWorld(), this, EQuitPreference::Quit, false);
         break;
     }
+
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Location_Encounter()

@@ -6,6 +6,8 @@
 #include <Components/VerticalBox.h>
 #include <Components/TextBlock.h>
 //------------------------------------------------------------------------------------------------------------
+#define LOCTEXT_NAMESPACE "TLG_Menu"
+//------------------------------------------------------------------------------------------------------------
 
 
 
@@ -42,9 +44,10 @@ void UTLG_Widget_Menu_Pause::Add_Menu_Pause_Buttons(UVerticalBox *vertical_box)
 {
     UTLG_Widget_Button_Flow *tlg_widget_button;
 
-    const FText text_game_exit = FText::FromString(TEXT("Exit Game") );
-    const FText text_game_restart = FText::FromString(TEXT("Restart Game") );
-    const FText text_game_Continue = FText::FromString(TEXT("Continue Game") );
+    const FText text_game_exit = LOCTEXT("ExitGame", "Exit Game");
+    const FText text_game_restart = LOCTEXT("RestartGame", "Restart Game");
+    const FText text_game_language_change = LOCTEXT("LanguageChange", "Language Change");
+    const FText text_game_Continue = LOCTEXT("ContinueGame", "Continue Game");
 
     tlg_widget_button = CreateWidget<UTLG_Widget_Button_Flow>(this, TLG_Widget_Button_Flow_Class);
     if (tlg_widget_button != 0)
@@ -55,6 +58,11 @@ void UTLG_Widget_Menu_Pause::Add_Menu_Pause_Buttons(UVerticalBox *vertical_box)
     tlg_widget_button = CreateWidget<UTLG_Widget_Button_Flow>(this, TLG_Widget_Button_Flow_Class);
     if (tlg_widget_button != 0)
         tlg_widget_button->Init(ETLG_Game_Flow_Option::Restart_Level, text_game_restart);
+    vertical_box->AddChild(tlg_widget_button);
+
+    tlg_widget_button = CreateWidget<UTLG_Widget_Button_Flow>(this, TLG_Widget_Button_Flow_Class);
+    if (tlg_widget_button != 0)
+        tlg_widget_button->Init(ETLG_Game_Flow_Option::Language_Change, text_game_language_change);
     vertical_box->AddChild(tlg_widget_button);
 
     // 2.2. Add button exit game
@@ -100,4 +108,11 @@ void UTLG_Widget_Menu_Pause::Handle_Game_Demo_Completed()
 
     Add_Menu_Pause_Buttons(VB_Button_Menu_Pause);
 }
+//------------------------------------------------------------------------------------------------------------
+
+
+
+
+//------------------------------------------------------------------------------------------------------------
+#undef LOCTEXT_NAMESPACE
 //------------------------------------------------------------------------------------------------------------
