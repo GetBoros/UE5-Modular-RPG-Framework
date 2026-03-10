@@ -91,7 +91,6 @@ void UTLG_Widget_Button::Handle_Hover_Internal()
 
 
 
-
 // UTLG_Widget_Button_Action
 void UTLG_Widget_Button_Action::NativeDestruct()
 {
@@ -138,6 +137,7 @@ void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_ac
     // 1.0. Init
     TLG_Location_Action = tlg_location_action;
     is_button_enabled = TLG_Widget_Controller->Check_Action_Requirements(TLG_Location_Action.Action_Requirement);
+    Gameplay_Tag_Container = tlg_location_action.Gameplay_Tag_Container;
 
 	// 1.1. Set Text in Button
     if (text_button.IsEmpty() == true)
@@ -150,6 +150,7 @@ void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_ac
 
 	// 1.2. Enable or Disable Button
 	Set_Button_Enabled(is_button_enabled);
+
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button_Action::Refresh_Button_State()

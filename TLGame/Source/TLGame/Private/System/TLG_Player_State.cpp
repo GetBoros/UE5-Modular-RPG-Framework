@@ -108,6 +108,12 @@ void ATLG_Player_State::Apply_Dynamic_Change(float magnitude, FGameplayTag gamep
     Ability_System_Component->ApplyGameplayEffectSpecToSelf(*gameplay_effect_handle_spec.Data.Get() );
 }
 //------------------------------------------------------------------------------------------------------------
+void ATLG_Player_State::Temp(const FGameplayTagContainer gameplay_tag_container)
+{
+    // Ability_System_Component->TryActivateAbilityByClass();
+    Ability_System_Component->TryActivateAbilitiesByTag(gameplay_tag_container);
+}
+//------------------------------------------------------------------------------------------------------------
 void ATLG_Player_State::Handle_Sanity_Zero()
 {
     if (ATLG_Game_State *tlg_game_state = GetWorld()->GetGameState<ATLG_Game_State>() )

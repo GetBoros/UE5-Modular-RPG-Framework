@@ -42,6 +42,10 @@ public:
 	// Achievements
     FGameplayTag Achievement_Tutorial_Intro;
 
+	// Achievements
+    FGameplayTag Ability_Action_Sport;
+    FGameplayTag Ability_Action_Computer;
+
 private:
     static FTLG_Data_Gameplay_Tags TLG_Data_Gameplay_Tags;
 

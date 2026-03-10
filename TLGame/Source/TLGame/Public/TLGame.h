@@ -20,6 +20,7 @@ V	- Part 1: Completed
 V	- Part 2: Completed
 
 X	- Part 3: In progress
+X	- Make Action button to use GA by tags
 X	- Tool tip on player Image to show stats? Or enemy
 X		- Second Attributes like STR, INT, WIS and other
 V	- If player can`t use button, need show tooltip with reason or else, if can use show tooltip with info about action

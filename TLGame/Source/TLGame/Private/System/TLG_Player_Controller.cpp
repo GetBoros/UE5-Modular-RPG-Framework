@@ -59,7 +59,7 @@ void ATLG_Player_Controller::SetupInputComponent()
     if (InputComponent == 0)
         return;
 
-    InputComponent->BindKey(EKeys::BackSpace, IE_Pressed, this, &ATLG_Player_Controller::On_Pressed_ESC);  // !!! TEMP Change on EKeys::Escape
+    InputComponent->BindKey(EKeys::Escape, IE_Pressed, this, &ATLG_Player_Controller::On_Pressed_ESC);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Location_Action(const FTLG_Location_Action &tlg_location_action)
@@ -96,7 +96,6 @@ void ATLG_Player_Controller::Request_Menu_Main_Pause(const ETLG_Game_Flow_Option
         UKismetSystemLibrary::QuitGame(GetWorld(), this, EQuitPreference::Quit, false);
         break;
     }
-
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_Controller::Handle_Location_Encounter()

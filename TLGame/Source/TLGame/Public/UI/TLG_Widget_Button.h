@@ -36,10 +36,10 @@ protected:
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UTextBlock> TB_Button;
     UPROPERTY(meta = (BindWidget) ) TObjectPtr<UButton> Button_Click;
 
-    UPROPERTY(EditDefaultsOnly) TObjectPtr<USoundBase> Sound_Click;
-    UPROPERTY(EditDefaultsOnly) TObjectPtr<USoundBase> Sound_Hover;
-
-    UPROPERTY(EditDefaultsOnly) TSubclassOf<UTLG_Widget_Tooltip> TLG_Widget_Tooltip_Class;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TObjectPtr<USoundBase> Sound_Click;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TObjectPtr<USoundBase> Sound_Hover;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) TSubclassOf<UTLG_Widget_Tooltip> TLG_Widget_Tooltip_Class;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) FGameplayTagContainer Gameplay_Tag_Container;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (MultiLine = true) ) FText Text_Tooltip_Description;
 

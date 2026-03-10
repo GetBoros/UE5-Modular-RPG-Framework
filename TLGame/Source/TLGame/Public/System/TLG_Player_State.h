@@ -33,6 +33,8 @@ public:
 	void Apply_Multy_Dynamic_Change(const TArray<FTLG_Set_By_Caller_Magnitude> &set_by_caller_magnitude);  // !!! TEMP
 	void Apply_Dynamic_Change(float magnitude, FGameplayTag attribute_tag);
 
+	void Temp(const FGameplayTagContainer gameplay_tag_container);
+
 private:
 	void Handle_Sanity_Zero();
 

@@ -41,6 +41,9 @@ void FTLG_Data_Gameplay_Tags::Initialize_Native_Tags()
     TLG_Data_Gameplay_Tags.Dialogue_Marina_Intro = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Dialogue.Marina.Intro"), FString("") );
     
     TLG_Data_Gameplay_Tags.Achievement_Tutorial_Intro = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Achievement.Tutorial.Intro"), FString("") );
+    
+    TLG_Data_Gameplay_Tags.Ability_Action_Sport = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Action.Sport"), FString("") );
+    TLG_Data_Gameplay_Tags.Ability_Action_Computer = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Action.Computer"), FString("") );
 
 }
 //------------------------------------------------------------------------------------------------------------
