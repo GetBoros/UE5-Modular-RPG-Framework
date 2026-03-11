@@ -9,8 +9,9 @@
 //------------------------------------------------------------------------------------------------------------
 class UGBC_Attribute_Info;
 class UTLG_Attribute_Set;
-class UGameplayEffect;
+class UGBG_Gameplay_Ability;
 class UAbilitySystemComponent;
+class UGameplayEffect;
 
 struct FGameplayTagContainer;
 struct FGameplayAttribute;
@@ -34,16 +35,20 @@ public:
 	void Apply_Dynamic_Change(float magnitude, FGameplayTag attribute_tag);
 
 	void Temp(const FGameplayTagContainer gameplay_tag_container);
+	void Give_Ability();
 
 private:
 	void Handle_Sanity_Zero();
 
+	/*  0.069 (Ciborg 24h) | 0.104 (Norm 16h) | 0.138 (Weak 12h) | 0.208 (Sick 8h) || 0.1f - 16h - 960min - 96 Fatigue */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true", ClampMin = "0.0", ClampMax = "1.0") ) float Fatigue_Accumulation_Rate = 0.105f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta =(AllowPrivateAccess = "true") ) TObjectPtr<UGBC_Attribute_Info> GBC_Attribute_Info;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta =(AllowPrivateAccess = "true") ) TSubclassOf<UGameplayEffect> Gameplay_Effect_Class_Attributes;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta =(AllowPrivateAccess = "true") ) TArray<TSubclassOf<UGBG_Gameplay_Ability> > Default_Abilities;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UAbilitySystemComponent> Ability_System_Component;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UTLG_Attribute_Set> Attribute_Set;
 
-	UPROPERTY(EditDefaultsOnly) TObjectPtr<UGBC_Attribute_Info> GBC_Attribute_Info;
-	UPROPERTY(EditDefaultsOnly) TSubclassOf<UGameplayEffect> Gameplay_Effect_Class_Attributes;
-	/*  0.069 (Ciborg 24h) | 0.104 (Norm 16h) | 0.138 (Weak 12h) | 0.208 (Sick 8h) || 0.1f - 16h - 960min - 96 Fatigue */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true", ClampMin = "0.0", ClampMax = "1.0") ) float Fatigue_Accumulation_Rate = 0.105f;
 };
 //------------------------------------------------------------------------------------------------------------

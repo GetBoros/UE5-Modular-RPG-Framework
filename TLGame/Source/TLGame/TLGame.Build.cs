@@ -37,7 +37,7 @@ public class TLGame : ModuleRules
 				"CoreUObject", "Engine", "Slate", "SlateCore", "UMG",  // Core
 				"GameplayTags", "GameplayTasks", "GameplayAbilities",  // Core Frameworks
 				"StateTreeModule", "GameplayStateTreeModule",  // AI State Tree
-                "GBUI_Core", "GBCore",  // Custom Frameworks
+                "GBUI_Core", "GBCore", "GBGameplay",  // Custom Frameworks
 				"InputCore"  // !!! TEMP For SetupInputComponent in ATLG_Player_Controller
 
 				// ... add private dependencies that you statically link with here ...	
