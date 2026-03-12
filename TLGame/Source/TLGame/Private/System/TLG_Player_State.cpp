@@ -6,7 +6,7 @@
 #include <Data/TLG_Data_Gameplay_Tags.h>
 
 #include <Abilities/TLG_Attribute_Set.h>
-#include <GAS/GBG_Gameplay_Ability.h>
+#include <GAS/TLG_Ability_Set.h>
 
 #include <Types/GBC_Attribute_Info.h>
 
@@ -37,14 +37,8 @@ void ATLG_Player_State::BeginPlay()
     Super::BeginPlay();
 
     Get_Attribute_Set()->On_Sanity_Zero.AddUObject(this, &ATLG_Player_State::Handle_Sanity_Zero);
-    Give_Ability();
 
-    // !!! TEMP
-    FGameplayTagContainer gameplaytagcontainer;
-
-    gameplaytagcontainer.AddTag(FTLG_Data_Gameplay_Tags::Get().Ability_Action_Sport);
-
-    Temp(gameplaytagcontainer);
+    Ability_Set_Default->Give_To_Ability_System(Ability_System_Component, this);
 
 }
 //------------------------------------------------------------------------------------------------------------
@@ -120,23 +114,7 @@ void ATLG_Player_State::Apply_Dynamic_Change(float magnitude, FGameplayTag gamep
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_State::Temp(const FGameplayTagContainer gameplay_tag_container)
 {
-    // Ability_System_Component->TryActivateAbilityByClass();
     Ability_System_Component->TryActivateAbilitiesByTag(gameplay_tag_container);
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_State::Give_Ability()
-{
-    for (const TSubclassOf<UGBG_Gameplay_Ability> &ability_class : Default_Abilities)
-    {
-        int32 input_id = 0;
-        UGBG_Gameplay_Ability *ability_cdo = ability_class->GetDefaultObject<UGBG_Gameplay_Ability>();  // Get Input id from ability template
-        
-        if (ability_cdo != 0)
-            input_id = ability_cdo->Input_ID;
-
-        Ability_System_Component->GiveAbility(FGameplayAbilitySpec(ability_class, 1, input_id, this) );
-    }
-
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_State::Handle_Sanity_Zero()
