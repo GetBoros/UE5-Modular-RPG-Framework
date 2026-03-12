@@ -24,9 +24,12 @@ UCLASS(BlueprintType, Const) class TLGAME_API UTLG_Ability_Set : public UPrimary
     GENERATED_BODY()
 
 public:
-    void Give_To_Ability_System(UAbilitySystemComponent *ability_system_component, UObject *object_source) const;
+    void Init(UAbilitySystemComponent *ability_system_component, UObject *object_source) const;
   
 private:
+    void Give_Abilities_Binded(UAbilitySystemComponent *ability_system_component, UObject *object_source) const;
+    void Give_Effects_Passive(UAbilitySystemComponent *ability_system_component, UObject *object_source) const;
+
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TArray<FTLG_Ability_Bind_Info> TLG_Ability_Bind_Info_Array;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TArray<TSubclassOf<UGameplayEffect>> Granted_Effects;
     

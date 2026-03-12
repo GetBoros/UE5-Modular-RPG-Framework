@@ -38,7 +38,7 @@ void ATLG_Player_State::BeginPlay()
 
     Get_Attribute_Set()->On_Sanity_Zero.AddUObject(this, &ATLG_Player_State::Handle_Sanity_Zero);
 
-    TLG_Ability_Set_Default->Give_To_Ability_System(Ability_System_Component, this);
+    TLG_Ability_Set_Default->Init(Ability_System_Component, this);
 
 }
 //------------------------------------------------------------------------------------------------------------
@@ -110,11 +110,6 @@ void ATLG_Player_State::Apply_Dynamic_Change(float magnitude, FGameplayTag gamep
 
     gameplay_effect_handle_spec.Data->SetSetByCallerMagnitude(gameplay_tag, magnitude);
     Ability_System_Component->ApplyGameplayEffectSpecToSelf(*gameplay_effect_handle_spec.Data.Get() );
-}
-//------------------------------------------------------------------------------------------------------------
-void ATLG_Player_State::Temp(const FGameplayTagContainer gameplay_tag_container)
-{
-    Ability_System_Component->TryActivateAbilitiesByTag(gameplay_tag_container);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Player_State::Handle_Sanity_Zero()

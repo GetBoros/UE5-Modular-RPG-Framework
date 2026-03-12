@@ -25,7 +25,7 @@ public:
     virtual void Broadcast_Initial_Values();
     virtual void Bind_Callbacks_To_Dependencies();
 
-    void Handle_Button_Pressed(const FGameplayTag &gameplay_tag);
+    void Request_Ability_Activation(const FGameplayTag &gameplay_tag) const;
     bool Check_Action_Requirements(const TArray<FTLG_Action_Requirement> &tlg_action_requirement_array) const;
 
     FOn_Game_Over On_Game_Over;

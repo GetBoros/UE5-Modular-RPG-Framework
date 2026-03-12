@@ -55,7 +55,7 @@ void UTLG_Widget_Button::On_Widget_Controller_Set_Implementation()
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button::Handle_Click()
 {
-    TLG_Widget_Controller->Handle_Button_Pressed(Gameplay_Tag);
+    TLG_Widget_Controller->Request_Ability_Activation(Gameplay_Tag);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button::Set_Button_Text(const FText &text_button) const
@@ -172,6 +172,8 @@ void UTLG_Widget_Button_Navigation::Handle_Click()
     APlayerController *player_controller;
     UTLG_Component_Navigation *tlg_component_navigation;
 
+    Super::Handle_Click();
+
     if (Target_Location == 0)
         return;
 
@@ -206,6 +208,8 @@ void UTLG_Widget_Button_Flow::Handle_Click()
     APlayerController *player_controller;
     ITLG_Interaction_Interface *interaction_interface;
 
+    Super::Handle_Click();
+
     player_controller = GetOwningPlayer();
     if (player_controller == 0)
         return;
@@ -213,7 +217,6 @@ void UTLG_Widget_Button_Flow::Handle_Click()
     interaction_interface = Cast<ITLG_Interaction_Interface>(player_controller);
     if (interaction_interface != 0)
         interaction_interface->Request_Menu_Main_Pause(TLG_Game_Flow_Option);
-
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button_Flow::Init(const ETLG_Game_Flow_Option tlg_game_flow_option, const FText &text_button)
