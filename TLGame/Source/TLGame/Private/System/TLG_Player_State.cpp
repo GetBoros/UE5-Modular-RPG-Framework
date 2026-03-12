@@ -38,7 +38,7 @@ void ATLG_Player_State::BeginPlay()
 
     Get_Attribute_Set()->On_Sanity_Zero.AddUObject(this, &ATLG_Player_State::Handle_Sanity_Zero);
 
-    Ability_Set_Default->Give_To_Ability_System(Ability_System_Component, this);
+    TLG_Ability_Set_Default->Give_To_Ability_System(Ability_System_Component, this);
 
 }
 //------------------------------------------------------------------------------------------------------------

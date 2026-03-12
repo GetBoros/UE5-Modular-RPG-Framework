@@ -55,7 +55,7 @@ void UTLG_Widget_Button::On_Widget_Controller_Set_Implementation()
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button::Handle_Click()
 {
-
+    TLG_Widget_Controller->Handle_Button_Pressed(Gameplay_Tag);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button::Set_Button_Text(const FText &text_button) const
@@ -116,6 +116,8 @@ void UTLG_Widget_Button_Action::Handle_Click()
     APlayerController *player_controller;
     ITLG_Interaction_Interface *interaction_interface;
 
+    Super::Handle_Click();
+
     player_controller = GetOwningPlayer();
     if (player_controller == 0)
         return;
@@ -137,7 +139,7 @@ void UTLG_Widget_Button_Action::Init(const FTLG_Location_Action &tlg_location_ac
     // 1.0. Init
     TLG_Location_Action = tlg_location_action;
     is_button_enabled = TLG_Widget_Controller->Check_Action_Requirements(TLG_Location_Action.Action_Requirement);
-    Gameplay_Tag_Container = tlg_location_action.Gameplay_Tag_Container;
+    Gameplay_Tag = tlg_location_action.Gameplay_Tag;
 
 	// 1.1. Set Text in Button
     if (text_button.IsEmpty() == true)

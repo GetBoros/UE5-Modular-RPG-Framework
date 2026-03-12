@@ -114,6 +114,16 @@ bool UTLG_Widget_Controller::Check_Action_Requirements(const TArray<FTLG_Action_
     return true;
 }
 //------------------------------------------------------------------------------------------------------------
+void UTLG_Widget_Controller::Handle_Button_Pressed(const FGameplayTag& gameplay_tag)
+{
+    FGameplayTagContainer gameplay_tag_container;
+
+    gameplay_tag_container.AddTag(gameplay_tag);
+
+    Ability_System_Component->TryActivateAbilitiesByTag(gameplay_tag_container);
+
+}
+//------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Controller::Handle_Changed_Sanity(const FOnAttributeChangeData &attribute_change_data)
 {
     const float current = attribute_change_data.NewValue;

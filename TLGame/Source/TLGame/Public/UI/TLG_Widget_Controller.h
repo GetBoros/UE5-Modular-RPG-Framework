@@ -25,6 +25,7 @@ public:
     virtual void Broadcast_Initial_Values();
     virtual void Bind_Callbacks_To_Dependencies();
 
+    void Handle_Button_Pressed(const FGameplayTag &gameplay_tag);
     bool Check_Action_Requirements(const TArray<FTLG_Action_Requirement> &tlg_action_requirement_array) const;
 
     FOn_Game_Over On_Game_Over;
@@ -56,6 +57,7 @@ private:
     void Handle_Changed_Day_Time(const int32 current_day) const;
 
     void Handle_Changed_Gameplay_Tag(const FGameplayTag gameplay_tag, const int32 new_count) const;
+
 
     UTLG_Attribute_Set *Get_TLG_Attribute_Set() const;
 
