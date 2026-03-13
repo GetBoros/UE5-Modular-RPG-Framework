@@ -24,10 +24,9 @@ void ATLG_Pawn::Tick(float DeltaTime)
 
 }
 //------------------------------------------------------------------------------------------------------------
-void ATLG_Pawn::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
+void ATLG_Pawn::SetupPlayerInputComponent(UInputComponent *player_input_component)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	Super::SetupPlayerInputComponent(player_input_component);
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Pawn::PossessedBy(AController *new_controller)
@@ -37,14 +36,16 @@ void ATLG_Pawn::PossessedBy(AController *new_controller)
 //------------------------------------------------------------------------------------------------------------
 UAbilitySystemComponent *ATLG_Pawn::GetAbilitySystemComponent() const
 {
+	ATLG_Player_State *tlg_player_state;
+
 	if (Ability_System_Component != 0)
 		return Ability_System_Component;
 
-	ATLG_Player_State* ps = GetPlayerState<ATLG_Player_State>();
-	if (ps == 0)
+	tlg_player_state = GetPlayerState<ATLG_Player_State>();
+	if (tlg_player_state == 0)
 		return 0;
 
-	Ability_System_Component = ps->GetAbilitySystemComponent();
+	Ability_System_Component = tlg_player_state->GetAbilitySystemComponent();
 
 	return Ability_System_Component;
 }

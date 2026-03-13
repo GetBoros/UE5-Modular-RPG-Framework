@@ -102,6 +102,11 @@ UAbilitySystemComponent *AGBG_Player::GetAbilitySystemComponent() const
 	return Ability_System_Component;
 }
 //------------------------------------------------------------------------------------------------------------
+UGBG_Attribute_Set *AGBG_Player::GetAttributeSet() const
+{
+	return Attribute_Set;
+}
+//------------------------------------------------------------------------------------------------------------
 void AGBG_Player::On_Move(const FInputActionValue &value)
 {
 	FVector2D movement_vector = value.Get<FVector2D>();

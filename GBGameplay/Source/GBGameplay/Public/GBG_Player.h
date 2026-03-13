@@ -24,11 +24,11 @@ public:
 	virtual void BeginPlay();
 	virtual void Tick(float delta_time);
 	virtual void PossessedBy(AController *new_controller);
-	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent);
+	virtual void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent);
 
 	virtual UAbilitySystemComponent *GetAbilitySystemComponent() const;
 
-	UGBG_Attribute_Set *GetAttributeSet() const { return Attribute_Set; }
+	UGBG_Attribute_Set *GetAttributeSet() const;
 
 	void On_Move(const FInputActionValue &value);
 	void On_Look(const FInputActionValue &value);

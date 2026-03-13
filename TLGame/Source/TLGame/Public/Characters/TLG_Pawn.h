@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------------------------------------
 class UAbilitySystemComponent;
 class ATLG_Player_State;
+class UInputComponent;
 //------------------------------------------------------------------------------------------------------------
 UCLASS() class TLGAME_API ATLG_Pawn : public APawn, public IAbilitySystemInterface
 {
@@ -18,8 +19,8 @@ public:
 
 	virtual void BeginPlay();
 	virtual void Tick(float DeltaTime);
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent);
-	virtual void PossessedBy(AController* new_controller);
+	virtual void SetupPlayerInputComponent(UInputComponent *player_input_component);
+	virtual void PossessedBy(AController *new_controller);
 	virtual UAbilitySystemComponent *GetAbilitySystemComponent() const;
 
 private:
