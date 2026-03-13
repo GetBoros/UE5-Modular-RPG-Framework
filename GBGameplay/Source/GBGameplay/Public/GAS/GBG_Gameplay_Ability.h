@@ -10,7 +10,7 @@ UCLASS() class GBGAMEPLAY_API UGBG_Gameplay_Ability : public UGameplayAbility
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") int32 Input_ID = 0; // 0 = No Input
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") int32 Input_ID = 0;  // 0 = No Input
 
 };
 //------------------------------------------------------------------------------------------------------------

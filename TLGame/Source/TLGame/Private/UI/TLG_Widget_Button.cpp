@@ -55,7 +55,8 @@ void UTLG_Widget_Button::On_Widget_Controller_Set_Implementation()
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button::Handle_Click()
 {
-    TLG_Widget_Controller->Request_Ability_Activation(Gameplay_Tag);
+    if (Gameplay_Tag.IsValid() == true)  // if tag is not empty try activate ability if object have this ability
+        TLG_Widget_Controller->Request_Ability_Activation(Gameplay_Tag);
 }
 //------------------------------------------------------------------------------------------------------------
 void UTLG_Widget_Button::Set_Button_Text(const FText &text_button) const

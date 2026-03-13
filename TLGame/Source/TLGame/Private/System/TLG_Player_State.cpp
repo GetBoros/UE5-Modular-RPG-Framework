@@ -36,9 +36,11 @@ void ATLG_Player_State::BeginPlay()
 
     Super::BeginPlay();
 
+    OnPawnSet.AddDynamic(this, &ATLG_Player_State::Handle_Pawn_Set);
+
     Get_Attribute_Set()->On_Sanity_Zero.AddUObject(this, &ATLG_Player_State::Handle_Sanity_Zero);
 
-    TLG_Ability_Set_Default->Init(Ability_System_Component, this);
+    TLG_Ability_Set_Default->Init(Ability_System_Component, this);  // Apply abilities and passive effects
 
 }
 //------------------------------------------------------------------------------------------------------------
@@ -116,5 +118,13 @@ void ATLG_Player_State::Handle_Sanity_Zero()
 {
     if (ATLG_Game_State *tlg_game_state = GetWorld()->GetGameState<ATLG_Game_State>() )
         tlg_game_state->Game_Over();
+}
+//------------------------------------------------------------------------------------------------------------
+void ATLG_Player_State::Handle_Pawn_Set(APlayerState* player_state, APawn* new_pawn, APawn* old_pawn)
+{
+    if (Ability_System_Component == 0 || new_pawn == 0)
+        return;
+
+    Ability_System_Component->InitAbilityActorInfo(this, new_pawn);
 }
 //------------------------------------------------------------------------------------------------------------

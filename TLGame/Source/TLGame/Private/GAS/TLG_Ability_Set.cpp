@@ -12,11 +12,28 @@
 // UTLG_Ability_Set
 void UTLG_Ability_Set::Init(UAbilitySystemComponent *ability_system_component, UObject *object_source) const
 {
-	Give_Abilities_Binded(ability_system_component, object_source);
-	Give_Effects_Passive(ability_system_component, object_source);
+	Grant_Abilities_Binded(ability_system_component, object_source);
+	Grant_Effects_Passive(ability_system_component, object_source);
 }
 //------------------------------------------------------------------------------------------------------------
-void UTLG_Ability_Set::Give_Effects_Passive(UAbilitySystemComponent *ability_system_component, UObject *object_source) const
+void UTLG_Ability_Set::Grant_Abilities_Binded(UAbilitySystemComponent *ability_system_component, UObject *object_source) const
+{
+	TSubclassOf<UTLG_Gameplay_Ability> tlg_gameplay_ability_class;
+	FGameplayAbilitySpec gameplay_ability_spec;
+
+	for (const FTLG_Ability_Bind_Info &tlg_ability_bind_info: TLG_Ability_Bind_Info_Array)
+	{
+		tlg_gameplay_ability_class = tlg_ability_bind_info.TLG_Gameplay_Ability_Class;
+		gameplay_ability_spec = FGameplayAbilitySpec(tlg_gameplay_ability_class, 1, -1, object_source);
+		
+		if (tlg_ability_bind_info.Dynamic_Spec_Source_Tag.IsValid() == true)
+			gameplay_ability_spec.GetDynamicSpecSourceTags().AddTag(tlg_ability_bind_info.Dynamic_Spec_Source_Tag);
+
+		ability_system_component->GiveAbility(gameplay_ability_spec);
+	}
+}
+//------------------------------------------------------------------------------------------------------------
+void UTLG_Ability_Set::Grant_Effects_Passive(UAbilitySystemComponent *ability_system_component, UObject *object_source) const
 {
 	FGameplayEffectSpecHandle spec_handle;
 	FGameplayEffectContextHandle context_handle;
@@ -28,24 +45,6 @@ void UTLG_Ability_Set::Give_Effects_Passive(UAbilitySystemComponent *ability_sys
 		spec_handle = ability_system_component->MakeOutgoingSpec(effect_class, 1.0f, context_handle);
 		if (spec_handle.IsValid() == true)
 			ability_system_component->ApplyGameplayEffectSpecToSelf(*spec_handle.Data.Get() );
-	}
-
-}
-//------------------------------------------------------------------------------------------------------------
-void UTLG_Ability_Set::Give_Abilities_Binded(UAbilitySystemComponent *ability_system_component, UObject *object_source) const
-{
-	TSubclassOf<UTLG_Gameplay_Ability> tlg_gameplay_ability_class;
-	FGameplayAbilitySpec gameplay_ability_spec;
-
-	for (const FTLG_Ability_Bind_Info &tlg_ability_bind_info: TLG_Ability_Bind_Info_Array)
-	{
-		tlg_gameplay_ability_class = tlg_ability_bind_info.TLG_Gameplay_Ability_Class;
-
-		gameplay_ability_spec = FGameplayAbilitySpec(tlg_gameplay_ability_class, 1, -1, object_source);
-		if (tlg_ability_bind_info.Input_Tag.IsValid() == true)
-			gameplay_ability_spec.GetDynamicSpecSourceTags().AddTag(tlg_ability_bind_info.Input_Tag);
-
-		ability_system_component->GiveAbility(gameplay_ability_spec);
 	}
 }
 //------------------------------------------------------------------------------------------------------------

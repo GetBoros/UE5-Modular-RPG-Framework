@@ -21,6 +21,7 @@ public:
     virtual void NativeDestruct();
     virtual void NativeConstruct();
     virtual void On_Widget_Controller_Set_Implementation();
+
     virtual void Handle_Click();
 
     void Set_Button_Text(const FText &text_button) const;
