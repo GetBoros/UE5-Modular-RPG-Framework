@@ -2,7 +2,7 @@
 #pragma once
 //------------------------------------------------------------------------------------------------------------
 #include <Engine/DataTable.h>
-#include <GameplayTagContainer.h>  // !!! TEMP
+#include <GameplayTagContainer.h>
 #include <AttributeSet.h>  // FTLG_Action_Requirement
 
 #include <TLG_Types.generated.h>

@@ -15,7 +15,6 @@ ATLG_Pawn::ATLG_Pawn()
 void ATLG_Pawn::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 //------------------------------------------------------------------------------------------------------------
 void ATLG_Pawn::Tick(float DeltaTime)
