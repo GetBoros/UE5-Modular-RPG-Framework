@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------------------------------------
 #include <AbilitySystemInterface.h>
 #include <GameFramework/Character.h>
+
 #include <GBG_Player.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class UInputComponent;
@@ -24,12 +25,13 @@ public:
 	virtual void BeginPlay();
 	virtual void Tick(float delta_time);
 	virtual void PossessedBy(AController *new_controller);
-	virtual void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent);
+	virtual void SetupPlayerInputComponent(UInputComponent *player_input_component);
 
 	virtual UAbilitySystemComponent *GetAbilitySystemComponent() const;
 
 	UGBG_Attribute_Set *GetAttributeSet() const;
 
+private:
 	void On_Move(const FInputActionValue &value);
 	void On_Look(const FInputActionValue &value);
 	void On_Jump_Bgn(const FInputActionValue &value);
@@ -38,19 +40,19 @@ public:
 	void On_Sprint_End(const FInputActionValue &value);
 	void On_Interact(const FInputActionValue &value);
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Move = 0;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Look = 0;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Jump = 0;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Sprint = 0;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input") UInputAction *Action_Interact = 0;
+	mutable UAbilitySystemComponent *Ability_System_Component;
+	UGBG_Attribute_Set *Attribute_Set;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GAS") TSubclassOf<UGameplayEffect> Default_Attributes_Effect;  // GEffect
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GAS") TArray<TSubclassOf<UGBG_Gameplay_Ability> > Default_Abilities;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) UInputAction *Action_Move = 0;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) UInputAction *Action_Look = 0;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) UInputAction *Action_Jump = 0;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) UInputAction *Action_Sprint = 0;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) UInputAction *Action_Interact = 0;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true") ) UAbilitySystemComponent *Ability_System_Component = 0;
-	UPROPERTY(VisibleAnywhere) UGBG_Attribute_Set *Attribute_Set;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UGameplayEffect> Default_Attributes_Effect;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) TArray<TSubclassOf<UGBG_Gameplay_Ability> > Default_Abilities;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components") UGBG_Destructible_Interaction *Destructible_Interaction_Component;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true") ) UGBG_Destructible_Interaction* Destructible_Interaction_Component;
 
 };
 //------------------------------------------------------------------------------------------------------------
