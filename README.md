@@ -16,9 +16,9 @@ The framework is built using a **Plugin-based architecture** to ensure zero coup
 - **Runtime Localization:** Dynamic string table support.
 
 ## 🛠 Tech Stack
-- Unreal Engine 5.4
+- Unreal Engine 5.7.4
 - C++ / GAS
 - StateTree / EQS
 
 ---
-*Showcase video: [ВСТАВЬ ССЫЛКУ НА СВОЕ ВИДЕО]*
+*Showcase video: [https://youtu.be/ujgZAM4Y9Ug?si=6r8nUWehWgZi68Ry]*
