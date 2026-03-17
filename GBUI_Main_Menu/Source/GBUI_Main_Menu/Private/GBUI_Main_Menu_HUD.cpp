@@ -17,12 +17,8 @@ void AGBUI_Main_Menu_HUD::BeginPlay()
 {
     Super::BeginPlay();
     
-    if (ensureMsgf(HUD_Widget_Class, TEXT("Don`t forget set") ) == true)
-    {
-        HUD_Widget = CreateWidget<UUserWidget>(GetWorld(), HUD_Widget_Class);
-
-        HUD_Widget->AddToViewport();
-    }
+    if (ensureMsgf(HUD_Widget_Class, TEXT("If need Widget HUD create and add to view port") ) == true)
+        Add_HUD_Widget_To_View_Port();
 
     return;  // !!! TEMP
 
@@ -88,5 +84,12 @@ void AGBUI_Main_Menu_HUD::Init()
     gbuic_widget_controller = Get_Widget_Controller(FController_Widget_Params(player_controller, player_state, ability_system_component, 0, Attribute_Info_Data) );
     gbui_user_widget->Set_Widget_Controller(gbuic_widget_controller);  // Pass the controller to the widget
     gbuic_widget_controller->Broadcast_Initial_Values();  // 3.2. Finally if all settings are good, make broadcast and update value in HUD_Widget
+}
+//------------------------------------------------------------------------------------------------------------
+void AGBUI_Main_Menu_HUD::Add_HUD_Widget_To_View_Port()
+{
+    HUD_Widget = CreateWidget<UUserWidget>(GetWorld(), HUD_Widget_Class);
+
+    HUD_Widget->AddToViewport();
 }
 //------------------------------------------------------------------------------------------------------------

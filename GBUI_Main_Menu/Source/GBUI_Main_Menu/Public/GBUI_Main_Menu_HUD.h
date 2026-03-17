@@ -22,6 +22,8 @@ public:
 private:
     void Init();
     
+    void Add_HUD_Widget_To_View_Port();
+
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UUserWidget> HUD_Widget_Class;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TSubclassOf<UGBUIC_Widget_Controller> GBUIC_Widget_Controller_Class;
     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TObjectPtr<UGBC_Attribute_Info> Attribute_Info_Data;
