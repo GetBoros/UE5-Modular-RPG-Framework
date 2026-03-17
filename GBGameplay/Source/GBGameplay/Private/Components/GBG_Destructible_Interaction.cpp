@@ -18,10 +18,9 @@ UGBG_Destructible_Interaction::UGBG_Destructible_Interaction()
 //------------------------------------------------------------------------------------------------------------
 void UGBG_Destructible_Interaction::BeginPlay()
 {
+	ensureMsgf(Actor_Class_To_Spawn, TEXT("Set FS_MasterField to a Actor_Class_To_Spawn") );
+	
 	Super::BeginPlay();
-
-	if (ensureMsgf(Actor_Class_To_Spawn, TEXT("Try Init") ) )
-		return;  // Need log or 
 }
 //------------------------------------------------------------------------------------------------------------
 void UGBG_Destructible_Interaction::TickComponent(float delta_time, ELevelTick tick_type, FActorComponentTickFunction *this_tick_function)
@@ -62,6 +61,6 @@ void UGBG_Destructible_Interaction::Try_Spawn_Destructible(const FHitResult &hit
 	const FTransform spawn_transform(FRotator::ZeroRotator, hit_result.Location);
 	actor_to_spawn = GetWorld()->SpawnActorDeferred<AActor>(Actor_Class_To_Spawn, spawn_transform, Cast<APawn>(GetOwner() ), 0, Spawn_Collision_Method);
 	UGameplayStatics::FinishSpawningActor(actor_to_spawn, spawn_transform);
-	actor_to_spawn->SetLifeSpan(2.0f);  // If FS_MasterField start destroy after 1 sec need destroy object after 2 seconds
+	actor_to_spawn->SetLifeSpan(2.0f);  // If FS_MasterField start destroy after 1 sec, need destroy object after 2 seconds
 }
 //------------------------------------------------------------------------------------------------------------
