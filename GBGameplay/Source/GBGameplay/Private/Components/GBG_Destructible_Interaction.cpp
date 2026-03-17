@@ -20,7 +20,8 @@ void UGBG_Destructible_Interaction::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ensureMsgf(Actor_Class_To_Spawn, TEXT("Hello world") );
+	if (ensureMsgf(Actor_Class_To_Spawn, TEXT("Try Init") ) )
+		return;  // Need log or 
 }
 //------------------------------------------------------------------------------------------------------------
 void UGBG_Destructible_Interaction::TickComponent(float delta_time, ELevelTick tick_type, FActorComponentTickFunction *this_tick_function)
