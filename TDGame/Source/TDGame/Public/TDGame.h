@@ -1,15 +1,10 @@
 //------------------------------------------------------------------------------------------------------------
 #pragma once
 //------------------------------------------------------------------------------------------------------------
-#include <GameFeatureAction.h>
-
-#include <GBF_Add_Ability.generated.h>
-//------------------------------------------------------------------------------------------------------------
-UCLASS() class GBF_COMPANION_SYSTEMRUNTIME_API UGBF_Add_Ability : public UGameFeatureAction
+class FTDGameModule : public IModuleInterface
 {
-	GENERATED_BODY()
-	
 public:
-
+	virtual void StartupModule();
+	virtual void ShutdownModule();
 };
 //------------------------------------------------------------------------------------------------------------
