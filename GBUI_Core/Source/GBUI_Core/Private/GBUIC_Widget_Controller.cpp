@@ -16,7 +16,6 @@ void UGBUIC_Widget_Controller::Init(const FController_Widget_Params& params)
     Attribute_Set = params.Attribute_Set;
     Attribute_Info = params.Attribute_Info;
     Game_State_Base = params.Game_State_Base;
-
 }
 //------------------------------------------------------------------------------------------------------------
 void UGBUIC_Widget_Controller::Broadcast_Initial_Values()

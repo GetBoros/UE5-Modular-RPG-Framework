@@ -17,29 +17,33 @@ void AGBUI_Main_Menu_HUD::BeginPlay()
 {
     Super::BeginPlay();
     
-    ensureMsgf(HUD_Widget_Class, TEXT("Don`t forget set") );
-    ensureMsgf(Controller_Widget_Class, TEXT("Don`t forget set") );
+    if (ensureMsgf(HUD_Widget_Class, TEXT("Don`t forget set") ) == true)
+    {
+        HUD_Widget = CreateWidget<UUserWidget>(GetWorld(), HUD_Widget_Class);
+
+        HUD_Widget->AddToViewport();
+    }
+
+    return;  // !!! TEMP
+
+    ensureMsgf(GBUIC_Widget_Controller_Class, TEXT("Don`t forget set") );
     ensureMsgf(Attribute_Info_Data, TEXT("Don`t forget set") );
 
     Init();
-
-    if (HUD_Widget != 0)
-        HUD_Widget->AddToViewport();
-
 }
 //------------------------------------------------------------------------------------------------------------
 UGBUIC_Widget_Controller *AGBUI_Main_Menu_HUD::Get_Widget_Controller(const FController_Widget_Params &params)
 {
-    if (Controller_Widget != 0)
-        return Controller_Widget;
+    if (GBUIC_Widget_Controller != 0)
+        return GBUIC_Widget_Controller;
 
-    if (Controller_Widget_Class == 0)
+    if (GBUIC_Widget_Controller_Class == 0)
         return 0;
 
-    Controller_Widget = NewObject<UGBUIC_Widget_Controller>(this, Controller_Widget_Class);
-    Controller_Widget->Init(params);
+    GBUIC_Widget_Controller = NewObject<UGBUIC_Widget_Controller>(this, GBUIC_Widget_Controller_Class);
+    GBUIC_Widget_Controller->Init(params);
 
-    return Controller_Widget;
+    return GBUIC_Widget_Controller;
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBUI_Main_Menu_HUD::Init()
