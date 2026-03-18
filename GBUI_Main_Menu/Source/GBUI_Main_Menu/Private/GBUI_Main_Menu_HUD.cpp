@@ -20,12 +20,12 @@ void AGBUI_Main_Menu_HUD::BeginPlay()
     if (ensureMsgf(HUD_Widget_Class, TEXT("If need Widget HUD create and add to view port") ) == true)
         Add_HUD_Widget_To_View_Port();
 
-    return;  // !!! TEMP
+    // return;  // !!! TEMP
 
-    ensureMsgf(GBUIC_Widget_Controller_Class, TEXT("Don`t forget set") );
-    ensureMsgf(Attribute_Info_Data, TEXT("Don`t forget set") );
-
-    Init();
+    // ensureMsgf(GBUIC_Widget_Controller_Class, TEXT("Don`t forget set") );
+    // ensureMsgf(Attribute_Info_Data, TEXT("Don`t forget set") );
+    // 
+    // Init();
 }
 //------------------------------------------------------------------------------------------------------------
 UGBUIC_Widget_Controller *AGBUI_Main_Menu_HUD::Get_Widget_Controller(const FController_Widget_Params &params)
