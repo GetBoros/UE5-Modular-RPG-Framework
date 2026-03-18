@@ -34,13 +34,11 @@ public class TDGame : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"CoreUObject",
-				"Engine",
-				"Slate",
-				"SlateCore",
-				// ... add private dependencies that you statically link with here ...	
+				"CoreUObject", "Engine", "Slate", "SlateCore", // Core
+				"GameplayTags", "GameplayTasks", "GameplayAbilities",  // Core Frameworks
+				"StateTreeModule", "GameplayStateTreeModule",  // AI State Tree
 			}
-			);
+            );
 		
 		
 		DynamicallyLoadedModuleNames.AddRange(
