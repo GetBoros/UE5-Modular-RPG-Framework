@@ -1,5 +1,6 @@
 //------------------------------------------------------------------------------------------------------------
-#include <GBG_Player.h>
+#include <System/GBG_Player.h>
+#include <System/GBG_Player_State.h>
 
 #include <GAS/GBG_Gameplay_Ability.h>
 #include <GAS/GBG_Attribute_Set.h>
