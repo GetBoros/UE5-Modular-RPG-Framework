@@ -2,9 +2,6 @@
 #include <System/GBG_Player.h>
 #include <System/GBG_Player_State.h>
 
-#include <GAS/GBG_Gameplay_Ability.h>
-#include <GAS/GBG_Attribute_Set.h>
-
 #include <Components/GBG_Destructible_Interaction.h>
 
 #include <EnhancedInputComponent.h>
@@ -17,14 +14,9 @@
 // AGBG_Player
 AGBG_Player::AGBG_Player()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
-	Ability_System_Component = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent") );
-	Ability_System_Component->SetIsReplicated(true);
-	Ability_System_Component->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);  // Mixed standart for Character
-
-	Attribute_Set = CreateDefaultSubobject<UGBG_Attribute_Set>(TEXT("AttributeSet") );
-	Destructible_Interaction_Component = CreateDefaultSubobject<UGBG_Destructible_Interaction>(TEXT("DestructibleInteractionComponent") );
+	Destructible_Interaction_Component = CreateDefaultSubobject<UGBG_Destructible_Interaction>(TEXT("DestructibleInteractionComponent") );  // !!! TEMP
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::BeginPlay()
@@ -45,38 +37,7 @@ void AGBG_Player::Tick(float delta_time)
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::PossessedBy(AController *new_controller)
 {
-	int32 input_id;
-	UGBG_Gameplay_Ability *ability_cdo;
-
 	Super::PossessedBy(new_controller);
-
-	if (Ability_System_Component == 0)
-		return;
-	Ability_System_Component->InitAbilityActorInfo(this, this);
-
-	if (Default_Attributes_Effect == 0)  // Apply Game Effect for set up starting attributes
-		return;
-
-	FGameplayEffectContextHandle effect_context = Ability_System_Component->MakeEffectContext();  // Create handle
-	effect_context.AddSourceObject(this);  // add handle
-	FGameplayEffectSpecHandle spec_handle = Ability_System_Component->MakeOutgoingSpec(Default_Attributes_Effect, 1, effect_context);
-	
-	if (spec_handle.IsValid() == true)
-		Ability_System_Component->ApplyGameplayEffectSpecToSelf(*spec_handle.Data.Get() );  // Apply effect to self
-
-	for (const TSubclassOf<UGBG_Gameplay_Ability> &ability_class : Default_Abilities)  // Learn abilities by default || 
-	{
-		if (ability_class == 0)
-			continue;
-
-		ability_cdo = ability_class->GetDefaultObject<UGBG_Gameplay_Ability>();  // Get Input id from ability template
-		if (ability_cdo != 0)
-			input_id = ability_cdo->Input_ID;
-		else
-			input_id = 0;
-
-		Ability_System_Component->GiveAbility(FGameplayAbilitySpec(ability_class, 1, input_id, this) );  // Give ability to player
-	}
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::SetupPlayerInputComponent(UInputComponent *player_input_component)
@@ -100,12 +61,18 @@ void AGBG_Player::SetupPlayerInputComponent(UInputComponent *player_input_compon
 //------------------------------------------------------------------------------------------------------------
 UAbilitySystemComponent *AGBG_Player::GetAbilitySystemComponent() const
 {
+	AGBG_Player_State *tlg_player_state;
+
+	if (Ability_System_Component != 0)
+		return Ability_System_Component;
+
+	tlg_player_state = GetPlayerState<AGBG_Player_State>();
+	if (tlg_player_state == 0)
+		return 0;
+
+	Ability_System_Component = tlg_player_state->GetAbilitySystemComponent();
+
 	return Ability_System_Component;
-}
-//------------------------------------------------------------------------------------------------------------
-UGBG_Attribute_Set *AGBG_Player::GetAttributeSet() const
-{
-	return Attribute_Set;
 }
 //------------------------------------------------------------------------------------------------------------
 void AGBG_Player::On_Move(const FInputActionValue &value)
