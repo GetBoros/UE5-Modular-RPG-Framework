@@ -2,7 +2,7 @@
 #include <System/GBG_Player_State.h>
 
 #include <GAS/GBG_Attribute_Set.h>
-#include <GAS/Data/GBG_GAS_Defaults_Init.h>
+#include <GAS/Data/GBG_Ability_Set.h>
 
 #include <AbilitySystemComponent.h>
 //------------------------------------------------------------------------------------------------------------

@@ -4,13 +4,13 @@
 #include <Engine/DataAsset.h>
 #include <GameplayTagContainer.h>
 
-#include <GBG_GAS_Defaults_Init.generated.h>
+#include <GBG_Ability_Set.generated.h>
 //------------------------------------------------------------------------------------------------------------
 class UGBG_Gameplay_Ability;
 class UGameplayEffect;
 class UAbilitySystemComponent;
 //------------------------------------------------------------------------------------------------------------
-USTRUCT(BlueprintType) struct FGBG_Ability_Bind_Info
+USTRUCT(BlueprintType) struct FGBG_Ability_Set_Bind_Info
 {
     GENERATED_BODY()
 
@@ -30,8 +30,8 @@ private:
     void Grant_Abilities_Binded(UAbilitySystemComponent *ability_system_component, UObject *object_source) const;
     void Grant_Effects_Passive(UAbilitySystemComponent *ability_system_component, UObject *object_source) const;
 
-     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TArray<FGBG_Ability_Bind_Info> TLG_Ability_Bind_Info_Array;
-     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TArray<TSubclassOf<UGameplayEffect>> Granted_Effects;
+     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TArray<FGBG_Ability_Set_Bind_Info> GBG_Ability_Set_Bind_Info;
+     UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true") ) TArray<TSubclassOf<UGameplayEffect> > Granted_Gameplay_Effects;
 
 };
 //------------------------------------------------------------------------------------------------------------
