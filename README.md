@@ -22,3 +22,5 @@ The framework is built using a **Plugin-based architecture** to ensure zero coup
 
 ---
 *Showcase video: [https://youtu.be/ujgZAM4Y9Ug?si=6r8nUWehWgZi68Ry]*
+
+S
